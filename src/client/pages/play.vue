@@ -1,0 +1,59 @@
+<template>
+  <iframe 
+    title="Playing Game"
+    :src="gameStore.url"
+    width="100%"
+    height="100%"
+    class="Iframe"
+  ></iframe>
+  
+  <UModal v-model="fastBuy.modal" prevent-close>
+    <DataShopBuyItem :item="fastBuy.item" :server="fastBuy.server" @close="fastBuy.modal = false" class="p-4" />
+  </UModal>
+</template>
+
+<script setup>
+definePageMeta({
+  layout: 'play',
+  middleware: 'play'
+})
+
+const gameStore = useGameStore()
+
+const fastBuy = ref({
+  modal: false,
+  item: null,
+  server: null
+})
+
+const onFastBuy = async (e) => {
+  try {
+    const detail = e.data
+    if(!detail) return
+    if(!detail.item_id) return
+
+    const data = await useAPI('shop/getFastbuy', detail)
+    fastBuy.value.item = data.item
+    fastBuy.value.server = data.server
+    fastBuy.value.modal = true
+  }
+  catch (e) {
+    return
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('message', onFastBuy, false)
+})
+
+onBeforeRouteLeave(() => {
+  window.removeEventListener('message', onFastBuy, false)
+})
+</script>
+
+<style lang="sass">
+.Iframe
+  overflow: hidden
+  outline: none
+  border: none
+</style>

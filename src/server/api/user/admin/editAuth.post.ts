@@ -1,0 +1,42 @@
+import md5 from 'md5'
+
+export default defineEventHandler(async (event) => {
+  try {
+    const auth = event.context.auth
+    if(!auth) throw 'Vui lòng đăng nhập trước'
+    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+
+    const { _id, email, phone, password, type, block } = await readBody(event)
+    if(!_id) throw 'Dữ liệu đầu vào không hợp lệ'
+    if(type < 0 || type > 2) throw 'Dữ liệu quyền hạn không hợp lệ'
+    if(block < 0 || block > 1) throw 'Dữ liệu khóa không hợp lệ'
+    if(type > 0 && auth.type < 2) throw 'Smod không thể sửa quyền người dùng'
+
+    const user = await DB.User.findOne({_id: _id})
+    .select('username email phone type')
+
+    if(!user) throw 'Người dùng không tồn tại'
+    if(user.type > 0 && auth.type < 2) throw 'Smod không thể sửa thông tin quản trị viên khác'
+
+    const update : any = { type: type, block: block }
+    if(!!email && user.email != email){
+      const check = await DB.User.findOne({ email: email }).select('_id')
+      if(!!check) throw 'Email đã tồn tại'
+      update['email'] = email
+    }
+    if(!!phone && user.phone != phone){
+      const check = await DB.User.findOne({ phone: phone }).select('_id')
+      if(!!check) throw 'Số điện thoại đã tồn tại'
+      update['phone'] = phone
+    }
+    if(!!password) update['password'] = md5(password)
+
+    await DB.User.updateOne({ _id: _id }, update)
+
+    logAdmin(event, `Sửa thông tin tài khoản <b>${user.username}</b>`)
+    return resp(event, { message: 'Sửa thông tin thành công' })
+  } 
+  catch (e:any) {
+    return resp(event, { code: 400, message: e.toString() })
+  }
+})
