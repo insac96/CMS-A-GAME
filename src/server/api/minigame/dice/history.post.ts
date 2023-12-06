@@ -1,3 +1,5 @@
+import { Types } from "mongoose"
+
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
@@ -10,7 +12,7 @@ export default defineEventHandler(async (event) => {
     const sorting : any = { }
     sorting[sort.column] = sort.direction == 'desc' ? -1 : 1
 
-    const match : any = { user: !!user ? user : auth._id }
+    const match : any = { user: new Types.ObjectId(!!user ? user : auth._id) }
 
     const histories = await DB.DiceHistory
     .aggregate([
