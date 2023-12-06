@@ -79,6 +79,8 @@ export default defineEventHandler(async (event) => {
       user: user._id,
       ip: IP
     })
+
+    logUser(event, user._id, 'Đăng ký tài khoản')
     
     await sendNotifyUser(event, {
       to: [ user._id ],
@@ -90,7 +92,7 @@ export default defineEventHandler(async (event) => {
       to: [ user._id ],
       type: 3,
       color: 'blue',
-      content: ` Bạn đã đăng nhập với IP <b>${IP}</b>`
+      content: `Bạn đã đăng nhập với IP <b>${IP}</b>`
     })
     
     return resp(event, { message: 'Đăng ký thành công' })

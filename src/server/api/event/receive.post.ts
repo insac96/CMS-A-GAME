@@ -4,6 +4,17 @@ const currencyTypeList = [
   'coin', 'wheel', 'notify'
 ]
 
+const typeName : any = {
+  'login.month' : 'Đăng nhập tháng', 
+  'login.total': 'Đăng nhập tổng', 
+  'pay.total.money': 'Tích nạp tổng', 
+  'pay.day.money': 'Tích nạp ngày', 
+  'pay.month.money': 'Tích nạp tháng', 
+  'spend.total.coin': 'Tiêu phí tổng',
+  'spend.day.coin': 'Tiêu phí ngày',
+  'spend.month.coin': 'Tiêu phí tháng'
+}
+
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
@@ -70,6 +81,11 @@ export default defineEventHandler(async (event) => {
       event: eventData._id,
       server: server
     })
+
+    // Log User
+    if(!!giftCurrency[`currency.coin`] && giftCurrency[`currency.coin`] > 0){
+      logUser(event, auth._id, `Nhận <b>${giftCurrency[`currency.coin`].toLocaleString('vi-VN')}</b> xu từ mốc <b>${eventData.need.toLocaleString('vi-VN')}</b> của sự kiện <b>${typeName[eventData.type]}</b>`)
+    }
     
     return resp(event, { message: 'Nhận thưởng thành công' })
   } 

@@ -9,6 +9,15 @@ export interface IDBLogAdmin {
   action: string
 }
 
+export interface IDBLogUser {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  
+  user: Types.ObjectId
+  action: string
+}
+
 export interface IDBLogUserIP {
   _id: Types.ObjectId
   createdAt: Date

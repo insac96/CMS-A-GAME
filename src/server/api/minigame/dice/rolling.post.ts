@@ -172,6 +172,11 @@ export default defineEventHandler(async (event) => {
       }
     })
 
+    // Log User
+    if(coinReceive > 0){
+      logUser(event, auth._id, `Nhận <b>${coinReceive.toLocaleString('vi-VN')}</b> xu từ <b>xúc xắc may mắn</b>`)
+    }
+
     // Result
     const newConfig = await DB.Dice.findOne().select('jar.now')
     return resp(event, { result: {

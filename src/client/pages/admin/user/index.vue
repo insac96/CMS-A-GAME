@@ -129,6 +129,10 @@
           <UInput v-model="stateEditCurrency.origin.notify" type="number" v-if="stateEditCurrency.type == 'origin'"/>
         </UFormGroup>
 
+        <UFormGroup label="Lý do">
+          <UTextarea v-model="stateEditCurrency.reason" />
+        </UFormGroup>
+
         <UiFlex justify="end" class="mt-6">
           <UButton type="submit" :loading="loading.editCurrency">
             {{ stateEditCurrency.type == 'plus' ? 'Thêm' : 'Sửa' }}
@@ -340,7 +344,8 @@ const stateEditCurrency = ref({
     coin: null,
     wheel: null,
     notify: null
-  }
+  },
+  reason: null
 })
 
 const stateEditPay = ref({
@@ -392,7 +397,8 @@ watch(() => modal.value.editCurrency, (val) => !val && (stateEditCurrency.value 
     coin: null,
     wheel: null,
     notify: null
-  }
+  },
+  reason: null
 }))
 
 // Loading

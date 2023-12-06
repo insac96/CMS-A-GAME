@@ -12,6 +12,10 @@
         </UButton>
       </template>
 
+      <template #log>
+        <AdminUserLog :user="user" />
+      </template>
+
       <template #ip>
         <AdminUserIp :user="user" />
       </template>
@@ -47,6 +51,10 @@
 const props = defineProps(['user'])
 
 const menu = [
+  {
+    label: 'Dòng thời gian',
+    slot: 'log'
+  },
   {
     label: 'Địa chỉ IP',
     slot: 'ip'

@@ -14,17 +14,12 @@
       <LoadingTable v-if="loading.load" />
 
       <UTable v-model:sort="page.sort" :columns="columns" :rows="list">
-        <template #ip-data="{ row }">
-          <UiText weight="semibold">{{ row.ip }}</UiText>
-        </template>
-
-        <template #block-data="{ row }">
-          <UBadge :color="!!row.block ? 'red' : 'gray'">{{ !!row.block ? 'Có' : 'Không' }}</UBadge>
+        <template #createdAt-data="{ row }">
+          {{ useDayJs().displayFull(row.createdAt) }}
         </template>
 
         <template #action-data="{ row }">
-          <UButton v-if="!row.block" color="gray" size="xs" icon="i-bxs-lock-alt" @click="block(row.ip, 'block')" :loading="loading.block" />
-          <UButton v-if="!!row.block" color="gray" size="xs" icon="i-bxs-lock-open-alt" @click="block(row.ip, 'unblock')" :loading="loading.block" />
+          <div v-html="row.action" />
         </template>
       </UTable>
 
@@ -52,16 +47,12 @@ const list = ref([])
 
 const columns = [
   {
-    key: 'ip',
-    label: 'IP',
-  },
-  {
-    key: 'block',
-    label: 'Khóa',
+    key: 'createdAt',
+    label: 'Thời gian',
   },
   {
     key: 'action',
-    label: 'Chức năng'
+    label: 'Hành động'
   }
 ]
 
@@ -80,23 +71,10 @@ watch(() => page.value.current, () => getList())
 watch(() => page.value.sort.column, () => getList())
 watch(() => page.value.sort.direction, () => getList())
 
-const block = async (ip, action) => {
-  try {
-    loading.value.true = true
-    await useAPI('log/ip/admin/block', { ip, action })
-
-    loading.value.true = false
-    getList()
-  }
-  catch (e) {
-    loading.value.block = false
-  }
-}
-
 const getList = async () => {
   try {
     loading.value.load = true
-    const data = await useAPI('log/ip/admin/user', JSON.parse(JSON.stringify(page.value)))
+    const data = await useAPI('log/user', JSON.parse(JSON.stringify(page.value)))
 
     loading.value.load = false
     list.value = data.list

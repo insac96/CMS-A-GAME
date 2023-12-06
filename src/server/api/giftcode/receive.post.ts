@@ -74,6 +74,13 @@ export default defineEventHandler(async (event) => {
       giftcode: giftcodeData._id,
       server: server
     })
+
+    // Log User
+    logUser(event, auth._id, `Sử dụng giftcode <b>${giftcodeData.code}</b>`)
+    
+    if(!!giftCurrency[`currency.coin`] && giftCurrency[`currency.coin`] > 0){
+      logUser(event, auth._id, `Nhận <b>${giftCurrency[`currency.coin`].toLocaleString('vi-VN')}</b> xu giftcode <b>${giftcodeData.code}</b>`)
+    }
     
     return resp(event, { message: 'Nhận thưởng thành công' })
   } 

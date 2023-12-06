@@ -105,6 +105,8 @@ export default async (
       + <b>${levelBonus}%</b> thưởng cấp độ 
       + <b>${gateBonus}%</b> khuyến mại kênh nạp
     `
+
+    logUser(event, user._id, `Nhận <b>${realMoney.toLocaleString('vi-VN')} Xu</b> từ giao dịch nạp tiền <b>${payment.code}</b>`)
   }
   else {
     realNotify = `Bạn bị từ chối giao dịch <b>${payment.code}</b> với lý do <b>${realReason}`
