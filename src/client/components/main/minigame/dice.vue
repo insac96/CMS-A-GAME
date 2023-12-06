@@ -16,7 +16,7 @@
         <USelectMenu 
           v-if="!!authStore.isLogin"
           v-model="fastCoin" 
-          :options="[100, 1000, 10000, 100000, 1000000, 10000000, 100000000]"
+          :options="[10000, 100000, 1000000, 10000000, 100000000]"
           class="ml-auto"
         >
           <template #label>{{ miniMoney(fastCoin) }}</template>
