@@ -75,6 +75,8 @@ export default defineEventHandler(async (event) => {
     const auth = event.context.auth
     if(!auth) throw 'Vui lòng đăng nhập trước'
 
+    throw 'Xúc xắc đang bảo trì, vui lòng quay lại sau'
+
     const body = await readBody(event)
 
     // Make Coin Play
@@ -115,7 +117,7 @@ export default defineEventHandler(async (event) => {
 
     // Make Coin Receive
     let coinReceive = 0
-    dices.forEach((dice : number) => coinReceive = coinReceive + (dicesPlay[dice] * 1.5))
+    dices.forEach((dice : number) => coinReceive = coinReceive + (dicesPlay[dice] * 2))
     coinReceive = Math.floor(coinReceive * 70 / 100)
     coinReceive = coinReceive - coinPlay
 
