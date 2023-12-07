@@ -40,13 +40,13 @@ export default defineEventHandler(async (event) => {
     if(!auth) throw 'Vui lòng đăng nhập trước'
 
     const body = await readBody(event)
-    const { server, role } = body
-    if(!server || !role) throw 'Dữ liệu đầu vào sai'
+    const { server, role, times } = body
+    if(!server || !role || !!isNaN(parseInt(times)) || parseInt(times) < 1 || parseInt(times) > 10) throw 'Dữ liệu đầu vào sai'
 
     // Get User
     const user = await DB.User.findOne({ _id: auth._id }).select('currency.wheel level wheel') as IDBUser
     if(!user) throw 'Không tìm thấy thông tin tài khoản'
-    if(user.currency.wheel < 1) throw 'Bạn đã hết lượt quay'
+    if(user.currency.wheel < times) throw 'Bạn đã hết lượt quay'
     const level = await DB.Level.findOne({ _id: user.level }).select('limit.wheel') as IDBLevel
     if(!level) throw 'Không tìm thấy thông tin cấp độ'
 
@@ -66,60 +66,68 @@ export default defineEventHandler(async (event) => {
     .limit(10) as Array<IDBWheel>
     if(list.length == 0) throw 'Vòng quay hiện chưa có phần thưởng để bắt đầu'
 
-    // Get Random List
-    const resultGift = getRandomGift(list)
-    if(!resultGift) throw 'Có lỗi xảy ra, vui lòng thử lại sau'
 
-    // Send Item
-    const item = await DB.Item.findOne({ _id: resultGift.item }).select('item_id type') as IDBItem
+    // Rand Spin
+    const resultListGift = []
+    for(let i = 0; i < times; i++){
+      // Get Random Gift
+      const resultGift = getRandomGift(list)
+      if(!resultGift) throw 'Có lỗi xảy ra, vui lòng thử lại sau'
 
-    if(item.type == 'game_item'){
-      await gameSendMail(event, {
-        account: auth.username,
-        server_id: server,
-        role_id: role,
-        title: 'Web Wheel Lucky',
-        content: 'Vật phẩm nhận từ vòng quay may mắn trên Web',
-        items: [{ 
-          id: item.item_id, 
-          amount: resultGift.amount 
-        }]
+      // Send Item
+      const item = await DB.Item.findOne({ _id: resultGift.item }).select('item_id type') as IDBItem
+
+      if(item.type == 'game_item'){
+        await gameSendMail(event, {
+          account: auth.username,
+          server_id: server,
+          role_id: role,
+          title: 'Web Wheel Lucky',
+          content: 'Vật phẩm nhận từ vòng quay may mắn trên Web',
+          items: [{ 
+            id: item.item_id, 
+            amount: resultGift.amount 
+          }]
+        })
+      }
+
+      if(!!currencyTypeList.includes(item.type)){
+        await DB.User.updateOne({ _id: auth._id }, {
+          $inc: {
+            [`currency.${item.type}`]: resultGift.amount 
+          }
+        })
+      }
+
+      // History
+      await DB.WheelHistory.create({
+        user: auth._id,
+        server: server,
+        item: item._id,
+        amount: resultGift.amount,
+        percent: resultGift.percent
       })
-    }
-    
-    if(!!currencyTypeList.includes(item.type)){
-      await DB.User.updateOne({ _id: auth._id }, {
-        $inc: {
-          [`currency.${item.type}`]: resultGift.amount 
-        }
-      })
+
+      // Log User
+      if(item.type == 'coin'){
+        logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> xu từ <b>vòng quay may mắn</b>`)
+      }
+
+      // Update List
+      resultListGift.push(resultGift)
     }
 
     // Update User
     await DB.User.updateOne({ _id: auth._id }, { 
       $inc: { 
-        'currency.wheel': -1,
-        'wheel.total': 1,
-        'wheel.day': 1,
-        'wheel.month': 1,
+        'currency.wheel': parseInt(times) * -1,
+        'wheel.total': parseInt(times),
+        'wheel.day': parseInt(times),
+        'wheel.month': parseInt(times),
       }
     })
 
-    // History
-    await DB.WheelHistory.create({
-      user: auth._id,
-      server: server,
-      item: item._id,
-      amount: resultGift.amount,
-      percent: resultGift.percent
-    })
-
-    // Log User
-    if(item.type == 'coin'){
-      logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> xu từ <b>vòng quay may mắn</b>`)
-    }
-    
-    return resp(event, { result: resultGift._id })
+    return resp(event, { result: resultListGift[resultListGift.length - 1]._id })
   } 
   catch (e:any) {
     return resp(event, { code: 400, message: e.toString() })

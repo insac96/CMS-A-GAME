@@ -22,6 +22,10 @@
         
         <UiFlex>
           <UButton color="gray" class="mr-auto" @click="modal.limit = true">Giới hạn</UButton>
+          <USelectMenu  v-model="state.times" :options="[1, 5, 10]" class="mx-1">
+            <template #label>x {{ state.times }}</template>
+            <template #option="{ option }">x {{ option }}</template>
+          </USelectMenu>
           <UButton type="submit" :loading="loading">{{ loading ? '' : 'Quay' }}</UButton>
         </UiFlex>
       </UForm>
@@ -49,7 +53,8 @@ const modal = ref({
 
 const state = ref({
   server: null,
-  role: null
+  role: null,
+  times: 1
 })
 
 const loading = ref(false)
