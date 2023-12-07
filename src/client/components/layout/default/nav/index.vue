@@ -35,6 +35,7 @@
       <template #tab-2><UVerticalNavigation :links="navItems[2].children" @click="emit('to')"/></template>
       <template #tab-3><UVerticalNavigation :links="navItems[3].children" @click="emit('to')"/></template>
       <template #tab-4><UVerticalNavigation :links="navItems[4].children" @click="emit('to')"/></template>
+      <template #tab-5><UVerticalNavigation :links="navItems[5].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -85,10 +86,20 @@ const navItems = [
     ]
   },
   {
+    label: 'Xếp Hạng',
+    icon: 'i-bx-bar-chart-alt-2',
+    defaultOpen: true,
+    slot: 'tab-4',
+    children: [
+      { label: 'Cấp độ', to: '/main/rank/level' },
+      { label: 'Lực chiến', to: '/main/rank/power' }, 
+    ]
+  },
+  {
     label: 'Mạng xã hội',
     icon: 'i-bx-book-reader',
     defaultOpen: true,
-    slot: 'tab-4',
+    slot: 'tab-5',
     children: [
       { label: 'Fanpage', to: configStore.config.social.facebook, target: '_blank' }, 
       { label: 'Nhóm Zalo', to: configStore.config.social.zalo, target: '_blank' },

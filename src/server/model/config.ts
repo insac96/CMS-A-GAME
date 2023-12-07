@@ -32,6 +32,9 @@ export const DBConfig = (mongoose : Mongoose) => {
         start: { type: String, default: '' },
         server: { type: String, default: '' },
         role: { type: String, default: '' },
+        role_data: { type: String, default: ''},
+        rank_level: { type: String, default: '' },
+        rank_power: { type: String, default: '' },
         mail: { type: String, default: '' },
         recharge: { type: String, default: '' },
       }

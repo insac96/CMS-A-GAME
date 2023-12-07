@@ -1,6 +1,12 @@
 export default defineEventHandler(async (event) => {
   try {
-    const list = await gameGetServer(event)
+    const { server } = await readBody(event)
+    if(!server) throw 'Dữ liệu đầu vào sai'
+
+    const list = await gameGetRankPower(event, {
+      server_id: server
+    })
+
     return resp(event, { result: list })
   } 
   catch (e:any) {

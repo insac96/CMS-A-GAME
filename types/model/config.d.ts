@@ -33,7 +33,10 @@ export interface IDBConfig {
     api: {
       start: string
       role: string
+      role_data: string
       server: string
+      rank_power: string
+      rank_level: string
       mail: string
       recharge: string
     }

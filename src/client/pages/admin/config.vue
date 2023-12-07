@@ -87,21 +87,21 @@
               <UInput v-model="state.social.messenger" />
             </UFormGroup>
 
-            <UFormGroup label="Telegram">
+            <!-- <UFormGroup label="Telegram">
               <UInput v-model="state.social.telegram" />
-            </UFormGroup>
+            </UFormGroup> -->
 
             <UFormGroup label="Zalo">
               <UInput v-model="state.social.zalo" />
             </UFormGroup>
 
-            <UFormGroup label="Tiktok">
+            <!-- <UFormGroup label="Tiktok">
               <UInput v-model="state.social.tiktok" />
             </UFormGroup>
 
             <UFormGroup label="Youtube">
               <UInput v-model="state.social.youtube" />
-            </UFormGroup>
+            </UFormGroup> -->
           </UForm>
         </UCard>
       </template>
@@ -109,12 +109,12 @@
       <template #game>
         <UCard>
           <UForm :state="state">
-            <UFormGroup label="Path Image">
-              <UInput v-model="state.game.image" />
-            </UFormGroup>
-
             <UFormGroup label="Secret">
               <UInput v-model="state.game.secret" />
+            </UFormGroup>
+
+            <UFormGroup label="Path Image">
+              <UInput v-model="state.game.image" />
             </UFormGroup>
             
             <UFormGroup label="API Get Start">
@@ -127,6 +127,18 @@
 
             <UFormGroup label="API Get Role">
               <UInput v-model="state.game.api.role" />
+            </UFormGroup>
+
+            <UFormGroup label="API Get Role Data">
+              <UInput v-model="state.game.api.role_data" />
+            </UFormGroup>
+
+            <UFormGroup label="API Rank Level">
+              <UInput v-model="state.game.api.rank_level" />
+            </UFormGroup>
+
+            <UFormGroup label="API Rank Power">
+              <UInput v-model="state.game.api.rank_power" />
             </UFormGroup>
 
             <UFormGroup label="API Send Mail">
@@ -255,6 +267,9 @@ const state = ref({
       start: '',
       server: '',
       role: '',
+      role_data: '',
+      rank_level: '',
+      rank_power: '',
       mail: '',
       recharge: '',
     }
