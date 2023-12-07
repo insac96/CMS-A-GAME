@@ -16,8 +16,8 @@
 
       <UTable v-model:sort="page.sort" :columns="columns" :rows="list">
         <template #status-data="{ row }">
-          <UBadge :color="row.receive <= row.play ? 'gray' : 'green'">
-            {{ row.receive < row.play ? 'Thua' : 'Thắng' }}
+          <UBadge :color="row.receive > 0 ? 'green' : 'gray'">
+            {{ row.receive > 0 ? 'Thắng' : 'Thua' }}
           </UBadge>
         </template>
 
