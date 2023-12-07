@@ -10,15 +10,15 @@ const isJarSix = (dices : Array<number>) => {
 }
 
 const isJarOther = (dices : Array<number>) => {
-  let test = false
+  let is = false
   const arr = [1,2,3,4,5]
   arr.forEach(i => {
     if(dices[0] == i && dices[1] == i && dices[2] == i){
-      test = true
+      is = true
     }
   })
 
-  return test
+  return is
 }
 
 const getDicesPlay = (body : any) : any => {
@@ -58,13 +58,13 @@ const getRandomDices = ({ six, other } : IDBDice['percent']) => {
   if(!!isJarSix(dices)){
     const rand = randomNumber(1,100)
     if(rand <= six) return dices
-    return [randomNumber(1,3), 6, randomNumber(5,6)]
+    return [randomNumber(1,2), randomNumber(3,6), randomNumber(3,6)]
   }
 
   if(!!isJarOther(dices)){
     const rand = randomNumber(1,100)
     if(rand <= other) return dices
-    return [randomNumber(1,4), 6, randomNumber(1,5)]
+    return [randomNumber(3,6), randomNumber(3,6), randomNumber(1,2)]
   }
 
   return dices
@@ -115,8 +115,8 @@ export default defineEventHandler(async (event) => {
 
     // Make Coin Receive
     let coinReceive = 0
-    dices.forEach((dice : number) => coinReceive = coinReceive + (dicesPlay[dice] * 2))
-    coinReceive = Math.floor(coinReceive * 95 / 100)
+    dices.forEach((dice : number) => coinReceive = coinReceive + (dicesPlay[dice] * 1.5))
+    coinReceive = Math.floor(coinReceive * 70 / 100)
     coinReceive = coinReceive - coinPlay
 
     // Make Coin Jar
@@ -125,10 +125,12 @@ export default defineEventHandler(async (event) => {
     let coinJarPlus = 0
     if(!!isJarSix(dices)){
       coinJar = jar.now
+      coinJar = Math.floor(coinJar * 70 / 100)
       coinJarPlus = jar.now * -1
     }
     else if(!!isJarOther(dices)){
-      coinJar = Math.floor(jar.now * 10 / 100)
+      coinJar = Math.floor(jar.now * 5 / 100)
+      coinJar = Math.floor(coinJar * 70 / 100)
       coinJarPlus = coinJar * -1
     }
     else {
