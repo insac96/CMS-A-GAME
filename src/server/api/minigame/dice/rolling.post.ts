@@ -1,7 +1,17 @@
 import type { IDBUser, IDBLevel, IDBDice } from "~~/types"
 
-const randomNumber = (min : number, max : number) : number => {
-  return Math.floor(Math.random() * (max - min) + min)
+const randExc = (min : number, max : number, exclusions : Array<number> = []) : number => {
+  const exclusionsSorted = exclusions.concat().sort(function(a, b) {
+    return a - b
+  })
+  let logicalMax = max - exclusionsSorted.length
+  let randomNumber = Math.floor(Math.random() * (logicalMax - min + 1)) + min
+  for(let i = 0; i < exclusionsSorted.length; i++) {
+    if (randomNumber >= exclusionsSorted[i]) {
+      randomNumber++
+    }
+  }
+  return randomNumber
 }
 
 const isJarSix = (dices : Array<number>) => {
@@ -49,33 +59,61 @@ const getTotalCoinPlay = (dicesPlay : any) : number => {
   return money
 } 
 
-const getRandomDices = ({ six, other } : IDBDice['percent']) => {
-  const dices = []
-  dices.push(randomNumber(1,6))
-  dices.push(randomNumber(1,6))
-  dices.push(randomNumber(1,6))
+const getRandomDices = ({ six, other, win } : IDBDice['percent'], dicesPlay : any) : Array<number> => {
+  const dicesGame : Array<number> = [1,2,3,4,5,6]
+  const dicesResult : Array<number> = []
+  const dices : Array<number> = []
 
-  if(!!isJarSix(dices)){
-    const rand = randomNumber(1,100)
-    if(rand <= six) return dices
-    return [randomNumber(1,2), randomNumber(3,6), randomNumber(3,6)]
+  for (const [key, value] of Object.entries(dicesPlay)) {
+    if((value as number) > 0) dices.push(Number(key))
   }
 
-  if(!!isJarOther(dices)){
-    const rand = randomNumber(1,100)
-    if(rand <= other) return dices
-    return [randomNumber(3,6), randomNumber(3,6), randomNumber(1,2)]
+  const dicesBet = dicesGame.filter(n => !!dices.includes(n))
+  const dicesNoBet = dicesGame.filter(n => !dices.includes(n))
+
+  if(dicesBet.length == 6){
+    const one = randExc(1,6)
+    const two = randExc(1,6, [one])
+    const three = randExc(1,6, [one, two])
+    dicesResult.push(one, two, three) 
+  }
+  if(dicesBet.length == 5){
+    const one = randExc(1,6, dicesBet)
+    const two = randExc(1,6, dicesNoBet)
+    const three = randExc(1,6, randExc(1,100) <= win ? dicesNoBet : dicesBet)
+    dicesResult.push(one, two, three) 
+  }
+  if(dicesBet.length == 4){
+    const one = dicesNoBet[0]
+    const two = dicesNoBet[1]
+    const three = randExc(1,6, randExc(1,100) <= win ? dicesNoBet : dicesBet)
+    dicesResult.push(one, two, three) 
+  }
+  if(dicesBet.length < 4){
+    const arr : Array<number> = [ ...dicesBet ]
+    const one = randExc(1,6, arr)
+    arr.push(one)
+    const two = randExc(1,6, arr)
+    arr.push(two)
+    const three = randExc(1,6, randExc(1,100) <= win ? dicesNoBet : arr)
+    dicesResult.push(one, two, three) 
   }
 
-  return dices
+  const randJarSix = randExc(1,1000)
+  const randJarOther = randExc(1,500)
+  if(randJarSix <= six) return [6,6,6]
+  if(randJarOther <= other){
+    const randNumberJar = randExc(1,6)
+    return [randNumberJar,randNumberJar,randNumberJar]
+  }
+
+  return dicesResult
 }
 
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
     if(!auth) throw 'Vui lòng đăng nhập trước'
-
-    throw 'Xúc xắc đang bảo trì, vui lòng quay lại sau'
 
     const body = await readBody(event)
 
@@ -113,12 +151,12 @@ export default defineEventHandler(async (event) => {
     if(limitCoinMonth != -1 && coinPlay > limitCoinMonth) throw `Tháng này bạn chỉ có thể chơi tối đa ${limitCoinMonth.toLocaleString("vi-VN")} Xu`
 
     // Make Dices
-    const dices = getRandomDices(config.percent)
+    const dices = getRandomDices(config.percent, dicesPlay)
 
     // Make Coin Receive
     let coinReceive = 0
-    dices.forEach((dice : number) => coinReceive = coinReceive + (dicesPlay[dice] * 2))
-    coinReceive = Math.floor(coinReceive * 70 / 100)
+    dices.forEach((dice : number) => coinReceive = coinReceive + (dicesPlay[Number(dice)] * 2))
+    coinReceive = Math.floor(coinReceive * 90 / 100)
     coinReceive = coinReceive - coinPlay
 
     // Make Coin Jar
@@ -127,12 +165,12 @@ export default defineEventHandler(async (event) => {
     let coinJarPlus = 0
     if(!!isJarSix(dices)){
       coinJar = jar.now
-      coinJar = Math.floor(coinJar * 70 / 100)
+      coinJar = Math.floor(coinJar * 90 / 100)
       coinJarPlus = jar.now * -1
     }
     else if(!!isJarOther(dices)){
       coinJar = Math.floor(jar.now * 5 / 100)
-      coinJar = Math.floor(coinJar * 70 / 100)
+      coinJar = Math.floor(coinJar * 90 / 100)
       coinJarPlus = coinJar * -1
     }
     else {

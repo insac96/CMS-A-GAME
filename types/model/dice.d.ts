@@ -9,6 +9,7 @@ export interface IDBDice {
     now: number
   },
   percent: {
+    win: number
     six: number
     other: number
   }

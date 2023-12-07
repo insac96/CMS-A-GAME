@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
     if(
       !!isNaN(parseInt(jar.default)) || parseInt(jar.default) < 0
       || !!isNaN(parseInt(jar.now)) || parseInt(jar.now) < 0
+      || !!isNaN(parseInt(percent.win)) || parseInt(percent.win) < 0
       || !!isNaN(parseInt(percent.six)) || parseInt(percent.six) < 0
       || !!isNaN(parseInt(percent.other)) || parseInt(percent.other) < 0
     ) throw 'Dữ liệu đầu vào sai'

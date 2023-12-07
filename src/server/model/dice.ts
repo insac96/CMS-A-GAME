@@ -8,6 +8,7 @@ export const DBDice = (mongoose : Mongoose) => {
       now: { type: Number, default: 0 },
     },
     percent: {
+      win: { type: Number, default: 50 },
       six: { type: Number, default: 0 },
       other: { type: Number, default: 10 },
     }

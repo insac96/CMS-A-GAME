@@ -13,11 +13,15 @@
         <UInput v-model="state.jar.now" />
       </UFormGroup>
 
+      <UFormGroup label="Tỷ lệ thắng">
+        <UInput v-model="state.percent.win" />
+      </UFormGroup>
+
       <UFormGroup label="Tỷ lệ hũ 666">
         <UInput v-model="state.percent.six" />
       </UFormGroup>
 
-      <UFormGroup label="Tỷ lệ hũ khác">
+      <UFormGroup label="Tỷ lệ hũ (111,222,333...)">
         <UInput v-model="state.percent.other" />
       </UFormGroup>
 
@@ -40,6 +44,7 @@ const state = ref({
     now: null
   },
   percent: {
+    win: null,
     six: null,
     other: null
   }
