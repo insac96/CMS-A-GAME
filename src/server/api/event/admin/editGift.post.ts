@@ -21,11 +21,15 @@ export default defineEventHandler(async (event) => {
 
     const eventData = await DB.Event.findOne({ _id: _id }).select('need type')
     if(!eventData) throw 'Dữ liệu mốc thưởng không tồn tại'
+
+    const giftFormat = gift.map((i : any) => ({
+      item: i._id,
+      amount: i.amount
+    }))
     
-    await DB.Event.updateOne({ _id: _id }, { gift: gift })
+    await DB.Event.updateOne({ _id: _id }, { gift: giftFormat })
 
     logAdmin(event, `Cập nhật phần thưởng cho mốc <b>${eventData.need}</b> cho sự kiện <b>${typeName[eventData.type]}</b>`)
-
     return resp(event, { message: 'Sửa phần thưởng mốc thành công' })
   } 
   catch (e:any) {

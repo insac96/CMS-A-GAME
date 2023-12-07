@@ -10,10 +10,15 @@ export default defineEventHandler(async (event) => {
     const { _id, gift } = body
     if(!_id || !gift) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    const giftcode = await DB.Giftcode.findOne({ _id: _id }).select('code')
+    const giftcode = await DB.Giftcode.findOne({ _id: _id }).select('code gift')
     if(!giftcode) throw 'Mã không tồn tại'
 
-    await DB.Giftcode.updateOne({ _id: _id }, { gift: gift })
+    const giftFormat = gift.map((i : any) => ({
+      item: i._id,
+      amount: i.amount
+    }))
+
+    await DB.Giftcode.updateOne({ _id: _id }, { gift: giftFormat })
 
     logAdmin(event, `Sửa phần thưởng Giftcode <b>${giftcode.code}</b>`)
     return resp(event, { message: 'Sửa mã thành công' })

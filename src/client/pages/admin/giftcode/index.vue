@@ -162,8 +162,8 @@ const page = ref({
   size: 10,
   current: 1,
   sort: {
-    column: 'need',
-    direction: 'asc'
+    column: 'updatedAt',
+    direction: 'desc'
   },
   search: null,
   total: 0
@@ -286,20 +286,7 @@ const editAction = async () => {
 const giftAction = async () => {
   try {
     loading.value.gift = true
-
-    const data = JSON.parse(JSON.stringify(stateGift.value))
-
-    const giftFormat = []
-    data.gift.forEach((i) => {
-      giftFormat.push({
-        item: i._id,
-        amount: i.amount
-      })
-    })
-
-    data.gift = giftFormat
-
-    await useAPI('giftcode/admin/editGift', data)
+    await useAPI('giftcode/admin/editGift', JSON.parse(JSON.stringify(stateGift.value)))
 
     loading.value.gift = false
     modal.value.gift = false

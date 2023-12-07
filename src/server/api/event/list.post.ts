@@ -30,17 +30,16 @@ export default defineEventHandler(async (event) => {
           gift: {
             $map: {
               input: '$giftdata',
-              as: 'item',
               in: {
-                _id: '$$item._id',
-                name: '$$item.item_name',
-                image: '$$item.item_image',
-                type: '$$item.type',
+                _id: '$$this._id',
+                name: '$$this.item_name',
+                image: '$$this.item_image',
+                type: '$$this.type',
                 amount: { 
                   $getField: {
                     field: 'amount',
                     input: {
-                      $arrayElemAt: [ '$gift', { $indexOfArray: ['$giftdata._id', '$$item._id']} ]
+                      $arrayElemAt: [ '$gift', { $indexOfArray: ['$gift.item', '$$this._id']} ]
                     }
                   }
                 },
