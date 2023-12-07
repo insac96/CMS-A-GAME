@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    const list = await DB.GameSendHistory
+    const list = await DB.LogAdminSendItem
     .find(match)
     .populate({ path: 'from', select: 'username' })
     .populate({ path: 'to', select: 'username' })
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
     .limit(size)
     .skip((current - 1) * size)
 
-    const total = await DB.GameSendHistory.count(match)
+    const total = await DB.LogAdminSendItem.count(match)
     return resp(event, { result: { list, total } })
   } 
   catch (e:any) {

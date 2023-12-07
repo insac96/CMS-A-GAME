@@ -1,5 +1,5 @@
 import type { Mongoose } from 'mongoose'
-import type { IDBLogAdmin, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from '~~/types'
+import type { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from '~~/types'
 
 export const DBLogAdmin = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBLogAdmin>({ 
@@ -11,6 +11,21 @@ export const DBLogAdmin = (mongoose : Mongoose) => {
 
   const model = mongoose.model('admin_logs', schema)
   return model
+}
+
+export const DBLogAdminSendItem = (mongoose : Mongoose) => {
+  const schema = new mongoose.Schema<IDBLogAdminSendItem>({ 
+    from: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    to: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    server: { type: String },
+    role: { type: String },
+    reason: { type: String }
+  }, {
+    timestamps: true
+  })
+
+  const model = mongoose.model('admin_senditem_logs', schema)
+  return model 
 }
 
 export const DBLogUser = (mongoose : Mongoose) => {

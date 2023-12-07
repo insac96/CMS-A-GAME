@@ -129,8 +129,8 @@
               <UInput v-model="state.game.api.role" />
             </UFormGroup>
 
-            <UFormGroup label="API Get Role Data">
-              <UInput v-model="state.game.api.role_data" />
+            <UFormGroup label="API Get All Role">
+              <UInput v-model="state.game.api.roles" />
             </UFormGroup>
 
             <UFormGroup label="API Rank Level">
@@ -267,7 +267,7 @@ const state = ref({
       start: '',
       server: '',
       role: '',
-      role_data: '',
+      roles: '',
       rank_level: '',
       rank_power: '',
       mail: '',

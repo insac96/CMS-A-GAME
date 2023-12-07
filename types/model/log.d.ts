@@ -9,6 +9,18 @@ export interface IDBLogAdmin {
   action: string
 }
 
+export interface IDBLogAdminSendItem {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+
+  from: Types.ObjectId
+  to: Types.ObjectId
+  server: string
+  role: string
+  reason: string
+}
+
 export interface IDBLogUser {
   _id: Types.ObjectId
   createdAt: Date

@@ -93,7 +93,7 @@ const navItems = [
     children: [
       { label: 'Vật phẩm', to: '/admin/game/item' },
       { label: 'Gửi vật phẩm', to: '/admin/game/send' },
-      { label: 'Lịch sử gửi', to: '/admin/game/send/history' },
+      { label: 'Nhân vật', to: '/admin/game/roles' },
     ]
   },
   {
@@ -146,6 +146,7 @@ const navItems = [
     slot: 'tab-9',
     children: [
       { label: 'Quản trị viên', to: '/admin/log/admin' }, 
+      { label: 'Gửi vật phẩm', to: '/admin/log/adminSendItem' },
       { label: 'Địa chỉ IP', to: '/admin/log/ip' }
     ]
   }

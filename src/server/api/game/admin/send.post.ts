@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
       items: itemSend
     })
 
-    await DB.GameSendHistory.create({
+    await DB.LogAdminSendItem.create({
       from: auth._id,
       to: userData._id,
       server: server,
