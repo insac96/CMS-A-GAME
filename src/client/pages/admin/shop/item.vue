@@ -2,9 +2,11 @@
   <UiContent title="Item Shop" sub="Quản lý cửa hàng vật phẩm">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
-      <UForm @submit="getList" class="mr-auto">
+
+      <UForm :state="page" @submit="getList" class="mr-auto">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
+      
       <UButton color="gray" @click="modal.add = true" class="ml-2">Thêm mới</UButton>
     </UiFlex>
     
@@ -59,7 +61,7 @@
 
     <!-- Modal Add -->
     <UModal v-model="modal.add" preventClose>
-      <UForm @submit="addAction" class="p-4">
+      <UForm :state="stateAdd" @submit="addAction" class="p-4">
         <UFormGroup label="Vật phẩm">
           <SelectItem v-model="stateAdd.item" :types="page.types" />
         </UFormGroup>
@@ -85,7 +87,7 @@
 
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
-      <UForm @submit="editAction" class="p-4">
+      <UForm :state="stateEdit" @submit="editAction" class="p-4">
         <UFormGroup label="Giá tiền">
           <UInput v-model="stateEdit.price" />
         </UFormGroup>

@@ -50,7 +50,7 @@
 
     <!-- Modal Add -->
     <UModal v-model="modal.add" preventClose>
-      <UForm @submit="addAction" class="p-4">
+      <UForm :state="stateAdd" @submit="addAction" class="p-4">
         <UFormGroup label="Cấp độ">
           <UInput v-model="stateAdd.number" />
         </UFormGroup>
@@ -76,7 +76,7 @@
 
     <!-- Modal Edit Info -->
     <UModal v-model="modal.editInfo" preventClose>
-      <UForm @submit="editInfoAction" class="p-4">
+      <UForm :state="stateEditInfo" @submit="editInfoAction" class="p-4">
         <UFormGroup label="Cấp độ">
           <UInput v-model="stateEditInfo.number" />
         </UFormGroup>
@@ -102,7 +102,7 @@
 
     <!-- Modal Edit Need -->
     <UModal v-model="modal.editNeed" preventClose>
-      <UForm @submit="editNeedAction" class="p-4">
+      <UForm :state="stateEditNeed" @submit="editNeedAction" class="p-4">
         <AdminLevelEditNeed v-model:need="stateEditNeed.need" />
 
         <UiFlex justify="end" class="mt-6">
@@ -114,7 +114,7 @@
 
     <!-- Modal Edit Limit -->
     <UModal v-model="modal.editLimit" preventClose>
-      <UForm @submit="editLimitAction" class="p-4">
+      <UForm :state="stateEditLimit" @submit="editLimitAction" class="p-4">
         <AdminLevelEditLimit v-model:limit="stateEditLimit.limit" />
 
         <UiFlex justify="end" class="mt-6">

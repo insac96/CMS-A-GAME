@@ -2,7 +2,7 @@
   <div>
     <!-- Match -->
     <UiFlex justify="between" class="mb-3">
-      <UForm @submit="getList" class="mr-1">
+      <UForm :state="page" @submit="getList" class="mr-1">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
       

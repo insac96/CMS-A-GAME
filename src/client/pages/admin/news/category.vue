@@ -42,7 +42,7 @@
 
     <!-- Modal Add -->
     <UModal v-model="modal.add" preventClose>
-      <UForm @submit="addAction" class="p-4">
+      <UForm :state="stateAdd" @submit="addAction" class="p-4">
         <UFormGroup label="Tên">
           <UInput v-model="stateAdd.name" />
         </UFormGroup>
@@ -60,7 +60,7 @@
 
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
-      <UForm @submit="editAction" class="p-4">
+      <UForm :state="stateEdit" @submit="editAction" class="p-4">
         <UFormGroup label="Tên">
           <UInput v-model="stateEdit.name" />
         </UFormGroup>

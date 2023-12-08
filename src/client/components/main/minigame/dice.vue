@@ -57,6 +57,8 @@
         <DataMinigameDiceLimit auth />
       </UModal>
     </UCard>
+
+    <DataMinigameDiceLuckyUser class="mt-4" :reload="reload" />
     
     <DataMinigameDiceHistory class="mt-4" :reload="reload" v-if="!!authStore.isLogin && history" />
   </div>

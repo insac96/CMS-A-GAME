@@ -2,7 +2,7 @@
   <div>
     <!-- Match -->
     <UiFlex class="mb-3">
-      <UForm @submit="getList" class="mr-auto max-w-[150px] sm:max-w-[220px]">
+      <UForm :state="page" @submit="getList" class="mr-auto max-w-[150px] sm:max-w-[220px]">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
       

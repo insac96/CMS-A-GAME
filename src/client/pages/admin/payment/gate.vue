@@ -58,7 +58,7 @@
 
     <!-- Modal Add -->
     <UModal v-model="modal.add" preventClose>
-      <UForm @submit="addAction" class="p-4">
+      <UForm :state="stateAdd" @submit="addAction" class="p-4">
         <UFormGroup label="Loại">
           <SelectGateType v-model="stateAdd.type" />
         </UFormGroup>
@@ -99,7 +99,7 @@
 
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
-      <UForm @submit="editAction" class="p-4">
+      <UForm :state="stateEdit" @submit="editAction" class="p-4">
         <UFormGroup label="Tên kênh">
           <UInput v-model="stateEdit.name" />
         </UFormGroup>
@@ -136,7 +136,7 @@
 
     <!-- Modal Extend -->
     <UModal v-model="modal.extend" preventClose>
-      <UForm @submit="extendAction" class="p-4">
+      <UForm :state="stateExtend" @submit="extendAction" class="p-4">
         <UFormGroup label="Key">
           <UInput v-model="stateExtend.key" />
         </UFormGroup>

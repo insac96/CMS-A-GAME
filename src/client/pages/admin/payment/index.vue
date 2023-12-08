@@ -2,7 +2,7 @@
   <UiContent title="Payment" sub="Quản lý các giao dịch">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
-      <UForm @submit="getList" class="mr-4">
+      <UForm :state="page" @submit="getList" class="mr-4">
         <UiFlex>
           <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" class="mr-1" />
           <USelectMenu v-model="page.search.by" :options="['CODE', 'USER']" />
@@ -87,7 +87,7 @@
 
     <!-- Modal Success -->
     <UModal v-model="modal.success" preventClose>
-      <UForm @submit="successAction" class="p-4">
+      <UForm :state="stateSuccess" @submit="successAction" class="p-4">
         <UFormGroup label="Mã giao dịch">
           <UInput :model-value="stateSuccess.code" readonly />
         </UFormGroup>
@@ -105,7 +105,7 @@
 
     <!-- Modal Refuse -->
     <UModal v-model="modal.refuse" preventClose>
-      <UForm @submit="refuseAction" class="p-4">
+      <UForm :state="stateRefuse" @submit="refuseAction" class="p-4">
         <UFormGroup label="Mã giao dịch">
           <UInput :model-value="stateRefuse.code" readonly />
         </UFormGroup>

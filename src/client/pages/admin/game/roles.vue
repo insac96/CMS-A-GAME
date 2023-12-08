@@ -3,7 +3,7 @@
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" :disabled="!page.server_id" class="mr-2"/>
 
-      <UForm @submit="getList" class="mr-auto">
+      <UForm :state="page" @submit="getList" class="mr-auto">
         <UiFlex>
           <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" class="mr-1" :disabled="!page.server_id" />
           <USelectMenu v-model="page.search.by" :options="['USER', 'ROLE']" :disabled="!page.server_id" />
@@ -19,7 +19,7 @@
 
       <UTable 
         v-model:sort="page.sort"
-        :columns="selectedColumns" 
+        :columns="selectedColumns"
         :rows="list"
       >
         <template #power-data="{row}">
@@ -117,7 +117,7 @@ watch(() => page.value.current, () => getList())
 watch(() => page.value.sort.column, () => getList())
 watch(() => page.value.sort.direction, () => getList())
 watch(() => page.value.search.key, (val) => !val && getList())
-watch(() => page.value.server_id, (val) => getList())
+watch(() => page.value.server_id, () => getList())
 
 // State
 const stateSend = ref({

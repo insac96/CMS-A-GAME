@@ -52,7 +52,7 @@
 
     <!-- Modal Add -->
     <UModal v-model="modal.add" preventClose>
-      <UForm @submit="addAction" class="p-4">
+      <UForm :state="stateAdd" @submit="addAction" class="p-4">
         <UFormGroup label="Vật phẩm">
           <SelectItem v-model="stateAdd.item" :types="page.types" />
         </UFormGroup>
@@ -74,7 +74,7 @@
 
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
-      <UForm @submit="editAction" class="p-4">
+      <UForm :state="stateEdit" @submit="editAction" class="p-4">
         <UFormGroup label="Giá tiền">
           <UInput v-model="stateEdit.price" type="number" />
         </UFormGroup>

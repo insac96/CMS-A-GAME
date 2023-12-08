@@ -27,3 +27,11 @@ export interface IDBDiceHistory {
     jar: number
   }
 }
+
+export interface IDBDiceLuckyUser {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  user: Types.ObjectId
+  action: string
+}

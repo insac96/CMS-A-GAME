@@ -75,7 +75,7 @@ export default defineEventHandler(async (event) => {
       if(!resultGift) throw 'Có lỗi xảy ra, vui lòng thử lại sau'
 
       // Send Item
-      const item = await DB.Item.findOne({ _id: resultGift.item }).select('item_id type') as IDBItem
+      const item = await DB.Item.findOne({ _id: resultGift.item }).select('item_id item_name type') as IDBItem
 
       if(item.type == 'game_item'){
         await gameSendMail(event, {
@@ -111,6 +111,14 @@ export default defineEventHandler(async (event) => {
       // Log User
       if(item.type == 'coin'){
         logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> xu từ <b>vòng quay may mắn</b>`)
+      }
+
+      // Lucky User
+      if(item.type != 'wheel_lose' && resultGift.percent <= 10){
+        await DB.WheelLuckyUser.create({
+          user: auth._id,
+          action: `<b>x ${resultGift.amount.toLocaleString('vi-VN')} ${item.item_name}</b>`
+        })
       }
 
       // Update List

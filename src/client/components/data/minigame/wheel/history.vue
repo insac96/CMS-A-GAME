@@ -2,13 +2,13 @@
   <div>
     <UCard :ui="{ 
       body: { padding: 'p-0 sm:p-0' },
-      header: { padding: 'p-2 sm:p-2' },
+      header: { padding: 'px-3 sm:px-3 py-2 sm:py-2' },
       footer: { padding: 'p-2 sm:p-2' },
     }">
       <template #header>
         <UiFlex justify="between">
           <UiText color="gray" weight="semibold">Lịch sử</UiText>
-          <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" />
+          <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" size="xs" />
         </UiFlex>
       </template>
 

@@ -11,8 +11,8 @@ export { IDBItem } from './item'
 export { IDBShop, IDBShopHistory } from './shop'
 export { IDBEvent, IDBEventHistory } from './event'
 export { IDBGiftcode, IDBGiftcodeHistory } from './giftcode'
-export { IDBDice, IDBDiceHistory } from './dice'
-export { IDBWheel, IDBWheelHistory } from './wheel'
+export { IDBDice, IDBDiceHistory, IDBDiceLuckyUser } from './dice'
+export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
 export { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from './log'
 
 export interface IGlobalDB {
@@ -43,9 +43,11 @@ export interface IGlobalDB {
 
   Dice: Model<IDBDice>
   DiceHistory: Model<IDBDiceHistory>
+  DiceLuckyUser: Model<IDBDiceLuckyUser>
 
   Wheel: Model<IDBWheel>
   WheelHistory: Model<IDBWheelHistory>
+  WheelLuckyUser: Model<IDBWheelLuckyUser>
 
   LogAdmin: Model<IDBLogAdmin>
   LogAdminSendItem: Model<IDBLogAdminSendItem>

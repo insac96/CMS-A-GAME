@@ -35,6 +35,8 @@
       </UModal>
     </UCard>
 
+    <DataMinigameWheelLuckyUser class="mt-4" :reload="reload" />
+
     <DataMinigameWheelHistory class="mt-4" :reload="reload" v-if="!!authStore.isLogin && !!history" />
   </div>
 </template>

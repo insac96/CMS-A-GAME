@@ -1,5 +1,5 @@
 import type { Mongoose } from 'mongoose'
-import type { IDBDice, IDBDiceHistory } from '~~/types'
+import type { IDBDice, IDBDiceHistory, IDBDiceLuckyUser } from '~~/types'
 
 export const DBDice = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBDice>({ 
@@ -41,5 +41,17 @@ export const DBDiceHistory = (mongoose : Mongoose) => {
   })
 
   const model = mongoose.model('dice_histories', schema)
+  return model 
+}
+
+export const DBDiceLuckyUser = (mongoose : Mongoose) => {
+  const schema = new mongoose.Schema<IDBDiceLuckyUser>({ 
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', index: true },
+    action: { type: String }
+  }, {
+    timestamps: true
+  })
+
+  const model = mongoose.model('dice_lucky_users', schema)
   return model 
 }

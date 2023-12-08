@@ -63,7 +63,7 @@
 
     <!-- Modal Add -->
     <UModal v-model="modal.add" preventClose>
-      <UForm @submit="addAction" class="p-4">
+      <UForm :state="stateAdd" @submit="addAction" class="p-4">
         <UFormGroup label="Yêu cầu">
           <UInput v-model="stateAdd.need" type="number" />
         </UFormGroup>
@@ -81,7 +81,7 @@
 
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
-      <UForm @submit="editAction" class="p-4">
+      <UForm :state="stateEdit" @submit="editAction" class="p-4">
         <UFormGroup label="Yêu cầu">
           <UInput v-model="stateEdit.need" type="number" />
         </UFormGroup>
@@ -99,7 +99,7 @@
 
     <!--Modal Gift-->
     <UModal v-model="modal.gift" preventClose :ui="{width: 'sm:max-w-[700px]'}">
-      <UForm @submit="giftAction" class="p-4">
+      <UForm :state="stateGift" @submit="giftAction" class="p-4">
         <SelectItemList v-model="stateGift.gift" :types="['coin', 'wheel', 'notify', 'game_item']" />
 
         <UiFlex justify="end" class="mt-4">

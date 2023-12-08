@@ -219,6 +219,14 @@ export default defineEventHandler(async (event) => {
       logUser(event, auth._id, `Nhận <b>${coinReceive.toLocaleString('vi-VN')}</b> xu từ <b>xúc xắc may mắn</b>`)
     }
 
+    // Lucky User
+    if(coinReceive > 500000){
+      await DB.DiceLuckyUser.create({
+        user: auth._id,
+        action: `<b>x ${coinReceive.toLocaleString('vi-VN')} Xu</b>`
+      })
+    }
+
     // Result
     const newConfig = await DB.Dice.findOne().select('jar.now')
     return resp(event, { result: {

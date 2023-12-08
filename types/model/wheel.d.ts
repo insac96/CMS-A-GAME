@@ -22,3 +22,11 @@ export interface IDBWheelHistory {
   server: string
   role: string
 }
+
+export interface IDBWheelLuckyUser {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  user: Types.ObjectId
+  action: string
+}

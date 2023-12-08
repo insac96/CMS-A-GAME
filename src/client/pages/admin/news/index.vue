@@ -54,7 +54,7 @@
 
     <!-- Modal Add -->
     <UModal v-model="modal.add" preventClose>
-      <UForm @submit="addAction" class="p-4">
+      <UForm :state="stateAdd" @submit="addAction" class="p-4">
         <UFormGroup label="Danh mục">
           <SelectNewsCategory v-model="stateAdd.category" />
         </UFormGroup>
@@ -90,7 +90,7 @@
 
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
-      <UForm @submit="editAction" class="p-4">
+      <UForm :state="stateEdit" @submit="editAction" class="p-4">
         <UFormGroup label="Danh mục">
           <SelectNewsCategory v-model="stateEdit.category" />
         </UFormGroup>
@@ -126,7 +126,7 @@
 
     <!-- Modal Content -->
     <UModal v-model="modal.content" preventClose :ui="{width: 'sm:max-w-[calc(90%)] md:max-w-[calc(80%)] lg:max-w-4xl'}">
-      <UForm @submit="contentAction" class="p-4">
+      <UForm :state="stateContent" @submit="contentAction" class="p-4">
         <UiEditor v-model="stateContent.content"></UiEditor>
         <UiFlex justify="end" class="mt-4">
           <UButton type="submit" :loading="loading.content">Lưu</UButton>

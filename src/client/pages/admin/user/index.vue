@@ -2,7 +2,7 @@
   <UiContent title="User" sub="Quản lý tài khoản người dùng">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
-      <UForm @submit="getList" class="mr-4">
+      <UForm :state="page" @submit="getList" class="mr-4">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
     </UiFlex>
@@ -83,7 +83,7 @@
 
     <!-- Modal Edit Auth-->
     <UModal v-model="modal.editAuth" preventClose>
-      <UForm @submit="editAuthAction" class="p-4">
+      <UForm :state="stateEditAuth" @submit="editAuthAction" class="p-4">
         <UFormGroup label="Email">
           <UInput v-model="stateEditAuth.email" />
         </UFormGroup>
@@ -113,7 +113,7 @@
 
     <!-- Modal Edit Currency-->
     <UModal v-model="modal.editCurrency" preventClose>
-      <UForm @submit="editCurrencyAction" class="p-4">
+      <UForm :state="stateEditCurrency" @submit="editCurrencyAction" class="p-4">
         <UFormGroup label="Xu Web">
           <UInput v-model="stateEditCurrency.plus.coin" type="number" v-if="stateEditCurrency.type == 'plus'" />
           <UInput v-model="stateEditCurrency.origin.coin" type="number" v-if="stateEditCurrency.type == 'origin'" />
@@ -144,7 +144,7 @@
 
     <!-- Modal Edit Pay-->
     <UModal v-model="modal.editPay" preventClose>
-      <UForm @submit="editPayAction" class="p-4" v-if="stateEditPay.pay">
+      <UForm :state="stateEditPay" @submit="editPayAction" class="p-4" v-if="stateEditPay.pay">
         <UFormGroup label="Ngày">
           <UInput v-model="stateEditPay.pay.day.money" type="number" />
         </UFormGroup>
@@ -166,7 +166,7 @@
 
     <!-- Modal Edit Spend-->
     <UModal v-model="modal.editSpend" preventClose>
-      <UForm @submit="editSpendAction" class="p-4" v-if="stateEditSpend.spend">
+      <UForm :state="stateEditSpend" @submit="editSpendAction" class="p-4" v-if="stateEditSpend.spend">
         <UFormGroup label="Ngày">
           <UInput v-model="stateEditSpend.spend.day.coin" type="number" />
         </UFormGroup>
@@ -188,7 +188,7 @@
 
     <!-- Modal Edit Wheel-->
     <UModal v-model="modal.editWheel" preventClose>
-      <UForm @submit="editWheelAction" class="p-4" v-if="stateEditWheel.wheel">
+      <UForm :state="stateEditWheel" @submit="editWheelAction" class="p-4" v-if="stateEditWheel.wheel">
         <UFormGroup label="Ngày">
           <UInput v-model="stateEditWheel.wheel.day" type="number" />
         </UFormGroup>
@@ -210,7 +210,7 @@
 
     <!-- Modal Edit Dice-->
     <UModal v-model="modal.editDice" preventClose>
-      <UForm @submit="editDiceAction" class="p-4" v-if="stateEditDice.dice">
+      <UForm :state="stateEditDice" @submit="editDiceAction" class="p-4" v-if="stateEditDice.dice">
         <UFormGroup label="Ngày">
           <UInput v-model="stateEditDice.dice.day.coin" type="number" />
         </UFormGroup>
@@ -232,7 +232,7 @@
 
     <!-- Modal Edit Login-->
     <UModal v-model="modal.editLogin" preventClose>
-      <UForm @submit="editLoginAction" class="p-4" v-if="stateEditLogin.login">
+      <UForm :state="stateEditLogin" @submit="editLoginAction" class="p-4" v-if="stateEditLogin.login">
         <UFormGroup label="Tháng">
           <UInput v-model="stateEditLogin.login.month" type="number" />
         </UFormGroup>
