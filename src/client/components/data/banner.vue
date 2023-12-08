@@ -10,8 +10,8 @@
         preload
       ></UiImg>
 
-      <div class="flex items-center justify-center absolute w-full h-full top-0 left-0 md:hidden">
-        <PlayBtn text="Bấm Chơi Ngay" size="md" class="bounce-anim"></PlayBtn>
+      <div class="flex items-end justify-center absolute w-full h-full top-0 left-0 md:hidden">
+        <PlayBtn text="Bấm Chơi Ngay" size="md" class="relative shadow-2xl bottom-1"></PlayBtn>
       </div>
     </div>
   </UiContent>

@@ -19,11 +19,12 @@ const props = defineProps({
 })
 
 useSeoMeta({
-  title: () => `${props.error.statusCode} - ${configStore.config.name}`,
-  description: () => props.error.message || props.error.statusMessage,
-  ogDescription: () => props.error.message || props.error.statusMessage,
-  ogImage: () => configStore.config.og_image,
-  ogImageAlt: () => props.error.statusCode,
+  title: `${props.error.statusCode} - ${configStore.config.name}`,
+  description: props.error.message || props.error.statusMessage,
+  ogDescription: props.error.message || props.error.statusMessage,
+  ogImage: imgLink(configStore.config.og_image),
+  ogImageAlt: props.error.statusCode,
+  ogImageType: 'image/png',
   ogType: 'website',
 })
 </script>
