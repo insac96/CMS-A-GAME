@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
           as: "gate"
         }
       },
-      { $unwind: { path: "$gate" }},
+      { $unwind: { path: "$gate", preserveNullAndEmptyArrays: true }},
       {
         $lookup: {
           from: "users",
@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
           as: "user"
         }
       },
-      { $unwind: { path: "$user" }},
+      { $unwind: { path: "$user", preserveNullAndEmptyArrays: true }},
       {
         $lookup: {
           from: "users",

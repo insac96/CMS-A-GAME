@@ -24,14 +24,15 @@
         </template>
 
         <template #user-data="{ row }">
-          <UBadge variant="soft" color="gray" class="cursor-pointer" @click="viewUser(row.user._id)">
+          <span v-if="!row.user">...</span>
+          <UBadge v-else variant="soft" color="gray" class="cursor-pointer" @click="viewUser(row.user._id)">
             {{ row.user.username }}
           </UBadge>
         </template>
 
         <template #gate-data="{ row }">
           <UBadge variant="soft" color="gray">
-            {{ row.gate.name }}
+            {{ row.gate ? row.gate.name : '...' }}
           </UBadge>
         </template>
 

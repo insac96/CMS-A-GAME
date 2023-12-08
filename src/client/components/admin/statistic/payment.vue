@@ -17,7 +17,7 @@
         :rows="list"
       >
         <template #time-data="{ row }">
-          <UiText color="primary" weight="semibold">{{ useDayJs().displayTime(row.time) }}</UiText>
+          <UiText color="primary" weight="semibold">{{row.timeformat}} {{ useDayJs().displayTime(row.time) }}</UiText>
         </template>
 
         <template #money_total-data="{ row }">

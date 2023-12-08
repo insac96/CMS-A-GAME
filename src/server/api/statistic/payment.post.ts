@@ -36,6 +36,9 @@ export default defineEventHandler(async (event) => {
       {
         $project: {
           createdAt: 1,
+          timeformat: {
+            $dateToString: { format: '%Y-%m-%d', date: '$createdAt' }
+          },
           count: {
             waiting: { $cond: [{$eq: ['$status', 0]} , 1, 0] },
             success: { $cond: [{$eq: ['$status', 1]} , 1, 0] },
@@ -69,7 +72,7 @@ export default defineEventHandler(async (event) => {
       },
       {
         $group: {
-          _id: { $dayOfYear: '$createdAt'},
+          _id: '$timeformat',
           time: { $min: '$createdAt' },
           count_total: { $sum: 1 },
           count_waiting: { $sum: '$count.waiting' },
