@@ -9,7 +9,6 @@
 
 <script setup>
 import colors from '#tailwind-config/theme/colors'
-const runtimeConfig = useRuntimeConfig()
 const { imgLink } = useMakeLink()
 
 const appConfig = useAppConfig()
@@ -20,22 +19,16 @@ const authStore = useAuthStore()
 const primaryCookie = useCookie('theme-primary')
 const grayCookie = useCookie('theme-gray')
 
-
 // Meta Seo
-useHead({
-  title: configStore.config.name,
-  meta: [
-    { name: 'og:title', property: 'og:title', hid: 'og:title', content: configStore.config.name },
-    { name: 'description', property: 'description', hid: 'description', content: configStore.config.description },
-    { name: 'og:description', property: 'og:description', hid: 'og:description', content: configStore.config.description },
-    { name: 'og:image', property: 'og:image', hid: 'og:image', content: imgLink(configStore.config.og_image) },
-    { name: 'og:image:alt', property: 'og:image:alt', hid: 'og:image:alt', content: configStore.config.description },
-    { name: 'og:type', property: 'og:type', hid: 'og:type', content: 'website' },
-  ],
-})
-
 useSeoMeta({
-  themeColor: colors[appConfig.ui.gray][900],
+  title: () => configStore.config.name,
+  ogTitle: () => configStore.config.name,
+  description: () => configStore.config.description,
+  ogDescription: () => configStore.config.description,
+  ogImage: () => imgLink(configStore.config.og_image),
+  ogImageAlt: () => configStore.config.name,
+  themeColor: () => colors[appConfig.ui.gray][900],
+  ogType: 'website'
 })
 
 // Set Theme
