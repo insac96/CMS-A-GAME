@@ -12,7 +12,8 @@ const typeName : any = {
   'pay.month.money': 'Tích nạp tháng', 
   'spend.total.coin': 'Tiêu phí tổng',
   'spend.day.coin': 'Tiêu phí ngày',
-  'spend.month.coin': 'Tiêu phí tháng'
+  'spend.month.coin': 'Tiêu phí tháng',
+  'referral.count': 'Giới thiệu bạn'
 }
 
 export default defineEventHandler(async (event) => {

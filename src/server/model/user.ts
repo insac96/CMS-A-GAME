@@ -25,6 +25,7 @@ export const DBUser = (mongoose : Mongoose) => {
       coin: { type: Number, default: 0, index: true },
       wheel: { type: Number, default: 0, index: true },
       notify: { type: Number, default: 0, index: true },
+      diamond: { type: Number, default: 0, index: true },
     },
     pay: {
       total: {

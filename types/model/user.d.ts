@@ -25,7 +25,8 @@ export interface IDBUser {
   currency: {
     coin: number
     wheel: number
-    notify: number
+    notify: number,
+    diamond: number
   }
   pay: {
     total: {

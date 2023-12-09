@@ -126,7 +126,8 @@ const navItems = [
       { label: 'Đăng nhập', to: '/admin/event/login' }, 
       { label: 'Tích nạp', to: '/admin/event/pay' }, 
       { label: 'Tiêu phí', to: '/admin/event/spend' },
-      { label: 'Lịch sử', to: '/admin/event/history' }, 
+      { label: 'Giới thiệu', to: '/admin/event/referral' },
+      { label: 'Lịch sử', to: '/admin/event/history' },
     ]
   },
   {

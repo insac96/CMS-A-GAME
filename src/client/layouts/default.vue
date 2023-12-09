@@ -20,6 +20,8 @@
       </div>
     </UContainer>
 
+    <DataEventReferralGiftbox />
+
     <LayoutFooter />
   </div>
 </template>

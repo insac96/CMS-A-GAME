@@ -1,7 +1,8 @@
 const typeList = [
   'login.month', 'login.total',
   'pay.total.money', 'pay.day.money', 'pay.month.money',
-  'spend.total.coin', 'spend.day.coin', 'spend.month.coin'
+  'spend.total.coin', 'spend.day.coin', 'spend.month.coin',
+  'referral.count'
 ]
 
 export default defineEventHandler(async (event) => {
