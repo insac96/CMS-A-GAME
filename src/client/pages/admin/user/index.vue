@@ -30,19 +30,23 @@
         </template>
         
         <template #pay-data="{ row }">
-          {{ toMoney(row.pay) }}
+          {{ toMoney(row.pay || 0) }}
         </template>
 
         <template #spend-data="{ row }">
-          {{ toMoney(row.spend) }}
+          {{ toMoney(row.spend || 0) }}
         </template>
 
         <template #coin-data="{ row }">
-          {{ toMoney(row.coin) }}
+          {{ toMoney(row.coin || 0) }}
         </template>
 
         <template #wheel-data="{ row }">
-          {{ toMoney(row.wheel) }}
+          {{ toMoney(row.wheel || 0) }}
+        </template>
+
+        <template #diamond-data="{ row }">
+          {{ toMoney(row.diamond || 0) }}
         </template>
 
         <template #login-data="{ row }">
@@ -293,6 +297,10 @@ const columns = [
   },{
     key: 'wheel',
     label: 'Lượt quay',
+    sortable: true
+  },{
+    key: 'diamond',
+    label: 'Cống hiến',
     sortable: true
   },{
     key: 'login',

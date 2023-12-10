@@ -19,6 +19,10 @@ export interface IDBLogAdminSendItem {
   server: string
   role: string
   reason: string
+  gift: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+  }>
 }
 
 export interface IDBLogUser {

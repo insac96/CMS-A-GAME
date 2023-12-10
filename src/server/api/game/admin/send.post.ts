@@ -14,6 +14,11 @@ export default defineEventHandler(async (event) => {
     const userData = await DB.User.findOne({ _id: user }).select('_id username') as IDBUser
     if(!userData) throw 'Tài khoản không tồn tại'
 
+    const itemLog = items.map(i => ({
+      item: i._id,
+      amount: i.amount
+    }))
+
     const itemSend = items.map(i => ({
       id: i.item_id,
       amount: i.amount
@@ -33,7 +38,8 @@ export default defineEventHandler(async (event) => {
       to: userData._id,
       server: server,
       role: role,
-      reason: reason
+      reason: reason,
+      gift: itemLog
     })
 
     return resp(event, { message: 'Gửi thành công thành công' })

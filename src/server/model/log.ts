@@ -19,7 +19,11 @@ export const DBLogAdminSendItem = (mongoose : Mongoose) => {
     to: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
     server: { type: String },
     role: { type: String },
-    reason: { type: String }
+    reason: { type: String },
+    gift: [{
+      item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },
+      amount: { type: Number, index: true },
+    }],
   }, {
     timestamps: true
   })

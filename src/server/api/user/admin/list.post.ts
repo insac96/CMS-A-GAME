@@ -16,7 +16,15 @@ export default defineEventHandler(async (event) => {
       if(search.by == 'USER') match['username'] = { $regex : search.key.toLowerCase(), $options : 'i' }
       if(search.by == 'MAIL') match['email'] = { $regex : search.key.toLowerCase(), $options : 'i' }
       if(search.by == 'PHONE') match['phone'] = { $regex : search.key, $options : 'i' }
-      if(search.by == 'IP') match['login.last_ip'] = { $regex : search.key, $options : 'i' }
+      if(search.by == 'IP') {
+        const listIP = await DB.LogUserIP.find({
+          ip: { $regex : search.key, $options : 'i' }
+        }).select('user')
+
+        match['_id'] = {
+          $in: listIP.map(i => i.user)
+        }
+      }
     }
 
     const list = await DB.User
@@ -43,6 +51,7 @@ export default defineEventHandler(async (event) => {
           coin: '$currency.coin',
           wheel: '$currency.wheel',
           notify: '$currency.notify',
+          diamond: '$currency.diamond',
           pay: '$pay.total.money',
           spend: '$spend.total.coin',
           login: '$login.total',

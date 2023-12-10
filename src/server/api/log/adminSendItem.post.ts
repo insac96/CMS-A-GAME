@@ -32,12 +32,70 @@ export default defineEventHandler(async (event) => {
     }
 
     const list = await DB.LogAdminSendItem
-    .find(match)
-    .populate({ path: 'from', select: 'username' })
-    .populate({ path: 'to', select: 'username' })
-    .sort(sorting)
-    .limit(size)
-    .skip((current - 1) * size)
+    .aggregate([
+      { $match: match },
+      {
+        $lookup: {
+          from: "users",
+          localField: "from",
+          foreignField: "_id",
+          pipeline: [{
+            $project: { username: 1 },
+          }],
+          as: "from"
+        }
+      },
+      { $unwind: { path: '$from', preserveNullAndEmptyArrays: true } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "to",
+          foreignField: "_id",
+          pipeline: [{
+            $project: { username: 1 },
+          }],
+          as: "to"
+        }
+      },
+      { $unwind: { path: '$to', preserveNullAndEmptyArrays: true } },
+      {
+        $lookup: {
+          from: "items",
+          localField: "gift.item",
+          foreignField: "_id",
+          pipeline: [{
+            $project: { item_name: 1, item_image: 1, type: 1 },
+          }],
+          as: "giftdata"
+        }
+      },
+      { 
+        $addFields: {
+          gift: {
+            $map: {
+              input: '$giftdata',
+              in: {
+                _id: '$$this._id',
+                name: '$$this.item_name',
+                image: '$$this.item_image',
+                type: '$$this.type',
+                amount: { 
+                  $getField: {
+                    field: 'amount',
+                    input: {
+                      $arrayElemAt: [ '$gift', { $indexOfArray: ['$gift.item', '$$this._id']} ]
+                    }
+                  }
+                },
+              }
+            }
+          }
+        } 
+      },
+      { $sort: sorting },
+      { $skip: (current - 1) * size },
+      { $limit: size }
+    ])
 
     const total = await DB.LogAdminSendItem.count(match)
     return resp(event, { result: { list, total } })

@@ -33,6 +33,10 @@
           <UBadge color="gray">{{ row.server ? `${row.server}` : '...' }}</UBadge>
         </template>
 
+        <template #gift-data="{ row }">
+          <DataItemList :items="row.gift" class="max-w-[400px]" empty="..." />
+        </template>
+
         <template #createdAt-data="{ row }">
           {{ useDayJs().displayFull(row.createdAt) }}
         </template>
@@ -69,6 +73,9 @@ const columns = [
   },{
     key: 'server',
     label: 'Máy chủ',
+  },{
+    key: 'gift',
+    label: 'Vật phẩm',
   },{
     key: 'reason',
     label: 'Lý do',
