@@ -21,6 +21,8 @@ export interface IDBUser {
   referral: {
     code: string
     person: Types.ObjectId
+    count: number
+    receive_gift: number
   }
   currency: {
     coin: number
@@ -79,6 +81,7 @@ export interface IDBUser {
     month: number
     total: number
     update: Date
+    last_ip: string
   }
   type: number
   block: number

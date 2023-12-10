@@ -1,3 +1,5 @@
+import type { IDBItem, IDBWheel } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
@@ -10,11 +12,15 @@ export default defineEventHandler(async (event) => {
     if(!!isNaN(parseInt(amount)) || parseInt(amount) < 1) throw 'Số lượng không hợp lệ'
     if(!!isNaN(parseFloat(percent)) || (parseFloat(percent) * -1) > 0) throw 'Tỷ lệ không hợp lệ'
 
-    const wheelItem = await DB.Wheel.findOne({ _id: _id }).select('_id')
+    const wheelItem = await DB.Wheel.findOne({ _id: _id }).select('item') as IDBWheel
     if(!wheelItem) throw 'Vật phẩm không tồn tại'
+
+    const itemData = await DB.Item.findOne({ _id: wheelItem.item }).select('item_name') as IDBItem
 
     delete body['_id']
     await DB.Wheel.updateOne({ _id: _id }, body)
+    
+    logAdmin(event, `Sửa thông tin vật phẩm <b>${itemData.item_name}</b> ở vòng quay`)
     
     return resp(event, { message: 'Sửa vật phẩm thành công' })
   } 

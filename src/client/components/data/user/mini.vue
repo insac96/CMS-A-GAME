@@ -25,6 +25,11 @@
           <UButton :label="miniNum ? miniMoney(user.currency?.notify) : toMoney(user.currency?.notify)" color="gray" />
           <UButton  color="primary" icon="i-bxs-megaphone"></UButton>
         </UButtonGroup>
+
+        <UButtonGroup size="sm" orientation="horizontal" class="ml-2" v-if="!noDiamond">
+          <UButton :label="miniNum ? miniMoney(user.currency?.diamond) : toMoney(user.currency?.diamond)" color="gray" />
+          <UButton  color="primary" icon="i-bxs-diamond"></UButton>
+        </UButtonGroup>
       </div>
     </UiFlex>
   </div>
@@ -40,6 +45,7 @@ const props = defineProps({
   noCoin: Boolean,
   noWheel: Boolean,
   noNotify: Boolean,
+  noDiamond: Boolean,
   miniNum: Boolean,
   modelValue: Object,
   level: Object,

@@ -19,12 +19,17 @@
         'border-t border-gray-100 dark:border-gray-800',
       ]"
     >
-      <UiFlex type="col" class="w-6/12 py-4">
+      <UiFlex type="col" class="w-4/12 py-4">
         <USkeleton class="h-2 w-8 mb-1" />
         <USkeleton class="h-4 w-12" />
       </UiFlex>
 
-      <UiFlex type="col" class="w-6/12 py-4">
+      <UiFlex type="col" class="w-4/12 py-4">
+        <USkeleton class="h-2 w-8 mb-1" />
+        <USkeleton class="h-4 w-12" />
+      </UiFlex>
+
+      <UiFlex type="col" class="w-4/12 py-4">
         <USkeleton class="h-2 w-8 mb-1" />
         <USkeleton class="h-4 w-12" />
       </UiFlex>

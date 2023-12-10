@@ -6,6 +6,7 @@ export { IDBUser, IDBUserStore } from './user'
 export { IDBLevel } from './level'
 export { IDBGate } from './gate'
 export { IDBPayment } from './payment'
+export { IDBWithdraw } from './withdraw'
 export { IDBNotifyUser, IDBNotifyAdmin } from './notify'
 export { IDBItem } from './item'
 export { IDBShop, IDBShopHistory } from './shop'
@@ -26,6 +27,8 @@ export interface IGlobalDB {
 
   Gate: Model<IDBGate>
   Payment: Model<IDBPayment>
+
+  Withdraw: Model<IDBWithdraw>
 
   NotifyUser: Model<IDBNotifyUser>
   NotifyAdmin: Model<IDBNotifyAdmin>

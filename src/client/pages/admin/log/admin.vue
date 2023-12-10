@@ -32,8 +32,8 @@
     </UCard>
 
     <!--Modal User Info-->
-    <UModal v-model="modal.user">
-      <DataUserBox :fetch-id="stateUser" />
+    <UModal v-model="modal.user" :ui="{width: 'sm:max-w-[900px]'}">
+      <AdminUserInfo :user="stateUser" />
     </UModal>
 
     <!-- Pagination -->

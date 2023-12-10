@@ -1,3 +1,5 @@
+import type { IDBItem } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
@@ -10,10 +12,13 @@ export default defineEventHandler(async (event) => {
     if(!!isNaN(parseInt(amount)) || parseInt(amount) < 1) throw 'Số lượng không hợp lệ'
     if(!!isNaN(parseFloat(percent)) || (parseFloat(percent) * -1) > 0) throw 'Tỷ lệ không hợp lệ'
 
-    const itemData = await DB.Item.findOne({ _id: item }).select('_id')
+    const itemData = await DB.Item.findOne({ _id: item }).select('item_name') as IDBItem
     if(!itemData) throw 'Vật phẩm không tồn tại'
 
     await DB.Wheel.create(body)
+
+    logAdmin(event, `Thêm vật phẩm <b>${itemData.item_name}</b> vào vòng quay`)
+
     return resp(event, { message: 'Thêm vật phẩm thành công' })
   } 
   catch (e:any) {

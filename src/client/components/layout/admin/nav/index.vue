@@ -38,6 +38,7 @@
       <template #tab-7><UVerticalNavigation :links="navItems[7].children" @click="emit('to')"/></template>
       <template #tab-8><UVerticalNavigation :links="navItems[8].children" @click="emit('to')"/></template>
       <template #tab-9><UVerticalNavigation :links="navItems[9].children" @click="emit('to')"/></template>
+      <template #tab-10><UVerticalNavigation :links="navItems[10].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -86,10 +87,19 @@ const navItems = [
     ]
   },
   {
+    label: 'Rút tiền',
+    icon: 'i-bx-money-withdraw',
+    defaultOpen: false,
+    slot: 'tab-4',
+    children: [
+      { label: 'Danh sách', to: '/admin/withdraw' }, 
+    ]
+  },
+  {
     label: 'Trò chơi',
     icon: 'i-bx-cube-alt',
     defaultOpen: false,
-    slot: 'tab-4',
+    slot: 'tab-5',
     children: [
       { label: 'Vật phẩm', to: '/admin/game/item' },
       { label: 'Gửi vật phẩm', to: '/admin/game/send' },
@@ -100,7 +110,7 @@ const navItems = [
     label: 'Giftcode',
     icon: 'i-bx-barcode-reader',
     defaultOpen: false,
-    slot: 'tab-5',
+    slot: 'tab-6',
     children: [
       { label: 'Danh sách', to: '/admin/giftcode' }, 
       { label: 'Lịch sử', to: '/admin/giftcode/history' }, 
@@ -110,7 +120,7 @@ const navItems = [
     label: 'Cửa hàng',
     icon: 'i-bx-shopping-bag',
     defaultOpen: false,
-    slot: 'tab-6',
+    slot: 'tab-7',
     children: [
       { label: 'Vật phẩm', to: '/admin/shop/item' }, 
       { label: 'Tiền tệ', to: '/admin/shop/currency' }, 
@@ -121,7 +131,7 @@ const navItems = [
     label: 'Sự Kiện',
     icon: 'i-bx-calendar',
     defaultOpen: false,
-    slot: 'tab-7',
+    slot: 'tab-8',
     children: [
       { label: 'Đăng nhập', to: '/admin/event/login' }, 
       { label: 'Tích nạp', to: '/admin/event/pay' }, 
@@ -134,7 +144,7 @@ const navItems = [
     label: 'Mini Game',
     icon: 'i-bx-game',
     defaultOpen: false,
-    slot: 'tab-8',
+    slot: 'tab-9',
     children: [
       { label: 'Vòng quay', to: '/admin/minigame/wheel' }, 
       { label: 'Xúc xắc', to: '/admin/minigame/dice' }
@@ -144,7 +154,7 @@ const navItems = [
     label: 'Nhật ký',
     icon: 'i-bx-book',
     defaultOpen: false,
-    slot: 'tab-9',
+    slot: 'tab-10',
     children: [
       { label: 'Quản trị viên', to: '/admin/log/admin' }, 
       { label: 'Gửi vật phẩm', to: '/admin/log/adminSendItem' },

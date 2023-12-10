@@ -22,6 +22,8 @@ export default defineEventHandler(async (event) => {
     body.updater = auth._id
 
     await DB.News.create(body)
+    logAdmin(event, `Thêm tin tức <b>${title}</b>`)
+
     return resp(event, { message: 'Thêm tin tức thành công' })
   } 
   catch (e:any) {

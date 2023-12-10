@@ -7,13 +7,15 @@ export default defineEventHandler(async (event) => {
     const { _id } = await readBody(event)
     if(!_id) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    const category = await DB.NewsCategory.findOne({ _id: _id }).select('_id')
+    const category = await DB.NewsCategory.findOne({ _id: _id }).select('name')
     if(!category) throw 'Danh mục không tồn tại'
     
     const news = await DB.News.count({ category: _id })
     if(news > 0) throw 'Không thể xóa danh mục đã có tin tức'
 
     await DB.NewsCategory.deleteOne({ _id: _id })
+    logAdmin(event, `Xóa danh mục tin tức <b>${category.name}</b>`)
+
     return resp(event, { message: 'Xóa danh mục thành công' })
   } 
   catch (e:any) {

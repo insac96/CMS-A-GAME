@@ -38,12 +38,17 @@
         'border-t border-gray-100 dark:border-gray-800',
       ]"
     >
-      <UiFlex type="col" class="p-2 w-6/12">
+      <UiFlex type="col" class="p-2 w-4/12">
         <UiText size="xs" color="gray" class="mb-1">Xu Web</UiText>
         <UiText weight="bold" @click="navigateTo('/main/action/payment'), emit('action')" pointer>{{ miniMoney(user.currency?.coin) }}</UiText>
       </UiFlex>
 
-      <UiFlex type="col" class="p-2 w-6/12">
+      <UiFlex type="col" class="p-2 w-4/12">
+        <UiText size="xs" color="gray" class="mb-1">Cống Hiến</UiText>
+        <UiText weight="bold" @click="navigateTo('/main/action/withdraw'), emit('action')" pointer>{{ miniMoney(user.currency?.diamond) }}</UiText>
+      </UiFlex>
+
+      <UiFlex type="col" class="p-2 w-4/12">
         <UiText size="xs" color="gray" class="mb-1">Lượt Quay</UiText>
         <UiText weight="bold" @click="navigateTo('/main/minigame/wheel'), emit('action')" pointer>{{ miniMoney(user.currency?.wheel) }}</UiText>
       </UiFlex>
@@ -58,18 +63,30 @@
       ]"
     >
       <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2" v-if="user.referral">
-        <UiIcon name="i-bx-barcode" size="5" class="mr-6" />
-        <UiText size="sm" weight="semibold">{{ user.referral.code || '...' }}</UiText>
+        <UiFlex class="mr-6" >
+          <UiIcon name="i-bx-barcode" size="5" class="mr-2" />
+          <UiText weight="semibold" size="sm">Mã mời</UiText>
+        </UiFlex>
+        
+        <UiText size="sm" weight="bold" color="primary">{{ user.referral.code || '...' }}</UiText>
       </UiFlex>
 
       <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2">
-        <UiIcon name="i-bx-envelope" size="5" class="mr-6" />
-        <UiText size="sm" weight="semibold">{{ user.email || '...' }}</UiText>
+        <UiFlex class="mr-6" >
+          <UiIcon name="i-bx-envelope" size="5" class="mr-2" />
+          <UiText weight="semibold" size="sm">Hòm thư</UiText>
+        </UiFlex>
+
+        <UiText size="sm" weight="bold" color="primary">{{ user.email || '...' }}</UiText>
       </UiFlex>
 
       <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2">
-        <UiIcon name="i-bx-phone" size="5" class="mr-6" />
-        <UiText size="sm" weight="semibold">{{ user.phone || '...' }}</UiText>
+        <UiFlex class="mr-6" >
+          <UiIcon name="i-bx-phone" size="5" class="mr-2" />
+          <UiText weight="semibold" size="sm">Điện thoại</UiText>
+        </UiFlex>
+
+        <UiText size="sm" weight="bold" color="primary">{{ user.phone || '...' }}</UiText>
       </UiFlex>
     </div>
   </div>

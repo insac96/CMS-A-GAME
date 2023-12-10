@@ -1,3 +1,5 @@
+import { IDBShop, IDBItem } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
@@ -16,11 +18,15 @@ export default defineEventHandler(async (event) => {
       || parseInt(limit) < 0
     ) throw 'Giới không hợp lệ'
 
-    const shopItem = await DB.Shop.findOne({ _id: _id }).select('item')
+    const shopItem = await DB.Shop.findOne({ _id: _id }).select('item') as IDBShop
     if(!shopItem) throw 'Vật phẩm không tồn tại'
+
+    const itemData = await DB.Item.findOne({ _id: shopItem.item }).select('item_name') as IDBItem
 
     delete body['_id']
     await DB.Shop.updateOne({ _id: _id }, body)
+
+    logAdmin(event, `Sửa thông tin vật phẩm <b>${itemData.item_name}</b> ở cửa hàng`)
     
     return resp(event, { message: 'Sửa vật phẩm thành công' })
   } 

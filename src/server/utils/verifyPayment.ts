@@ -41,7 +41,7 @@ export default async (
   if(payment.status > 0) throw 'Không thể thao tác trên giao dịch này'
 
   // Get Other
-  const user = await DB.User.findOne({ _id: payment.user }).select('level') as IDBUser
+  const user = await DB.User.findOne({ _id: payment.user }).select('level referral') as IDBUser
   if(!user) throw 'Không tìm thấy thông tin tài khoản'
   const level = await DB.Level.findOne({ _id: user.level }).select('bonus bonus_wheel') as IDBLevel
   if(!level) throw 'Không tìm thấy thông tin cấp độ tài khoản'
@@ -106,19 +106,42 @@ export default async (
       + <b>${gateBonus}%</b> khuyến mại kênh nạp
     `
 
-    logUser(event, user._id, `Nhận <b>${realMoney.toLocaleString('vi-VN')} Xu</b> từ giao dịch nạp tiền <b>${payment.code}</b>`)
+    logUser(event, user._id, `Nhận <b>${coin.toLocaleString('vi-VN')} xu, ${bonusWheel.toLocaleString('vi-VN')} lượt quay</b> từ giao dịch nạp tiền thành công <b>${payment.code}</b>`)
+    if(!!verifier) return logAdmin(event, `Chấp nhận giao dịch nạp tiền <b>${payment.code}</b> với số tiền <b>${realMoney.toLocaleString('vi-VN')}</b>`, verifier)
+
+    // Update Diamond Referraler
+    if(!!user.referral.person){
+      const referraler = await DB.User
+      .findOne({ _id: user.referral.person })
+      .select('level')
+      .populate({ path: 'level', select: 'bonus_presentee_pay' })
+
+      if(!!referraler){
+        const diamondBonus = parseInt(String(referraler.level.bonus_presentee_pay || 0))
+        if(diamondBonus > 0){
+          const diamond = Math.floor(realMoney * (diamondBonus / 100))
+
+          await DB.User.updateOne({ _id: referraler._id },{ $inc: { 'currency.diamond': diamond }})
+          await sendNotifyUser(event, {
+            to: [ referraler._id ],
+            type: 2,
+            color: 'primary',
+            content: `Bạn nhận được <b>${diamond.toLocaleString('vi-VN')} Kim Cương</b> từ giao dịch nạp tiền của bạn bè`
+          })
+        }
+      }
+    }
   }
   else {
-    realNotify = `Bạn bị từ chối giao dịch <b>${payment.code}</b> với lý do <b>${realReason}`
+    realNotify = `Bạn bị từ chối giao dịch <b>${payment.code}</b> với lý do <b>${realReason}</b>`
+    if(!!verifier) return logAdmin(event, `Từ chối giao dịch nạp tiền <b>${payment.code}</b> với lý do <b>${realReason}</b>`, verifier)
   }
 
   // Send Notify
-  if(!!sendNotify){
-    await sendNotifyUser(event, {
-      to: [ payment.user ],
-      type: 2,
-      color: realStatus == 1 ? 'green' : 'red',
-      content: realNotify
-    })
-  }
+  if(!!sendNotify) await sendNotifyUser(event, {
+    to: [ payment.user ],
+    type: 2,
+    color: realStatus == 1 ? 'green' : 'red',
+    content: realNotify
+  })
 }

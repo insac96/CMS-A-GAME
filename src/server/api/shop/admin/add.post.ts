@@ -1,3 +1,5 @@
+import type { IDBItem } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
@@ -16,13 +18,15 @@ export default defineEventHandler(async (event) => {
       || parseInt(limit) < 0
     ) throw 'Giới hạn không hợp lệ'
 
-    const itemData = await DB.Item.findOne({ _id: item }).select('_id')
+    const itemData = await DB.Item.findOne({ _id: item }).select('item_name') as IDBItem
     if(!itemData) throw 'Vật phẩm không tồn tại'
 
     const checkDup = await DB.Shop.findOne({ item: item }).select('_id')
     if(!!checkDup) throw 'Vật phẩm cửa hàng đã tồn tại'
 
     await DB.Shop.create(body)
+
+    logAdmin(event, `Thêm vật phẩm <b>${itemData.item_name}</b> vào cửa hàng`)
     return resp(event, { message: 'Thêm vật phẩm thành công' })
   } 
   catch (e:any) {

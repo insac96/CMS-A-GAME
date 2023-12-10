@@ -6,6 +6,7 @@ import { DBUser } from './user'
 import { DBLevel } from './level'
 import { DBGate } from './gate'
 import { DBPayment } from './payment'
+import { DBWithdraw } from './withdraw'
 import { DBNotifyUser, DBNotifyAdmin } from './notify'
 import { DBItem } from './item'
 import { DBShop, DBShopHistory } from './shop'
@@ -27,6 +28,8 @@ export default (mongoose : Mongoose) : IGlobalDB => {
 
     Gate: DBGate(mongoose),
     Payment: DBPayment(mongoose),
+
+    Withdraw: DBWithdraw(mongoose),
 
     NotifyUser: DBNotifyUser(mongoose),
     NotifyAdmin: DBNotifyAdmin(mongoose),

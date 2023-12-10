@@ -19,7 +19,7 @@ export const useDayJs = () => {
 
   const displayFull = (time : Date) : string => {
     const t = dayjs(time)
-    return t.format('DD [Th]MM YYYY [lúc] hh:mm')
+    return t.format('DD [Th]MM YYYY [lúc] HH:mm')
   }
 
   return { dayjs, fromTime, displayTime, displayFull }

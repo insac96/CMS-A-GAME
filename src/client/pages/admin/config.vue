@@ -38,6 +38,10 @@
                 </template>
               </UiUploadImage>
             </UFormGroup>
+
+            <UiFlex justify="end" class="mt-4">
+              <UButton @click="update('basic')" :loading="updating">Cập nhật</UButton>
+            </UiFlex>
           </UForm>
         </UCard>
       </template>
@@ -60,6 +64,10 @@
             <UFormGroup label="Địa chỉ">
               <UInput v-model="state.contact.address" />
             </UFormGroup>
+
+            <UiFlex justify="end" class="mt-4">
+              <UButton @click="update('contact')" :loading="updating">Cập nhật</UButton>
+            </UiFlex>
           </UForm>
         </UCard>
       </template>
@@ -102,6 +110,10 @@
             <UFormGroup label="Youtube">
               <UInput v-model="state.social.youtube" />
             </UFormGroup> -->
+
+            <UiFlex justify="end" class="mt-4">
+              <UButton @click="update('social')" :loading="updating">Cập nhật</UButton>
+            </UiFlex>
           </UForm>
         </UCard>
       </template>
@@ -148,6 +160,10 @@
             <UFormGroup label="API Send Recharge">
               <UInput v-model="state.game.api.recharge" />
             </UFormGroup>
+
+            <UiFlex justify="end" class="mt-4">
+              <UButton @click="update('game')" :loading="updating">Cập nhật</UButton>
+            </UiFlex>
           </UForm>
         </UCard>
       </template>
@@ -220,10 +236,6 @@
         </UCard>
       </template> -->
     </UAccordion>
-
-    <UiFlex justify="end" class="mt-2">
-      <UButton @click="update" :loading="updating" class="mr-1">Cập nhật</UButton>
-    </UiFlex>
   </UiContent>
 </template>
 
@@ -234,6 +246,8 @@ const load = ref(true)
 const updating = ref(false)
 
 const state = ref({
+  change: null,
+
   name: '',
   short_name: '',
   description: '',
@@ -349,9 +363,10 @@ const getConfig = async () => {
   load.value = false
 }
 
-const update = async () => {
+const update = async (change) => {
   try {
     updating.value = true
+    state.value.change = change
 
     await useAPI('config/admin/update', JSON.parse(JSON.stringify(state.value)))
     bootConfig()

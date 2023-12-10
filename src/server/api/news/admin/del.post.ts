@@ -7,11 +7,12 @@ export default defineEventHandler(async (event) => {
     const { _id } = await readBody(event)
     if(!_id) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    const news = await DB.News.findOne({ _id: _id }).select('name')
+    const news = await DB.News.findOne({ _id: _id }).select('title')
     if(!news) throw 'Tin tức không tồn tại'
 
     await DB.News.deleteOne({ _id: _id })
-    
+    logAdmin(event, `Xóa tin tức <b>${news.title}</b>`)
+
     return resp(event, { message: 'Xóa tin tức thành công' })
   } 
   catch (e:any) {

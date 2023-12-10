@@ -20,7 +20,7 @@
       </div>
     </UContainer>
 
-    <DataEventReferralGiftbox />
+    <DataReferralModal />
 
     <LayoutFooter />
   </div>

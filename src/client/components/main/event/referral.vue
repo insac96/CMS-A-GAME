@@ -1,23 +1,102 @@
 <template>
   <div>
-    <UTabs 
-      v-model="tab" 
-      :items="[
-        { label: 'Mời bạn cùng chơi' },
-        { label: 'Bằng hữu nạp tiền' },
-      ]" 
-      :ui="{wrapper: 'space-y-0'}"
-      class="mb-2"
-    />
+    <!-- <UiFlex justify="end" class="mb-2" v-if="!!authStore.isLogin">
+      <UButton size="sm" color="gray" @click="modal.statistical = true" >Thống kê</UButton>
+    </UiFlex> -->
 
-    <div>
-      <DataEventReferralPerson v-if="tab == 0" />
-      <DataEventReferralWithdraw v-if="tab == 1" />
-    </div>
+    <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }">
+      <LoadingTable v-if="loading" />
+
+      <UTable :rows="list" :columns="columns">
+        <template #need-data="{ row }">
+          <UiText weight="semibold">{{ row.need }} người</UiText>
+        </template>
+
+        <template #gift-data="{ row }">
+          <DataItemList :items="row.gift" :currency="row.currency" class="sm:min-w-[auto] min-w-[250px]" />
+        </template>
+
+        <template #actions-data="{ row }">
+          <UButton 
+            size="xs"
+            :color="statusFormat[row.status].color"
+            :disabled="row.status != 0"
+            @click="openReceive(row)"
+          >{{ statusFormat[row.status].label }}</UButton>
+        </template>
+      </UTable>
+
+      <UModal v-model="modal.receive" prevent-close>
+        <DataEventReceive :event="stateReceive" @done="doneReceive" @close="modal.receive = false" class="p-4" />
+      </UModal>
+
+      <UModal v-model="modal.statistical" :ui="{ width: 'md:max-w-2xl sm:max-w-xl' }" v-if="!!authStore.isLogin">
+        <DataUserStatistical type-default="count" />
+      </UModal>
+    </UCard>
   </div>
 </template>
 
 <script setup>
-const tab = ref(0)
-</script>
+const authStore = useAuthStore()
+watch(() => authStore.isLogin, () => getList())
 
+const loading = ref(true)
+
+const modal = ref({
+  statistical: false,
+  receive: false
+})
+
+const stateReceive = ref(null)
+const openReceive = (row) => {
+  stateReceive.value = row
+  modal.value.receive = true
+}
+watch(() => modal.value.receive, (val) => !val && (stateReceive.value = null))
+
+const list = ref([])
+const type = ref('referral.count')
+
+const columns = [{
+  key: 'need',
+  label: 'Mời',
+},{
+  key: 'gift',
+  label: 'Phần thưởng',
+},{
+  key: 'actions',
+  label: 'Trạng thái'
+}]
+
+const statusFormat = {
+  '-3': { color: 'gray', label: 'Lỗi' },
+  '-2': { color: 'gray', label: 'Chưa đăng nhập' },
+  '-1': { color: 'gray', label: 'Chưa đạt' },
+  '0': { color: 'primary', label: 'Nhận' },
+  '1': { color: 'gray', label: 'Đã nhận' },
+}
+
+const doneReceive = () => {
+  modal.value.receive = false
+  getList()
+}
+
+const getList = async () => {
+  try {
+    loading.value = true
+    const get = await useAPI('event/list', {
+      type: type.value
+    })
+
+    loading.value = false
+    list.value = get
+  }
+  catch(e){
+    list.value = []
+    loading.value = false
+  }
+}
+
+getList()
+</script>

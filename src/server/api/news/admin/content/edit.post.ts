@@ -7,10 +7,7 @@ export default defineEventHandler(async (event) => {
     const { _id, content } = await readBody(event)
     if(!_id || !content) throw 'Dữ liệu đầu vào không đủ'
 
-    const news = await DB.News
-    .findOne({ _id: _id })
-    .select('_id')
-
+    const news = await DB.News.findOne({ _id: _id }).select('title')
     if(!news) throw 'Tin tức không tồn tại'
 
     await DB.News.updateOne({ 
@@ -19,6 +16,8 @@ export default defineEventHandler(async (event) => {
       content: content, 
       updater: auth._id 
     })
+
+    logAdmin(event, `Sửa nội dung tin tức <b>${news.title}</b>`)
 
     return resp(event, { message: 'Cập nhật nội dung thành công' })
   } 

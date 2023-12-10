@@ -1,7 +1,8 @@
 import type { H3Event } from 'h3'
+import { Types } from 'mongoose'
 
-export default async (event: H3Event, action: string) => {
-  const auth = event.context.auth
+export default async (event: H3Event, action: string, admin?: Types.ObjectId) => {
+  const auth = admin ? admin : event.context.auth
   
   await DB.LogAdmin.create({
     user: auth._id,

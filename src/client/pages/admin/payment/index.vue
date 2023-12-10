@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Payment" sub="Quản lý các giao dịch">
+  <UiContent title="Payment" sub="Quản lý giao dịch nạp tiền">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
       <UForm :state="page" @submit="getList" class="mr-4">
@@ -76,8 +76,8 @@
     </UiFlex>
 
     <!-- Modal User View -->
-    <UModal v-model="modal.user">
-      <DataUserBox :fetch-id="stateUser" />
+    <UModal v-model="modal.user" :ui="{width: 'sm:max-w-[900px]'}">
+      <AdminUserInfo :user="stateUser" />
     </UModal>
 
     <!-- Modal Payment View -->
@@ -93,7 +93,7 @@
         </UFormGroup>
 
         <UFormGroup label="Số tiền thực nhận">
-          <UInput v-model="stateSuccess.money" />
+          <UInput v-model="stateSuccess.money" type="number" />
         </UFormGroup>
 
         <UiFlex justify="end" class="mt-6">

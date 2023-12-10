@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     const categoryCheck = await DB.NewsCategory.findOne({ _id: category }).select('_id name')
     if(!categoryCheck) throw 'Danh mục không tồn tại'
 
-    const newsCheck = await DB.News.findOne({ _id: _id }).select('_id title')
+    const newsCheck = await DB.News.findOne({ _id: _id }).select('title')
     if(!newsCheck) throw 'Tin tức không tồn tại'
 
     if(newsCheck.title != title){
@@ -27,6 +27,8 @@ export default defineEventHandler(async (event) => {
     body.updater = auth._id
 
     await DB.News.updateOne({ _id: _id }, body)
+    logAdmin(event, `Sửa thông tin cơ bản tin tức <b>${newsCheck.title}</b>`)
+
     return resp(event, { message: 'Sửa tin tức thành công' })
   } 
   catch (e:any) {

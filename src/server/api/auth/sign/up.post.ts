@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
     // Check IP
     const IP = getRequestIP(event, { xForwardedFor: true })
     const logIP = await DB.LogUserIP.count({ ip: IP })
-    if(logIP > 5) throw 'IP đã vượt quá giới hạn tạo tài khoản'
+    if(logIP > 10) throw 'IP đã vượt quá giới hạn tạo tài khoản'
     
     // Create
     const user = await DB.User.create({
@@ -81,6 +81,7 @@ export default defineEventHandler(async (event) => {
     })
 
     logUser(event, user._id, 'Đăng ký tài khoản')
+    logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
     
     await sendNotifyUser(event, {
       to: [ user._id ],

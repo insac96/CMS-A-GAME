@@ -20,6 +20,7 @@ export const DBUser = (mongoose : Mongoose) => {
       code: { type: String },
       person: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
       count: { type: Number, default: 0, index: true },
+      receive_gift: { type: Number, default: 0, index: true },
     },
     currency: {
       coin: { type: Number, default: 0, index: true },
@@ -77,7 +78,8 @@ export const DBUser = (mongoose : Mongoose) => {
     login: {
       month: { type: Number, default: 0, index: true },
       total: { type: Number, default: 0, index: true },
-      update: { type: Date }
+      update: { type: Date },
+      last_ip: { type: String }
     },
     type: { type: Number, default: 0, index: true }, // 0 - Member, 1 - SMod, 2 - Admin, 99 - Robot
     block: { type: Number, default: 0, index: true }, // 0 - False, 1 - True

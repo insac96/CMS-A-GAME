@@ -16,8 +16,12 @@
       <DataUserStatistical />
     </UiContent>
 
-    <UiContent title="Payment" sub="Lịch sử giao dịch" class="mb-6">
+    <UiContent title="Payment" sub="Lịch sử nạp tiền" class="mb-6">
       <DataPaymentHistory />
+    </UiContent>
+
+    <UiContent title="Withdraw" sub="Lịch sử rút tiền" class="mb-6">
+      <DataWithdrawHistory />
     </UiContent>
 
     <UiContent title="Shop" sub="Lịch sử mua hàng" class="mb-6">

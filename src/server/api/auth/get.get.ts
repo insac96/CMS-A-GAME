@@ -16,7 +16,9 @@ export default defineEventHandler(async (event) => {
     const now  = new Date()
     const nowDate = formatDate(event, now)
     const lastDate = formatDate(event, user.login.update)
+    const IP = getRequestIP(event, { xForwardedFor: true })
     user.login.update = now
+    user.login.last_ip = IP as string
 
     // Is Next Day
     if(

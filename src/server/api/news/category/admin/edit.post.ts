@@ -17,6 +17,9 @@ export default defineEventHandler(async (event) => {
 
     delete body['_id']
     await DB.NewsCategory.updateOne({ _id: _id }, body)
+
+    logAdmin(event, `Sửa thông tin danh mục tin tức <b>${category.name}</b>`)
+
     return resp(event, { message: 'Sửa danh mục thành công' })
   } 
   catch (e:any) {

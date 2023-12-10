@@ -3,7 +3,10 @@
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
       <UForm :state="page" @submit="getList" class="mr-4">
-        <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
+        <UiFlex>
+          <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" class="mr-1" />
+          <USelectMenu v-model="page.search.by" :options="['USER', 'PHONE', 'MAIL', 'IP']" />
+        </UiFlex>
       </UForm>
     </UiFlex>
     
@@ -46,6 +49,10 @@
           {{ `${row.login || 0} ngày` }}
         </template>
 
+        <template #ip-data="{ row }">
+          {{ row.ip || '...' }}
+        </template>
+
         <template #block-data="{ row }">
           <UBadge :color="row.block == 1 ? 'red' : 'gray'" variant="soft">{{ row.block == 1 ? 'Có' : 'Không' }}</UBadge>
         </template>
@@ -76,9 +83,7 @@
 
     <!-- Modal User View -->
     <UModal v-model="modal.user" :ui="{width: 'sm:max-w-[900px]'}">
-      <DataUserBox :fetch-id="stateUser" />
-
-      <AdminUserHistory :user="stateUser" />
+      <AdminUserInfo :user="stateUser" />
     </UModal>
 
     <!-- Modal Edit Auth-->
@@ -157,6 +162,10 @@
           <UInput v-model="stateEditPay.pay.total.money" type="number" />
         </UFormGroup>
 
+        <UFormGroup label="Lý do">
+          <UTextarea v-model="stateEditPay.reason" />
+        </UFormGroup>
+
         <UiFlex justify="end" class="mt-6">
           <UButton type="submit" :loading="loading.editPay">Sửa tích nạp</UButton>
           <UButton color="gray" @click="modal.editPay = false" :disabled="loading.editPay" class="ml-1">Đóng</UButton>
@@ -177,6 +186,10 @@
 
         <UFormGroup label="Tổng">
           <UInput v-model="stateEditSpend.spend.total.coin" type="number" />
+        </UFormGroup>
+
+        <UFormGroup label="Lý do">
+          <UTextarea v-model="stateEditSpend.reason" />
         </UFormGroup>
 
         <UiFlex justify="end" class="mt-6">
@@ -286,6 +299,9 @@ const columns = [
     label: 'Đăng nhập',
     sortable: true
   },{
+    key: 'ip',
+    label: 'IP',
+  },{
     key: 'block',
     label: 'Khóa',
     sortable: true
@@ -312,14 +328,17 @@ const page = ref({
     column: 'createdAt',
     direction: 'desc'
   },
-  search: undefined,
+  search: {
+    key: null,
+    by: 'USER'
+  },
   total: 0
 })
 watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())
 watch(() => page.value.sort.column, () => getList())
 watch(() => page.value.sort.direction, () => getList())
-watch(() => page.value.search, (val) => !val && getList())
+watch(() => page.value.search.key, (val) => !val && getList())
 
 // State
 const stateUser = ref(undefined)
@@ -350,12 +369,14 @@ const stateEditCurrency = ref({
 
 const stateEditPay = ref({
   _id: null,
-  pay: null
+  pay: null,
+  reason: null
 })
 
 const stateEditSpend = ref({
   _id: null,
-  spend: null
+  spend: null,
+  reason: null
 })
 
 const stateEditLogin = ref({
@@ -400,6 +421,9 @@ watch(() => modal.value.editCurrency, (val) => !val && (stateEditCurrency.value 
   },
   reason: null
 }))
+
+watch(() => modal.value.editPay, (val) => !val && (stateEditPay.value.reason = null))
+watch(() => modal.value.editSpend, (val) => !val && (stateEditSpend.value.reason = null))
 
 // Loading
 const loading = ref({
@@ -468,31 +492,33 @@ const actions = (row) => [
       stateEditSpend.value._id = row._id
       modal.value.editSpend = true
     }
-  }],[{
-    label: 'Sửa d.liệu vòng quay',
-    icon: 'i-bx-color',
-    click: () => {
-      stateEditWheel.value.wheel = JSON.parse(JSON.stringify(row.wheel_data))
-      stateEditWheel.value._id = row._id
-      modal.value.editWheel = true
-    }
-  },{
-    label: 'Sửa d.liệu xúc xắc',
-    icon: 'i-bx-dice-6',
-    click: () => {
-      stateEditDice.value.dice = JSON.parse(JSON.stringify(row.dice_data))
-      stateEditDice.value._id = row._id
-      modal.value.editDice = true
-    }
-  }],[{
-    label: 'Sửa đăng nhập',
-    icon: 'i-bx-calendar',
-    click: () => {
-      stateEditLogin.value.login = JSON.parse(JSON.stringify(row.login_data))
-      stateEditLogin.value._id = row._id
-      modal.value.editLogin = true
-    }
-  }]
+  }],
+  // [{
+  //   label: 'Sửa d.liệu vòng quay',
+  //   icon: 'i-bx-color',
+  //   click: () => {
+  //     stateEditWheel.value.wheel = JSON.parse(JSON.stringify(row.wheel_data))
+  //     stateEditWheel.value._id = row._id
+  //     modal.value.editWheel = true
+  //   }
+  // },{
+  //   label: 'Sửa d.liệu xúc xắc',
+  //   icon: 'i-bx-dice-6',
+  //   click: () => {
+  //     stateEditDice.value.dice = JSON.parse(JSON.stringify(row.dice_data))
+  //     stateEditDice.value._id = row._id
+  //     modal.value.editDice = true
+  //   }
+  // }],
+  // [{
+  //   label: 'Sửa đăng nhập',
+  //   icon: 'i-bx-calendar',
+  //   click: () => {
+  //     stateEditLogin.value.login = JSON.parse(JSON.stringify(row.login_data))
+  //     stateEditLogin.value._id = row._id
+  //     modal.value.editLogin = true
+  //   }
+  // }]
 ]
  
 // Fetch

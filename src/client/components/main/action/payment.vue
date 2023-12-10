@@ -2,60 +2,62 @@
   <div>
     <DataEmpty text="Vui lòng đăng nhập trước" icon="i-bx-credit-card" v-if="!authStore.isLogin" />
     
-    <UForm v-else ref="form" :state="state" :validate="validate" @submit="submit">
-      <UFormGroup label="Giới hạn">
-        <DataPaymentLimit v-model="limit" auth />
-      </UFormGroup>
-
-      <UFormGroup label="Kênh nạp" name="gate">
-        <SelectGate v-model="state.gate" v-model:gate="gateSelect" />
-      </UFormGroup>
-
-      <UFormGroup label="Khuyến mại" name="gate" v-if="gateBonus && gateBonus.number > 0">
-        <UInput :model-value="`${gateBonus.number}% ${gateBonus.time}`" readonly />
-      </UFormGroup>
-
-      <div v-if="gateSelect && gateSelect.type != 1">
-        <UFormGroup label="Nhập số tiền" name="money">
-          <UInput v-model="state.money" type="number" />
-        </UFormGroup>
-      </div>
-
-      <div v-if="gateSelect && gateSelect.type == 1">
-        <UFormGroup label="Chọn nhà mạng" name="card_net">
-          <USelectMenu v-model="state.card.net" :options="card.net" value-attribute="value" size="lg" />
+    <div v-else>
+      <UForm ref="form" :state="state" :validate="validate" @submit="submit">
+        <UFormGroup label="Giới hạn">
+          <DataPaymentLimit v-model="limit" auth />
         </UFormGroup>
 
-        <UFormGroup label="Chọn mệnh giá" name="card_money">
-          <USelectMenu v-model="state.money" :options="card.money" value-attribute="value" size="lg" />
+        <UFormGroup label="Kênh nạp" name="gate">
+          <SelectGate v-model="state.gate" v-model:gate="gateSelect" />
         </UFormGroup>
 
-        <UFormGroup label="Nhập số Seri" name="card_seri">
-          <UInput v-model="state.card.seri" />
+        <UFormGroup label="Khuyến mại" name="gate" v-if="gateBonus && gateBonus.number > 0">
+          <UInput :model-value="`${gateBonus.number}% ${gateBonus.time}`" readonly />
         </UFormGroup>
 
-        <UFormGroup label="Nhập mã Pin" name="card_pin">
-          <UInput v-model="state.card.pin" />
-        </UFormGroup>
-      </div>
+        <div v-if="gateSelect && gateSelect.type != 1">
+          <UFormGroup label="Nhập số tiền" name="money">
+            <UInput v-model="state.money" type="number" />
+          </UFormGroup>
+        </div>
 
-      <UiFlex justify="between" class="mt-4">
-        <UButton color="gray" @click="modal.history = true">Lịch sử</UButton>
-        <UButton type="submit" :loading="loading">Xác nhận</UButton>
-      </UiFlex>
-    </UForm>
+        <div v-if="gateSelect && gateSelect.type == 1">
+          <UFormGroup label="Chọn nhà mạng" name="card_net">
+            <USelectMenu v-model="state.card.net" :options="card.net" value-attribute="value" size="lg" />
+          </UFormGroup>
 
-    <UModal v-model="modal.payment" prevent-close>
-      <DataPaymentView :fetch-id="payment" class="p-4"/>
+          <UFormGroup label="Chọn mệnh giá" name="card_money">
+            <USelectMenu v-model="state.money" :options="card.money" value-attribute="value" size="lg" />
+          </UFormGroup>
 
-      <UiFlex justify="end" class="px-4 pb-4">
-        <UButton color="gray" @click="modal.payment = false">Đóng</UButton>
-      </UiFlex>
-    </UModal>
+          <UFormGroup label="Nhập số Seri" name="card_seri">
+            <UInput v-model="state.card.seri" />
+          </UFormGroup>
 
-    <UModal v-model="modal.history" :ui="{ width: 'lg:max-w-4xl md:max-w-2xl sm:max-w-xl' }">
-      <DataPaymentHistory />
-    </UModal>
+          <UFormGroup label="Nhập mã Pin" name="card_pin">
+            <UInput v-model="state.card.pin" />
+          </UFormGroup>
+        </div>
+
+        <UiFlex justify="between" class="mt-4">
+          <UButton color="gray" @click="modal.history = true">Lịch sử</UButton>
+          <UButton type="submit" :loading="loading">Xác nhận</UButton>
+        </UiFlex>
+      </UForm>
+
+      <UModal v-model="modal.payment" prevent-close>
+        <DataPaymentView :fetch-id="payment" class="p-4"/>
+
+        <UiFlex justify="end" class="px-4 pb-4">
+          <UButton color="gray" @click="modal.payment = false">Đóng</UButton>
+        </UiFlex>
+      </UModal>
+
+      <UModal v-model="modal.history" :ui="{ width: 'lg:max-w-4xl md:max-w-2xl sm:max-w-xl' }">
+        <DataPaymentHistory />
+      </UModal>
+    </div>
   </div>
 </template>
 

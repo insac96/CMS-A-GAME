@@ -35,6 +35,8 @@ export default defineEventHandler(async (event) => {
       color: 'blue',
       content: `Bạn đã đăng nhập với IP <b>${IP}</b>`
     })
+
+    logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
     
     return resp(event, { message: 'Đăng nhập thành công' })
   } 

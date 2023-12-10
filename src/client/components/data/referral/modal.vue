@@ -10,7 +10,7 @@
     />
 
     <UModal v-model="modal" :ui="{width: 'sm:max-w-[750px]'}">
-      <MainEventReferral class="p-2"/>
+      <DataReferralTabs class="p-2" />
     </UModal>
   </div>
 </template>

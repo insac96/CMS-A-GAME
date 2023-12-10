@@ -27,7 +27,8 @@
         </template>
 
         <template #action-data="{row}">
-          <UButton icon="i-bx-mail-send" color="gray" :disabled="!!loading.send" @click="openSend(row)" />
+          <UButton icon="i-bx-mail-send" color="gray" :disabled="!!loading.send" @click="openSend(row)" class="mr-1" />
+          <UButton icon="i-bx-play" color="gray" :disabled="!!loading.play" @click="openPlay(row)" />
         </template>
       </UTable>
     </UCard>
@@ -35,7 +36,7 @@
     <!-- Pagination -->
     <UiFlex justify="between" class="py-4">
       <USelectMenu v-model="selectedColumns"  :options="columns" multiple placeholder="Chọn cột" />
-      <UPagination v-model="page.current" :page-count="page.size" :total="page.total" />
+      <UPagination v-model="page.current" :page-count="page.size" :total="page.total" :max="5"/>
     </UiFlex>
 
     <!-- Modal Send -->
@@ -154,7 +155,8 @@ watch(() => modal.value.send, (val) => !val && (stateSend.value = {
 // Loading
 const loading = ref({
   load: false,
-  send: false
+  send: false,
+  play: false
 })
 
 // Send
@@ -176,6 +178,22 @@ const openSend = async (row) => {
   }
   catch (e) {
     loading.value.send = false
+  }
+}
+
+// Play
+const openPlay = async (row) => {
+  try {
+    loading.value.play = true
+    const url = await useAPI('game/admin/start', {
+      username: row.account
+    })
+
+    window.open(url, '_blank')
+    loading.value.play = false
+  }
+  catch (e) {
+    loading.value.play = false
   }
 }
 

@@ -1,4 +1,5 @@
 import md5 from 'md5'
+import type { IDBUser } from '~~/types'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -13,27 +14,44 @@ export default defineEventHandler(async (event) => {
     if(type > 0 && auth.type < 2) throw 'Smod không thể sửa quyền người dùng'
 
     const user = await DB.User.findOne({_id: _id})
-    .select('username email phone type')
+    .select('username email phone type block') as IDBUser
 
     if(!user) throw 'Người dùng không tồn tại'
     if(user.type > 0 && auth.type < 2) throw 'Smod không thể sửa thông tin quản trị viên khác'
 
     const update : any = { type: type, block: block }
+    const change = []
+
     if(!!email && user.email != email){
       const check = await DB.User.findOne({ email: email }).select('_id')
       if(!!check) throw 'Email đã tồn tại'
       update['email'] = email
+      change.push('Email')
     }
     if(!!phone && user.phone != phone){
       const check = await DB.User.findOne({ phone: phone }).select('_id')
       if(!!check) throw 'Số điện thoại đã tồn tại'
       update['phone'] = phone
+      change.push('Số điện thoại')
     }
-    if(!!password) update['password'] = md5(password)
+    if(!!password){
+      update['password'] = md5(password)
+      change.push('Mật khẩu')
+    }
+    if(user.type != type){
+      update['type'] = type
+      change.push('Quyền tài khoản')
+    }
+    if(user.block != block){
+      update['block'] = block
+      change.push('Trạng thái khóa')
+    }
 
-    await DB.User.updateOne({ _id: _id }, update)
-
-    logAdmin(event, `Sửa thông tin tài khoản <b>${user.username}</b>`)
+    if(change.length > 0){
+      await DB.User.updateOne({ _id: _id }, update)
+      logAdmin(event, `Sửa <b>${change.join(', ')}</b> của tài khoản <b>${user.username}</b>`)
+    }
+    
     return resp(event, { message: 'Sửa thông tin thành công' })
   } 
   catch (e:any) {

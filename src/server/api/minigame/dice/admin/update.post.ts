@@ -1,3 +1,5 @@
+import type { IDBDice } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
@@ -14,10 +16,21 @@ export default defineEventHandler(async (event) => {
       || !!isNaN(parseInt(percent.six)) || parseInt(percent.six) < 0
       || !!isNaN(parseInt(percent.other)) || parseInt(percent.other) < 0
     ) throw 'Dữ liệu đầu vào sai'
+    
+    const diceConfig = await DB.Dice.findOne({}) as IDBDice
 
-    await DB.Dice.updateMany({}, { jar, percent })
+    const change : any = []
+    if(diceConfig.jar.default != jar.default) change.push('hũ mặc định')
+    if(diceConfig.jar.now != jar.now) change.push('hũ hiện tại')
+    if(diceConfig.percent.win != percent.win) change.push('tỷ lệ thắng')
+    if(diceConfig.percent.six != percent.six) change.push('tỷ lệ nổ hũ 666')
+    if(diceConfig.percent.other != percent.other) change.push('tỷ lệ nổ hũ nhỏ')
+    
+    if(change.length > 0){
+      await DB.Dice.updateMany({}, { jar, percent })
+      logAdmin(event, `Sửa thông tin <b>${change.join(', ')}</b> của xúc xắc`)
+    }
 
-    logAdmin(event, `Sửa thông tin xúc xắc`)
     return resp(event, { message: 'Cập nhật thành công' })
   } 
   catch (e:any) {

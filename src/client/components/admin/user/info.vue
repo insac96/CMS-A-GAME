@@ -1,5 +1,7 @@
 <template>
   <div class="px-2">
+    <DataUserBox :fetch-id="user" />
+
     <UAccordion
       color="primary"
       variant="soft"

@@ -54,5 +54,10 @@ export interface IDBLevel {
   }
   bonus: number
   bonus_wheel: number
+  bonus_presentee_pay: number
   discount: number
+  gift_invited: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+  }>
 }

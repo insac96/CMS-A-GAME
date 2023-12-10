@@ -12,6 +12,8 @@ export default defineEventHandler(async (event) => {
     if(!!getByName) throw 'Tên danh mục đã tồn tại'
 
     await DB.NewsCategory.create(body)
+    logAdmin(event, `Thêm danh mục tin tức <b>${name}</b>`)
+    
     return resp(event, { message: 'Thêm danh mục thành công' })
   } 
   catch (e:any) {

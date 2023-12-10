@@ -53,7 +53,12 @@ export const DBLevel = (mongoose : Mongoose) => {
     },
     bonus: { type: Number, default: 0, index: true },
     bonus_wheel: { type: Number, default: 0, index: true },
+    bonus_presentee_pay: { type: Number, default: 0, index: true },
     discount: { type: Number, default: 0, index: true },
+    gift_invited: [{
+      item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },
+      amount: { type: Number, index: true },
+    }]
   }, {
     timestamps: true
   })

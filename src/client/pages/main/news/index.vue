@@ -1,11 +1,11 @@
 <template>
   <UiContent title="News" sub="Tổng hợp tất cả tin tức">
-    <UiFlex justify="between" class="mb-6">
+    <UiFlex justify="between" class="mb-4">
       <UForm @submit="getList" class="mr-2 max-w-[150px] sm:max-w-[220px]">
-        <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="lg" />
+        <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
       
-      <SelectNewsCategory v-model="page.category" :options="[{ _id: undefined, label: 'Tất cả' }]" />
+      <SelectNewsCategory v-model="page.category" :options="[{ _id: undefined, label: 'Tất cả' }]" size="sm" />
     </UiFlex>
 
     <div class="grid grid-cols-12 gap-4" v-if="loading">

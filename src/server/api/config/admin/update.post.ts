@@ -5,13 +5,17 @@ export default defineEventHandler(async (event) => {
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const data = await readBody(event)
-    const { name, short_name, description } = data
-    if(!name || !short_name || !description) throw 'Dữ liệu đầu vào không hợp lệ'
+    const { change, name, short_name, description } = data
+    if(!change || !name || !short_name || !description) throw 'Dữ liệu đầu vào không hợp lệ'
+    
+    if(change == 'basic') logAdmin(event, 'Cập nhật thông tin <b>cơ bản</b> trang web')
+    if(change == 'contact') logAdmin(event, 'Cập nhật thông tin <b>liên hệ</b> trang web')
+    if(change == 'social') logAdmin(event, 'Cập nhật thông tin <b>mạng xã hội</b> trang web')
+    if(change == 'game') logAdmin(event, 'Cập nhật cấu hình <b>trò chơi</b>')
 
     delete data['_id']
+    delete data['change']
     await DB.Config.updateMany({}, data)
-
-    logAdmin(event, 'Cập nhật thông tin trang');
 
     return resp(event, { message: 'Cập nhật thành công' })
   } 
