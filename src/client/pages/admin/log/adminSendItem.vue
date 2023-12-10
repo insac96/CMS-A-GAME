@@ -37,6 +37,10 @@
           <DataItemList :items="row.gift" class="max-w-[400px]" empty="..." />
         </template>
 
+        <template #reason-data="{ row }">
+          <div class="whitespace-normal" v-html="row.reason" />
+        </template>
+
         <template #createdAt-data="{ row }">
           {{ useDayJs().displayFull(row.createdAt) }}
         </template>

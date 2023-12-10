@@ -14,12 +14,12 @@
       <LoadingTable v-if="loading.load" />
 
       <UTable v-model:sort="page.sort" :columns="columns" :rows="list">
-        <template #createdAt-data="{ row }">
-          {{ useDayJs().displayFull(row.createdAt) }}
+        <template #action-data="{ row }">
+          <div class="whitespace-normal" v-html="row.action" />
         </template>
 
-        <template #action-data="{ row }">
-          <div v-html="row.action" />
+        <template #createdAt-data="{ row }">
+          {{ useDayJs().displayFull(row.createdAt) }}
         </template>
       </UTable>
 
@@ -47,12 +47,12 @@ const list = ref([])
 
 const columns = [
   {
-    key: 'createdAt',
-    label: 'Thời gian',
-  },
-  {
     key: 'action',
     label: 'Hành động'
+  },
+  {
+    key: 'createdAt',
+    label: 'Thời gian',
   }
 ]
 

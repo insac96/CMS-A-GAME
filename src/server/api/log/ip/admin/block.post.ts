@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
     if(action == 'block'){
       const lockIP = await DB.LogBlockIP.findOne({ ip: ip }).select('_id')
-      if(!!lockIP) throw 'Đại chỉ IP đã có trong danh sách khóa'
+      if(!!lockIP) throw 'Địa chỉ IP đã có trong danh sách khóa'
 
       await DB.LogBlockIP.create({ ip: ip })
       logAdmin(event, `Khóa IP <b>${ip}</b>`)
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
     else if(action == 'unblock'){
       const lockIP = await DB.LogBlockIP.findOne({ ip: ip }).select('_id')
-      if(!lockIP) throw 'Đại chỉ IP không có trong danh sách khóa'
+      if(!lockIP) throw 'Địa chỉ IP không có trong danh sách khóa'
 
       await DB.LogBlockIP.deleteMany({ ip: ip })
       logAdmin(event, `Mở khóa IP <b>${ip}</b>`)

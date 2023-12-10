@@ -1,51 +1,53 @@
 <template>
-  <div class="px-2">
+  <div>
     <DataUserBox :fetch-id="user" />
 
-    <UAccordion
-      color="primary"
-      variant="soft"
-      size="md"
-      :items="menu"
-    >
-      <template #default="{ item, open }">
-        <UButton :color="open ? 'primary' : 'gray'" size="md" class="mb-2">
-          {{ item.label }}
-        </UButton>
-      </template>
+    <div class="px-4 pb-2">
+      <UAccordion
+        color="primary"
+        variant="soft"
+        size="md"
+        :items="menu"
+      >
+        <template #default="{ item, open }">
+          <UButton :color="open ? 'primary' : 'gray'" size="md" class="mb-2">
+            {{ item.label }}
+          </UButton>
+        </template>
 
-      <template #log>
-        <AdminUserLog :user="user" />
-      </template>
+        <template #log>
+          <AdminUserLog :user="user" />
+        </template>
 
-      <template #ip>
-        <AdminUserIp :user="user" />
-      </template>
+        <template #ip>
+          <AdminUserIp :user="user" />
+        </template>
 
-      <template #payment>
-        <DataPaymentHistory :user="user" />
-      </template>
+        <template #payment>
+          <DataPaymentHistory :user="user" />
+        </template>
 
-      <template #shop>
-        <DataShopHistory :user="user" />
-      </template>
+        <template #shop>
+          <DataShopHistory :user="user" />
+        </template>
 
-      <template #event>
-        <DataEventHistory :user="user" />
-      </template>
+        <template #event>
+          <DataEventHistory :user="user" />
+        </template>
 
-      <template #giftcode>
-        <DataGiftcodeHistory :user="user" />
-      </template>
+        <template #giftcode>
+          <DataGiftcodeHistory :user="user" />
+        </template>
 
-      <template #wheel>
-        <DataMinigameWheelHistory :user="user" />
-      </template>
+        <template #wheel>
+          <DataMinigameWheelHistory :user="user" />
+        </template>
 
-      <template #dice>
-        <DataMinigameDiceHistory :user="user" />
-      </template>
-    </UAccordion>
+        <template #dice>
+          <DataMinigameDiceHistory :user="user" />
+        </template>
+      </UAccordion>
+    </div>
   </div>
 </template>
 

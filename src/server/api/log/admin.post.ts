@@ -4,21 +4,26 @@ export default defineEventHandler(async (event) => {
     if(!auth) throw 'Vui lòng đăng nhập trước'
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
-    const { size, current, sort, user } = await readBody(event)
-    if(!size || !current) throw 'Dữ liệu phân trang sai'
+    const { size, current, sort, search } = await readBody(event)
+    if(!size || !current || !search) throw 'Dữ liệu phân trang sai'
     if(!sort.column || !sort.direction) throw 'Dữ liệu sắp xếp sai'
 
     const sorting : any = { }
     sorting[sort.column] = sort.direction == 'desc' ? -1 : 1
 
     const match : any = {  }
-    if(!!user){
-      const users = await DB.User.find({
-        username : { $regex : user.toLowerCase(), $options : 'i' }
-      }).select('_id')
-      
-      match['user'] = {
-        $in: users.map(i => i._id)
+    if(!!search.key){
+      if(search.by == 'USER'){
+        const users = await DB.User.find({
+          username : { $regex : search.key.toLowerCase(), $options : 'i' }
+        }).select('_id')
+        
+        match['user'] = {
+          $in: users.map(i => i._id)
+        }
+      }
+      if(search.by == 'LOG'){
+        match['action'] = { $regex : search.key.toLowerCase(), $options : 'i' }
       }
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="History Giftcode" sub="Lịch sử nhận mã toàn hệ thống">
+  <UiContent title="IP Log" sub="Lịch sử nhận mã toàn hệ thống">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1"/>
 
@@ -20,6 +20,14 @@
         <template #ip-data="{ row }">
           <UiText weight="semibold">{{ row.ip }}</UiText>
         </template>
+
+        <template #users-data="{ row }">
+          <UButton 
+            v-for="user in row.users" :key="user._id"
+            size="2xs" color="gray" class="m-1"
+            @click="viewUser(user._id)"
+          >{{ user.username }}</UButton>
+        </template>
         
         <template #block-data="{ row }">
           <UBadge :color="row.block == 1 ? 'red' : 'gray'">{{ row.block == 1 ? 'Có' : 'Không' }}</UBadge>
@@ -37,6 +45,11 @@
       <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Chọn cột" />
       <UPagination v-model="page.current" :page-count="page.size" :total="page.total" :max="4" />
     </UiFlex>
+
+    <!--Modal User Info-->
+    <UModal v-model="modal.user" :ui="{width: 'sm:max-w-[900px]'}">
+      <AdminUserInfo :user="stateUser" />
+    </UModal>
   </UiContent>
 </template>
 
@@ -50,9 +63,12 @@ const columns = [
     key: 'ip',
     label: 'Địa chỉ',
   },{
-    key: 'users',
+    key: 'count',
     label: 'Số tài khoản',
     sortable: true
+  },{
+    key: 'users',
+    label: 'Tài khoản'
   },{
     key: 'block',
     label: 'Trạng thái khóa',
@@ -86,12 +102,22 @@ watch(() => page.value.search.key, (val) => !val && getList())
 
 // Modal
 const modal = ref({
+  user: false
 })
 
 // Loading
 const loading = ref({
   load: true
 })
+
+// State
+const stateUser = ref(undefined)
+
+// View User
+const viewUser = (_id) => {
+  modal.value.user = true
+  stateUser.value = _id
+}
 
 // Fetch
 const block = async (ip, action) => {

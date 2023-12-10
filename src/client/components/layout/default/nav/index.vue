@@ -55,7 +55,7 @@ const navItems = [
     ]
   },
   {
-    label: 'Cửa hàng',
+    label: 'Cửa Hàng',
     icon: 'i-bx-shopping-bag',
     defaultOpen: true,
     slot: 'tab-1',
@@ -96,7 +96,7 @@ const navItems = [
     ]
   },
   {
-    label: 'Mạng xã hội',
+    label: 'Mạng Xã Hội',
     icon: 'i-bx-book-reader',
     defaultOpen: true,
     slot: 'tab-5',

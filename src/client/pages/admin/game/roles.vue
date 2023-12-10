@@ -137,8 +137,8 @@ const stateSend = ref({
   user: null,
   server: null,
   role: null,
-  title: null,
-  content: null,
+  title: 'Quà từ GM',
+  content: 'Chúc bạn chơi game vui vẻ',
   reason: null,
   items: [],
 

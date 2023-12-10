@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     const shopData = await DB.Shop
     .findOne({ _id: item }) 
     .select('item price limit')
-    .populate({ path: 'item', select: 'type' }) as IDBShop
+    .populate({ path: 'item', select: 'item_name type' }) as IDBShop
     if(!shopData) throw 'Vật phẩm không tồn tại'
 
     // Total Price
@@ -73,6 +73,8 @@ export default defineEventHandler(async (event) => {
       price: totalPrice,
       amount: parseInt(amount)
     })
+
+    logUser(event, auth._id, `Dùng <b>${totalPrice.toLocaleString("vi-VN")}</b> để mua <b>x${amount} ${itemData.item_name}</b>`)
 
     return resp(event, { message: 'Mua vật phẩm thành công' })
   } 

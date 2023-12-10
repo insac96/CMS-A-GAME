@@ -42,6 +42,8 @@ export default defineEventHandler(async (event) => {
       gift: itemLog
     })
 
+    logUser(event, userData._id, `Nhận <b>vật phẩm</b> từ quản trị viên <b>${auth.username}</b> với lý do <b>${reason}</b>`)
+
     return resp(event, { message: 'Gửi thành công thành công' })
   } 
   catch (e:any) {

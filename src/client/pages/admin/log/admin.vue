@@ -4,7 +4,10 @@
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1"/>
 
       <UForm :state="page" @submit="getList">
-        <UInput size="sm" v-model="page.user" placeholder="Tìm kiếm theo tài khoản" />
+        <UiFlex>
+          <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" class="mr-1" />
+          <USelectMenu v-model="page.search.by" :options="['USER', 'LOG']" />
+        </UiFlex>
       </UForm>
     </UiFlex>
     
@@ -22,7 +25,7 @@
         </template>
 
         <template #action-data="{ row }">
-          <div v-html="row.action" />
+          <div class="whitespace-normal" v-html="row.action" />
         </template>
 
         <template #createdAt-data="{ row }">
@@ -60,7 +63,7 @@ const columns = [
     label: 'Hành động',
   },{
     key: 'createdAt',
-    label: 'Ngày mua',
+    label: 'Thời gian',
     sortable: true
   }
 ]
@@ -74,14 +77,17 @@ const page = ref({
     column: 'createdAt',
     direction: 'desc'
   },
-  user: null,
+  search: {
+    key: null,
+    by: 'USER'
+  },
   total: 0,
 })
 watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())
 watch(() => page.value.sort.column, () => getList())
 watch(() => page.value.sort.direction, () => getList())
-watch(() => page.value.user, (val) => !val && getList())
+watch(() => page.value.search.key, (val) => !val && getList())
 
 // State
 const stateUser = ref(undefined)
