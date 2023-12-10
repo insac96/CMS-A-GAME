@@ -72,15 +72,24 @@ export default defineEventHandler(async (event) => {
     await DB.GiftcodeHistory.create({
       user: auth._id,
       giftcode: giftcodeData._id,
-      server: server
+      server: server,
+      role: role
     })
 
     // Log User
-    logUser(event, auth._id, `Sử dụng giftcode <b>${giftcodeData.code}</b>`)
-    
+    const change : any = []
     if(!!giftCurrency[`currency.coin`] && giftCurrency[`currency.coin`] > 0){
-      logUser(event, auth._id, `Nhận <b>${giftCurrency[`currency.coin`].toLocaleString('vi-VN')}</b> xu giftcode <b>${giftcodeData.code}</b>`)
+      change.push(`${giftCurrency[`currency.coin`].toLocaleString('vi-VN')} xu`) 
     }
+    if(!!giftCurrency[`currency.wheel`] && giftCurrency[`currency.wheel`] > 0){
+      change.push(`${giftCurrency[`currency.wheel`].toLocaleString('vi-VN')} lượt quay`) 
+    }
+    if(!!giftCurrency[`currency.notify`] && giftCurrency[`currency.notify`] > 0){
+      change.push(`${giftCurrency[`currency.notify`].toLocaleString('vi-VN')} lượt gửi thông báo`) 
+    }
+
+    logUser(event, auth._id, `Sử dụng giftcode <b>${giftcodeData.code}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
+    if(change.length > 0) logUser(event, auth._id, `Nhận <b>${change.join(', ')}</b> từ giftcode <b>${giftcodeData.code}</b>`)
     
     return resp(event, { message: 'Nhận thưởng thành công' })
   } 

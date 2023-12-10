@@ -93,6 +93,7 @@ export default defineEventHandler(async (event) => {
       user: auth._id,
       item: itemData._id,
       server: server,
+      role: role,
       price: totalPrice,
       amount: parseInt(amount)
     })

@@ -13,6 +13,8 @@ export default defineEventHandler(async (event) => {
       if(!!lockIP) throw 'Đại chỉ IP đã có trong danh sách khóa'
 
       await DB.LogBlockIP.create({ ip: ip })
+      logAdmin(event, `Khóa IP <b>${ip}</b>`)
+
       return resp(event, { message: 'Khóa IP thành công' })
     }
 
@@ -21,6 +23,8 @@ export default defineEventHandler(async (event) => {
       if(!lockIP) throw 'Đại chỉ IP không có trong danh sách khóa'
 
       await DB.LogBlockIP.deleteMany({ ip: ip })
+      logAdmin(event, `Mở khóa IP <b>${ip}</b>`)
+
       return resp(event, { message: 'Mở khóa IP thành công' })
     }
 

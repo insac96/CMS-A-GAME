@@ -34,6 +34,9 @@ export default defineEventHandler(async (event) => {
       content: `Bạn đã thao tác lấy lại <b>mật khẩu</b> tài khoản`
     })
 
+    const IP = getRequestIP(event, { xForwardedFor: true })
+    logUser(event, user._id, `Thao tác lấy lại <b>mật khẩu</b> tài khoản bằng IP <b>${IP}</b>`)
+
     return resp(event, { message: 'Lấy lại mật khẩu thành công' })
   } 
   catch (e:any) {

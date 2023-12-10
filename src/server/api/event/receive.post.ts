@@ -80,13 +80,24 @@ export default defineEventHandler(async (event) => {
     await DB.EventHistory.create({
       user: auth._id,
       event: eventData._id,
-      server: server
+      server: server,
+      role: role
     })
 
     // Log User
+    const change : any = []
     if(!!giftCurrency[`currency.coin`] && giftCurrency[`currency.coin`] > 0){
-      logUser(event, auth._id, `Nhận <b>${giftCurrency[`currency.coin`].toLocaleString('vi-VN')}</b> xu từ mốc <b>${eventData.need.toLocaleString('vi-VN')}</b> của sự kiện <b>${typeName[eventData.type]}</b>`)
+      change.push(`${giftCurrency[`currency.coin`].toLocaleString('vi-VN')} xu`) 
     }
+    if(!!giftCurrency[`currency.wheel`] && giftCurrency[`currency.wheel`] > 0){
+      change.push(`${giftCurrency[`currency.wheel`].toLocaleString('vi-VN')} lượt quay`) 
+    }
+    if(!!giftCurrency[`currency.notify`] && giftCurrency[`currency.notify`] > 0){
+      change.push(`${giftCurrency[`currency.notify`].toLocaleString('vi-VN')} lượt gửi thông báo`) 
+    }
+
+    logUser(event, auth._id, `Nhận thưởng mốc <b>${eventData.need.toLocaleString('vi-VN')}</b> của sự kiện <b>${typeName[eventData.type]}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
+    if(change.length > 0) logUser(event, auth._id, `Nhận <b>${change.join(', ')}</b> từ mốc <b>${eventData.need.toLocaleString('vi-VN')}</b> của sự kiện <b>${typeName[eventData.type]}</b>`)
     
     return resp(event, { message: 'Nhận thưởng thành công' })
   } 

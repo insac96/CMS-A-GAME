@@ -103,6 +103,7 @@ export default defineEventHandler(async (event) => {
       await DB.WheelHistory.create({
         user: auth._id,
         server: server,
+        role: role,
         item: item._id,
         amount: resultGift.amount,
         percent: resultGift.percent
@@ -112,9 +113,15 @@ export default defineEventHandler(async (event) => {
       if(item.type == 'coin'){
         logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> xu từ <b>vòng quay may mắn</b>`)
       }
+      if(item.type == 'wheel'){
+        logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> lượt quay từ <b>vòng quay may mắn</b>`)
+      }
+      if(item.type == 'notify'){
+        logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> lượt gửi thông báo từ <b>vòng quay may mắn</b>`)
+      }
 
       // Lucky User
-      if(item.type != 'wheel_lose' && resultGift.percent <= 10){
+      if(item.type != 'wheel_lose' && resultGift.percent <= 5){
         await DB.WheelLuckyUser.create({
           user: auth._id,
           action: `<b>x ${resultGift.amount.toLocaleString('vi-VN')} ${item.item_name}</b>`

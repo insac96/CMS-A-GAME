@@ -6,7 +6,7 @@
       <UForm :state="page" @submit="getList" class="mr-auto">
         <UiFlex>
           <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" class="mr-1" :disabled="!page.server_id" />
-          <USelectMenu v-model="page.search.by" :options="['USER', 'ROLE']" :disabled="!page.server_id" />
+          <USelectMenu v-model="page.search.by" :options="['USER', 'ROLE', 'ID']" :disabled="!page.server_id" />
         </UiFlex>
       </UForm>
 
@@ -22,6 +22,10 @@
         :columns="selectedColumns"
         :rows="list"
       >
+        <template #account-data="{ row }">
+          <UButton size="2xs" color="gray" @click="viewUser(row.account)" :disabled="!!loading.user">{{ row.account }}</UButton>
+        </template>
+
         <template #power-data="{row}">
           {{ useMoney().toMoney(row.power) }}
         </template>
@@ -38,6 +42,11 @@
       <USelectMenu v-model="selectedColumns"  :options="columns" multiple placeholder="Chọn cột" />
       <UPagination v-model="page.current" :page-count="page.size" :total="page.total" :max="5"/>
     </UiFlex>
+
+    <!--Modal User Info-->
+    <UModal v-model="modal.user" :ui="{width: 'sm:max-w-[900px]'}">
+      <AdminUserInfo :user="stateUser" />
+    </UModal>
 
     <!-- Modal Send -->
     <UModal v-model="modal.send" prevent-close :ui="{width: 'sm:max-w-[800px]'}">
@@ -80,6 +89,9 @@ const columns = [
   {
     key: 'account',
     label: 'Tài khoản',
+  },{
+    key: 'role_id',
+    label: 'ID',
   },{
     key: 'role_name',
     label: 'Tên',
@@ -134,9 +146,12 @@ const stateSend = ref({
   role_name: null,
 })
 
+const stateUser = ref(undefined)
+
 // Modal
 const modal = ref({
-  send: false
+  send: false,
+  user: false
 })
 
 watch(() => modal.value.send, (val) => !val && (stateSend.value = {
@@ -155,9 +170,27 @@ watch(() => modal.value.send, (val) => !val && (stateSend.value = {
 // Loading
 const loading = ref({
   load: false,
+  user: false,
   send: false,
   play: false
 })
+
+// View User
+const viewUser = async (username) => {
+  try {
+    loading.value.user = true
+    const id = await useAPI('user/admin/getIDByUsername', {
+      username: username
+    })
+
+    stateUser.value = id
+    modal.value.user = true
+    loading.value.user = false
+  }
+  catch(e){
+    loading.value.user = false
+  }
+}
 
 // Send
 const openSend = async (row) => {

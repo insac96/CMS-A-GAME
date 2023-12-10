@@ -215,6 +215,7 @@ export default defineEventHandler(async (event) => {
     })
 
     // Log User
+    logUser(event, auth._id, `Dùng <b>${coinPlay.toLocaleString('vi-VN')}</b> xu để chơi <b>xúc xắc may mắn</b>`)
     if(coinReceive > 0){
       logUser(event, auth._id, `Nhận <b>${coinReceive.toLocaleString('vi-VN')}</b> xu từ <b>xúc xắc may mắn</b>`)
     }
