@@ -1,7 +1,7 @@
 <template>
   <div>
     <UCard>
-      <DataUserMini mini-num no-level no-diamond :reload="reload" class="mb-4" v-if="!!authStore.isLogin"/>
+      <DataUserMini mini-num no-level no-notify no-diamond :reload="reload" class="mb-4" v-if="!!authStore.isLogin"/>
 
       <DataMinigameWheelBox 
         :items="items" 

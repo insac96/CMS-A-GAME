@@ -2,7 +2,7 @@
   <UForm :validate="validate" :state="state" @submit="submit" class="p-6">
     <!-- User Info -->
     <UFormGroup name="currency">
-      <DataUserMini v-model:currency="currency" no-wheel no-coin />
+      <DataUserMini v-model:currency="currency" no-wheel no-coin no-diamond />
     </UFormGroup>
 
     <!-- To -->

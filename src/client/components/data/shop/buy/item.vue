@@ -3,7 +3,7 @@
     <!-- Form -->
     <UForm :state="state" :validate="validate" @submit="submit">
       <UFormGroup>
-        <DataUserMini v-model:level="level" v-model:currency="currency" no-wheel no-notify />
+        <DataUserMini v-model:level="level" v-model:currency="currency" no-wheel no-notify no-diamond />
       </UFormGroup>
 
       <UFormGroup label="Máy chủ" name="server">
