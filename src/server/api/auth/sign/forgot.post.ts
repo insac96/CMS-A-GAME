@@ -4,6 +4,7 @@ import type { IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
+    throw 'Tính năng bảo trì'
     const runtimeConfig = useRuntimeConfig()
     const { username, password, phone } = await readBody(event)
     if(!username || !phone || !password) throw 'Vui lòng nhập đủ thông tin'

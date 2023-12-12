@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       }) as IDBShop
     }
     else {
-      shop = await DB.Shop.findOne({ item: item._id }).select(' price') as IDBShop
+      shop = await DB.Shop.findOne({ item: item._id }).select('price') as IDBShop
       if(!shop) throw 'Vật phẩm không tồn tại'
     }
 
