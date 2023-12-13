@@ -14,6 +14,7 @@ import { DBEvent, DBEventHistory } from './event'
 import { DBGiftcode, DBGiftcodeHistory } from './giftcode'
 import { DBDice, DBDiceHistory, DBDiceLuckyUser } from './dice'
 import { DBWheel, DBWheelHistory, DBWheelLuckyUser } from './wheel'
+import { DBGameRankGift } from './game'
 import { DBLogAdmin, DBLogAdminSendItem, DBLogUser, DBLogUserIP, DBLogBlockIP } from './log'
 
 export default (mongoose : Mongoose) : IGlobalDB => {
@@ -52,6 +53,8 @@ export default (mongoose : Mongoose) : IGlobalDB => {
     Wheel: DBWheel(mongoose),
     WheelHistory: DBWheelHistory(mongoose),
     WheelLuckyUser: DBWheelLuckyUser(mongoose),
+
+    GameRankGift: DBGameRankGift(mongoose),
 
     LogAdmin: DBLogAdmin(mongoose),
     LogAdminSendItem: DBLogAdminSendItem(mongoose),

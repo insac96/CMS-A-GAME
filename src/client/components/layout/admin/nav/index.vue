@@ -102,8 +102,9 @@ const navItems = [
     slot: 'tab-5',
     children: [
       { label: 'Vật phẩm', to: '/admin/game/item' },
-      { label: 'Gửi vật phẩm', to: '/admin/game/send' },
+      // { label: 'Gửi vật phẩm', to: '/admin/game/send' },
       { label: 'Nhân vật', to: '/admin/game/roles' },
+      { label: 'Quà xếp hạng', to: '/admin/game/rankgift' },
     ]
   },
   {
