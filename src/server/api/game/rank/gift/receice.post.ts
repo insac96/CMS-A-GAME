@@ -12,7 +12,7 @@ const currencyTypeList = [
 export default defineEventHandler(async (event) => {
   try {
     const auth = event.context.auth
-    if(!auth) return 'Vui lòng đăng nhập trước'
+    if(!auth) throw 'Vui lòng đăng nhập trước'
 
     const { _id, role } = await readBody(event)
     if(!_id) throw 'Dữ liệu đầu vào sai'
@@ -34,6 +34,9 @@ export default defineEventHandler(async (event) => {
     if(now.timestamp < expired.timestamp) throw 'Chưa đến thời gian được nhận thưởng'
 
     // Kiểm tra lịch sử nhận
+    const countUserReceive = await DB.GameRankGiftHistory.count({ rankgift: rankgift._id, user: auth._id })
+    if(countUserReceive > 0) throw 'Bạn đã nhận phần thưởng này rồi'
+
     const maxCountReceive = rankgift.end - rankgift.start + 1
     const countReceive = await DB.GameRankGiftHistory.count({ rankgift: rankgift._id })
     if(countReceive >= maxCountReceive) throw 'Phần thưởng hạng này đã có người nhận'

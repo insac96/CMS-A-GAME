@@ -12,6 +12,9 @@ const getReceice = async (event : any, rankgift : IDBGameRankGift) : Promise<boo
   if(now.timestamp < expired.timestamp) return false
 
   // Kiểm tra lịch sử nhận
+  const countUserReceive = await DB.GameRankGiftHistory.count({ rankgift: rankgift._id, user: auth._id })
+  if(countUserReceive > 0) return false
+
   const maxCountReceive = rankgift.end - rankgift.start + 1
   const countReceive = await DB.GameRankGiftHistory.count({ rankgift: rankgift._id })
   if(countReceive >= maxCountReceive) return false
