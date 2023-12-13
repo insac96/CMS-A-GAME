@@ -84,7 +84,7 @@
         </UiFlex>
 
         <UiFlex justify="end" class="mt-4">
-          <UButton color="gray" :loading="loading.start" @click="start">Đóng</UButton>
+          <UButton color="gray" :loading="loading.start" :disabled="timewait > 0" @click="start">Đóng {{ timewait > 0 ? `(${timewait}s)` : '' }}</UButton>
         </UiFlex>
       </UCard>
     </UModal>
@@ -103,6 +103,9 @@ const loading = ref({
 const modal = ref({
   referral: false
 })
+
+const timewait = ref(10)
+const timming = ref(undefined)
 
 const state = ref({
   username: undefined,
@@ -136,6 +139,18 @@ const validate = (state) => {
   return errors
 }
 
+const startTimeWait = () => {
+  timming.value = setInterval(() => {
+    if(timewait.value == 0){
+      clearInterval(timming.value)
+      timewait.value = 0
+    }
+    else {
+      timewait.value--
+    }
+  }, 1000)
+}
+
 const submit = async () => {
   try {
     loading.value.signup = true
@@ -143,6 +158,7 @@ const submit = async () => {
 
     modal.value.referral = true
     loading.value.signup = false
+    startTimeWait()
   }
   catch (e) {
     loading.value.signup = false
