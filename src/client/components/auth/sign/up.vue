@@ -40,9 +40,10 @@
           class="mb-4"
         >
           <template #description>
-            <UiText class="mb-1">- Hãy sử dụng mã mời để giới thiệu bạn bè cùng tham gia.</UiText>
-            <UiText class="mb-1">- Bạn sẽ nhận được Điểm Cống Hiến mỗi khi bạn bè của bạn nạp tiền thành công.</UiText>
-            <UiText>- Sử dụng điểm cống hiến có thể rút tiền về tài khoản ngân hàng của bạn.</UiText>
+            <UiText class="mb-1.5">- Hãy sử dụng mã mời để giới thiệu bạn bè cùng tham gia.</UiText>
+            <UiText class="mb-1.5">- Bạn sẽ nhận được Điểm Cống Hiến mỗi khi bạn bè của bạn nạp tiền thành công.</UiText>
+            <UiText class="mb-1.5">- Sử dụng điểm cống hiến có thể rút tiền về tài khoản ngân hàng của bạn.</UiText>
+            <UiText>- Ví dụ khi bạn bè bạn giới thiếu nạp <b>1.000.000đ</b>, bạn sẽ nhận được <b>500.000đ</b></UiText>
           </template>
         </UAlert>
 

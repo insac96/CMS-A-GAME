@@ -19,7 +19,7 @@
       </USelectMenu>
       <SelectGameServer v-model="page.server" size="sm" class="mr-auto" />
 
-      <UButton color="gray" @click="modal.add = true">Thêm</UButton>
+      <UButton color="gray" @click="modal.add = true" :disabled="!page.server">Thêm</UButton>
     </UiFlex>
     
     <!-- Table -->
@@ -31,6 +31,10 @@
         :columns="selectedColumns"
         :rows="list"
       >
+        <template #expired-data="{ row }">
+          {{ !!row.expired ? useDayJs().displayFull(row.expired) : '...' }}
+        </template>
+
         <template #gift-data="{ row }">
           <DataItemList :items="row.gift" class="min-w-[400px] max-w-[400px]" />
         </template>
@@ -59,6 +63,10 @@
         <UFormGroup label="Hạng kết thúc">
           <UInput v-model="stateAdd.end" type="number" />
         </UFormGroup>
+        
+        <UFormGroup label="Thời gian có thể nhận">
+          <SelectDate v-model="stateAdd.expired" time />
+        </UFormGroup>
 
         <UFormGroup name="gift">
           <SelectItemList v-model="stateAdd.gift" :types="['coin', 'wheel', 'notify', 'game_item']" />
@@ -74,6 +82,10 @@
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" prevent-close :ui="{width: 'sm:max-w-[950px]'}">
       <UForm :state="stateEdit" :validate="validate" @submit="editAction" class="p-4">
+        <UFormGroup label="Thời gian có thể nhận">
+          <SelectDate v-model="stateEdit.expired" time />
+        </UFormGroup>
+
         <UFormGroup name="gift">
           <SelectItemList v-model="stateEdit.gift" :types="['coin', 'wheel', 'notify', 'game_item']" />
         </UFormGroup>
@@ -100,10 +112,13 @@ const columns = [
     key: 'end',
     label: 'Hạng kết thúc',
   },{
+    key: 'expired',
+    label: 'Ngày nhận'
+  },{
     key: 'gift',
     label: 'Phần thưởng',
   },{
-    key: 'action',
+    key: 'actions',
     label: 'Chức năng'
   }
 ]
@@ -134,11 +149,13 @@ const stateAdd = ref({
   server: null,
   start: null,
   end: null,
+  expired: null,
   gift: [],
 })
 
 const stateEdit = ref({
   _id: null,
+  expired: null,
   gift: null
 })
 
@@ -153,6 +170,7 @@ watch(() => modal.value.add, (val) => !val && (stateAdd.value = {
   server: null,
   start: null,
   end: null,
+  expired: stateAdd.value.expired,
   gift: [],
 }))
 
@@ -171,6 +189,7 @@ const actions = (row) => [
     icon: 'i-bx-gift',
     click: () => {
       stateEdit.value._id = row._id
+      stateEdit.value.expired = row.expired
       stateEdit.value.gift = JSON.parse((JSON.stringify(row.gift)))
       modal.value.edit = true
     }

@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
       },
       { 
         $project: {
-          start: 1, end: 1,
+          start: 1, end: 1, expired: 1,
           gift: {
             $map: {
               input: '$giftdata',

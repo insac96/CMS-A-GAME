@@ -1,5 +1,4 @@
 import type { Model } from 'mongoose'
-
 export { IDBConfig, IDBConfigStore } from './config'
 export { IDBNews, IDBNewsCategory } from './news'
 export { IDBUser, IDBUserStore } from './user'
@@ -14,7 +13,7 @@ export { IDBEvent, IDBEventHistory } from './event'
 export { IDBGiftcode, IDBGiftcodeHistory } from './giftcode'
 export { IDBDice, IDBDiceHistory, IDBDiceLuckyUser } from './dice'
 export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
-export { IDBGameRankGift } from './game'
+export { IDBGameRankGift, IDBGameRankGiftHistory } from './game'
 export { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from './log'
 
 export interface IGlobalDB {
@@ -54,6 +53,7 @@ export interface IGlobalDB {
   WheelLuckyUser: Model<IDBWheelLuckyUser>
 
   GameRankGift: Model<IDBGameRankGift>
+  GameRankGiftHistory: Model<IDBGameRankGiftHistory>
 
   LogAdmin: Model<IDBLogAdmin>
   LogAdminSendItem: Model<IDBLogAdminSendItem>

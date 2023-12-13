@@ -5,7 +5,7 @@
     size="lg"
     value-attribute="value"
     option-attribute="label"
-    :disabled="options.length == 0"
+    :disabled="options.length == 0 || !!disabled"
     :loading="loading"
   >
     <template #label>
@@ -20,7 +20,8 @@ const props = defineProps({
   options: {
     type: Array,
     default: () => []
-  }
+  },
+  disabled: Boolean
 })
 const emit = defineEmits(['update:modelValue'])
 

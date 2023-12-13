@@ -9,8 +9,21 @@ export interface IDBGameRankGift {
   type: string
   start: number
   end: number
+  expired: Date
   gift: Array<{
     item: Types.ObjectId | IDBItem,
     amount: number
   }>
+}
+
+export interface IDBGameRankGiftHistory {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+
+  rankgift: Types.ObjectId
+  user: Types.ObjectId
+  server: string
+  role: string
+  rank: number
 }
