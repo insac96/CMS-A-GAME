@@ -95,6 +95,8 @@ export default defineEventHandler(async (event) => {
       color: 'blue',
       content: `Bạn đã đăng nhập với IP <b>${IP}</b>`
     })
+
+    await createChat(event, 'bot', `Chào mừng thành viên mới <b>${user.username}</b>`)
     
     return resp(event, { message: 'Đăng ký thành công' })
   } 

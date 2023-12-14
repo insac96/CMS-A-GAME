@@ -6,7 +6,13 @@ export default defineEventHandler(async (event) => {
     const { text } = await readBody(event)
     if(!text) throw 'Vui lòng nhập nội dung'
 
-    const user = await DB.User.findOne({ _id: auth._id }).select('username avatar type')
+    const user = await DB.User
+    .findOne({ _id: auth._id })
+    .select('username level avatar type')
+    .populate({
+      path: 'level',
+      select: 'number'
+    })
 
     const chat = await DB.SocketChat.create({
       user: user._id,

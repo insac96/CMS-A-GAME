@@ -2,7 +2,8 @@
   <UiFlex class="p-3" justify="between">
     <UButtonGroup>
       <UButton icon="i-bx-group" />
-      <UButton color="gray">{{socketStore.online}}</UButton>
+      <UButton color="gray">Online</UButton>
+      <UButton color="gray" class="px-3">{{socketStore.online}}</UButton>
     </UButtonGroup>
 
     <UiIcon name="i-bx-x" size="5" pointer @click="emit('close')" />

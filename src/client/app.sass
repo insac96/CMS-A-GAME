@@ -1,6 +1,8 @@
 :root
   --header-size: 3.5rem
   --footer-size: 2.5rem
+  --scroll-color: var(--color-gray-200)
+  --scroll-color-hover: var(--color-gray-400)
 
 *
   -webkit-tap-highlight-color: transparent !important
@@ -13,6 +15,8 @@ html, body
   height: 100%
   
 .dark
+  --scroll-color: var(--color-gray-800)
+  --scroll-color-hover: var(--color-gray-700)
   body
     background: rgb(var(--color-gray-900))
 
@@ -20,12 +24,18 @@ html, body
   min-height: 100%
   height: 100%
 
-.text-mini
-  max-width: 100%
-  white-space: nowrap
-  text-overflow: ellipsis
-  word-wrap: break-word
-  overflow: hidden
+@media (hover: hover)
+  ::-webkit-scrollbar
+    width: 20px
+  ::-webkit-scrollbar-track
+    background-color: transparent
+  ::-webkit-scrollbar-thumb
+    background-color: rgb(var(--scroll-color))
+    border-radius: 20px
+    border: 6px solid transparent
+    background-clip: content-box
+  ::-webkit-scrollbar-thumb:hover
+    background-color: rgb(var(--scroll-color-hover))
 
 .page-enter-active, .page-leave-active
   transition: all 0.4s

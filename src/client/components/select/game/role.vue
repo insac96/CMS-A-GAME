@@ -40,6 +40,10 @@ const fetch = async () => {
 
     loading.value = false
     options.value = list.map(i => ({ value: i.role_id, label: i.role_name }))
+
+    if(options.value.length == 1){
+      role.value = options.value[0].value
+    }
   }
   catch (e) {
     loading.value = false
