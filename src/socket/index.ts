@@ -9,6 +9,7 @@ export default (io : SocketServer) => {
 
     socket.on('disconnect', () => {
       global.SocketData.online--
+      if(global.SocketData.online <= 0) global.SocketData.online = 0
       io.emit('online', global.SocketData.online)
     })
   })
