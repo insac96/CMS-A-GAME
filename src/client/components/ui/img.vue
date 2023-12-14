@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="relative overflow-hidden select-none"
+    class="relative select-none"
     :style="`aspect-ratio: ${w} / ${h}`"
   >
     <NuxtImg 
@@ -17,9 +17,18 @@
       placeholder="/images/placeholder.png"
       :alt="props.alt" 
       @load="onLoad"
+      :style="{
+        borderRadius: 'inherit'
+      }"
     />
 
-    <USkeleton class="absolute top-0 left-0 rounded-none w-full h-full" v-if="!!loading"></USkeleton>
+    <USkeleton 
+      class="absolute top-0 left-0 rounded-none w-full h-full" 
+      :style="{
+        borderRadius: 'inherit'
+      }"
+      v-if="!!loading"
+    ></USkeleton>
   </div>
 </template>
 

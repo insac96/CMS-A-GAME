@@ -16,6 +16,8 @@ export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
 export { IDBGameRankGift, IDBGameRankGiftHistory } from './game'
 export { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from './log'
 
+export { IDBSocketChat } from './socket'
+
 export interface IGlobalDB {
   Config: Model<IDBConfig>
 
@@ -61,4 +63,6 @@ export interface IGlobalDB {
   LogBlockIP: Model<IDBLogBlockIP>
   LogUser: Model<IDBLogUser>
   LogUserIP: Model<IDBLogUserIP>
+
+  SocketChat: Model<IDBSocketChat>
 }

@@ -11,6 +11,7 @@
       
       <UiFlex justify="end" items="center">
         <Setting />
+        <SocketChat class="ml-1" />
         <AuthSign v-if="!authStore.isLogin" class="ml-1" />
         <LazyAuthSlide v-else class="ml-1" />
       </UiFlex>

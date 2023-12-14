@@ -17,6 +17,8 @@ import { DBWheel, DBWheelHistory, DBWheelLuckyUser } from './wheel'
 import { DBGameRankGift, DBGameRankGiftHistory } from './game'
 import { DBLogAdmin, DBLogAdminSendItem, DBLogUser, DBLogUserIP, DBLogBlockIP } from './log'
 
+import { DBSocketChat } from './socket'
+
 export default (mongoose : Mongoose) : IGlobalDB => {
   return {
     Config: DBConfig(mongoose),
@@ -63,5 +65,7 @@ export default (mongoose : Mongoose) : IGlobalDB => {
     LogBlockIP: DBLogBlockIP(mongoose),
     LogUser: DBLogUser(mongoose),
     LogUserIP: DBLogUserIP(mongoose),
+
+    SocketChat: DBSocketChat(mongoose)
   }
 }

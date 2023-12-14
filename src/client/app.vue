@@ -9,12 +9,14 @@
 
 <script setup>
 import colors from '#tailwind-config/theme/colors'
+const { $socket } = useNuxtApp()
 const { imgLink } = useMakeLink()
 
 const appConfig = useAppConfig()
 
 const configStore = useConfigStore()
 const authStore = useAuthStore()
+const socketStore = useSocketStore()
 
 const primaryCookie = useCookie('theme-primary')
 const grayCookie = useCookie('theme-gray')
@@ -38,4 +40,10 @@ if(primaryCookie.value){
 if(grayCookie.value){
   appConfig.ui.gray = grayCookie.value
 }
+
+// Init Socket
+onMounted(() => {
+  $socket.emit('get-online')
+  $socket.on('online', data => socketStore.setOnline(data))
+})
 </script>
