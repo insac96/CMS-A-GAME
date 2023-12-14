@@ -7,8 +7,6 @@ export default defineEventHandler(async (event) => {
     const { username } = await readBody(event)
     if(!username) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    console.log(username)
-
     const user = await DB.User.findOne({ username: username }).select('_id')
     if(!user) throw 'Không thể tìm tài khoản người dùng'
 

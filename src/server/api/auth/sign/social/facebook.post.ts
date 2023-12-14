@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
     const runtimeConfig = useRuntimeConfig()
     const { code, redirect_uri } = await readBody(event)
     if(!code || !redirect_uri) throw 'Không tìm thấy mã ủy quyền hoặc URL ủy quyền'
-    console.log()
 
     // Get Config
     const config = await DB.Config.findOne().select('facebook') as IDBConfig

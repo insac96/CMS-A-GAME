@@ -38,7 +38,6 @@ export default async (event: H3Event, data : ISendData) : Promise<void> => {
     if(res.error) throw res.error
   }
   catch (e:any) {
-    console.log(e)
     throw e.toString()
   }
 }
