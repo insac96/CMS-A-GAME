@@ -7,4 +7,5 @@ export interface IDBSocketChat {
 
   user: Types.ObjectId
   text: string
+  type: string
 }

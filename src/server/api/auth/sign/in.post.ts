@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
     const user = await DB.User
     .findOne({ username: username.toLowerCase() })
-    .select('password block type token') as IDBUser
+    .select('username password block type token') as IDBUser
     
     if(!user) throw 'Tài khoản không tồn tại'
     if(md5(password) != user.password) throw 'Mật khẩu không chính xác'
@@ -37,6 +37,8 @@ export default defineEventHandler(async (event) => {
     })
 
     logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
+
+    await createChat(event, 'bot', `<b>${user.username}</b> vừa truy cập`, true)
     
     return resp(event, { message: 'Đăng nhập thành công' })
   } 

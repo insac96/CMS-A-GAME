@@ -68,7 +68,7 @@
   </UAlert>
 
   <!-- Modal User Box -->
-  <UModal v-model="modalUserBox" :ui="{ width: 'max-w-xs sm:max-w-xs' }">
+  <UModal v-model="modalUserBox">
     <DataUserBox :fetch-id="userSelect" />
   </UModal>
 

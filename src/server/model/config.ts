@@ -7,6 +7,7 @@ export const DBConfig = (mongoose : Mongoose) => {
     short_name: { type: String, default: 'Game' },
     description: { type: String, default: 'A Online Game Web' },
     og_image: { type: String },
+    logo_image: { type: String },
     makeby: { type: String, default: 'Galvin' },
     about: { type: String },
     privacy: { type: String },
@@ -28,6 +29,7 @@ export const DBConfig = (mongoose : Mongoose) => {
     game: {
       image: { type: String, default: '' },
       secret: { type: String, default: '' },
+      landing: { type: String, default: '' },
       api: {
         start: { type: String, default: '' },
         server: { type: String, default: '' },

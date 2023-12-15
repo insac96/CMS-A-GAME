@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3'
 import type { Types } from 'mongoose'
 
-export default async (event: H3Event, user : Types.ObjectId | string, text: string) : Promise<void> => {
+export default async (event: H3Event, user : Types.ObjectId | string, text: string, notify : boolean = false) : Promise<void> => {
   const match : any = {}
   if(user == 'bot') match['username'] = 'bot'
   else match['_id'] = user
@@ -17,13 +17,15 @@ export default async (event: H3Event, user : Types.ObjectId | string, text: stri
   if(!!userdata){
     const chat = await DB.SocketChat.create({
       user: userdata._id,
-      text: text
+      text: text,
+      type: !!notify ? 'notify' : 'message'
     })
 
     IO.emit('chat-push', {
       _id: chat._id,
       user: userdata,
-      text: text
+      text: text,
+      type: !!notify ? 'notify' : 'message'
     })
   }
 }

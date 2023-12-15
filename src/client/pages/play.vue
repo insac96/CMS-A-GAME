@@ -50,10 +50,3 @@ onBeforeRouteLeave(() => {
   window.removeEventListener('message', onFastBuy, false)
 })
 </script>
-
-<style lang="sass">
-.Iframe
-  overflow: hidden
-  outline: none
-  border: none
-</style>

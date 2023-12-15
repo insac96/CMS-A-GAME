@@ -1,19 +1,16 @@
 <template>
-  <div 
-    class="
-      relative
-      w-full h-full 
-      overflow-x-hidden overflow-y-auto
-      p-3
-    "
-    id="BoxChat"
-  >
+  <div id="BoxChat" class="relative w-full h-full overflow-x-hidden overflow-y-auto p-3">
     <LoadingTable class="rounded-none" v-if="!!loading" />
 
     <UiFlex type="col" class="w-full gap-y-4" v-else>
       <UiFlex v-for="chat in chats" :key="chat._id" class="w-full">
         <!-- Right -->
-        <UiFlex class="w-full space-x-2 max-w-[300px] ml-auto" items="start" justify="end" v-if="!!authStore.isLogin && authStore.profile._id == chat.user._id">
+        <UiFlex 
+          v-if="position(chat) == 'right'"
+          class="w-full space-x-2 max-w-[300px] ml-auto" 
+          items="start" 
+          justify="end"
+        >
           <!-- Info -->
           <div class="text-right">
             <UiFlex justify="end" class="mb-1">
@@ -35,7 +32,11 @@
         </UiFlex>
 
         <!-- Left -->
-        <UiFlex class="w-full space-x-2 max-w-[300px]" items="start" v-else>
+        <UiFlex 
+          v-if="position(chat) == 'left'"
+          class="w-full space-x-2 max-w-[300px]" 
+          items="start" 
+        >
           <!-- Avatar -->
           <UiImg :src="chat.user.avatar" w="1" h="1" img-w="100" img-h="100" class="w-8 h-8 rounded-full" />
           
@@ -54,6 +55,15 @@
 
             <UiText color="gray" class="leading-none mx-2 text-[0.7rem]" mini>{{ useDayJs().fromTime(chat.createdAt, null, true) }}</UiText>
           </div>
+        </UiFlex>
+
+        <!-- Center -->
+        <UiFlex
+          v-if="position(chat) == 'center'"
+          class="w-full px-4 text-center"
+          justify="center"
+        >
+          <UiText color="gray" size="xs" v-html="chat.text"></UiText>
         </UiFlex>
       </UiFlex>
     </UiFlex>
@@ -81,6 +91,17 @@ const chats = computed(() => {
     return new Date(a.createdAt) - new Date(b.createdAt);
   })
 })
+
+const position = (chat) => {
+  if(!!chat.type && chat.type == 'notify') return 'center'
+  else {
+    if(!authStore.isLogin) return 'left'
+    else {
+      if(authStore.profile._id == chat.user._id) return 'right'
+      else return 'left'
+    }
+  }
+}
 
 const toBottom = () => {
   const box = document.getElementById('BoxChat')

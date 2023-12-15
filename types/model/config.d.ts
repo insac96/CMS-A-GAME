@@ -9,6 +9,7 @@ export interface IDBConfig {
   short_name: string
   description: string
   og_image: string
+  logo_image: string
   makeby: string
   about: string
   privacy: string
@@ -30,6 +31,7 @@ export interface IDBConfig {
   game: {
     image: string
     secret: string
+    landing: string
     api: {
       start: string
       role: string
@@ -67,6 +69,7 @@ export interface IDBConfigStore {
   short_name: string
   description: string
   og_image: string
+  logo_image: string
   makeby: string
   contact: {
     name: string
@@ -84,6 +87,7 @@ export interface IDBConfigStore {
   }
   game: {
     image: string
+    landing: string
   }
   google: {
     client_id: string

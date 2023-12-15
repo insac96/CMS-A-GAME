@@ -7,6 +7,7 @@ export const useConfigStore = defineStore('config', () => {
     short_name: '...',
     description: '...',
     og_image: '',
+    logo_image: '',
     makeby: '',
     contact: {
       name: '',
@@ -24,6 +25,7 @@ export const useConfigStore = defineStore('config', () => {
     },
     game: {
       image: '',
+      landing: ''
     },
     google: {
       client_id: '',

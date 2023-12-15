@@ -4,7 +4,8 @@ import type { IDBSocketChat } from '~~/types'
 export const DBSocketChat = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBSocketChat>({ 
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
-    text: { type: String }
+    text: { type: String },
+    type: { type: String, default: 'message' }
   }, {
     timestamps: true
   })

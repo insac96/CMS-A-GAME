@@ -31,7 +31,15 @@
               <UTextarea autoresize v-model="state.description" name="input" />
             </UFormGroup>
 
-            <UFormGroup label="Ảnh">
+            <UFormGroup label="Logo">
+              <UiUploadImage v-model="state.logo_image">
+                <template #default="{ select, loading }">
+                  <UInput :model-value="state.logo_image" :loading="loading" readonly @click="select"/>
+                </template>
+              </UiUploadImage>
+            </UFormGroup>
+
+            <UFormGroup label="Banner">
               <UiUploadImage v-model="state.og_image">
                 <template #default="{ select, loading }">
                   <UInput :model-value="state.og_image" :loading="loading" readonly @click="select"/>
@@ -121,6 +129,10 @@
       <template #game>
         <UCard>
           <UForm :state="state">
+            <UFormGroup label="Landing">
+              <UInput v-model="state.game.landing" />
+            </UFormGroup>
+
             <UFormGroup label="Secret">
               <UInput v-model="state.game.secret" />
             </UFormGroup>
@@ -252,6 +264,7 @@ const state = ref({
   short_name: '',
   description: '',
   og_image: '',
+  logo_image: '',
   makeby: '',
 
   // about: '',
@@ -277,6 +290,7 @@ const state = ref({
   game: {
     image: '',
     secret: '',
+    landing: '',
     api: {
       start: '',
       server: '',

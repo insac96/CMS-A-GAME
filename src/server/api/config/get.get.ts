@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     .findOne()
     .select(`
       -about -privacy -terms 
-      -game.api 
+      -game.api -game.secret
       -facebook.client_secret 
       -zalo.client_secret 
       -tiktok.client_secret`
