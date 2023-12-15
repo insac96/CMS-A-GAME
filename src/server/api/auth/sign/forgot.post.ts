@@ -18,14 +18,14 @@ export default defineEventHandler(async (event) => {
     if(user.block == 1) throw 'Tài khoản đang bị khóa, không thể lấy lại mật khẩu'
     if(user.phone != phone) throw 'Số điện thoại của tài khoản không đúng'
 
-    user.password = md5(password)
-    await user.save()
-
     const token = jwt.sign({
       _id : user._id
     }, runtimeConfig.apiSecret, { expiresIn: '360d' })
 
     setCookie(event, 'token-auth', token, runtimeConfig.cookieConfig)
+    user.password = md5(password)
+    user.token = token
+    await user.save()
 
     await sendNotifyUser(event, {
       to: [ user._id ],
