@@ -41,6 +41,7 @@ export interface IDBConfig {
       rank_level: string
       mail: string
       recharge: string
+      os: string
     }
   },
   google: {

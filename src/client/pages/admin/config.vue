@@ -140,6 +140,10 @@
             <UFormGroup label="Path Image">
               <UInput v-model="state.game.image" />
             </UFormGroup>
+
+            <UFormGroup label="API Get OS">
+              <UInput v-model="state.game.api.os" />
+            </UFormGroup>
             
             <UFormGroup label="API Get Start">
               <UInput v-model="state.game.api.start" />
@@ -300,6 +304,7 @@ const state = ref({
       rank_power: '',
       mail: '',
       recharge: '',
+      os: ''
     }
   },
 

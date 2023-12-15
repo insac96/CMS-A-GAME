@@ -14,8 +14,7 @@
       <div class="p-2">
         <UTabs v-model="tabItem" :items="tabItems"></UTabs>
         <LazyAuthSignIn v-if="tabItem == 0" @done="start"></LazyAuthSignIn>
-        <LazyAuthSignUp v-if="tabItem == 1" @done="start"></LazyAuthSignUp>
-        <LazyAuthSignForgot v-if="tabItem == 2" @done="start"></LazyAuthSignForgot>
+        <LazyAuthSignFastUp v-if="tabItem == 1" @done="start"></LazyAuthSignFastUp>
       </div>
     </UModal>
   </div>
@@ -30,15 +29,11 @@ const { config } = useConfigStore()
 const authStore = useAuthStore()
 const gameStore = useGameStore()
 const modal = ref(false)
-const tabItem = ref(0) 
+const tabItem = ref(1) 
 const tabItems = [
   { label: 'Đăng nhập', key: 'in' },
-  { label: 'Đăng ký', key: 'up' },
-  { label: 'Mật khẩu', key: 'fotgot' },
+  { label: 'Đăng ký nhanh', key: 'up' }
 ]
-
-watch(() => authStore.modal, (val) => !!val && (modal.value = true))
-watch(modal, (val) => !val && authStore.setModal(false))
 
 const openSign = () => {
   if(!!authStore.isLogin) return start()
@@ -53,7 +48,7 @@ const start = async () => {
     navigateTo('/play')
   }
   catch (e) {
-    navigateTo('/main')
+    navigateTo('/')
   }
 }
 </script>

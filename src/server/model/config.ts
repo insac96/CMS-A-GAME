@@ -39,6 +39,7 @@ export const DBConfig = (mongoose : Mongoose) => {
         rank_power: { type: String, default: '' },
         mail: { type: String, default: '' },
         recharge: { type: String, default: '' },
+        os: { type: String, default: '' },
       }
     },
     google: {

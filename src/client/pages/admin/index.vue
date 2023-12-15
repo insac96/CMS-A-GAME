@@ -5,8 +5,10 @@
       :sub="`Chào mừng đến với trang quản trị viên của ${config.name}`"
       head-align="center"
       :dot="false"
-      class="pt-8"
+      class="my-8"
     >
+      <AdminGameOs />
+
       <UiFlex justify="center" class="gap-2 flex-wrap pt-4">
         <UButton 
           v-for="(item, index) in menus" :key="index"

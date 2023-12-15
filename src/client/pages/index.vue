@@ -4,9 +4,3 @@
     <DataNewsLatest />
   </div>
 </template>
-
-<script setup>
-definePageMeta({
-  middleware: 'landing'
-})
-</script>
