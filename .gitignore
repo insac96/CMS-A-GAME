@@ -18,4 +18,5 @@ dist/server
 src/server/routes/upload
 
 .env
+image-*
 
