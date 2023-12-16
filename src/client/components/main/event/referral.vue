@@ -1,8 +1,13 @@
 <template>
   <div>
-    <!-- <UiFlex justify="end" class="mb-2" v-if="!!authStore.isLogin">
-      <UButton size="sm" color="gray" @click="modal.statistical = true" >Thống kê</UButton>
-    </UiFlex> -->
+    <UCard class="mb-2" v-if="!!authStore.isLogin && !!authStore.profile.referral_code">
+      <UiFlex justify="between" >
+        <UiText size="sm" weight="semibold">Mã mời của bạn</UiText>
+        <UBadge size="md">
+          <UiText weight="semibold">{{ authStore.profile.referral_code }}</UiText>
+        </UBadge>
+      </UiFlex>
+    </UCard>
 
     <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }">
       <LoadingTable v-if="loading" />

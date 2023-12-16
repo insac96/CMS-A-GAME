@@ -75,6 +75,7 @@ export default defineEventHandler(async (event) => {
       username: user.username,
       level: realLevel.number,
       type: user.type,
+      referral_code: user.referral.code
     }
 
     userStore.notify = await DB.NotifyUser.count({ 

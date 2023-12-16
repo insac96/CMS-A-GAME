@@ -31,8 +31,8 @@ export default async (event: H3Event, data : any, type : string) : Promise<any> 
       match['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
     }
     if(!!typeCheck[type] && typeCheck[type] == 'month'){
-      const start : any = dayjs().startOf('date')
-      const end : any = dayjs().endOf('date')
+      const start : any = dayjs().startOf('month')
+      const end : any = dayjs().endOf('month')
       match['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
     }
 

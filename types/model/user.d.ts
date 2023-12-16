@@ -97,5 +97,6 @@ export interface IDBUserStore {
   username? : string
   level? : number
   type?: number
+  referral_code?: string
   notify?: number
 }
