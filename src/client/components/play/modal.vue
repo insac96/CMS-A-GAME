@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UiFlex justify="between" class="py-1 px-4 pr-2 bg-primary-700 dark:bg-primary-600 text-white">
+    <UiFlex justify="between" class="py-1 px-4 pr-2 bg-primary-700 dark:bg-primary-600 text-white rounded-t-lg">
       <UiText weight="semibold">{{ title }}</UiText>
       <UiIcon name="i-bx-x" size="7" pointer @click="emit('close')"/>
     </UiFlex>

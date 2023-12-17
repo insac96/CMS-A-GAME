@@ -29,6 +29,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@popperjs/core": "^2.11.8",
     "@vueup/vue-quill": "^1.2.0",
+    "@vueuse/core": "^10.7.0",
     "dayjs": "^1.11.10",
     "env-cmd": "^10.1.0",
     "jsonwebtoken": "^9.0.2",
