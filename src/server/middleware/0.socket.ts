@@ -1,6 +1,6 @@
-import { Server as SocketServer, ServerOptions } from 'socket.io'
+import { Server as SocketServer } from 'socket.io'
 import type { Server } from 'http'
-import SocketHandler from '../../socket'
+import SocketHandler from '../socket'
 
 declare global {
   var IO : SocketServer
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     
     if(!!httpServer){
       const io = new SocketServer(httpServer, {})
-      SocketHandler(io)
+      SocketHandler(event, io)
     }
   }
 })

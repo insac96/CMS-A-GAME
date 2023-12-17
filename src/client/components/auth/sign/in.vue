@@ -26,7 +26,8 @@
 </template>
 
 <script setup>
-const { setAuth } = useAuthStore()
+const { $socket } = useNuxtApp()
+const authStore = useAuthStore()
 const emit = defineEmits(['done'])
 
 const loading = ref(false)
@@ -51,7 +52,8 @@ const submit = async () => {
     await useAPI('auth/sign/in', JSON.parse(JSON.stringify(state.value)))
 
     const auth = await useAPI('auth/get')
-    setAuth(auth)
+    authStore.setAuth(auth)
+    $socket.emit('login', authStore.profile._id)
 
     loading.value = false
     emit('done')

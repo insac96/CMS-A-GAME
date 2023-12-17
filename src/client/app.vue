@@ -43,7 +43,10 @@ if(grayCookie.value){
 
 // Init Socket
 onMounted(() => {
-  $socket.emit('get-online')
+  $socket.emit('join-online', !!authStore.isLogin ? authStore.profile._id : null)
   $socket.on('online', data => socketStore.setOnline(data))
+  $socket.on('update-online', () => $socket.emit('update-online'))
+
+  $socket.on('page-reload', () => location.reload())
 })
 </script>

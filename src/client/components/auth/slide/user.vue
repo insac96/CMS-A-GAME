@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['close'])
 const authStore = useAuthStore()
+const emit = defineEmits(['close'])
 
 const signOut = async () => {
   await useAPI('auth/sign/out')

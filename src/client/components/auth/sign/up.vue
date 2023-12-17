@@ -92,7 +92,8 @@
 </template>
 
 <script setup>
-const { setAuth } = useAuthStore()
+const { $socket } = useNuxtApp()
+const authStore = useAuthStore()
 const emit = defineEmits(['done'])
 
 const loading = ref({
@@ -169,7 +170,9 @@ const start = async () => {
   try {
     loading.value.start = true
     const auth = await useAPI('auth/get')
-    setAuth(auth)
+    
+    authStore.setAuth(auth)
+    $socket.emit('login', authStore.profile._id)
 
     loading.value.start = false
     modal.value.referral = false

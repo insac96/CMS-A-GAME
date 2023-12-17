@@ -1,4 +1,4 @@
-import type { IDBLevel, IDBUser, IDBUserStore } from "~~/types"
+import type { IDBLevel, IDBUser, IDBUserLogin, IDBUserStore } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -19,6 +19,17 @@ export default defineEventHandler(async (event) => {
     const IP = getRequestIP(event, { xForwardedFor: true })
     user.login.update = now
     user.login.last_ip = IP as string
+
+    // User Login
+    let createNewLogin = false
+    const lastLogin = await DB.UserLogin.findOne({ user: user._id }).sort({ createdAt: -1 }).limit(1) as IDBUserLogin
+    if(!lastLogin) createNewLogin = true
+    else {
+      const lastLoginDate = formatDate(event, lastLogin.createdAt)
+      if(lastLoginDate.day != nowDate.day) createNewLogin = true
+    }
+
+    if(!!createNewLogin) await DB.UserLogin.create({ user: user._id })
 
     // Is Next Day
     if(
@@ -85,6 +96,10 @@ export default defineEventHandler(async (event) => {
     return resp(event, { result: userStore })
   } 
   catch (e:any) {
+    const auth = event.context.auth
+    await DB.SocketOnline.updateOne({ user: auth._id }, { user: null })
+    IO.emit('online-update')
+
     const runtimeConfig = useRuntimeConfig()
     deleteCookie(event, 'token-auth', runtimeConfig.cookieConfig)
     return resp(event, { code: 401, message: e.toString() })

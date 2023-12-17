@@ -63,6 +63,7 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-1',
     children: [
+      { label: 'Hệ thống', to: '/admin/socket/system' },
       { label: 'Kênh chat', to: '/admin/socket/chat' },
     ]
   },

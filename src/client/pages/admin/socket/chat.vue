@@ -9,8 +9,6 @@
           <USelectMenu v-model="page.search.by" :options="['USER', 'TEXT']" />
         </UiFlex>
       </UForm>
-
-      <UButton color="gray" :loading="loading.delAll" @click="delAllAction" class="ml-1">Xóa tất cả</UButton>
     </UiFlex>
     
     <!-- Table -->
@@ -111,8 +109,7 @@ const modal = ref({
 // Loading
 const loading = ref({
   load: true,
-  del: false,
-  delAll: false
+  del: false
 })
 
 // View User
@@ -128,20 +125,6 @@ const actions = (row) => [
     click: () => delAction(row._id)
   }]
 ]
-
-// Fetch
-const delAllAction = async () => {
-  try {
-    loading.value.delAll = true
-    await useAPI('socket/admin/chat/delAll')
-
-    loading.value.delAll = false
-    getList()
-  }
-  catch (e) {
-    loading.value.delAll = false
-  }
-}
 
 const delAction = async (_id) => {
   try {

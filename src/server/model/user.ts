@@ -1,5 +1,5 @@
 import type { Mongoose } from 'mongoose'
-import type { IDBUser } from '~~/types'
+import type { IDBUser, IDBUserLogin } from '~~/types'
 import md5 from 'md5'
 
 export const DBUser = (mongoose : Mongoose) => {
@@ -108,4 +108,15 @@ export const DBUser = (mongoose : Mongoose) => {
 
   autoCreate()
   return model
+}
+
+export const DBUserLogin = (mongoose : Mongoose) => {
+  const schema = new mongoose.Schema<IDBUserLogin>({ 
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+  }, {
+    timestamps: true
+  })
+
+  const model = mongoose.model('user_login_logs', schema)
+  return model 
 }

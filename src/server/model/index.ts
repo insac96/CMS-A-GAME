@@ -2,7 +2,7 @@ import type { IGlobalDB } from '~~/types'
 import type { Mongoose } from 'mongoose'
 import { DBConfig } from './config'
 import { DBNews, DBNewsCategory } from './news'
-import { DBUser } from './user'
+import { DBUser, DBUserLogin } from './user'
 import { DBLevel } from './level'
 import { DBGate } from './gate'
 import { DBPayment } from './payment'
@@ -17,7 +17,7 @@ import { DBWheel, DBWheelHistory, DBWheelLuckyUser } from './wheel'
 import { DBGameRankGift, DBGameRankGiftHistory } from './game'
 import { DBLogAdmin, DBLogAdminSendItem, DBLogUser, DBLogUserIP, DBLogBlockIP } from './log'
 
-import { DBSocketChat } from './socket'
+import { DBSocketChat, DBSocketOnline } from './socket'
 
 export default (mongoose : Mongoose) : IGlobalDB => {
   return {
@@ -27,6 +27,7 @@ export default (mongoose : Mongoose) : IGlobalDB => {
     News: DBNews(mongoose),
 
     User: DBUser(mongoose),
+    UserLogin: DBUserLogin(mongoose),
     Level: DBLevel(mongoose),
 
     Gate: DBGate(mongoose),
@@ -66,6 +67,7 @@ export default (mongoose : Mongoose) : IGlobalDB => {
     LogUser: DBLogUser(mongoose),
     LogUserIP: DBLogUserIP(mongoose),
 
+    SocketOnline: DBSocketOnline(mongoose),
     SocketChat: DBSocketChat(mongoose)
   }
 }

@@ -1,7 +1,7 @@
 import type { Model } from 'mongoose'
 export { IDBConfig, IDBConfigStore } from './config'
 export { IDBNews, IDBNewsCategory } from './news'
-export { IDBUser, IDBUserStore } from './user'
+export { IDBUser, IDBUserLogin, IDBUserStore } from './user'
 export { IDBLevel } from './level'
 export { IDBGate } from './gate'
 export { IDBPayment } from './payment'
@@ -16,7 +16,7 @@ export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
 export { IDBGameRankGift, IDBGameRankGiftHistory } from './game'
 export { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from './log'
 
-export { IDBSocketChat } from './socket'
+export { IDBSocketOnline, IDBSocketChat } from './socket'
 
 export interface IGlobalDB {
   Config: Model<IDBConfig>
@@ -25,6 +25,7 @@ export interface IGlobalDB {
   NewsCategory: Model<IDBNewsCategory>
 
   User: Model<IDBUser>
+  UserLogin: Model<IDBUserLogin>
   Level: Model<IDBLevel>
 
   Gate: Model<IDBGate>
@@ -64,5 +65,6 @@ export interface IGlobalDB {
   LogUser: Model<IDBLogUser>
   LogUserIP: Model<IDBLogUserIP>
 
+  SocketOnline: Model<IDBSocketOnline>
   SocketChat: Model<IDBSocketChat>
 }

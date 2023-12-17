@@ -92,6 +92,13 @@ export interface IDBUser {
   }
 }
 
+export interface IDBUserLogin {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  user: Types.ObjectId
+}
+
 export interface IDBUserStore {
   _id? : Types.ObjectId
   username? : string
