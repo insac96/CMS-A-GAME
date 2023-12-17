@@ -1,9 +1,13 @@
 <template>
   <header class="w-full bg-white/75 dark:bg-transparent backdrop-blur-xl">
     <UiFlex class="w-full h-[50px] max-h-[50px] px-2">
-      <LayoutPlayMenu class="mr-4" />
+      <LayoutPlayMenu class="mr-3" />
 
-      <UiLogo class="mr-auto"  />
+      <UiFlex class="mr-auto">
+        <NuxtLink to="/">
+          <UiLogo />
+        </NuxtLink>
+      </UiFlex>
 
       <UiFlex justify="end" items="center">
         <Setting class="ml-1" />
