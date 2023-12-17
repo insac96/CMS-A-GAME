@@ -1,7 +1,7 @@
 <template>
   <header class="sticky top-0 z-50 bg-white/75 dark:bg-transparent backdrop-blur-xl">
     <UContainer class="flex items-center h-[var(--header-size)] max-h-[var(--header-size)]">
-      <LayoutDefaultNavSlide class="mr-3"/>
+      <LayoutDefaultNavSlide class="mr-2"/>
       
       <UiFlex class="mr-auto">
         <NuxtLink to="/">

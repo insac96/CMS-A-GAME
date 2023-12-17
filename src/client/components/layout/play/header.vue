@@ -1,7 +1,7 @@
 <template>
-  <header class="w-full bg-white/75 dark:bg-transparent backdrop-blur-xl">
+  <header class="w-full bg-white/75 dark:bg-transparent backdrop-blur-xl" style="z-index: 200;">
     <UiFlex class="w-full h-[50px] max-h-[50px] px-2">
-      <LayoutPlayMenu class="mr-3" />
+      <LayoutPlayMenu class="mr-2" />
 
       <UiFlex class="mr-auto">
         <NuxtLink to="/">
