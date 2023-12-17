@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     // Shop Item Data
     const shopData = await DB.Shop
     .findOne({ _id: item }) 
-    .select('item price limit')
+    .select('item item_amount price limit')
     .populate({ path: 'item', select: 'item_id item_name type' }) as IDBShop
     if(!shopData) throw 'Vật phẩm không tồn tại'
 
@@ -71,7 +71,7 @@ export default defineEventHandler(async (event) => {
         role_id: role,
         title: 'Web Shop',
         content: 'Vật phẩm mua từ Web Shop',
-        items: [{ id: itemData.item_id, amount: parseInt(amount) }]
+        items: [{ id: itemData.item_id, amount: parseInt(amount) * shopData.item_amount }]
       })
     }
 

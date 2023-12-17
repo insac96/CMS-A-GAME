@@ -5,7 +5,9 @@ export interface IDBShop {
   _id: Types.ObjectId
   createdAt: Date
   updatedAt: Date
+
   item: Types.ObjectId | IDBItem
+  item_amount: number
   price: number
   limit: number
   display: number
@@ -15,6 +17,7 @@ export interface IDBShopHistory {
   _id: Types.ObjectId
   createdAt: Date
   updatedAt: Date
+  
   user: Types.ObjectId
   item: Types.ObjectId
   price: number

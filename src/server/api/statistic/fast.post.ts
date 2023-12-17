@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     }
     if(type == 'day' || type == 'month'){
       matchPayment['verify.time'] = { $gte: start['$d'], $lte: end['$d'] }
-      matchSignIn['login.update'] = { $gte: start['$d'], $lte: end['$d'] }
+      matchSignIn['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
       matchSignUp['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
     }
 
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       { $group: { _id: null, total: { $sum: '$money' }}}
     ])
 
-    const signin = await DB.User.count(matchSignIn)
+    const signin = await DB.UserLogin.count(matchSignIn)
     const signup = await DB.User.count(matchSignUp)
 
     return resp(event, {

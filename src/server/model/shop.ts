@@ -4,6 +4,7 @@ import type { IDBShop, IDBShopHistory } from '~~/types'
 export const DBShop = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBShop>({ 
     item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },
+    item_amount: { type: Number, default: 1, index: true },
     price: { type: Number, index: true },
     limit: { type: Number, default: 0, index: true },
     display: { type: Number, default: 1, index: true },

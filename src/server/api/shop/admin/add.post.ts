@@ -7,8 +7,12 @@ export default defineEventHandler(async (event) => {
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const body = await readBody(event)
-    const { item, price, limit } = body
+    const { item, item_amount, price, limit } = body
     if(!item || !price) throw 'Dữ liệu đầu vào không hợp lệ'
+    if(
+      !!isNaN(parseInt(item_amount))
+      || parseInt(item_amount) < 1
+    ) throw 'Số lượng không hợp lệ'
     if(
       !!isNaN(parseInt(price))
       || parseInt(price) < 1

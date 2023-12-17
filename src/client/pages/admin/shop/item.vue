@@ -29,6 +29,10 @@
           </UBadge>
         </template>
 
+        <template #item_amount-data="{ row }">
+          {{ !row.item_amount ? 1 : toMoney(row.item_amount) }}
+        </template>
+
         <template #price-data="{ row }">
           <UiText weight="semibold">{{ toMoney(row.price) }}</UiText>
         </template>
@@ -66,12 +70,16 @@
           <SelectItem v-model="stateAdd.item" :types="page.types" />
         </UFormGroup>
 
+        <UFormGroup label="Số lượng vật phẩm">
+          <UInput v-model="stateAdd.item_amount" type="number" />
+        </UFormGroup>
+
         <UFormGroup label="Giá tiền">
-          <UInput v-model="stateAdd.price" />
+          <UInput v-model="stateAdd.price" type="number" />
         </UFormGroup>
 
         <UFormGroup label="Giới hạn mua">
-          <UInput v-model="stateAdd.limit" />
+          <UInput v-model="stateAdd.limit" type="number" />
         </UFormGroup>
 
         <UFormGroup label="Hiển thị">
@@ -88,12 +96,16 @@
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
       <UForm :state="stateEdit" @submit="editAction" class="p-4">
-        <UFormGroup label="Giá tiền">
-          <UInput v-model="stateEdit.price" />
+        <UFormGroup label="Số lượng vật phẩm">
+          <UInput v-model="stateEdit.item_amount" type="number" />
         </UFormGroup>
 
+        <UFormGroup label="Giá tiền">
+          <UInput v-model="stateEdit.price" type="number" />
+        </UFormGroup>
+        
         <UFormGroup label="Giới hạn mua">
-          <UInput v-model="stateEdit.limit" />
+          <UInput v-model="stateEdit.limit" type="number" />
         </UFormGroup>
 
         <UFormGroup label="Hiển thị">
@@ -126,6 +138,10 @@ const columns = [
   },{
     key: 'type',
     label: 'Loại',
+    sortable: true
+  },{
+    key: 'item_amount',
+    label: 'Số lượng',
     sortable: true
   },{
     key: 'price',
@@ -171,12 +187,14 @@ watch(() => page.value.search, (val) => !val && getList())
 // State
 const stateAdd = ref({
   item: null,
+  item_amount: 1,
   price: null,
   limit: 0,
   display: 1
 })
 const stateEdit = ref({
   _id: null,
+  item_amount: null,
   price: null,
   limit: null,
   display: null
@@ -190,6 +208,7 @@ const modal = ref({
 
 watch(() => modal.value.add, (val) => !val && (stateAdd.value = {
   item: null,
+  item_amount: 1,
   price: null,
   limit: 0,
   display: 1
