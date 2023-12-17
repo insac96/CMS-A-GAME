@@ -71,7 +71,7 @@ export default defineEventHandler(async (event) => {
         role_id: role,
         title: 'Web Shop',
         content: 'Vật phẩm mua từ Web Shop',
-        items: [{ id: itemData.item_id, amount: parseInt(amount) * shopData.item_amount }]
+        items: [{ id: itemData.item_id, amount: parseInt(amount) * (shopData.item_amount || 1) }]
       })
     }
 
