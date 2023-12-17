@@ -7,7 +7,7 @@
       :dot="false"
       class="my-8"
     >
-      <AdminGameOs />
+      <AdminGameOs class="md:max-w-xl max-w-full mx-auto" />
 
       <UiFlex justify="center" class="gap-2 flex-wrap pt-4">
         <UButton 
