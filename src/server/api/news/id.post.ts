@@ -9,8 +9,6 @@ export default defineEventHandler(async (event) => {
     .populate({ path: 'updater', select: 'avatar username' })
 
     if(!news) throw 'Tin tức không tồn tại'
-
-    news.updater.username = 'Quản trị viên'
     return resp(event, { result: news })
   } 
   catch (e:any) {
