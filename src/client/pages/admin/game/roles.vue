@@ -50,32 +50,7 @@
 
     <!-- Modal Send -->
     <UModal v-model="modal.send" prevent-close :ui="{width: 'sm:max-w-[800px]'}">
-      <UForm :state="stateSend" :validate="validate" @submit="actionSend" class="p-4">
-        <UFormGroup label="Nhân vật">
-          <UInput :model-value="`${stateSend.username} - ${stateSend.role_name}`" readonly />
-        </UFormGroup>
-
-        <UFormGroup label="Tiêu đề">
-          <UInput v-model="stateSend.title" placeholder="Có thể để trống" />
-        </UFormGroup>
-
-        <UFormGroup label="Nội dung">
-          <UInput v-model="stateSend.content" placeholder="Có thể để trống" />
-        </UFormGroup>
-
-        <UFormGroup label="Lý do" name="reason">
-          <UTextarea v-model="stateSend.reason" />
-        </UFormGroup>
-
-        <UFormGroup name="items">
-          <SelectItemList v-model="stateSend.items" :types="['game_item']" />
-        </UFormGroup>
-
-        <UiFlex justify="end" class="mt-6">
-          <UButton type="submit" :loading="loading.send">Gửi</UButton>
-          <UButton color="gray" @click="modal.send = false" :disabled="loading.send" class="ml-1">Đóng</UButton>
-        </UiFlex>
-      </UForm>
+      <AdminGameSend class="p-4" :user="stateSend.user" :server="stateSend.server" @close="modal.send = false" />
     </UModal>
   </UiContent>
 </template>
@@ -135,15 +110,7 @@ watch(() => page.value.server_id, () => getList())
 // State
 const stateSend = ref({
   user: null,
-  server: null,
-  role: null,
-  title: 'Quà từ GM',
-  content: 'Chúc bạn chơi game vui vẻ',
-  reason: null,
-  items: [],
-
-  username: null,
-  role_name: null,
+  server: null
 })
 
 const stateUser = ref(undefined)
@@ -153,19 +120,6 @@ const modal = ref({
   send: false,
   user: false
 })
-
-watch(() => modal.value.send, (val) => !val && (stateSend.value = {
-  user: null,
-  server: null,
-  role: null,
-  title: null,
-  content: null,
-  reason: null,
-  items: [],
-
-  username: null,
-  role_name: null,
-}))
 
 // Loading
 const loading = ref({
@@ -200,12 +154,8 @@ const openSend = async (row) => {
       username: row.account
     })
 
-    stateSend.value.user = id
     stateSend.value.server = page.value.server_id
-    stateSend.value.role = row.role_id
-    stateSend.value.username = row.account
-    stateSend.value.role_name = row.role_name
-
+    stateSend.value.user = id
     loading.value.send = false
     modal.value.send = true
   }
@@ -227,26 +177,6 @@ const openPlay = async (row) => {
   }
   catch (e) {
     loading.value.play = false
-  }
-}
-
-const validate = (state) => {
-  const errors = []
-  if(!state.reason) errors.push({ path: 'reason', message: 'Vui lòng nhập lý do' })
-  if(state.items.length < 1) errors.push({ path: 'items', message: 'Vui lòng thêm vật phẩm' })
-  return errors
-}
-
-const actionSend = async () => {
-  try {
-    loading.value.send = true
-    await useAPI('game/admin/send', JSON.parse(JSON.stringify(stateSend.value)))
-
-    loading.value.send = false
-    modal.value.send = false
-  }
-  catch(e) {
-    loading.value.send = false
   }
 }
 

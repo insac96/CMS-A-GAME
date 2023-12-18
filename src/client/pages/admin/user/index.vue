@@ -264,6 +264,11 @@
         </UiFlex>
       </UForm>
     </UModal>
+
+    <!-- Modal Send Item-->
+    <UModal v-model="modal.sendItem" preventClose :ui="{width: 'sm:max-w-[800px]'}">
+      <AdminGameSend class="p-4" :user="stateSendItem.user" @close="modal.sendItem = false" />
+    </UModal>
   </UiContent>
 </template>
 
@@ -402,6 +407,10 @@ const stateEditDice = ref({
   dice: null
 })
 
+const stateSendItem = ref({
+  user: null
+})
+
 
 // Modal
 const modal = ref({
@@ -412,7 +421,8 @@ const modal = ref({
   editSpend: false,
   editLogin: false,
   editWheel: false,
-  editDice: false
+  editDice: false,
+  sendItem: false
 })
 
 watch(() => modal.value.editCurrency, (val) => !val && (stateEditCurrency.value = {
@@ -501,6 +511,14 @@ const actions = (row) => [
       modal.value.editSpend = true
     }
   }],
+  [{
+    label: 'Gửi vật phẩm',
+    icon: 'i-bx-mail-send',
+    click: () => {
+      stateSendItem.value.user = row._id
+      modal.value.sendItem = true
+    }
+  }]
   // [{
   //   label: 'Sửa d.liệu vòng quay',
   //   icon: 'i-bx-color',
