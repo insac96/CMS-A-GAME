@@ -8,6 +8,7 @@ export const DBConfig = (mongoose : Mongoose) => {
     description: { type: String, default: 'A Online Game Web' },
     og_image: { type: String },
     logo_image: { type: String },
+    logo_long_image: { type: String },
     makeby: { type: String, default: 'Galvin' },
     about: { type: String },
     privacy: { type: String },

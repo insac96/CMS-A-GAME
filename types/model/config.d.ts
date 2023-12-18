@@ -10,6 +10,7 @@ export interface IDBConfig {
   description: string
   og_image: string
   logo_image: string
+  logo_long_image: string
   makeby: string
   about: string
   privacy: string
@@ -71,6 +72,7 @@ export interface IDBConfigStore {
   description: string
   og_image: string
   logo_image: string
+  logo_long_image: string
   makeby: string
   contact: {
     name: string

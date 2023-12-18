@@ -1,34 +1,38 @@
 <template>
+  <div>
+    <div id="ButtonDrag" class="shadow-xl rounded-full touch-none overflow-hidden ring-2 ring-primary" :style="style" ref="el" @click="openMenu">
+      <UiImg v-if="!!configStore.config.logo_image" :src="configStore.config.logo_image" w="1" h="1" img-w="100" img-h="100" class="w-full h-full" />
+      <UiIcon v-else name="i-bx-menu" size="8" />
+    </div>
 
-  <div id="ButtonDrag" class="dark:bg-primary-500 bg-primary-400 shadow-xl rounded-full" :style="style" ref="el" >
-    <UiIcon name="i-bx-menu" size="6" @click="openMenu"/>
+    <div class="fixed bg-black/50 w-full h-full top-0 left-0" style="z-index: 99;" v-if="!!dragging"></div>
   </div>
 </template>
 
 <script setup>
 import { useDraggable } from '@vueuse/core'
 
-const emits = defineEmits(['open', 'startdrag', 'enddrag'])
+const configStore = useConfigStore()
+const emits = defineEmits(['open'])
 
 const el = ref(null)
 
 const dragging = ref(false)
 
 const { style } = useDraggable(el, {
-  initialValue: { x: -10, y: -10 },
+  initialValue: { x: -8, y: -8 },
   exact: false,
   preventDefault: true,
   onStart: () => {
     dragging.value = true
-    emits('startdrag')
   },
   onEnd: () => {
     dragging.value = false
-    emits('enddrag')
   }
 })
 
 const openMenu = () => {
+  if(!!dragging.value) return
   emits('open')
 }
 </script>
@@ -39,8 +43,12 @@ const openMenu = () => {
   display: inline-flex
   align-items: center
   justify-content: center
+  min-width: 45px
+  min-height: 45px
   width: 45px
   height: 45px
+  max-width: 45px
+  max-height: 45px
   z-index: 100
   cursor: pointer
 </style>

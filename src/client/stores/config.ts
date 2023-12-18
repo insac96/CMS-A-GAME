@@ -8,6 +8,7 @@ export const useConfigStore = defineStore('config', () => {
     description: '...',
     og_image: '',
     logo_image: '',
+    logo_long_image: '',
     makeby: '',
     contact: {
       name: '',

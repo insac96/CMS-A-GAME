@@ -31,10 +31,18 @@
               <UTextarea autoresize v-model="state.description" name="input" />
             </UFormGroup>
 
-            <UFormGroup label="Logo">
+            <UFormGroup label="Logo Vuông">
               <UiUploadImage v-model="state.logo_image">
                 <template #default="{ select, loading }">
                   <UInput :model-value="state.logo_image" :loading="loading" readonly @click="select"/>
+                </template>
+              </UiUploadImage>
+            </UFormGroup>
+
+            <UFormGroup label="Logo Dài">
+              <UiUploadImage v-model="state.logo_long_image">
+                <template #default="{ select, loading }">
+                  <UInput :model-value="state.logo_long_image" :loading="loading" readonly @click="select"/>
                 </template>
               </UiUploadImage>
             </UFormGroup>
@@ -269,6 +277,7 @@ const state = ref({
   description: '',
   og_image: '',
   logo_image: '',
+  logo_long_image: '',
   makeby: '',
 
   // about: '',
