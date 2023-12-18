@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div id="ButtonDrag" class="shadow-xl rounded-full touch-none overflow-hidden ring-2 ring-primary" :style="style" ref="el" @click="openMenu">
+    <div id="ButtonDrag" class="bg-gray-900 backdrop-blur-xl shadow-xl rounded-full touch-none overflow-hidden ring-2 ring-primary" :style="style" ref="el" @click="openMenu">
       <UiImg v-if="!!configStore.config.logo_image" :src="configStore.config.logo_image" w="1" h="1" img-w="100" img-h="100" class="w-full h-full" />
-      <UiIcon v-else name="i-bx-menu" size="8" />
+      
+      <UiIcon v-else name="i-bx-menu" color="primary" size="8" />
     </div>
 
     <div class="fixed bg-black/50 w-full h-full top-0 left-0" style="z-index: 99;" v-if="!!dragging"></div>

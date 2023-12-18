@@ -22,7 +22,7 @@
         }"
       >
         <template #header>
-          <SocketChatOnline @close="open = false" />
+          <SocketOnline @close="open = false" />
         </template>
 
         <SocketChatList />
