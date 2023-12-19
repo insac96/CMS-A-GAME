@@ -31,7 +31,7 @@
               <UTextarea autoresize v-model="state.description" name="input" />
             </UFormGroup>
 
-            <UFormGroup label="Logo Vuông">
+            <UFormGroup label="Logo vuông">
               <UiUploadImage v-model="state.logo_image">
                 <template #default="{ select, loading }">
                   <UInput :model-value="state.logo_image" :loading="loading" readonly @click="select"/>
@@ -39,7 +39,7 @@
               </UiUploadImage>
             </UFormGroup>
 
-            <UFormGroup label="Logo Dài">
+            <UFormGroup label="Logo dài">
               <UiUploadImage v-model="state.logo_long_image">
                 <template #default="{ select, loading }">
                   <UInput :model-value="state.logo_long_image" :loading="loading" readonly @click="select"/>
@@ -53,6 +53,14 @@
                   <UInput :model-value="state.og_image" :loading="loading" readonly @click="select"/>
                 </template>
               </UiUploadImage>
+            </UFormGroup>
+
+            <UFormGroup label="Link tải APK">
+              <UInput v-model="state.download.apk" />
+            </UFormGroup>
+
+            <UFormGroup label="Link tải IOS">
+              <UInput v-model="state.download.ios" />
             </UFormGroup>
 
             <UiFlex justify="end" class="mt-4">
@@ -280,6 +288,11 @@ const state = ref({
   logo_long_image: '',
   makeby: '',
 
+  download: {
+    apk: '',
+    ios: '',
+  },
+
   // about: '',
   // privacy: '',
   // terms: '',
@@ -387,7 +400,7 @@ const menu = [
 
 const getConfig = async () => {
   const config = await useAPI('config/admin/get')
-  state.value = config
+  state.value = Object.assign(state.value, config)
   load.value = false
 }
 

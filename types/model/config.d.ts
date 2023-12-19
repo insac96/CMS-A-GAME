@@ -15,6 +15,10 @@ export interface IDBConfig {
   about: string
   privacy: string
   terms: string
+  download: {
+    apk: string
+    ios: string
+  }
   contact: {
     name: string
     phone: string
@@ -74,6 +78,10 @@ export interface IDBConfigStore {
   logo_image: string
   logo_long_image: string
   makeby: string
+  download: {
+    apk: string
+    ios: string
+  }
   contact: {
     name: string
     phone: string

@@ -1,34 +1,26 @@
 <template>
   <UContainer :ui="{ padding: 'p-0 sm:p-0 lg:p-0' }">
-    <UiContent 
-      :title="`Hello, ${profile.username}`" 
-      :sub="`Chào mừng đến với trang quản trị viên của ${config.name}`"
-      head-align="center"
-      :dot="false"
-      class="my-8"
-    >
-      <AdminGameOs class="md:max-w-xl max-w-full mx-auto" />
+    <AdminGameOs class="md:max-w-xl max-w-full mx-auto" />
 
-      <UiFlex justify="center" class="gap-2 flex-wrap pt-4">
-        <UButton 
-          v-for="(item, index) in menus" :key="index"
-          size="xl" 
-          class="
-            flex flex-col justify-center 
-            h-36 w-36
-          "
-          :ui="{
-            icon: { base: 'mb-2', size: { xl: 'h-10 w-10' } },
-            font: 'font-semibold'
-          }"
-          :icon="item.icon"
-          :color="item.color"
-          @click="navigateTo(item.to)"
-        >
-          {{ item.label }}
-        </UButton>
-      </UiFlex>
-    </UiContent>
+    <UiFlex justify="center" class="gap-2 flex-wrap pt-4">
+      <UButton 
+        v-for="(item, index) in menus" :key="index"
+        size="xl" 
+        class="
+          flex flex-col justify-center 
+          h-36 w-36
+        "
+        :ui="{
+          icon: { base: 'mb-2', size: { xl: 'h-10 w-10' } },
+          font: 'font-semibold'
+        }"
+        :icon="item.icon"
+        :color="item.color"
+        @click="navigateTo(item.to)"
+      >
+        {{ item.label }}
+      </UButton>
+    </UiFlex>
   </UContainer>
 </template>
 

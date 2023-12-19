@@ -1,23 +1,29 @@
 <template>
   <UiContent :title="config.name" :sub="config.description">
-    <div class="relative"> 
-      <UiImg 
-        :src="config.og_image"
-        w="16" h="9"
-        img-size="xs:300px sm:600 md:800px 1000px"
-        alt="Banner"
-        class="transition-all rounded-xl shadow-md hover:shadow-lg"
-        preload
-      ></UiImg>
+    <template #right-head>
+      <UiFlex class="ml-4">
+        <PlayBtn text="Chơi" size="sm"></PlayBtn>
+        <UButton icon="i-bxl-android" color="gray" class="ml-1" v-if="!!config.download.apk" @click="download(config.download.apk)"></UButton>
+        <UButton icon="i-bxl-apple" color="gray" class="ml-1" v-if="!!config.download.ios" @click="download(config.download.ios)"></UButton>
+      </UiFlex>
+    </template>
 
-      <div class="flex items-end justify-center absolute w-full h-full top-0 left-0 md:hidden">
-        <PlayBtn text="Bấm Chơi Ngay" size="md" class="relative shadow-2xl bottom-1"></PlayBtn>
-      </div>
-    </div>
+    <UiImg 
+      :src="config.og_image"
+      w="16" h="9"
+      img-size="xs:300px sm:600 md:800px 1000px"
+      alt="Banner"
+      class="transition-all rounded-xl shadow-md hover:shadow-lg"
+      preload
+    ></UiImg>
   </UiContent>
 </template>
 
 <script setup>
 const configStore = useConfigStore()
 const config = computed(() => configStore.config)
+
+const download = (link) => {
+  window.open(link, '_blank'); 
+}
 </script>

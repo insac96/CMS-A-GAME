@@ -73,7 +73,7 @@ export default defineNuxtConfig({
   },
 
   ui: {
-    icons: ['bxs', 'bx'],
+    icons: ['bxs', 'bx', 'bxl'],
   },
 
   image: {

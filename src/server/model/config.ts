@@ -13,6 +13,10 @@ export const DBConfig = (mongoose : Mongoose) => {
     about: { type: String },
     privacy: { type: String },
     terms: { type: String },
+    download: {
+      apk: { type: String },
+      ios: { type: String },
+    },
     contact: {
       name: { type: String, default: '' },
       phone: { type: String, default: '' },
