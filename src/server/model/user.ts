@@ -16,6 +16,10 @@ export const DBUser = (mongoose : Mongoose) => {
     phone: { type: String },
     avatar: { type: String, default: '/images/user/default.png' },
     level: { type: mongoose.Schema.Types.ObjectId, ref: 'levels' },
+    reg: {
+      landing: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_landing' },
+      platform: { type: String, default: 'local' },
+    },
     referral: {
       code: { type: String },
       person: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },

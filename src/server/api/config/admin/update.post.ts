@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const data = await readBody(event)
-    const { change, name, short_name, description } = data
+    const { change, name, short_name, description, logo_image } = data
     if(!change || !name || !short_name || !description) throw 'Dữ liệu đầu vào không hợp lệ'
     
     if(change == 'basic') logAdmin(event, 'Cập nhật thông tin <b>cơ bản</b> trang web')
@@ -16,6 +16,14 @@ export default defineEventHandler(async (event) => {
     delete data['_id']
     delete data['change']
     await DB.Config.updateMany({}, data)
+
+    if(!!logo_image){
+      await DB.User.updateMany({
+        avatar: '/images/user/default.png'
+      }, {
+        avatar: logo_image
+      })
+    }
 
     return resp(event, { message: 'Cập nhật thành công' })
   } 

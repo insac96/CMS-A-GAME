@@ -15,6 +15,7 @@ export { IDBDice, IDBDiceHistory, IDBDiceLuckyUser } from './dice'
 export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
 export { IDBGameRankGift, IDBGameRankGiftHistory } from './game'
 export { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from './log'
+export { IDBAdsLanding } from './ads'
 
 export { IDBSocketOnline, IDBSocketChat } from './socket'
 
@@ -67,4 +68,6 @@ export interface IGlobalDB {
 
   SocketOnline: Model<IDBSocketOnline>
   SocketChat: Model<IDBSocketChat>
+
+  AdsLanding: Model<IDBAdsLanding>
 }

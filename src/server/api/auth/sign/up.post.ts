@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import md5 from 'md5'
-import type { IDBUser } from "~~/types"
+import type { IDBConfig, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -25,6 +25,10 @@ export default defineEventHandler(async (event) => {
     if (!password) throw 'Vui lòng nhập mật khẩu'
     if (password.length < 6 || password.length > 15) throw 'Mật khẩu trong khoảng 6-15 ký tự'
     if (!!password.match(/\s/g)) throw 'Mật khẩu không có khoảng cách'
+
+    // Config
+    const config = await DB.Config.findOne({}).select('logo_image') as IDBConfig
+    if(!config) throw 'Không tìm thấy cấu hình trang'
 
     // Check User
     const userCheck = await DB.User
@@ -64,6 +68,7 @@ export default defineEventHandler(async (event) => {
       password: md5(password),
       phone: phone,
       email: email,
+      avatar: config.logo_image || '/images/user/default.png',
       referral: referral
     })
 

@@ -27,6 +27,8 @@
 <script setup>
 const { $socket } = useNuxtApp()
 const authStore = useAuthStore()
+
+const props = defineProps(['landing'])
 const emit = defineEmits(['done'])
 
 const loading = ref(false)
@@ -34,7 +36,8 @@ const loading = ref(false)
 const state = ref({
   username: undefined,
   password: undefined,
-  confirm_password: undefined
+  confirm_password: undefined,
+  landing: undefined
 })
 
 const validate = (state) => {
@@ -60,6 +63,8 @@ const validate = (state) => {
 const submit = async () => {
   try {
     loading.value = true
+
+    state.value.landing = props.landing
     await useAPI('auth/sign/fastUp', JSON.parse(JSON.stringify(state.value)))
 
     const auth = await useAPI('auth/get')

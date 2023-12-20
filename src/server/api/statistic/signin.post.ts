@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
         $group: {
           _id: '$timeformat',
           time: { $min: '$createdAt' },
-          count: { $sum: 1 },
+          count: { $count: {} },
         }
       },
       { $match: match },

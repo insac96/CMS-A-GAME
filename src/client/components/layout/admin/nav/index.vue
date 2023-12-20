@@ -40,6 +40,7 @@
       <template #tab-9><UVerticalNavigation :links="navItems[9].children" @click="emit('to')"/></template>
       <template #tab-10><UVerticalNavigation :links="navItems[10].children" @click="emit('to')"/></template>
       <template #tab-11><UVerticalNavigation :links="navItems[11].children" @click="emit('to')"/></template>
+      <template #tab-12><UVerticalNavigation :links="navItems[12].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -58,10 +59,19 @@ const navItems = [
     ]
   },
   {
+    label: 'Quảng cáo',
+    icon: 'i-bx-spreadsheet',
+    defaultOpen: false,
+    slot: 'tab-1',
+    children: [
+      { label: 'Landing', to: '/admin/ads/landing' }
+    ]
+  },
+  {
     label: 'Thời gian thực',
     icon: 'i-bxs-timer',
     defaultOpen: false,
-    slot: 'tab-1',
+    slot: 'tab-2',
     children: [
       { label: 'Hệ thống', to: '/admin/socket/system' },
       { label: 'Kênh chat', to: '/admin/socket/chat' },
@@ -71,7 +81,7 @@ const navItems = [
     label: 'Tin tức',
     icon: 'i-bx-news',
     defaultOpen: false,
-    slot: 'tab-2',
+    slot: 'tab-3',
     children: [
     { label: 'Danh mục', to: '/admin/news/category' }, 
     { label: 'Danh sách', to: '/admin/news' }, 
@@ -81,7 +91,7 @@ const navItems = [
     label: 'Tài khoản',
     icon: 'i-bx-user',
     defaultOpen: false,
-    slot: 'tab-3',
+    slot: 'tab-4',
     children: [
       { label: 'Danh sách', to: '/admin/user' }, 
       { label: 'Cấp độ', to: '/admin/user/level' }, 
@@ -91,7 +101,7 @@ const navItems = [
     label: 'Nạp tiền',
     icon: 'i-bx-credit-card',
     defaultOpen: false,
-    slot: 'tab-4',
+    slot: 'tab-5',
     children: [
       { label: 'Kênh nạp', to: '/admin/payment/gate' }, 
       { label: 'Danh sách', to: '/admin/payment' }, 
@@ -101,7 +111,7 @@ const navItems = [
     label: 'Rút tiền',
     icon: 'i-bx-money-withdraw',
     defaultOpen: false,
-    slot: 'tab-5',
+    slot: 'tab-6',
     children: [
       { label: 'Danh sách', to: '/admin/withdraw' }, 
     ]
@@ -110,7 +120,7 @@ const navItems = [
     label: 'Trò chơi',
     icon: 'i-bx-cube-alt',
     defaultOpen: false,
-    slot: 'tab-6',
+    slot: 'tab-7',
     children: [
       { label: 'Vật phẩm', to: '/admin/game/item' },
       // { label: 'Gửi vật phẩm', to: '/admin/game/send' },
@@ -122,7 +132,7 @@ const navItems = [
     label: 'Giftcode',
     icon: 'i-bx-barcode-reader',
     defaultOpen: false,
-    slot: 'tab-7',
+    slot: 'tab-8',
     children: [
       { label: 'Danh sách', to: '/admin/giftcode' }, 
       { label: 'Lịch sử', to: '/admin/giftcode/history' }, 
@@ -132,7 +142,7 @@ const navItems = [
     label: 'Cửa hàng',
     icon: 'i-bx-shopping-bag',
     defaultOpen: false,
-    slot: 'tab-8',
+    slot: 'tab-9',
     children: [
       { label: 'Vật phẩm', to: '/admin/shop/item' }, 
       { label: 'Tiền tệ', to: '/admin/shop/currency' }, 
@@ -143,7 +153,7 @@ const navItems = [
     label: 'Sự Kiện',
     icon: 'i-bx-calendar',
     defaultOpen: false,
-    slot: 'tab-9',
+    slot: 'tab-10',
     children: [
       { label: 'Đăng nhập', to: '/admin/event/login' }, 
       { label: 'Tích nạp', to: '/admin/event/pay' }, 
@@ -156,7 +166,7 @@ const navItems = [
     label: 'Mini Game',
     icon: 'i-bx-game',
     defaultOpen: false,
-    slot: 'tab-10',
+    slot: 'tab-11',
     children: [
       { label: 'Vòng quay', to: '/admin/minigame/wheel' }, 
       { label: 'Xúc xắc', to: '/admin/minigame/dice' }
@@ -166,7 +176,7 @@ const navItems = [
     label: 'Nhật ký',
     icon: 'i-bx-book',
     defaultOpen: false,
-    slot: 'tab-11',
+    slot: 'tab-12',
     children: [
       { label: 'Quản trị viên', to: '/admin/log/admin' }, 
       { label: 'Gửi vật phẩm', to: '/admin/log/adminSendItem' },

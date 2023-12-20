@@ -5,7 +5,7 @@ import { IDBUser } from '~~/types'
 export default defineEventHandler(async (event) => {
   try {
     const runtimeConfig = useRuntimeConfig()
-    const { username, password } = await readBody(event)
+    const { username, password, landing } = await readBody(event)
     if(!username || !password) throw 'Vui lòng nhập đầy đủ thông tin'
 
     const user = await DB.User
@@ -39,6 +39,9 @@ export default defineEventHandler(async (event) => {
     logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
 
     await createChat(event, 'bot', `<b>${user.username}</b> vừa truy cập`, true)
+
+    const landingData = await DB.AdsLanding.findOne({ _id: landing }).select('_id')
+    if(!!landingData) await DB.AdsLanding.updateOne({ _id: landing }, { $inc: { 'sign.in': 1 }})
     
     return resp(event, { message: 'Đăng nhập thành công' })
   } 

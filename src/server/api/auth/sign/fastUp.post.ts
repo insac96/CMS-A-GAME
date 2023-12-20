@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import md5 from 'md5'
-import type { IDBUser } from "~~/types"
+import type { IDBAdsLanding, IDBConfig, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
     const runtimeConfig = useRuntimeConfig()
-    const { username, password, confirm_password } = await readBody(event)
+    const { username, password, confirm_password, landing } = await readBody(event)
 
     if (!username) throw 'Vui lòng nhập tài khoản'
     if (username.length < 6 || username.length > 15) throw 'Tài khoản trong khoảng 6-15 ký tự'
@@ -23,6 +23,10 @@ export default defineEventHandler(async (event) => {
     if (!confirm_password) throw 'Vui lòng nhập mật khẩu xác nhận'
     if (password != confirm_password) throw 'Mật khẩu xác nhận không khớp'
 
+    // Config
+    const config = await DB.Config.findOne({}).select('logo_image') as IDBConfig
+    if(!config) throw 'Không tìm thấy cấu hình trang'
+
     // Check User
     const userCheck = await DB.User
     .findOne({ username: username })
@@ -37,11 +41,20 @@ export default defineEventHandler(async (event) => {
     const IP = getRequestIP(event, { xForwardedFor: true })
     const logIP = await DB.LogUserIP.count({ ip: IP })
     if(logIP > 30) throw 'IP đã vượt quá giới hạn tạo tài khoản'
+
+    // Landing
+    const landingData = await DB.AdsLanding.findOne({ _id: landing }).select('_id') as IDBAdsLanding
+    if(!landingData) throw 'Mã Landing không tồn tại'
+    await DB.AdsLanding.updateOne({ _id: landing }, { $inc: { 'sign.up': 1 }})
     
     // Create
     const user = await DB.User.create({
       username: username,
       password: md5(password),
+      avatar: config.logo_image || '/images/user/default.png',
+      reg: {
+        landing: landingData._id
+      },
       referral: referral
     })
 
@@ -75,7 +88,7 @@ export default defineEventHandler(async (event) => {
     })
 
     await createChat(event, 'bot', `Chào mừng thành viên mới <b>${user.username}</b>`)
-    
+
     return resp(event, { message: 'Đăng ký thành công' })
   } 
   catch (e:any) {

@@ -18,6 +18,10 @@ export interface IDBUser {
   phone: string
   avatar: string
   level: Types.ObjectId | IDBLevel
+  reg: {
+    landing: Types.ObjectId
+    platform: string
+  }
   referral: {
     code: string
     person: Types.ObjectId
