@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
     // Giftcode
     const giftcodeData = await DB.Giftcode
-    .findOne({ code: code, display: 1 })
+    .findOne({ code: code.toUpperCase(), display: 1 })
     .populate({
       path: 'gift.item',
       select: 'item_name item_image type'
