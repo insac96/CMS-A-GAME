@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     const { notice } = await readBody(event)
     if(!notice) throw 'Vui lòng thêm nội dung thông báo'
 
-    IO.emit('page-reload', notice)
+    IO.emit('notice-reload', notice)
     return resp(event, { message: 'Thao tác thành công' })
   } 
   catch (e:any) {

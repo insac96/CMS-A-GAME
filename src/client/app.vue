@@ -3,7 +3,9 @@
     <NuxtLoadingIndicator :height="2" />
     <NuxtPage />
     <UNotifications />
-    <LazyAuthUpdateUsername v-if="authStore.isLogin && !authStore.profile.username" />
+    <SocketNoticeReload />
+    <SocketNoticeSystem />
+    <!-- <LazyAuthUpdateUsername v-if="authStore.isLogin && !authStore.profile.username" /> -->
   </NuxtLayout>
 </template>
 
@@ -46,7 +48,5 @@ onMounted(() => {
   $socket.emit('join-online', !!authStore.isLogin ? authStore.profile._id : null)
   $socket.on('online', data => socketStore.setOnline(data))
   $socket.on('update-online', () => $socket.emit('update-online'))
-
-  $socket.on('page-reload', () => location.reload())
 })
 </script>

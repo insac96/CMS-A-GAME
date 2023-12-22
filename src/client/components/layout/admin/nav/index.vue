@@ -73,7 +73,7 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-2',
     children: [
-      { label: 'Hệ thống', to: '/admin/socket/system' },
+      { label: 'Chức năng', to: '/admin/socket/action' },
       { label: 'Kênh chat', to: '/admin/socket/chat' },
     ]
   },
