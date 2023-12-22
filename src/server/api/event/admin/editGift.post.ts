@@ -1,3 +1,5 @@
+import type { IAuth } from "~~/types"
+
 const typeName : any = {
   'login.month' : 'Đăng nhập tháng', 
   'login.total': 'Đăng nhập tổng', 
@@ -12,8 +14,7 @@ const typeName : any = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const body = await readBody(event)

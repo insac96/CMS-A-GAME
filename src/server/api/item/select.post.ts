@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     const match : any = {}
     if(!!types && types.length) match['type'] = { $in: types }
 
-    const items = await DB.Item.find(match).select('item_id item_name item_image type')
+    const items = await DB.Item.find(match).select('item_id item_name item_image type').limit(5)
     return resp(event, { result: items })
   } 
   catch (e:any) {

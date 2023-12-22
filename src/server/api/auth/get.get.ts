@@ -1,16 +1,10 @@
-import type { IDBLevel, IDBUser, IDBUserLogin, IDBUserStore } from "~~/types"
+import type { IAuth, IDBLevel, IDBUser, IDBUserLogin, IDBUserStore } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    // Get Auth
-    const auth = event.context.auth
-    if(!auth) throw 'Không tìm thấy mã xác thực tài khoản'
-
     // Get User
-    const { _id } = auth
+    const { _id } = await getAuth(event) as IAuth
     const user = await DB.User.findOne({ _id: _id }) as IDBUser
-    if(!user) throw 'Không tìm thấy tài khoản'
-    if(user.block == 1) throw 'Tài khoản đang bị khóa'
 
     // Get Date
     const now  = new Date()
@@ -28,10 +22,9 @@ export default defineEventHandler(async (event) => {
       const lastLoginDate = formatDate(event, lastLogin.createdAt)
       if(lastLoginDate.day != nowDate.day) createNewLogin = true
     }
-
     if(!!createNewLogin) await DB.UserLogin.create({ user: user._id })
 
-    // Is Next Day
+    // Update If Is Next Day
     if(
       lastDate.day != nowDate.day 
       || lastDate.month != nowDate.month 
@@ -48,7 +41,7 @@ export default defineEventHandler(async (event) => {
       user.wheel.day = 0
     }
 
-    // Is Next Month
+    // Update If Is Next Month
     if(
       lastDate.month != nowDate.month
       || lastDate.year != nowDate.year
@@ -96,12 +89,6 @@ export default defineEventHandler(async (event) => {
     return resp(event, { result: userStore })
   } 
   catch (e:any) {
-    const auth = event.context.auth
-    await DB.SocketOnline.updateOne({ user: auth._id }, { user: null })
-    IO.emit('online-update')
-
-    const runtimeConfig = useRuntimeConfig()
-    deleteCookie(event, 'token-auth', runtimeConfig.cookieConfig)
-    return resp(event, { code: 401, message: e.toString() })
+    return resp(event, { code: 400, message: e.toString() })
   }
 })

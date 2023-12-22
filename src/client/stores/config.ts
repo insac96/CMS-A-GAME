@@ -23,29 +23,11 @@ export const useConfigStore = defineStore('config', () => {
     social: {
       facebook: '',
       messenger: '',
-      telegram: '',
       zalo: '',
-      tiktok: '',
-      youtube: '',
     },
     game: {
       image: '',
       landing: ''
-    },
-    google: {
-      client_id: '',
-      client_verify: '',
-    },
-    facebook: {
-      client_id: '',
-      client_version: '',
-    },
-    zalo: {
-      client_id: '',
-      client_verify: '',
-    },
-    tiktok: {
-      client_id: '',
     }
   })
 

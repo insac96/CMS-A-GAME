@@ -96,18 +96,6 @@
         </UCard>
       </template>
 
-      <!-- <template #about>
-        <UiEditor v-model="state.about" v-if="!load" />
-      </template>
-
-      <template #privacy>
-        <UiEditor v-model="state.privacy" v-if="!load" />
-      </template>
-
-      <template #terms>
-        <UiEditor v-model="state.terms" v-if="!load" />
-      </template> -->
-
       <template #social>
         <UCard>
           <UForm :state="state">
@@ -119,21 +107,9 @@
               <UInput v-model="state.social.messenger" />
             </UFormGroup>
 
-            <!-- <UFormGroup label="Telegram">
-              <UInput v-model="state.social.telegram" />
-            </UFormGroup> -->
-
             <UFormGroup label="Zalo">
               <UInput v-model="state.social.zalo" />
             </UFormGroup>
-
-            <!-- <UFormGroup label="Tiktok">
-              <UInput v-model="state.social.tiktok" />
-            </UFormGroup>
-
-            <UFormGroup label="Youtube">
-              <UInput v-model="state.social.youtube" />
-            </UFormGroup> -->
 
             <UiFlex justify="end" class="mt-4">
               <UButton @click="update('social')" :loading="updating">Cập nhật</UButton>
@@ -145,10 +121,6 @@
       <template #game>
         <UCard>
           <UForm :state="state">
-            <UFormGroup label="Landing">
-              <UInput v-model="state.game.landing" />
-            </UFormGroup>
-
             <UFormGroup label="Secret">
               <UInput v-model="state.game.secret" />
             </UFormGroup>
@@ -199,74 +171,6 @@
           </UForm>
         </UCard>
       </template>
-
-      <!-- <template #google>
-        <UCard>
-          <UForm :state="state">
-            <UFormGroup label="Client ID">
-              <UInput v-model="state.google.client_id" />
-            </UFormGroup>
-
-            <UFormGroup label="Client Secret">
-              <UInput v-model="state.google.client_secret" />
-            </UFormGroup>
-
-            <UFormGroup label="Client Verify">
-              <UInput v-model="state.google.client_verify" />
-            </UFormGroup>
-          </UForm>
-        </UCard>
-      </template>
-
-      <template #facebook>
-        <UCard>
-          <UForm :state="state">
-            <UFormGroup label="Client ID">
-              <UInput v-model="state.facebook.client_id" />
-            </UFormGroup>
-
-            <UFormGroup label="Client Secret">
-              <UInput v-model="state.facebook.client_secret" />
-            </UFormGroup>
-
-            <UFormGroup label="Client Version">
-              <UInput v-model="state.facebook.client_version" />
-            </UFormGroup>
-          </UForm>
-        </UCard>
-      </template>
-
-      <template #zalo>
-        <UCard>
-          <UForm :state="state">
-            <UFormGroup label="Client ID">
-              <UInput v-model="state.zalo.client_id" />
-            </UFormGroup>
-
-            <UFormGroup label="Client Secret">
-              <UInput v-model="state.zalo.client_secret" />
-            </UFormGroup>
-
-            <UFormGroup label="Client Verify">
-              <UInput v-model="state.zalo.client_verify" />
-            </UFormGroup>
-          </UForm>
-        </UCard>
-      </template>
-
-      <template #tiktok>
-        <UCard>
-          <UForm :state="state">
-            <UFormGroup label="Client ID">
-              <UInput v-model="state.tiktok.client_id" />
-            </UFormGroup>
-
-            <UFormGroup label="Client Secret">
-              <UInput v-model="state.tiktok.client_secret" />
-            </UFormGroup>
-          </UForm>
-        </UCard>
-      </template> -->
     </UAccordion>
   </UiContent>
 </template>
@@ -293,10 +197,6 @@ const state = ref({
     ios: '',
   },
 
-  // about: '',
-  // privacy: '',
-  // terms: '',
-
   contact: {
     name: '',
     phone: '',
@@ -307,16 +207,12 @@ const state = ref({
   social: {
     facebook: '',
     messenger: '',
-    telegram: '',
-    zalo: '',
-    tiktok: '',
-    youtube: '',
+    zalo: ''
   },
 
   game: {
     image: '',
     secret: '',
-    landing: '',
     api: {
       start: '',
       server: '',
@@ -328,30 +224,7 @@ const state = ref({
       recharge: '',
       os: ''
     }
-  },
-
-  // google: {
-  //   client_id: '',
-  //   client_secret: '',
-  //   client_verify: '',
-  // },
-
-  // facebook: {
-  //   client_id: '',
-  //   client_secret: '',
-  //   client_version: ''
-  // },
-
-  // zalo: {
-  //   client_id: '',
-  //   client_secret: '',
-  //   client_verify: '',
-  // },
-
-  // tiktok: {
-  //   client_id: '',
-  //   client_secret: '',
-  // }
+  }
 })
 
 const menu = [
@@ -367,35 +240,10 @@ const menu = [
   label: 'Mạng xã hội',
   slot: 'social'
 },
-// {
-//   label: 'Bài giới thiệu',
-//   slot: 'about'
-// },
-// {
-//   label: 'Điều khoản dịch vụ',
-//   slot: 'terms'
-// },
-// {
-//   label: 'Chính sách quyền riêng tư',
-//   slot: 'privacy'
-// },
 {
   label: 'Trò chơi',
   slot: 'game'
-},
-// {
-//   label: 'API Google',
-//   slot: 'google'
-// },{
-//   label: 'API Facebook',
-//   slot: 'facebook'
-// },{
-//   label: 'API Zalo',
-//   slot: 'zalo'
-// },{
-//   label: 'API Tiktok',
-//   slot: 'tiktok'
-// }
+}
 ]
 
 const getConfig = async () => {

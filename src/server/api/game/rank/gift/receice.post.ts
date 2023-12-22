@@ -1,4 +1,4 @@
-import type { IDBGameRankGift, IDBItem } from "~~/types"
+import type { IAuth, IDBGameRankGift, IDBItem } from "~~/types"
 
 const typeName : any = {
   'level': 'cấp độ',
@@ -11,8 +11,7 @@ const currencyTypeList = [
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const { _id, role } = await readBody(event)
     if(!_id) throw 'Dữ liệu đầu vào sai'

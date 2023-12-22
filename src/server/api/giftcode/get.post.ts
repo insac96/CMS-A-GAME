@@ -1,9 +1,8 @@
-import type { IDBGiftcode, IDBItem } from '~~/types'
+import type { IAuth, IDBGiftcode, IDBItem } from '~~/types'
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const { code } = await readBody(event)
     if(!code) throw 'Không tìm thấy tên mã'

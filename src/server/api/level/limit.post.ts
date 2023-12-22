@@ -1,3 +1,5 @@
+import type { IAuth } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
     const { number, auth } = await readBody(event)
@@ -6,8 +8,7 @@ export default defineEventHandler(async (event) => {
     let levelData, authData
 
     if(!!auth){
-      const authContext = event.context.auth
-      if(!authContext) throw 'Vui lòng đăng nhập trước'
+      const authContext = await getAuth(event) as IAuth
       authData = await DB.User.findOne({ _id: authContext._id }).select('pay spend dice wheel level')
       levelData = await DB.Level.findOne({ _id: authData.level }).select('number limit')
       delete authData['level']

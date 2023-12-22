@@ -1,11 +1,8 @@
-import type { IDBUser } from "~~/types"
+import type { IAuth, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const runtimeConfig = useRuntimeConfig()
-
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const { avatar } = await readBody(event)
     if(!avatar) throw 'Vui tải ảnh lên trước'

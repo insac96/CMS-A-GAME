@@ -1,10 +1,9 @@
 import md5 from "md5"
-import type { IDBGate, IDBLevel, IDBUser } from "~~/types"
+import type { IAuth, IDBGate, IDBLevel, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     // Check Body
     const body = await readBody(event)

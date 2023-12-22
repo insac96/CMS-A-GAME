@@ -26,10 +26,7 @@ export const DBConfig = (mongoose : Mongoose) => {
     social: {
       facebook: { type: String, default: '' },
       messenger: { type: String, default: '' },
-      telegram: { type: String, default: '' },
       zalo: { type: String, default: '' },
-      tiktok: { type: String, default: '' },
-      youtube: { type: String, default: '' },
     },
     game: {
       image: { type: String, default: '' },
@@ -46,25 +43,6 @@ export const DBConfig = (mongoose : Mongoose) => {
         recharge: { type: String, default: '' },
         os: { type: String, default: '' },
       }
-    },
-    google: {
-      client_id: { type: String, default: '' },
-      client_secret: { type: String, default: '' },
-      client_verify: { type: String, default: '' },
-    },
-    facebook: {
-      client_id: { type: String, default: '' },
-      client_secret: { type: String, default: '' },
-      client_version: { type: String, default: '' }
-    },
-    zalo: {
-      client_id: { type: String, default: '' },
-      client_secret: { type: String, default: '' },
-      client_verify: { type: String, default: '' },
-    },
-    tiktok: {
-      client_id: { type: String, default: '' },
-      client_secret: { type: String, default: '' },
     }
   }, {
     timestamps: true

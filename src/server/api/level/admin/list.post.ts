@@ -1,7 +1,8 @@
+import type { IAuth } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const { size, current, sort } = await readBody(event)
@@ -10,7 +11,6 @@ export default defineEventHandler(async (event) => {
 
     const sorting : any = { }
     sorting[sort.column] = sort.direction == 'desc' ? -1 : 1
-
 
     const list = await DB.Level
     .aggregate([

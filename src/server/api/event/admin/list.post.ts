@@ -1,3 +1,5 @@
+import type { IAuth } from "~~/types"
+
 const typeList = [
   'login.month', 'login.total',
   'pay.total.money', 'pay.day.money', 'pay.month.money',
@@ -7,8 +9,7 @@ const typeList = [
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const { size, current, sort, type } = await readBody(event)

@@ -117,6 +117,7 @@ const columns = [
   {
     key: 'type',
     label: 'Loại',
+    sortable: true
   },{
     key: 'item_id',
     label: 'ID',

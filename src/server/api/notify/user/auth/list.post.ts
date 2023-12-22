@@ -1,9 +1,9 @@
 import { Types } from 'mongoose'
+import type { IAuth } from '~~/types'
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const { type, page } = await readBody(event)
     if(!page) throw 'Thiếu dữ liệu phân trang'

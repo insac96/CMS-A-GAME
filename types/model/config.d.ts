@@ -28,10 +28,7 @@ export interface IDBConfig {
   social: {
     facebook: string
     messenger: string
-    telegram: string
     zalo: string
-    tiktok: string
-    youtube: string
   },
   game: {
     image: string
@@ -48,25 +45,6 @@ export interface IDBConfig {
       recharge: string
       os: string
     }
-  },
-  google: {
-    client_id: string
-    client_secret: string
-    client_verify: string
-  },
-  facebook: {
-    client_id: string
-    client_secret: string
-    client_version: string
-  },
-  zalo: {
-    client_id: string
-    client_secret: string
-    client_verify: string
-  },
-  tiktok: {
-    client_id: string
-    client_secret: string
   }
 }
 
@@ -91,28 +69,10 @@ export interface IDBConfigStore {
   social: {
     facebook: string
     messenger: string
-    telegram: string
     zalo: string
-    tiktok: string
-    youtube: string
   }
   game: {
     image: string
     landing: string
-  }
-  google: {
-    client_id: string
-    client_verify: string
-  }
-  facebook: {
-    client_id: string
-    client_version: string
-  }
-  zalo: {
-    client_id: string
-    client_verify: string
-  }
-  tiktok: {
-    client_id: string
   }
 }

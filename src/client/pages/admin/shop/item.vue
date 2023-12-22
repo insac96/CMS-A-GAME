@@ -174,7 +174,7 @@ const page = ref({
     column: 'updatedAt',
     direction: 'desc'
   },
-  types: ['game_item', 'game_recharge'],
+  types: ['game_item'],
   search: null,
   total: 0
 })

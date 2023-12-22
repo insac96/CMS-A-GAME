@@ -1,4 +1,4 @@
-import type { IDBUser, IDBLevel, IDBWheel, IDBItem } from "~~/types"
+import type { IDBUser, IDBLevel, IDBWheel, IDBItem, IAuth } from "~~/types"
 
 const currencyTypeList = [
   'coin', 'wheel', 'notify'
@@ -36,8 +36,7 @@ const getRandomGift = (list : Array<IDBWheel>) : IDBWheel => {
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const body = await readBody(event)
     const { server, role, times } = body

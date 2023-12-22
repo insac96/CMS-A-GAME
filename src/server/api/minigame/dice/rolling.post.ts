@@ -1,4 +1,4 @@
-import type { IDBUser, IDBLevel, IDBDice } from "~~/types"
+import type { IDBUser, IDBLevel, IDBDice, IAuth } from "~~/types"
 
 const randExc = (min : number, max : number, exclusions : Array<number> = []) : number => {
   const exclusionsSorted = exclusions.concat().sort(function(a, b) {
@@ -112,8 +112,7 @@ const getRandomDices = ({ six, other, win } : IDBDice['percent'], dicesPlay : an
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const body = await readBody(event)
 

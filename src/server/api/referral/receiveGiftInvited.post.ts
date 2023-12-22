@@ -1,4 +1,4 @@
-import type { IDBUser, IDBLevel, IDBItem } from '~~/types'
+import type { IDBUser, IDBLevel, IDBItem, IAuth } from '~~/types'
 
 const currencyTypeList = [
   'coin', 'wheel', 'notify'
@@ -6,8 +6,7 @@ const currencyTypeList = [
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const { server, role } = await readBody(event)
     if(!server) throw 'Không tìm thấy ID máy chủ'

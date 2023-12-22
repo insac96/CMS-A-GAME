@@ -7,7 +7,7 @@
   <div v-if="!!user && !loading">
     <!-- Info -->
     <UiFlex class="p-4">
-      <UiFlex @click="navigateTo('/user'), emit('action')">
+      <UiFlex @click="navigateTo('/main/user'), emit('action')">
         <UAvatar :src="user.avatar" alt="Avatar" size="md" class="cursor-pointer"  />
       </UiFlex>
 

@@ -1,5 +1,11 @@
 import { Types } from 'mongoose'
 
+export interface IAuth {
+  _id: Types.ObjectId
+  username: string
+  type: number
+}
+
 export interface IResp {
   code? : number
   message?: string

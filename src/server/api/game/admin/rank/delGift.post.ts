@@ -1,4 +1,4 @@
-import type { IDBGameRankGift } from "~~/types"
+import type { IAuth, IDBGameRankGift } from "~~/types"
 
 const typeName : any = {
   'level': 'cấp độ',
@@ -7,8 +7,7 @@ const typeName : any = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const body = await readBody(event)

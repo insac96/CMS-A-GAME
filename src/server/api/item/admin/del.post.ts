@@ -1,17 +1,18 @@
+import type { IAuth } from "~~/types"
+
 const typeList = [
   'game_item', 'game_recharge'
 ]
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const { _id } = await readBody(event)
     if(!_id) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    const item = await DB.Item.findOne({ _id: _id }).select('_id type')
+    const item = await DB.Item.findOne({ _id: _id }).select('_id type item_name')
     if(!item) throw 'Vật phẩm không tồn tại'
     if(!typeList.includes(item.type)) throw 'Không thể xóa vật phẩm mặc định'
 
@@ -36,6 +37,7 @@ export default defineEventHandler(async (event) => {
     if(giftcode > 0) throw 'Không thể xóa vật phẩm đã có trong giftcode'
 
     await DB.Item.deleteOne({ _id: _id })
+    logAdmin(event, `Xóa vật phẩm trò chơi <b>${item.item_name}</b>`)
     return resp(event, { message: 'Xóa vật phẩm thành công' })
   } 
   catch (e:any) {

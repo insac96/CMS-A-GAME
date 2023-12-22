@@ -15,12 +15,6 @@ interface ISendData {
 
 export default async (event: H3Event, data : ISendData) : Promise<void> => {
   try {
-    const runtimeConfig = useRuntimeConfig()
-    
-    // Dev
-    // if(!!runtimeConfig.dev) return
-
-    // Prod
     const config = await DB.Config.findOne().select('game') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
     if(!config.game.api.mail) throw 'Tính năng gửi thư vào trò chơi đang bảo trì'

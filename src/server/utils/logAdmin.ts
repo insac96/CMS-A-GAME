@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import { Types } from 'mongoose'
+import type { Types } from 'mongoose'
 
 export default async (event: H3Event, action: string, admin?: Types.ObjectId) => {
   const auth = admin ? admin : event.context.auth

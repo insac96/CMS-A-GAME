@@ -22,7 +22,7 @@
       color="primary"
       weight="bold"
       align="center"
-      class="truncate lg:text-base text-sm mb-1"
+      class="truncate lg:text-base text-sm mb-1 px-2"
     >
       {{ item.item_amount > 1 ? `x${miniMoney(item.item_amount)}` : '' }} {{ item.name }}
     </UiText>

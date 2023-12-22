@@ -1,4 +1,4 @@
-import type { IDBEvent, IDBItem } from '~~/types'
+import type { IAuth, IDBEvent, IDBItem } from '~~/types'
 
 const currencyTypeList = [
   'coin', 'wheel', 'notify'
@@ -18,11 +18,10 @@ const typeName : any = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const { server, role, event : eventID } = await readBody(event)
-    if(!eventID) throw 'Không tìm thấy ID sụ kiện'
+    if(!eventID) throw 'Không tìm thấy ID sự kiện'
     if(!server) throw 'Không tìm thấy ID máy chủ'
     if(!role) throw 'Không tìm thấy ID nhân vật'
 

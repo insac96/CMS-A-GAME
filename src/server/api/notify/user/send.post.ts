@@ -1,4 +1,5 @@
 import { Types } from 'mongoose'
+import type { IAuth } from '~~/types'
 
 const hasDup = (arr : Array<string>) => {
   return new Set(arr).size !== arr.length
@@ -6,8 +7,7 @@ const hasDup = (arr : Array<string>) => {
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const body = await readBody(event)
     const { to, type, title, content, link, pin } = body

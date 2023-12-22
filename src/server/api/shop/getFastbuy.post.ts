@@ -1,9 +1,8 @@
-import type { IDBShop, IDBItem } from "~~/types"
+import type { IDBShop, IDBItem, IAuth } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const { item_id, item_name, price, server_id } = await readBody(event)
     if(!item_id) throw 'Không tìm thấy ID vật phẩm'

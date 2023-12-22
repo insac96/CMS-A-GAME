@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import dayjs from 'dayjs'
+import type { IAuth } from '~~/types'
 
 const typeCheck : any = {
   'login.month' : 'month',
@@ -11,7 +12,7 @@ const typeCheck : any = {
 
 export default async (event: H3Event, data : any, type : string) : Promise<any> => {
   try {
-    const auth = event.context.auth
+    const auth = await getAuth(event, false) as IAuth | null
     if(!auth) return Promise.resolve(-2) // Chưa đăng nhập
 
     let check : any

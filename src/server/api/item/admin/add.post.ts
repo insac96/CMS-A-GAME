@@ -1,11 +1,12 @@
+import type { IAuth } from "~~/types"
+
 const typeList = [
   'game_item', 'game_recharge'
 ]
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const body = await readBody(event)
@@ -17,6 +18,9 @@ export default defineEventHandler(async (event) => {
     if(!!checkDup) throw 'ID vật phẩm đã tồn tại'
 
     await DB.Item.create(body)
+
+    logAdmin(event, `Thêm vật phẩm trò chơi <b>${item_name}</b>`)
+
     return resp(event, { message: 'Thêm vật phẩm thành công' })
   } 
   catch (e:any) {

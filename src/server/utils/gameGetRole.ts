@@ -8,15 +8,6 @@ interface ISendData {
 
 export default async (event: H3Event, data : ISendData, showBoolean : boolean = false) : Promise<any> => {
   try {
-    const runtimeConfig = useRuntimeConfig()
-    
-    // Dev
-    // if(!!runtimeConfig.dev) return Promise.resolve([{
-    //   role_id: 1,
-    //   role_name: 'Nhân vật 1'
-    // }])
-
-    // Prod
     const config = await DB.Config.findOne().select('game') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
     if(!config.game.api.role) throw 'Tính năng tìm nhân vật trong trò chơi đang bảo trì'

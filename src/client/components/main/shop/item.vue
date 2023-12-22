@@ -1,27 +1,11 @@
 <template>
   <div>
     <!-- Match -->
-    <UiFlex class="mb-3">
-      <UForm :state="page" @submit="getList" class="mr-auto max-w-[150px] sm:max-w-[220px]">
+    <UiFlex justify="between" class="mb-3">
+      <UForm :state="page" @submit="getList" class="mr-1 max-w-[150px] sm:max-w-[220px]">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
       
-      <USelectMenu
-        v-model="typeSelect" 
-        value-attribute="value"
-        option-attribute="label"
-        :options="[
-          { label: 'Gói nạp', value: 'game_recharge' },
-          { label: 'Vật phẩm', value: 'game_item' },
-        ]"
-        class="mx-1"
-        size="sm"
-      >
-        <template #label>
-          <UiText mini>{{ typeFormat[typeSelect] }}</UiText>
-        </template>
-      </USelectMenu>  
-
       <UDropdown :items="menuList">
         <UButton icon="i-bx-dots-vertical-rounded" color="white" size="sm"></UButton>
       </UDropdown>
@@ -96,10 +80,6 @@ const itemSelect = ref(undefined)
 watch(() => modal.value.buy, (val) => (!val && (itemSelect.value = undefined)))
 
 const typeSelect = ref('game_item')
-const typeFormat = {
-  'game_recharge': 'Gói nạp',
-  'game_item': 'Vật phẩm',
-}
 watch(() => typeSelect.value, (val) => page.value.types = [val])
 
 const menuList = computed(() => [

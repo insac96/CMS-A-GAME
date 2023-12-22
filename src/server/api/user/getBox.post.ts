@@ -1,6 +1,8 @@
+import type { IAuth } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
+    const auth = await getAuth(event, false) as IAuth | null
     const { _id } = await readBody(event)
 
     const select = ['username', 'avatar', 'level', 'type']

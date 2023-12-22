@@ -1,7 +1,8 @@
+import type { IAuth } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Chưa đăng nhập, không thể đăng xuất'
+    const auth = await getAuth(event) as IAuth
 
     await DB.SocketOnline.updateOne({ user: auth._id }, { user: null })
     IO.emit('online-update')

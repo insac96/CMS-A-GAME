@@ -15,12 +15,8 @@
 
             <UiText class="capitalize mr-auto" weight="semibold" size="sm" mini>{{ user.username }}</UiText>
 
-            <UBadge color="primary" variant="soft" class="ml-2 mr-1">
+            <UBadge color="primary" variant="soft" class="ml-2">
               Cấp {{ user.level?.number || 0 }}
-            </UBadge>
-
-            <UBadge :color="typeFormat[user.type].color" variant="soft" class="cursor-pointer">
-              {{ typeFormat[user.type].label }}
             </UBadge>
           </UiFlex>
         </div>
@@ -35,13 +31,6 @@ const props = defineProps(['type'])
 const emits = defineEmits(['close'])
 const loading = ref(true)
 const list = ref(undefined)
-
-const typeFormat = {
-  0: { label: 'MEMBER', color: 'gray' },
-  1: { label: 'SMOD', color: 'green' },
-  2: { label: 'ADMIN', color: 'red' },
-  99: { label: 'ROBOT', color: 'orange' }
-}
 
 const getList = async () => {
   try {

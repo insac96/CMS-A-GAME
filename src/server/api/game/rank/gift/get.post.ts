@@ -1,9 +1,9 @@
-import type { IDBGameRankGift, IDBItem } from "~~/types"
+import type { IAuth, IDBGameRankGift, IDBItem } from "~~/types"
 
 const typeList = ['level', 'power']
 
 const getReceice = async (event : any, rankgift : IDBGameRankGift) : Promise<boolean> => {
-  const auth = event.context.auth
+  const auth = await getAuth(event, false) as IAuth | null
   if(!auth) return false
 
   // Kiểm tra thời gian được nhận

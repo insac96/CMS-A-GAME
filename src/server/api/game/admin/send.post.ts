@@ -1,9 +1,8 @@
-import { IDBUser } from "~~/types"
+import { IAuth, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const body = await readBody(event)
@@ -43,8 +42,9 @@ export default defineEventHandler(async (event) => {
     })
 
     logUser(event, userData._id, `Nhận <b>vật phẩm</b> từ quản trị viên <b>${auth.username}</b> với lý do <b>${reason}</b>`)
+    logAdmin(event, `Gửi vật phẩm cho <b>${userData.username}</b> tại máy chủ <b>${server}</b> với lý do <b>${reason}</b>`)
 
-    return resp(event, { message: 'Gửi thành công thành công' })
+    return resp(event, { message: 'Gửi thành công' })
   } 
   catch (e:any) {
     return resp(event, { code: 400, message: e.toString() })

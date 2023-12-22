@@ -1,7 +1,8 @@
+import type { IAuth } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const body = await readBody(event)
@@ -19,6 +20,7 @@ export default defineEventHandler(async (event) => {
     delete body['_id']
     await DB.AdsLanding.updateOne({ _id: _id }, body)
     
+    await logAdmin(event, `Sửa Landing Page mã <b>${landing.code}</b>`)
     return resp(event, { message: 'Sửa Landing thành công' })
   } 
   catch (e:any) {

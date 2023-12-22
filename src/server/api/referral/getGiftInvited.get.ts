@@ -1,9 +1,8 @@
-import type { IDBLevel, IDBUser } from "~~/types"
+import type { IAuth, IDBLevel, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     const user = await DB.User.findOne({ _id: auth._id }).select('referral') as IDBUser
     if(!user) throw 'Không tìm thấy thông tin tài khoản'

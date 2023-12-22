@@ -3,13 +3,6 @@ import type { IDBConfig } from '~~/types'
 
 export default async (event: H3Event, account : string) : Promise<any> => {
   try {
-    // Dev
-    const runtimeConfig = useRuntimeConfig()
-    
-    // Dev
-    // if(!!runtimeConfig.dev) return Promise.resolve('https://www.youtube.com/embed/AOoYcIkMGp0"')
-
-    // Prod
     const config = await DB.Config.findOne().select('game') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
     if(!config.game.api.start) throw 'Trò chơi đang bảo trì'

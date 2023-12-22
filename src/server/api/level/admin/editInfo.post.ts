@@ -1,8 +1,9 @@
+import type { IAuth } from "~~/types"
+
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
-    if(auth.type < 2) throw 'Admin mới có quyền sửa cấp độ'
+    const auth = await getAuth(event) as IAuth
+    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const body = await readBody(event)
     const { _id, number, bonus, discount } = body

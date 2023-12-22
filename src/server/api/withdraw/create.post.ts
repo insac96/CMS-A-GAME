@@ -1,10 +1,8 @@
-import md5 from "md5"
-import type { IDBGate, IDBLevel, IDBUser } from "~~/types"
+import type { IAuth, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = event.context.auth
-    if(!auth) throw 'Vui lòng đăng nhập trước'
+    const auth = await getAuth(event) as IAuth
 
     // Check Body
     const body = await readBody(event)
@@ -13,7 +11,7 @@ export default defineEventHandler(async (event) => {
     if(!bank.name || !bank.person || !bank.number) throw 'Thông tin ngân hàng không hợp lệ'
     if(!!isNaN(parseInt(diamond)) || parseInt(diamond) < 1) throw 'Số tiền không hợp lệ'
     if(parseInt(diamond) < 10000) throw 'Số tiền phải lớn hơn hoặc bằng 10.000đ'
-    if(parseInt(diamond) % 10000 != 0) return 'Số tiền phải là bội số của 10.000'
+    if(parseInt(diamond) % 10000 != 0) throw 'Số tiền phải là bội số của 10.000'
 
     // Check User
     const user = await DB.User.findOne({ _id: auth._id }).select('currency') as IDBUser
