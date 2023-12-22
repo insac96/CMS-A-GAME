@@ -1,13 +1,15 @@
 <template>
   <UiContent title="User" sub="Quản lý tài khoản người dùng">
     <UiFlex class="mb-4">
-      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
-      <UForm :state="page" @submit="getList" class="mr-4">
+      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1"/>
+      <UForm :state="page" @submit="getList" class="mr-1">
         <UiFlex>
           <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" class="mr-1" />
           <USelectMenu v-model="page.search.by" :options="['USER', 'PHONE', 'MAIL', 'IP']" />
         </UiFlex>
       </UForm>
+
+      <UButton class="ml-auto" :loading="loading.exportExcel" @click="exportExcel">Xuất Excel</UButton>
     </UiFlex>
     
     <!-- Table -->
@@ -452,7 +454,8 @@ const loading = ref({
   editSpend: false,
   editLogin: false,
   editWheel: false,
-  editDice: false
+  editDice: false,
+  exportExcel: false
 })
 
 // Type
@@ -657,6 +660,21 @@ const editLoginAction = async () => {
   }
   catch (e) {
     loading.value.editLogin = false
+  }
+}
+
+const exportExcel = async () => {
+  try {
+    loading.value.exportExcel = true
+    const url = await useAPI('user/admin/exportExcel')
+
+    window.open(url, '_blank')
+
+    loading.value.exportExcel = false
+    modal.value.exportExcel = false
+  }
+  catch (e) {
+    loading.value.exportExcel = false
   }
 }
 

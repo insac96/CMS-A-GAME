@@ -16,6 +16,8 @@ export interface IFormatDate {
   day: number
   month: number
   year: number
+  hour: number
+  minute: number
   timestamp: number
   source: any
 }

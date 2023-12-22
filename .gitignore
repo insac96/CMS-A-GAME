@@ -19,4 +19,5 @@ src/server/routes/upload
 
 .env
 image-*
+excel-*
 
