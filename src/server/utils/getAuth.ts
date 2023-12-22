@@ -7,21 +7,21 @@ export default async (event: H3Event, throwError : boolean = true) : Promise<IAu
 
   try {
     const token = getCookie(event, 'token-auth')
-    if(!token) throw 'Vui lòng đăng nhập trước'
+    if(!token) throw 'AUTH-NO-TOKEN'
 
     const decoded = jwt.verify(token, runtimeConfig.apiSecret) as any
     const user = await DB.User.findOne({ _id: decoded._id }).select('username block type token') as IDBUser
 
-    if(!user) throw 'Xác thực tài khoản không thành công'
+    if(!user) throw 'AUTH-NO-USER'
     if(user.token != token) {
       await DB.SocketOnline.updateOne({ user: user._id }, { user: null })
       IO.emit('online-update')
-      throw 'Tài khoản đang đăng nhập ở nơi khác, vui lòng đăng nhập lại'
+      throw 'AUTH-DUP-LOGIN'
     }
     if(user.block == 1) {
       await DB.SocketOnline.updateOne({ user: user._id }, { user: null })
       IO.emit('online-update')
-      throw 'Tài khoản đang bị khóa, vui lòng đăng nhập bằng tài khoản khác'
+      throw 'AUTH-BLOCK'
     }
 
     const result = { 
@@ -34,8 +34,7 @@ export default async (event: H3Event, throwError : boolean = true) : Promise<IAu
   }
   catch (e:any) {
     deleteCookie(event, 'token-auth', runtimeConfig.cookieConfig)
-
-    if(!!throwError) return resp(event, { code: 401, message: e.toString() })
+    if(!!throwError) throw e.toString()
     else return null
   }
 }

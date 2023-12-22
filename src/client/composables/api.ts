@@ -21,7 +21,6 @@ export const useAPI = async (path : string, post?: any, options: any = {}) => {
   else {
     if(!data.value) return Promise.reject(false)
     const { code, message, result } = data.value as IResp
-    
 
     if(!!message && process.client){
       const toast = useToast()

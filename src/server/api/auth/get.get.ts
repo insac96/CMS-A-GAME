@@ -3,8 +3,8 @@ import type { IAuth, IDBLevel, IDBUser, IDBUserLogin, IDBUserStore } from "~~/ty
 export default defineEventHandler(async (event) => {
   try {
     // Get User
-    const { _id } = await getAuth(event) as IAuth
-    const user = await DB.User.findOne({ _id: _id }) as IDBUser
+    const auth = await getAuth(event) as IAuth
+    const user = await DB.User.findOne({ _id: auth._id }) as IDBUser
 
     // Get Date
     const now  = new Date()
@@ -89,6 +89,6 @@ export default defineEventHandler(async (event) => {
     return resp(event, { result: userStore })
   } 
   catch (e:any) {
-    return resp(event, { code: 400, message: e.toString() })
+    return resp(event, { code: 401, message: e.toString() })
   }
 })

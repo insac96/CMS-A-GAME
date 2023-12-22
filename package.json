@@ -32,6 +32,7 @@
     "@vueuse/core": "^10.7.0",
     "dayjs": "^1.11.10",
     "env-cmd": "^10.1.0",
+    "exceljs": "^4.4.0",
     "jsonwebtoken": "^9.0.2",
     "md5": "^2.3.0",
     "mongoose": "^7.6.2",
