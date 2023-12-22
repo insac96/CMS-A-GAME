@@ -12,7 +12,7 @@
           <SelectGate v-model="state.gate" v-model:gate="gateSelect" />
         </UFormGroup>
 
-        <UFormGroup label="Khuyến mại" name="gate" v-if="gateBonus && gateBonus.number > 0">
+        <UFormGroup label="Khuyến mại" v-if="gateBonus && gateBonus.number > 0">
           <UInput :model-value="`${gateBonus.number}% ${gateBonus.time}`" readonly />
         </UFormGroup>
 

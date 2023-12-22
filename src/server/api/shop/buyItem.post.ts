@@ -1,4 +1,4 @@
-import type { IDBLevel, IDBUser, IDBShop, IDBItem, IAuth } from "~~/types"
+import type { IDBLevel, IDBUser, IDBShop, IDBItem, IAuth, IDBShopConfig } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -9,6 +9,11 @@ export default defineEventHandler(async (event) => {
     if(!server) throw 'Không tìm thấy ID máy chủ'
     if(!role) throw 'Không tìm thấy ID nhân vật'
     if(!!isNaN(parseInt(amount)) || parseInt(amount) < 1) throw 'Số lượng không hợp lệ'
+
+    // Shop Config
+    const shopConfig = await DB.ShopConfig.findOne() as IDBShopConfig
+    if(!shopConfig) throw 'Không tìm thấy cấu hình cửa hàng'
+    if(!!shopConfig.maintenance) throw 'Cửa hàng đang bảo trì, vui lòng quay lại sau'
 
     // Check User
     const user = await DB.User.findOne({ _id: auth._id }).select('currency.coin level spend') as IDBUser
@@ -25,7 +30,10 @@ export default defineEventHandler(async (event) => {
 
     // Total Price
     const price = shopData.price * parseInt(amount)
-    const totalPrice = Math.floor(price - Math.floor(price * level.discount / 100))
+    const discountLevel = level.discount
+    const discountSystem = getShopDiscount(event, shopConfig)
+    const discount = discountLevel + discountSystem > 100 ? 100 : discountLevel + discountSystem
+    const totalPrice = Math.floor(price - Math.floor(price * discount / 100))
     if(totalPrice > user.currency.coin) throw 'Số dư xu không đủ'
 
     // Check Limit Spend

@@ -1,26 +1,21 @@
 <template>
-  <UiContent 
-    title="Config Shop" 
-    sub="Cài đặt cửa hàng" 
-    class="max-w-3xl mx-auto"
-  >
-    <UAlert title="Khuyến Mãi" :ui="{ title: 'text-primary font-bold'}" class="mb-4">
-      <template #description>
-        <UForm :state="state" @submit="update" class="mt-4">
-          <UFormGroup label="Phần trăm">
-            <UInput v-model="state.discount.number" type="number" />
-          </UFormGroup>
+  <UiContent title="Config Shop" sub="Cài đặt cửa hàng" class="max-w-3xl mx-auto">
+      <UForm :state="state" @submit="update">
+        <UFormGroup label="Giảm giá">
+          <UInput v-model="state.discount.number" type="number" />
+        </UFormGroup>
 
-          <UFormGroup label="Thời hạn">
-            <SelectDate v-model="state.discount.expired" />
-          </UFormGroup>
+        <UFormGroup label="Thời hạn">
+          <SelectDate v-model="state.discount.expired" />
+        </UFormGroup>
 
-          <UiFlex justify="end">
-            <UButton type="submit" color="gray" :loading="updating">Cập nhật</UButton>
-          </UiFlex>
-        </UForm>
-      </template>
-    </UAlert>
+        <UiFlex>
+          <UToggle v-model="state.maintenance" :disabled="!!updating" />
+          <UiText size="sm" class="ml-2 mr-auto">Bảo trì</UiText>
+
+          <UButton type="submit" color="gray" :loading="updating">Cập nhật</UButton>
+        </UiFlex>
+      </UForm>
   </UiContent>
 </template>
 
@@ -29,6 +24,7 @@ const load = ref(true)
 const updating = ref(false)
 
 const state = ref({
+  maintenance: null,
   discount: {
     number: null,
     expired: null
@@ -53,4 +49,6 @@ const update = async () => {
     updating.value = false
   }
 }
+
+getConfig()
 </script>
