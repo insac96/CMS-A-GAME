@@ -33,8 +33,10 @@ export default async (event: H3Event, throwError : boolean = true) : Promise<IAu
     return result
   }
   catch (e:any) {
-    deleteCookie(event, 'token-auth', runtimeConfig.cookieConfig)
-    if(!!throwError) throw e.toString()
+    if(!!throwError) {
+      deleteCookie(event, 'token-auth', runtimeConfig.cookieConfig)
+      throw e.toString()
+    }
     else return null
   }
 }
