@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       const countReceive = await DB.GiftcodeHistory.count({ giftcode: giftcodeData._id })
       if(countReceive >= giftcodeData.limit) throw 'Mã này đã hết lượt sử dụng'
     }
-    const countReceiveAuth = await DB.GiftcodeHistory.count({ user: auth._id, giftcode: giftcodeData._id })
+    const countReceiveAuth = await DB.GiftcodeHistory.count({ user: auth._id, giftcode: giftcodeData._id, server: server })
     if(countReceiveAuth > 0) throw 'Bạn đã nhận mã này rồi'
 
     // Format Gift
