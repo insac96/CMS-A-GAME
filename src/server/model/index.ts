@@ -9,7 +9,7 @@ import { DBPayment } from './payment'
 import { DBWithdraw } from './withdraw'
 import { DBNotifyUser, DBNotifyAdmin } from './notify'
 import { DBItem } from './item'
-import { DBShop, DBShopHistory } from './shop'
+import { DBShopConfig, DBShop, DBShopHistory } from './shop'
 import { DBEvent, DBEventHistory } from './event'
 import { DBGiftcode, DBGiftcodeHistory } from './giftcode'
 import { DBDice, DBDiceHistory, DBDiceLuckyUser } from './dice'
@@ -41,6 +41,7 @@ export default (mongoose : Mongoose) : IGlobalDB => {
 
     Item: DBItem(mongoose),
     
+    ShopConfig: DBShopConfig(mongoose),
     Shop: DBShop(mongoose),
     ShopHistory: DBShopHistory(mongoose),
 

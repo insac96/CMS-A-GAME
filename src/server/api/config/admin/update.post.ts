@@ -26,6 +26,8 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    IO.emit('notice-reload', 'Có bản cập nhật mới, vui lòng tải lại trang !')
+
     return resp(event, { message: 'Cập nhật thành công' })
   } 
   catch (e:any) {

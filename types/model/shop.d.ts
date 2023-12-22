@@ -1,6 +1,18 @@
 import type { Types } from 'mongoose'
 import type { IDBItem } from './item'
 
+export interface IDBShopConfig {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+
+  maintenance: boolean
+  discount: {
+    number: number
+    expired: Date
+  }
+}
+
 export interface IDBShop {
   _id: Types.ObjectId
   createdAt: Date

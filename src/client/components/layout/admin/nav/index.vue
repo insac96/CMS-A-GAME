@@ -144,6 +144,7 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-9',
     children: [
+      { label: 'Cài đặt', to: '/admin/shop/config' }, 
       { label: 'Vật phẩm', to: '/admin/shop/item' }, 
       { label: 'Tiền tệ', to: '/admin/shop/currency' }, 
       { label: 'Lịch sử', to: '/admin/shop/history' }, 

@@ -8,7 +8,7 @@ export { IDBPayment } from './payment'
 export { IDBWithdraw } from './withdraw'
 export { IDBNotifyUser, IDBNotifyAdmin } from './notify'
 export { IDBItem } from './item'
-export { IDBShop, IDBShopHistory } from './shop'
+export { IDBShopConfig, IDBShop, IDBShopHistory } from './shop'
 export { IDBEvent, IDBEventHistory } from './event'
 export { IDBGiftcode, IDBGiftcodeHistory } from './giftcode'
 export { IDBDice, IDBDiceHistory, IDBDiceLuckyUser } from './dice'
@@ -39,6 +39,7 @@ export interface IGlobalDB {
 
   Item: Model<IDBItem>
 
+  ShopConfig: Model<IDBShopConfig>
   Shop: Model<IDBShop>
   ShopHistory: Model<IDBShopHistory>
 

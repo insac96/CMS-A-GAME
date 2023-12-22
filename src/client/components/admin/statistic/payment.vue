@@ -41,7 +41,7 @@
     <!-- Pagination -->
     <UiFlex justify="between" class="py-4">
       <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Chọn cột" />
-      <UPagination v-model="page.current" :page-count="page.size" :total="page.total" />
+      <UPagination v-model="page.current" :page-count="page.size" :total="page.total" :max="5" />
     </UiFlex>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <UiContent 
-    title="System" 
-    sub="Chức năng hệ thống" 
+    title="Action" 
+    sub="Chức năng thời gian thực" 
     class="max-w-3xl mx-auto"
   >
     <UAlert icon="i-bx-chat" title="Xóa kênh Chat" :ui="{ title: 'text-primary font-bold'}" class="mb-4">
@@ -50,7 +50,7 @@ const noticeSystem = ref(null)
 const delAllChat = async () => {
   try {
     loading.value.delAllChat = true
-    await useAPI('socket/admin/system/delAllChat')
+    await useAPI('socket/admin/action/delAllChat')
 
     loading.value.delAllChat = false
   }
@@ -62,7 +62,7 @@ const delAllChat = async () => {
 const sendNoticeReload = async () => {
   try {
     loading.value.noticeReload = true
-    await useAPI('socket/admin/system/noticeReload', {
+    await useAPI('socket/admin/action/noticeReload', {
       notice: noticeReload.value
     })
 
@@ -76,7 +76,7 @@ const sendNoticeReload = async () => {
 const sendNoticeSystem = async () => {
   try {
     loading.value.noticeSystem = true
-    await useAPI('socket/admin/system/noticeSystem', {
+    await useAPI('socket/admin/action/noticeSystem', {
       notice: noticeSystem.value
     })
 
