@@ -5,7 +5,7 @@
   }">
     <template #header>
       <UiFlex justify="between">
-        <SelectItemBox @change="mergeGift" />
+        <SelectItemBox @change="mergeGift" class="min-w-[180px] mr-2" />
         <UButton color="gray" @click="modal.add = true">Thêm mới</UButton>
       </UiFlex>
     </template>
