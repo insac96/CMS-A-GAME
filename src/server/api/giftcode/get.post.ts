@@ -27,8 +27,8 @@ export default defineEventHandler(async (event) => {
     }
 
     // Check Received
-    const countReceiveAuth = await DB.GiftcodeHistory.count({ user: auth._id, giftcode: giftcodeData._id })
-    if(countReceiveAuth > 0) throw 'Bạn đã nhận mã này rồi'
+    // const countReceiveAuth = await DB.GiftcodeHistory.count({ user: auth._id, giftcode: giftcodeData._id })
+    // if(countReceiveAuth > 0) throw 'Bạn đã nhận mã này rồi'
 
     // Result
     const result : any = JSON.parse(JSON.stringify(giftcodeData))
