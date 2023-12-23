@@ -3,7 +3,7 @@ import { join } from 'path'
 
 export default defineEventHandler(async (event) => {
   // @ts-expect-error
-  const filePath = join('dist/static/excel', event.context.params.name)
+  const filePath = join('dist/static/image', event.context.params.name)
   
   return sendStream(event, createReadStream(filePath))
 })

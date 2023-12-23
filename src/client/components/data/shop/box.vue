@@ -29,16 +29,16 @@
 
     <UiText 
       weight="semibold"
-      color="gray"
+      :color="(!!systemDiscount && systemDiscount.number > 0) ? 'red' : 'gray'"
       align="center"
       class="truncate lg:text-xs text-[10px] mb-4"
     >
-      {{ typeFormat[item.type] }}
+      {{ (!!systemDiscount && systemDiscount.number > 0) ? `Giảm giá ${systemDiscount.number}%` : typeFormat[item.type] }}
     </UiText>
     
     <UiFlex justify="center">
       <UButtonGroup size="xs" orientation="horizontal">
-        <UButton :label="miniMoney(item.price)" color="gray" />
+        <UButton :label="miniMoney(totalPrice)" color="gray" />
         <UButton  color="primary" icon="i-bxs-dollar-circle"></UButton>
       </UButtonGroup>
     </UiFlex>
@@ -46,13 +46,42 @@
 </template>
 
 <script setup>
-const props = defineProps(['item'])
+const props = defineProps(['item', 'config'])
 const { miniMoney } = useMoney()
+const { dayjs, displayFull } = useDayJs()
 
 const typeFormat = {
-  1: 'Gói Nạp',
-  2: 'Vật Phẩm',
+  'game_recharge': 'Gói Nạp',
+  'game_item': 'Vật Phẩm',
   'wheel': 'Tiền Tệ',
   'notify': 'Tiền Tệ'
 }
+
+const systemDiscount = computed(() => {
+  if(!props.config) return null
+
+  let number = 0
+  let time = ''
+  const discount = parseInt(props.config.discount.number || 0)
+  const expired = props.config.discount.expired || null
+
+  if(!expired) number = discount, time = ''
+  else {
+    const nowTime = dayjs(Date.now()).unix()
+    const expiredTime = dayjs(expired).unix()
+    if(nowTime <= expiredTime) number = discount, time = `đến ${displayFull(expired)}`
+    else number = 0, time = ''
+  }
+
+  return { number, time }
+})
+
+const totalPrice = computed(() => {
+  if(!props.item) return 0
+  if(!systemDiscount.value) return props.item.price
+
+  const discount_system = systemDiscount.value.number
+  const total = props.item.price - Math.floor(props.item.price * discount_system / 100)
+  return total
+})
 </script>

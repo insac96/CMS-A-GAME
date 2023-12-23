@@ -179,7 +179,7 @@ const getConfig = async () => {
   try {
     load.value = true
 
-    const data = await useAPI('shop/admin/config/get')
+    const data = await useAPI('shop/config')
     config.value = Object.assign(config.value, data)
 
     load.value = false

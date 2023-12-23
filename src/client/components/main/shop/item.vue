@@ -28,6 +28,7 @@
           class="xl:col-span-3 sm:col-span-4 col-span-6" 
           v-for="item in list" :key="item._id"
           :item="item"
+          :config="config"
           @click="buyItem(item)"
         />
       </div>
@@ -53,7 +54,15 @@
 <script setup>
 const authStore = useAuthStore()
 
+const config = ref({
+  maintenance: true,
+  discount: {
+    number: null,
+    expired: null
+  }
+})
 const list = ref([])
+
 const loading = ref(true)
 const modal = ref({
   limit: false,
@@ -119,11 +128,15 @@ const buyItem = (item) => {
 const getList = async () => {
   try {
     loading.value = true
-    const data = await useAPI('shop/list', JSON.parse(JSON.stringify(page.value)))
+
+    const configData = await useAPI('shop/config')
+    config.value = Object.assign(config.value, configData)
+
+    const listData = await useAPI('shop/list', JSON.parse(JSON.stringify(page.value)))
 
     loading.value = false
-    page.value.total = data.total
-    list.value = data.list
+    page.value.total = listData.total
+    list.value = listData.list
   }
   catch (e) {
     loading.value = false
