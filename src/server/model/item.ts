@@ -1,5 +1,5 @@
 import type { Mongoose } from 'mongoose'
-import type { IDBItem } from '~~/types'
+import type { IDBItem, IDBItemBox } from '~~/types'
 
 export const DBItem = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBItem>({ 
@@ -34,5 +34,22 @@ export const DBItem = (mongoose : Mongoose) => {
   }
 
   autoCreate()
+  return model 
+}
+
+export const DBItemBox = (mongoose : Mongoose) => {
+  const schema = new mongoose.Schema<IDBItemBox>({ 
+    name: { type: String },
+    gift: [{
+      item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },
+      amount: { type: Number, index: true },
+    }]
+  }, {
+    timestamps: true
+  })
+
+  schema.index({ name: 'text' })
+  const model = mongoose.model('item_boxs', schema)
+
   return model 
 }

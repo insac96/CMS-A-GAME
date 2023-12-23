@@ -1,14 +1,18 @@
 <template>
   <USelectMenu
-    v-model="item"
-    searchable
-    :options="options"
+    v-model="itemSelect"
+    :searchable="searchItem"
+    :multiple="props.multiple"
     size="lg"
-    value-attribute="_id"
-    option-attribute="name"
+    by="_id"
+    class="grow"
   >
     <template #label>
-      <UiText mini>{{ select ? select.name : 'Chọn vật phẩm' }}</UiText>
+      {{ !!select ? select.name : 'Tìm kiếm vật phẩm' }}
+    </template>
+
+    <template #option="{ option: item }">
+      {{ item.name }}
     </template>
   </USelectMenu>
 </template>
@@ -22,32 +26,30 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'update:itemData'])
 
-const options = ref([])
+const itemSelect = ref(props.modelValue)
 
-const item = computed({
-  get: () => props.modelValue,
-  set: (value) => {
-    const itemData = options.value.find(i => i._id === value)
-    emit('update:modelValue', value)
-    emit('update:itemData', itemData)
-  }
-}) 
+const select = ref(undefined)
 
-const select = computed(() => options.value.find(i => i._id === item.value))
+watch(itemSelect, val => {
+  select.value = val
+  if(!val) return 
 
-const fetch = async () => {
-  const items = await useAPI('item/select', {
+  emit('update:modelValue', val._id)
+  emit('update:itemData', val)
+})
+
+const searchItem = async (key) => {
+  const items = await useAPI('item/search', {
+    key: key,
     types: JSON.parse(JSON.stringify(props.types))
   })
-  
-  options.value = items.map(i => ({ 
+
+  return items.map(i => ({ 
     _id: i._id, 
     item_id: i.item_id,
     name: i.item_name,
     image: i.item_image,
     type: i.type
-  }))
+  })).filter(Boolean)
 }
-
-fetch()
 </script>

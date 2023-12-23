@@ -5,7 +5,7 @@
   }">
     <template #header>
       <UiFlex justify="between">
-        <UiText color="gray" size="sm" weight="semibold">Danh sách vật phẩm</UiText>
+        <SelectItemBox @change="mergeGift" />
         <UButton color="gray" @click="modal.add = true">Thêm mới</UButton>
       </UiFlex>
     </template>
@@ -125,6 +125,11 @@ const openEdit = (row, index) => {
   stateEdit.value.name = row.name
   stateEdit.value.amount = row.amount
   modal.value.edit = true
+}
+
+const mergeGift = (gift) => {
+  list.value = list.value.concat(gift)
+  emit('update:modelValue', list.value)
 }
 
 const addAction = () => {

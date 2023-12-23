@@ -10,3 +10,15 @@ export interface IDBItem {
   item_image: string
   type: string
 }
+
+export interface IDBItemBox {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  
+  name: string
+  gift: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+  }>
+}
