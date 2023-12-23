@@ -11,7 +11,7 @@ export default defineAppConfig({
     },
 
     card: {
-      base: 'relative overflow-y-auto'
+      base: 'relative overflow-x-hidden overflow-visible'
     },
 
     input: {

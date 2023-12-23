@@ -128,7 +128,17 @@ const openEdit = (row, index) => {
 }
 
 const mergeGift = (gift) => {
-  list.value = list.value.concat(gift)
+  if(!gift || gift.length == 0) return
+
+  const arr = list.value.concat(gift)
+  
+  list.value = arr.reduce((a, c) => {
+    const obj = a.find((obj) => obj._id === c._id)
+    if(!obj) a.push(c)
+    else obj.amount += c.amount
+    return a
+  }, [])
+
   emit('update:modelValue', list.value)
 }
 
