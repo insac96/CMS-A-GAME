@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
           localField: "gift.item",
           foreignField: "_id",
           pipeline: [{
-            $project: { item_name: 1, item_image: 1, type: 1 },
+            $project: { item_id: 1, item_name: 1, item_image: 1, type: 1 },
           }],
           as: "giftdata"
         }
@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
               input: '$giftdata',
               in: {
                 _id: '$$this._id',
+                item_id: '$$this.item_id',
                 name: '$$this.item_name',
                 image: '$$this.item_image',
                 type: '$$this.type',
