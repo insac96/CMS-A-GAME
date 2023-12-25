@@ -30,6 +30,14 @@
           {{ useMoney().toMoney(row.power) }}
         </template>
 
+        <template #knb-data="{row}">
+          {{ useMoney().toMoney(row.knb) }}
+        </template>
+
+        <template #coin-data="{row}">
+          {{ useMoney().toMoney(row.coin) }}
+        </template>
+
         <template #action-data="{row}">
           <UButton icon="i-bx-mail-send" color="gray" :disabled="!!loading.send" @click="openSend(row)" class="mr-1" />
           <UButton icon="i-bx-play" color="gray" :disabled="!!loading.play" @click="openPlay(row)" />
@@ -77,6 +85,14 @@ const columns = [
   },{
     key: 'power',
     label: 'Lực chiến',
+    sortable: true
+  },{
+    key: 'knb',
+    label: 'Nguyên bảo',
+    sortable: true
+  },{
+    key: 'coin',
+    label: 'Kim tệ',
     sortable: true
   },{
     key: 'action',

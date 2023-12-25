@@ -4,16 +4,17 @@
       <LayoutPlayMenu class="mr-2" />
 
       <UiFlex class="mr-auto">
-        <NuxtLink to="/">
+        <!-- <NuxtLink to="/">
           <UiLogo />
-        </NuxtLink>
+        </NuxtLink> -->
+        <UButton size="xs" color="gray" @click="navigateTo('/')">Trang chủ</UButton>
       </UiFlex>
 
       <UiFlex justify="end" items="center">
         <Setting class="ml-1" />
         <SocketChat class="ml-1" />
         <AuthSlide class="ml-1" />
-        <UButton class="ml-1" color="red" icon="i-bx-hide" @click="emits('hide')"></UButton>
+        <UButton class="ml-1" color="red" icon="i-bx-x" @click="emits('hide')"></UButton>
       </UiFlex>
     </UiFlex>
   </header>
