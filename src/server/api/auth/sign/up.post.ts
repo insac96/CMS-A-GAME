@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
     const IP = getRequestIP(event, { xForwardedFor: true })
     const logIP = await DB.LogUserIP.count({ ip: IP })
     if(logIP > 30) throw 'IP đã vượt quá giới hạn tạo tài khoản'
-    
+
     // Create
     const user = await DB.User.create({
       username: username,
@@ -102,6 +102,16 @@ export default defineEventHandler(async (event) => {
     })
 
     await createChat(event, 'bot', `Chào mừng thành viên mới <b>${user.username}</b>`)
+
+    // Ads From
+    const adsFrom = getCookie(event, 'ads-from')
+    if(!!adsFrom){
+      const fromData = await DB.AdsFrom.findOne({ code: adsFrom }).select('_id')
+      if(!!fromData){
+        await DB.AdsFrom.updateOne({ _id: fromData._id }, { $inc: { 'sign.up': 1 }})
+        await DB.User.updateOne({ _id: user._id }, { 'reg.from' : fromData._id })
+      }
+    }
     
     return resp(event, { message: 'Đăng ký thành công' })
   } 

@@ -41,7 +41,13 @@ export default defineEventHandler(async (event) => {
     await createChat(event, 'bot', `<b>${user.username}</b> vừa truy cập`, true)
 
     const landingData = await DB.AdsLanding.findOne({ _id: landing }).select('_id')
-    if(!!landingData) await DB.AdsLanding.updateOne({ _id: landing }, { $inc: { 'sign.in': 1 }})
+    if(!!landingData) await DB.AdsLanding.updateOne({ _id: landingData._id }, { $inc: { 'sign.in': 1 }})
+
+    const adsFrom = getCookie(event, 'ads-from')
+    if(!!adsFrom){
+      const fromData = await DB.AdsFrom.findOne({ code: adsFrom }).select('_id')
+      if(!!fromData) await DB.AdsFrom.updateOne({ _id: fromData._id }, { $inc: { 'sign.in': 1 }})
+    }
     
     return resp(event, { message: 'Đăng nhập thành công' })
   } 

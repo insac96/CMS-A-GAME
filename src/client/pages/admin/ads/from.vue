@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Landing" sub="Quản lý Landing Quảng Cáo">
+  <UiContent title="From" sub="Quản lý Nguồn Quảng Cáo">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
       <UForm :state="page" @submit="getList" class="mr-auto">
@@ -17,10 +17,6 @@
         :columns="selectedColumns" 
         :rows="list"
       >
-        <template #url-data="{ row }">
-          {{ useMakeLink().link(`/ads/landing/${row.code}`) }}
-        </template>
-
         <template #updatedAt-data="{ row }">
           {{ useDayJs().displayFull(row.updatedAt) }}
         </template>
@@ -30,8 +26,6 @@
             <UDropdown :items="actions(row)">
               <UButton color="gray" icon="i-bx-dots-horizontal-rounded" :disabled="loading.del"/>
             </UDropdown>
-
-            <UButton icon="i-bx-link-alt" class="ml-1" @click="openLink(row.code)"></UButton>
           </UiFlex>
         </template>
       </UTable>
@@ -50,8 +44,8 @@
           <UInput v-model="stateAdd.code" />
         </UFormGroup>
 
-        <UFormGroup label="Source Link">
-          <UInput v-model="stateAdd.link" />
+        <UFormGroup label="Note">
+          <UInput v-model="stateAdd.note" />
         </UFormGroup>
 
         <UiFlex justify="end" class="mt-6">
@@ -68,8 +62,8 @@
           <UInput v-model="stateEdit.code" />
         </UFormGroup>
 
-        <UFormGroup label="Source Link">
-          <UInput v-model="stateEdit.link" />
+        <UFormGroup label="Note">
+          <UInput v-model="stateEdit.note" />
         </UFormGroup>
 
         <UiFlex justify="end" class="mt-6">
@@ -91,8 +85,8 @@ const columns = [
     key: 'code',
     label: 'Mã',
   },{
-    key: 'url',
-    label: 'Đường dẫn',
+    key: 'note',
+    label: 'Ghi chú',
   },{
     key: 'view',
     label: 'Truy cập',
@@ -136,12 +130,12 @@ watch(() => page.value.search, (val) => !val && getList())
 // State
 const stateAdd = ref({
   code: null,
-  link: null,
+  note: null,
 })
 const stateEdit = ref({
   _id: null,
   code: null,
-  link: null
+  note: null
 })
 
 // Modal
@@ -152,7 +146,7 @@ const modal = ref({
 
 watch(() => modal.value.add, (val) => !val && (stateAdd.value = {
   code: null,
-  link: null,
+  note: null,
 }))
 
 // Loading
@@ -173,7 +167,7 @@ const actions = (row) => [
       modal.value.edit = true
     }
   }],[{
-    label: 'Xóa Landing',
+    label: 'Xóa nguồn',
     icon: 'i-bx-trash',
     click: () => delAction(row._id)
   }]
@@ -188,7 +182,7 @@ const openLink = (code) => {
 const getList = async () => {
   try {
     loading.value.load = true
-    const data = await useAPI('ads/landing/admin/list', JSON.parse(JSON.stringify(page.value)))
+    const data = await useAPI('ads/from/admin/list', JSON.parse(JSON.stringify(page.value)))
 
     loading.value.load = false
     list.value = data.list
@@ -202,7 +196,7 @@ const getList = async () => {
 const addAction = async () => {
   try {
     loading.value.add = true
-    await useAPI('ads/landing/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
+    await useAPI('ads/from/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
 
     loading.value.add = false
     modal.value.add = false
@@ -216,7 +210,7 @@ const addAction = async () => {
 const editAction = async () => {
   try {
     loading.value.edit = true
-    await useAPI('ads/landing/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
+    await useAPI('ads/from/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
 
     loading.value.edit = false
     modal.value.edit = false
@@ -230,7 +224,7 @@ const editAction = async () => {
 const delAction = async (_id) => {
   try {
     loading.value.del = true
-    await useAPI('ads/landing/admin/del', { _id })
+    await useAPI('ads/from/admin/del', { _id })
 
     loading.value.del = false
     getList()

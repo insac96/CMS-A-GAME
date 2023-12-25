@@ -20,6 +20,7 @@ export interface IDBUser {
   level: Types.ObjectId | IDBLevel
   reg: {
     landing: Types.ObjectId
+    from: Types.ObjectId
     platform: string
   }
   referral: {
