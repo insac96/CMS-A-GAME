@@ -6,12 +6,6 @@ export interface IDBUser {
   createdAt: Date
   updatedAt: Date
 
-  social: {
-    facebook: string
-    zalo: string
-    google: string
-    tiktok: string
-  }
   username: string
   password: string
   email: string
@@ -22,6 +16,12 @@ export interface IDBUser {
     landing: Types.ObjectId
     from: Types.ObjectId
     platform: string
+  }
+  social: {
+    facebook: string
+    zalo: string
+    google: string
+    tiktok: string
   }
   referral: {
     code: string

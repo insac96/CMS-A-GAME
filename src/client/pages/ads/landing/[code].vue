@@ -25,6 +25,7 @@ definePageMeta({
   layout: 'landing',
 })
 
+const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const authStore = useAuthStore()
 const modal = ref(false)
@@ -56,6 +57,10 @@ const getLanding = async () => {
   try {
     const data = await useAPI('ads/landing/code', { code: route.params.code })
     landing.value = data
+
+    // Add Cookie Ads Landing
+    const fromCookie = useCookie('ads-landing', runtimeConfig.cookieConfig)
+    fromCookie.value = data
   }
   catch (e) {
     landing.value = null

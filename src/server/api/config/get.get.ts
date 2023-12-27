@@ -9,8 +9,9 @@ export default defineEventHandler(async (event) => {
       -game.api -game.secret
       -facebook.client_secret 
       -zalo.client_secret 
-      -tiktok.client_secret`
-    ) as IDBConfig
+      -tiktok.client_secret
+      -google.client_secret
+    `) as IDBConfig
 
     if(!config) throw 'Không tìm thấy cấu hình trang'
     return resp(event, { result: config })

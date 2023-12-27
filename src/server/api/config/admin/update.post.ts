@@ -13,6 +13,10 @@ export default defineEventHandler(async (event) => {
     if(change == 'contact') logAdmin(event, 'Cập nhật thông tin <b>liên hệ</b> trang web')
     if(change == 'social') logAdmin(event, 'Cập nhật thông tin <b>mạng xã hội</b> trang web')
     if(change == 'game') logAdmin(event, 'Cập nhật cấu hình <b>trò chơi</b>')
+    if(change == 'facebook') logAdmin(event, 'Cập nhật cấu hình <b>API Facebook</b>')
+    if(change == 'google') logAdmin(event, 'Cập nhật cấu hình <b>API Google</b>')
+    if(change == 'zalo') logAdmin(event, 'Cập nhật cấu hình <b>API Zalo</b>')
+    if(change == 'tiktok') logAdmin(event, 'Cập nhật cấu hình <b>API Tiktok</b>')
 
     delete data['_id']
     delete data['change']
@@ -25,8 +29,6 @@ export default defineEventHandler(async (event) => {
         avatar: logo_image
       })
     }
-
-    IO.emit('notice-reload', 'Có bản cập nhật mới, vui lòng tải lại trang !')
 
     return resp(event, { message: 'Cập nhật thành công' })
   } 

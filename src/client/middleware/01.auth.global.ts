@@ -1,8 +1,14 @@
 export default defineNuxtRouteMiddleware(async () => {
-  const token = useCookie('token-auth')
+  const { setAuth } = useAuthStore()
+  const runtimeConfig = useRuntimeConfig()
+  const token = useCookie('token-auth', runtimeConfig.cookieConfig)
   if(!token.value) return
 
-  const auth = await useAPI('auth/get')
-  const { setAuth } = useAuthStore()
-  return setAuth(auth)
+  try{
+    const auth = await useAPI('auth/get')
+    return setAuth(auth)
+  }
+  catch(e){
+    token.value = null
+  }
 })

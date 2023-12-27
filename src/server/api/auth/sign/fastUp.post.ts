@@ -66,10 +66,7 @@ export default defineEventHandler(async (event) => {
     user.token = token
     await user.save()
 
-    await DB.LogUserIP.create({
-      user: user._id,
-      ip: IP
-    })
+    await DB.LogUserIP.create({ user: user._id, ip: IP })
 
     logUser(event, user._id, 'Đăng ký tài khoản nhanh tại Landing Page')
     logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)

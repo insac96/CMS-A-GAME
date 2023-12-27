@@ -21,9 +21,10 @@ export default defineNuxtConfig({
     cookieConfig: {
       path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      domain: `.${process.env.DOMAIN}`
+      domain: process.env.NODE_ENV === 'production' ? `.${process.env.DOMAIN}` : null
     },
     public: {
+      dev: process.env.NODE_ENV === 'production' ? false : true,
       clientURL: process.env.CLIENT_URL,
       domain: process.env.DOMAIN
     }

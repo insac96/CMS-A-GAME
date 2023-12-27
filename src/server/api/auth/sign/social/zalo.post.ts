@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { IDBConfig } from '~~/types'
+import { IDBAdsFrom, IDBAdsLanding, IDBConfig, IDBUser } from '~~/types'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -43,20 +43,80 @@ export default defineEventHandler(async (event) => {
     const { id } = respUserInfo
     if(!id) throw 'Không thể lấy thông tin người dùng'
 
+    // Get IP
+    const IP = getRequestIP(event, { xForwardedFor: true })
+
     // Check User
-    let user = await DB.User.findOne({ 'social.zalo': id }).select('block')
+    let typeSign
+    let user = await DB.User.findOne({ 'social.zalo': id }).select('block') as IDBUser
+    
+    // If Has User
     if(!!user){
       if(user.block == 1) throw 'Tài khoản của bạn đang bị khóa'
-    } 
+      typeSign = 'in'
+    }
 
     // Create User
     if(!user){
+      // Check IP
+      const logIP = await DB.LogUserIP.count({ ip: IP })
+      if(logIP > 30) throw 'IP đã vượt quá giới hạn tạo tài khoản'
+
+      // Save User
       const picture = respUserInfo.picture
       const avatar = (!!picture && !!picture['data'] && !!picture['data']['url']) ? picture['data']['url'] : '/images/user/default.png'
       user = await DB.User.create({
+        reg: { platform: 'tiktok' },
         social: { zalo: id },
         avatar: avatar
       })
+
+      // Save IP
+      await DB.LogUserIP.create({ user: user._id, ip: IP })
+      typeSign = 'up'
+    }
+
+    // Landing
+    let landingData
+    const adsLanding = getCookie(event, 'ads-landing')
+    if(!!adsLanding) landingData = await DB.AdsLanding.findOne({ _id: adsLanding }).select('_id') as IDBAdsLanding
+
+    // From Data
+    let fromData
+    const adsFrom = getCookie(event, 'ads-from')
+    if(!!adsFrom) fromData = await DB.AdsFrom.findOne({ code: adsFrom }).select('_id') as IDBAdsFrom
+
+    // Log And Notify
+    if(typeSign == 'in'){
+      logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
+
+      await sendNotifyUser(event, {
+        to: [ user._id ],
+        type: 3,
+        color: 'blue',
+        content: ` Bạn đã đăng nhập bằng <b>Zalo</b> với IP <b>${IP}</b>`
+      })
+
+      if(!!landingData) await DB.AdsLanding.updateOne({ _id: landingData._id }, { $inc: { 'sign.in': 1 }})
+      if(!!fromData) await DB.AdsFrom.updateOne({ _id: fromData._id }, { $inc: { 'sign.in': 1 }})
+    }
+    if(typeSign == 'up'){
+      logUser(event, user._id, 'Đăng ký tài khoản')
+
+      await sendNotifyUser(event, {
+        to: [ user._id ],
+        color: 'primary',
+        content: `Chào mừng thành viên mới, chúc bạn chơi game vui vẻ`
+      })
+
+      if(!!landingData){
+        await DB.AdsLanding.updateOne({ _id: landingData._id }, { $inc: { 'sign.up': 1 }})
+        await DB.User.updateOne({ _id: user._id }, { 'reg.landing' : landingData._id })
+      }
+      if(!!fromData){
+        await DB.AdsFrom.updateOne({ _id: fromData._id }, { $inc: { 'sign.up': 1 }})
+        await DB.User.updateOne({ _id: user._id }, { 'reg.from' : fromData._id })
+      }
     }
 
     // Make Token
@@ -64,14 +124,10 @@ export default defineEventHandler(async (event) => {
       _id : user._id
     }, runtimeConfig.apiSecret, { expiresIn: '360d' })
 
-    // Send Notify
-    const IP = getRequestIP(event, { xForwardedFor: true })
-    await sendNotifyUser(event, {
-      to: [ user._id ],
-      type: 3,
-      color: 'blue',
-      content: ` Bạn đã đăng nhập bằng <b>Zalo</b> với IP <b>${IP}</b>`
-    })
+    // Make Cookie
+    setCookie(event, 'token-auth', token, runtimeConfig.cookieConfig)
+    user.token = token
+    await user.save()
 
     return resp(event, { message: 'Xác thực thành công', result: token })
   } 

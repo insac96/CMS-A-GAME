@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     await DB.SocketOnline.updateOne({ user: auth._id }, { user: null })
     IO.emit('online-update')
 
-    const runtimeConfig = useRuntimeConfig()
+    const runtimeConfig = useRuntimeConfig(event)
     deleteCookie(event, 'token-auth', runtimeConfig.cookieConfig)
     return resp(event, { message: 'Đăng xuất thành công' })
   } 

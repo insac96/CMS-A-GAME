@@ -4,12 +4,6 @@ import md5 from 'md5'
 
 export const DBUser = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBUser>({ 
-    social: {
-      facebook: { type: String },
-      zalo: { type: String },
-      google: { type: String },
-      tiktok: { type: String },
-    },
     username: { type: String },
     password: { type: String },
     email: { type: String },
@@ -20,6 +14,12 @@ export const DBUser = (mongoose : Mongoose) => {
       landing: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_landing' },
       from: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_from' },
       platform: { type: String, default: 'local' },
+    },
+    social: {
+      facebook: { type: String },
+      zalo: { type: String },
+      google: { type: String },
+      tiktok: { type: String },
     },
     referral: {
       code: { type: String },

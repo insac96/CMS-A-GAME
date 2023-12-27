@@ -43,6 +43,27 @@ export const DBConfig = (mongoose : Mongoose) => {
         recharge: { type: String, default: '' },
         os: { type: String, default: '' },
       }
+    },
+    facebook: {
+      client_id: { type: String, default: '' },
+      client_secret: { type: String, default: '' },
+      client_version: { type: String, default: '' },
+      client_verify: { type: String, default: '' },
+    },
+    google: {
+      client_id: { type: String, default: '' },
+      client_secret: { type: String, default: '' },
+      client_verify: { type: String, default: '' },
+    },
+    tiktok: {
+      client_id: { type: String, default: '' },
+      client_secret: { type: String, default: '' },
+      client_verify: { type: String, default: '' },
+    },
+    zalo: {
+      client_id: { type: String, default: '' },
+      client_secret: { type: String, default: '' },
+      client_verify: { type: String, default: '' },
     }
   }, {
     timestamps: true

@@ -5,7 +5,7 @@
     <UNotifications />
     <SocketNoticeReload />
     <SocketNoticeSystem />
-    <!-- <LazyAuthUpdateUsername v-if="authStore.isLogin && !authStore.profile.username" /> -->
+    <LazyAuthUpdateUsername v-if="authStore.isLogin && !authStore.profile.username" />
   </NuxtLayout>
 </template>
 
@@ -22,8 +22,8 @@ const configStore = useConfigStore()
 const authStore = useAuthStore()
 const socketStore = useSocketStore()
 
-const primaryCookie = useCookie('theme-primary')
-const grayCookie = useCookie('theme-gray')
+const primaryCookie = useCookie('theme-primary', runtimeConfig.cookieConfig)
+const grayCookie = useCookie('theme-gray', runtimeConfig.cookieConfig)
 
 // Meta Seo
 useSeoMeta({

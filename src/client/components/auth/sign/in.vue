@@ -14,14 +14,14 @@
       </UiFlex>
     </UForm>
 
-    <!-- <template #footer>
+    <template #footer>
       <UiFlex justify="center" class="gap-3">
-        <LazyAuthSignSocialFacebook />
-        <LazyAuthSignSocialGoogle />
-        <LazyAuthSignSocialZalo />
-        <LazyAuthSignSocialTiktok />
+        <AuthSignSocialFacebook />
+        <AuthSignSocialGoogle />
+        <AuthSignSocialZalo />
+        <AuthSignSocialTiktok />
       </UiFlex>
-    </template> -->
+    </template>
   </UCard>
 </template>
 
