@@ -3,6 +3,7 @@
 </template>
 
 <script setup>
+const runtimeConfig = useRuntimeConfig()
 const props = defineProps(['block', 'text', 'size'])
 const loading = ref(false)
 const authStore = useAuthStore()
@@ -14,9 +15,18 @@ const start = async () => {
 
     loading.value = true
     const url = await useAPI('game/start')
-    
+
+    const playCookie = useCookie('play-url', runtimeConfig.cookieConfig)
+    playCookie.value = url
     gameStore.setURL(url)
-    navigateTo('/play')
+
+    if(document.location.protocol == 'https:') {
+      navigateTo(`http://play.${runtimeConfig.public.domain}/play`)
+    }
+    else {
+      navigateTo('/play')
+    }
+    
     loading.value = false
   }
   catch (e) {

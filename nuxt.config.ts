@@ -20,10 +20,12 @@ export default defineNuxtConfig({
     apiSecret: process.env.SECRET,
     cookieConfig: {
       path: '/',
-      maxAge: 7 * 24 * 60 * 60 * 1000
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      domain: `.${process.env.DOMAIN}`
     },
     public: {
-      clientURL: process.env.CLIENT_URL
+      clientURL: process.env.CLIENT_URL,
+      domain: process.env.DOMAIN
     }
   },
 
