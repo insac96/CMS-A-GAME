@@ -19,7 +19,7 @@ const start = async () => {
       navigateTo('/play')
     }
     else {
-      location.href = `http://service.${runtimeConfig.public.domain}/play`
+      location.href = `http://game.${runtimeConfig.public.domain}/play`
     }
 
     loading.value = false
