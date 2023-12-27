@@ -1,7 +1,7 @@
 <template>
   <iframe 
     title="Playing Game"
-    :src="gameStore.url || playCookie"
+    :src="playCookie"
     width="100%"
     height="100%"
     class="Iframe"
@@ -20,7 +20,6 @@ definePageMeta({
 
 const runtimeConfig = useRuntimeConfig()
 const playCookie = useCookie('play-url', runtimeConfig.cookieConfig)
-const gameStore = useGameStore()
 
 const fastBuy = ref({
   modal: false,

@@ -27,7 +27,6 @@ definePageMeta({
 
 const { config } = useConfigStore()
 const authStore = useAuthStore()
-const gameStore = useGameStore()
 const modal = ref(false)
 const tabItem = ref(1) 
 const tabItems = [
@@ -42,9 +41,8 @@ const openSign = () => {
 
 const start = async () => {
   try {
-    const url = await useAPI('game/start')
+    await useAPI('game/start')
     modal.value = false
-    gameStore.setURL(url)
     navigateTo('/play')
   }
   catch (e) {

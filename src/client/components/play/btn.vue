@@ -7,21 +7,16 @@ const runtimeConfig = useRuntimeConfig()
 const props = defineProps(['block', 'text', 'size'])
 const loading = ref(false)
 const authStore = useAuthStore()
-const gameStore = useGameStore()
 
 const start = async () => {
   try {
     if(!authStore.isLogin) return authStore.setModal(true)
 
     loading.value = true
-    const url = await useAPI('game/start')
-
-    const playCookie = useCookie('play-url', runtimeConfig.cookieConfig)
-    playCookie.value = url
-    gameStore.setURL(url)
+    await useAPI('game/start')
 
     if(document.location.protocol == 'https:') {
-      location.href = `http://play.${runtimeConfig.public.domain}/play`
+      location.href = `http://${runtimeConfig.public.domain}/play`
     }
     else {
       navigateTo('/play')
