@@ -21,7 +21,7 @@ const start = async () => {
     gameStore.setURL(url)
 
     if(document.location.protocol == 'https:') {
-      navigateTo(`http://play.${runtimeConfig.public.domain}/play`)
+      location.href = `http://play.${runtimeConfig.public.domain}/play`
     }
     else {
       navigateTo('/play')
