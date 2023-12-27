@@ -53,7 +53,7 @@ definePageMeta({
 })
 
 const authStore = useAuthStore()
-watch(() => authStore.isLogin, (val) => !val && navigateTo('/'))
+watch(() => authStore.isLogin, (val) => !val && useTo().navigateToSSL('/'))
 
 const modal = ref({
   avatar: false,

@@ -7,7 +7,7 @@
   <div v-if="!!user && !loading">
     <!-- Info -->
     <UiFlex class="p-4">
-      <UiFlex @click="navigateTo('/main/user'), emit('action')">
+      <UiFlex @click="useTo().navigateToSSL('/main/user'), emit('action')">
         <UAvatar :src="user.avatar" alt="Avatar" size="md" class="cursor-pointer"  />
       </UiFlex>
 
@@ -40,17 +40,17 @@
     >
       <UiFlex type="col" class="p-2 w-4/12">
         <UiText size="xs" color="gray" class="mb-1">Xu Web</UiText>
-        <UiText weight="bold" @click="navigateTo('/main/action/payment'), emit('action')" pointer>{{ miniMoney(user.currency?.coin) }}</UiText>
+        <UiText weight="bold" @click="useTo().navigateToSSL('/main/action/payment'), emit('action')" pointer>{{ miniMoney(user.currency?.coin) }}</UiText>
       </UiFlex>
 
       <UiFlex type="col" class="p-2 w-4/12">
         <UiText size="xs" color="gray" class="mb-1">Cống Hiến</UiText>
-        <UiText weight="bold" @click="navigateTo('/main/action/withdraw'), emit('action')" pointer>{{ miniMoney(user.currency?.diamond) }}</UiText>
+        <UiText weight="bold" @click="useTo().navigateToSSL('/main/action/withdraw'), emit('action')" pointer>{{ miniMoney(user.currency?.diamond) }}</UiText>
       </UiFlex>
 
       <UiFlex type="col" class="p-2 w-4/12">
         <UiText size="xs" color="gray" class="mb-1">Lượt Quay</UiText>
-        <UiText weight="bold" @click="navigateTo('/main/minigame/wheel'), emit('action')" pointer>{{ miniMoney(user.currency?.wheel) }}</UiText>
+        <UiText weight="bold" @click="useTo().navigateToSSL('/main/minigame/wheel'), emit('action')" pointer>{{ miniMoney(user.currency?.wheel) }}</UiText>
       </UiFlex>
     </UiFlex>
 
@@ -118,7 +118,7 @@ watch(() => props.reload, (val) => !!val && init())
 
 const goToAdmin = (type) => {
   if(type < 1) return
-  navigateTo('/admin')
+  useTo().navigateToSSL('/admin')
   emit('action')
 }
 

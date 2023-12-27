@@ -45,10 +45,10 @@ const start = async () => {
   try {
     await useAPI('game/start')
     modal.value = false
-    navigateTo('/play')
+    useTo().navigateToSSL('/play')
   }
   catch (e) {
-    navigateTo('/')
+    useTo().navigateToSSL('/')
   }
 }
 

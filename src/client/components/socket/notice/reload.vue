@@ -16,7 +16,7 @@ const modal = ref(false)
 const notice = ref(null)
 
 const reload = () => {
-  navigateTo('/')
+  useTo().navigateToSSL('/')
   location.reload()
 }
 

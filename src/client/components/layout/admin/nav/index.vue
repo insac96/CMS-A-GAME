@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UButton block size="md" class="mb-2" @click="navigateTo('/')">Trang Chủ</UButton>
+    <UButton block size="md" class="mb-2" @click="useTo().navigateToSSL('/')">Trang Chủ</UButton>
 
     <UAccordion 
       :items="navItems" 

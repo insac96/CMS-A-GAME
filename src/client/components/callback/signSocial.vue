@@ -12,7 +12,7 @@
     <UiText color="primary" size="3xl" weight="bold" class="capitalize">OAuth {{type}}</UiText>
     <UiText color="gray" size="sm" class="mb-4">{{ text }}</UiText>
     <UiIcon color="primary" name="i-bx-loader-alt" class="animate-spin" size="5" v-if="!!loading" />
-    <UButton @click="navigateTo('/')" v-else>Trang Chủ</UButton>
+    <UButton @click="useTo().navigateToSSL('/')" v-else>Trang Chủ</UButton>
   </UiFlex>
 </template>
 
@@ -38,7 +38,7 @@ const sign = async () => {
 
     cookie.value = token
     setTimeout(() => {
-      navigateTo('/')
+      useTo().navigateToSSL('/')
     }, 500)
   }
   catch (e) {

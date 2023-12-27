@@ -143,7 +143,7 @@ const goLink = (link) => {
     return emit('to')
   }
   if(nuxtFormat[0] == ''){
-    navigateTo(link)
+    useTo().navigateToSSL(link)
     return emit('to')
   }
 

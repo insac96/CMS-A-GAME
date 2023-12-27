@@ -16,7 +16,7 @@
         }"
         :icon="item.icon"
         :color="item.color"
-        @click="navigateTo(item.to)"
+        @click="useTo().navigateToSSL(item.to)"
       >
         {{ item.label }}
       </UButton>

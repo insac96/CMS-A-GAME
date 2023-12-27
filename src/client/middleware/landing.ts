@@ -3,6 +3,6 @@ export default defineNuxtRouteMiddleware(async () => {
     const authStore = useAuthStore()
     const configStore = useConfigStore()
     const game = configStore.config.game
-    if(!authStore.isLogin && !!game.landing) return navigateTo('/landing')
+    if(!authStore.isLogin && !!game.landing) return useTo().navigateToSSL('/landing')
   }
 })

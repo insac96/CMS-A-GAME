@@ -15,12 +15,8 @@ const start = async () => {
     loading.value = true
     await useAPI('game/start')
 
-    if (window.location.protocol == "http:") {
-      navigateTo('/play')
-    }
-    else {
-      location.href = `http://game.${runtimeConfig.public.domain}/play`
-    }
+    if(!!runtimeConfig.dev) navigateTo('play')
+    else location.href = `http://game.${runtimeConfig.public.domain}/play`
 
     loading.value = false
   }

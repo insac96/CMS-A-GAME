@@ -6,7 +6,7 @@
     <UiText color="gray" size="2xl" align="center" class="mb-6">
       {{ error.message || error.statusMessage || 'Có lỗi xảy ra' }}
     </UiText>
-    <UButton size="md" @click="navigateTo('/')">Trang Chủ</UButton>
+    <UButton size="md" @click="useTo().navigateToSSL('/')">Trang Chủ</UButton>
   </UiFlex>
 </template>
 

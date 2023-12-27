@@ -7,7 +7,7 @@
         <!-- <NuxtLink to="/">
           <UiLogo />
         </NuxtLink> -->
-        <UButton size="xs" color="gray" @click="navigateTo('/')">Trang chủ</UButton>
+        <UButton size="xs" color="gray" @click="useTo().navigateToSSL('/')">Trang chủ</UButton>
       </UiFlex>
 
       <UiFlex justify="end" items="center">
