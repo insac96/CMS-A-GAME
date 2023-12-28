@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     IO.emit('online-update')
 
     const runtimeConfig = useRuntimeConfig(event)
-    deleteCookie(event, 'token-auth', runtimeConfig.cookieConfig)
+    deleteCookie(event, 'token-auth', runtimeConfig.public.cookieConfig)
     return resp(event, { message: 'Đăng xuất thành công' })
   } 
   catch (e:any) {

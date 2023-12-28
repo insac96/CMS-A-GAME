@@ -125,7 +125,7 @@ export default defineEventHandler(async (event) => {
     }, runtimeConfig.apiSecret, { expiresIn: '360d' })
 
     // Make Cookie
-    setCookie(event, 'token-auth', token, runtimeConfig.cookieConfig)
+    setCookie(event, 'token-auth', token, runtimeConfig.public.cookieConfig)
     user.token = token
     await user.save()
 

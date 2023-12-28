@@ -59,7 +59,7 @@ const getLanding = async () => {
     landing.value = data
 
     // Add Cookie Ads Landing
-    const fromCookie = useCookie('ads-landing', runtimeConfig.cookieConfig)
+    const fromCookie = useCookie('ads-landing', runtimeConfig.public.cookieConfig)
     fromCookie.value = data
   }
   catch (e) {

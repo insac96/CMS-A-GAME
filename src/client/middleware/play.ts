@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(async () => {
     const authStore = useAuthStore()
     if(!authStore.isLogin) throw true
 
-    const playUrl = useCookie('play-url', runtimeConfig.cookieConfig)
+    const playUrl = useCookie('play-url', runtimeConfig.public.cookieConfig)
     if(!playUrl.value) throw true
   }
   catch (e:any) {

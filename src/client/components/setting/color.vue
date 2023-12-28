@@ -32,7 +32,7 @@ const runtimeConfig = useRuntimeConfig()
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
 
-const primaryCookie = useCookie('theme-primary', runtimeConfig.cookieConfig)
+const primaryCookie = useCookie('theme-primary', runtimeConfig.public.cookieConfig)
 const primaryColors = computed(() => {
   return appConfig.ui.colors.filter(color => color !== 'primary').map(color => ({ 
     value: color, 
@@ -49,7 +49,7 @@ const primary = computed({
   }
 })
 
-const grayCookie = useCookie('theme-gray', runtimeConfig.cookieConfig)
+const grayCookie = useCookie('theme-gray', runtimeConfig.public.cookieConfig)
 const grayColors = computed(() => {
   return ['slate', 'cool', 'zinc', 'neutral', 'stone'].map(color => ({ 
     value: color, 

@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     const auth = await getAuth(event) as IAuth
     const url = await gameStart(event, auth.username)
 
-    setCookie(event, 'play-url', url, runtimeConfig.cookieConfig)
+    setCookie(event, 'play-url', url, runtimeConfig.public.cookieConfig)
 
     return resp(event, { result: 'Playing' })
   } 

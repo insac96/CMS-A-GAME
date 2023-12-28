@@ -5,7 +5,7 @@
 <script setup>
 const runtimeConfig = useRuntimeConfig()
 const mode = useColorMode()
-const modeCookie = useCookie('theme-mode', runtimeConfig.cookieConfig)
+const modeCookie = useCookie('theme-mode', runtimeConfig.public.cookieConfig)
 
 const tabItems = [
   { label: 'Dark', key: 'dark' },

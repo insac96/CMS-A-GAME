@@ -34,7 +34,7 @@ const sign = async () => {
 
     query.redirect_uri = link(`/callback/sign/${props.type}`)
     const token = await useAPI(`auth/sign/social/${props.type}`, query)
-    const cookie = useCookie('token-auth', runtimeConfig.cookieConfig)
+    const cookie = useCookie('token-auth', runtimeConfig.public.cookieConfig)
 
     cookie.value = token
     setTimeout(() => {

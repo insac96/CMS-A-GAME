@@ -34,7 +34,7 @@ export default async (event: H3Event, throwError : boolean = true) : Promise<IAu
   }
   catch (e:any) {
     if(!!throwError) {
-      deleteCookie(event, 'token-auth', runtimeConfig.cookieConfig)
+      deleteCookie(event, 'token-auth', runtimeConfig.public.cookieConfig)
       event.node.res.end(JSON.stringify({code: 401, message: e.toString()}))
     }
     return null
