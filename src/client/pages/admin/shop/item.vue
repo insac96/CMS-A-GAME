@@ -1,13 +1,28 @@
 <template>
   <UiContent title="Item Shop" sub="Quản lý cửa hàng vật phẩm">
     <UiFlex class="mb-4">
-      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
+      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1"/>
 
-      <UForm :state="page" @submit="getList" class="mr-auto">
+      <UForm :state="page" @submit="getList" class="mr-1">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
+
+      <USelectMenu 
+        v-model="page.types" 
+        value-attribute="value"
+        option-attribute="label"
+        :options="[
+          { label: 'Vật phẩm', value: ['game_item'] },
+          { label: 'Gói nạp', value: ['game_recharge'] },
+        ]"
+        class="mr-auto"
+      >
+        <template #label>
+          <span>{{ page.types[0] == 'game_item' ? 'Vật phẩm' : 'Gói nạp' }}</span>
+        </template>
+      </USelectMenu>
       
-      <UButton color="gray" @click="modal.add = true" class="ml-2">Thêm mới</UButton>
+      <UButton color="gray" @click="modal.add = true" class="ml-1">Thêm mới</UButton>
     </UiFlex>
     
     <!-- Table -->
@@ -182,6 +197,7 @@ watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())
 watch(() => page.value.sort.column, () => getList())
 watch(() => page.value.sort.direction, () => getList())
+watch(() => page.value.types, () => getList())
 watch(() => page.value.search, (val) => !val && getList())
 
 // State
