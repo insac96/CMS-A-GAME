@@ -2,7 +2,7 @@ export const useTo = () => {
   const navigateToSSL = (path : string) => {
     const runtimeConfig = useRuntimeConfig()
 
-    if(runtimeConfig.public.dev) {
+    if(!!runtimeConfig.public.dev) {
       navigateTo(path)
     } 
     else {

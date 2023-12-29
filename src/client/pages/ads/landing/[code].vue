@@ -11,11 +11,7 @@
     <div class="absolute w-full h-full top-0 left-0 cursor-pointer" @click="openSign"></div>
 
     <UModal v-model="modal">
-      <div class="p-2">
-        <UTabs v-model="tabItem" :items="tabItems"></UTabs>
-        <LazyAuthSignIn v-if="tabItem == 0" @done="start" :landing="landing._id"></LazyAuthSignIn>
-        <LazyAuthSignFastUp v-if="tabItem == 1" @done="start" :landing="landing._id"></LazyAuthSignFastUp>
-      </div>
+      <LazyAuthSignFastUp @done="thankyou" :landing="landing._id"></LazyAuthSignFastUp>
     </UModal>
   </div>
 </template>
@@ -29,12 +25,6 @@ const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const authStore = useAuthStore()
 const modal = ref(false)
-const tabItem = ref(1) 
-const tabItems = [
-  { label: 'Đăng nhập', key: 'in' },
-  { label: 'Đăng ký nhanh', key: 'up' }
-]
-
 const landing = ref(undefined)
 
 const openSign = () => {
@@ -42,11 +32,15 @@ const openSign = () => {
   modal.value = true
 }
 
+const thankyou = async () => {
+  useTo().navigateToSSL('/ads/thankyou')
+}
+
 const start = async () => {
   try {
     await useAPI('game/start')
 
-    if(!!runtimeConfig.public.dev) navigateTo('play')
+    if(!!runtimeConfig.public.dev) navigateTo('/play')
     else location.href = `http://game.${runtimeConfig.public.domain}/play`
   }
   catch (e) {
@@ -64,7 +58,7 @@ const getLanding = async () => {
     fromCookie.value = data
   }
   catch (e) {
-    landing.value = null
+    return false
   }
 }
 getLanding()
