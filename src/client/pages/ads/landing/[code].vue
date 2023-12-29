@@ -45,8 +45,9 @@ const openSign = () => {
 const start = async () => {
   try {
     await useAPI('game/start')
-    modal.value = false
-    useTo().navigateToSSL('/play')
+
+    if(!!runtimeConfig.public.dev) navigateTo('play')
+    else location.href = `http://game.${runtimeConfig.public.domain}/play`
   }
   catch (e) {
     useTo().navigateToSSL('/')

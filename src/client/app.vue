@@ -14,8 +14,6 @@ import colors from '#tailwind-config/theme/colors'
 const { $socket } = useNuxtApp()
 const { imgLink } = useMakeLink()
 
-
-
 const runtimeConfig = useRuntimeConfig()
 const appConfig = useAppConfig()
 const route = useRoute()
@@ -37,6 +35,13 @@ useSeoMeta({
   ogImageAlt: () => configStore.config.name,
   themeColor: () => colors[appConfig.ui.gray][900],
   ogType: 'website'
+})
+
+useHead({
+  meta: [
+    { name: 'google-site-verification', content: configStore.config.google.client_verify },
+    { name: 'zalo-platform-site-verification', content: configStore.config.zalo.client_verify },
+  ]
 })
 
 useHead({

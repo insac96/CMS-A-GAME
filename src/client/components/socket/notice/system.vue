@@ -3,9 +3,9 @@
     <UiFlex type="col" justify="center" class="p-6">
       <UiText color="primary" weight="bold" align="center" size="xl" class="mb-6">Thông Báo</UiText>
 
-      <UCard class="mb-6 w-full max-h-[60vh]">
+      <div class="mb-6 w-full max-h-[60vh] overflow-y-auto">
         <UiText color="gray" v-html="notice"></UiText>
-      </UCard>
+      </div>
 
       <UButton @click="modal = false">Xác Nhận</UButton>
     </UiFlex>
