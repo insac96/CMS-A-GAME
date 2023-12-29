@@ -56,7 +56,7 @@ useHead({
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '402035672245098');
     fbq('track', 'PageView');
-`}],
+  `}],
 });
 
 // Add Cookie Ads From

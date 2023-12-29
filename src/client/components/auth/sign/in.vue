@@ -14,14 +14,23 @@
       </UiFlex>
     </UForm>
 
-    <template #footer>
+    <UDivider label="Hoặc đăng nhập nhanh" />
+
+    <UiFlex justify="center" class="pt-5 gap-3">
+      <AuthSignSocialFacebook />
+      <AuthSignSocialGoogle />
+      <AuthSignSocialZalo />
+      <AuthSignSocialTiktok />
+    </UiFlex>
+
+    <!-- <template #footer>
       <UiFlex justify="center" class="gap-3">
         <AuthSignSocialFacebook />
         <AuthSignSocialGoogle />
         <AuthSignSocialZalo />
         <AuthSignSocialTiktok />
       </UiFlex>
-    </template>
+    </template> -->
   </UCard>
 </template>
 
