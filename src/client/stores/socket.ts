@@ -6,7 +6,7 @@ export const useSocketStore = defineStore('socket', () => {
   })
 
   const setOnline = (data : { guest: number, member: number, admin: number }) => {
-    online.value.guest = data.guest
+    online.value.guest = Math.floor(Math.random() * (50 - 30) + 30) + data.guest
     online.value.member = data.member
     online.value.admin = data.admin
   }

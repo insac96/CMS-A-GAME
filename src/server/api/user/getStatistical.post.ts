@@ -4,12 +4,14 @@ export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
 
-    const user = await DB.User
-    .findOne({ _id: auth._id })
-    .select('login pay spend wheel dice referral')
-    if(!user) throw 'Không tìm thấy thông tin tài khoản'
+    const { user } = await readBody(event)
 
-    return resp(event, { result: user })
+    const userData = await DB.User
+    .findOne({ _id: !!user ? user : auth._id })
+    .select('login pay spend wheel dice referral')
+    if(!userData) throw 'Không tìm thấy thông tin tài khoản'
+
+    return resp(event, { result: userData })
   } 
   catch (e:any) {
     return resp(event, { code: 400, message: e.toString() })

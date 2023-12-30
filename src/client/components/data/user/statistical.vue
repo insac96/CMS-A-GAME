@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-const props = defineProps(['typeDefault'])
+const props = defineProps(['typeDefault', 'user'])
 const { toMoney } = useMoney()
 const authStore = useAuthStore()
 const loading = ref(false)
@@ -95,7 +95,9 @@ const getStatistical = async () => {
     if(!authStore.isLogin) return
 
     loading.value = true
-    const get = await useAPI('user/getStatistical')
+    const get = await useAPI('user/getStatistical', JSON.parse(JSON.stringify({
+      user: props.user
+    })))
 
     statistical.value = get
     loading.value = false

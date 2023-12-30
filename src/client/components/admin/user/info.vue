@@ -19,6 +19,10 @@
           <AdminUserLog :user="user" />
         </template>
 
+        <template #statistical>
+          <DataUserStatistical :user="user" />
+        </template>
+
         <template #ip>
           <AdminUserIp :user="user" />
         </template>
@@ -58,6 +62,10 @@ const menu = [
   {
     label: 'Dòng thời gian',
     slot: 'log'
+  },
+  {
+    label: 'Thống kê',
+    slot: 'statistical'
   },
   {
     label: 'Địa chỉ IP',
