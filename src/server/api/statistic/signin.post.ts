@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     if(!!range && !!range['start'] && !!range['end']){
       const start : any = DayJS(range['start']).startOf('date')
       const end : any = DayJS(range['end']).endOf('date')
-      match['time'] = { $gte: start['$d'], $lte: end['$d'] }
+      match['time'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
     }
 
     const signin = await DB.UserLogin.aggregate([

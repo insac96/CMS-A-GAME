@@ -21,9 +21,9 @@ export default defineEventHandler(async (event) => {
       end = DayJS().endOf('month')
     }
     if(type == 'day' || type == 'month'){
-      matchPayment['verify.time'] = { $gte: start['$d'], $lte: end['$d'] }
-      matchSignIn['login.update'] = { $gte: start['$d'], $lte: end['$d'] }
-      matchSignUp['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
+      matchPayment['verify.time'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
+      matchSignIn['login.update'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
+      matchSignUp['createdAt'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
     }
 
     const payment = await DB.Payment.aggregate([
