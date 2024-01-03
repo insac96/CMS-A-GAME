@@ -1,6 +1,13 @@
 import type { H3Event } from 'h3'
 import type { IFormatDate } from '~~/types'
+
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
 
 export default (event: H3Event, date?: Date) : IFormatDate => {
   const dateFormat = !!date ? dayjs(date) : null

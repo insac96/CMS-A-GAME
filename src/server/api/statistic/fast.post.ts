@@ -1,5 +1,11 @@
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 import type { IAuth } from '~~/types'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
 
 export default defineEventHandler(async (event) => {
   try {
