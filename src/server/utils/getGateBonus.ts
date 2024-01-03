@@ -1,8 +1,6 @@
 import type { H3Event } from 'h3'
 
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
 
 interface IBodyData {
   default: number,
@@ -13,10 +11,6 @@ interface IBodyData {
 }
 
 export default (event: H3Event, body : IBodyData) : number => {
-  dayjs.extend(utc)
-  dayjs.extend(timezone)
-  dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
-
   const defaultBonus = parseInt(String(body.default))
   const limitBonus = parseInt(String(body.limit.number || 0))
   const limitExpired = body.limit.expired

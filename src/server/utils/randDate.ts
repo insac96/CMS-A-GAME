@@ -1,11 +1,11 @@
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
+// import utc from 'dayjs/plugin/utc'
+// import timezone from 'dayjs/plugin/timezone'
 
 export default (date: Date | null, type : any) : any => {
-  dayjs.extend(utc)
-  dayjs.extend(timezone)
-  dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
+  // dayjs.extend(utc)
+  // dayjs.extend(timezone)
+  // dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
 
   if(!date){
     const start : any = dayjs().startOf(type)
