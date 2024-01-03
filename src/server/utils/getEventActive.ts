@@ -1,6 +1,5 @@
 import type { H3Event } from 'h3'
 import type { IAuth } from '~~/types'
-import dayjs from 'dayjs'
 
 const typeCheck : any = {
   'login.month' : 'month',
@@ -27,13 +26,13 @@ export default async (event: H3Event, data : any, type : string) : Promise<any> 
 
     const match : any = { user: auth._id, event: data._id }
     if(!!typeCheck[type] && typeCheck[type] == 'day'){
-      const start : any = dayjs().startOf('date')
-      const end : any = dayjs().endOf('date')
+      const start : any = DayJS().startOf('date')
+      const end : any = DayJS().endOf('date')
       match['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
     }
     if(!!typeCheck[type] && typeCheck[type] == 'month'){
-      const start : any = dayjs().startOf('month')
-      const end : any = dayjs().endOf('month')
+      const start : any = DayJS().startOf('month')
+      const end : any = DayJS().endOf('month')
       match['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
     }
 

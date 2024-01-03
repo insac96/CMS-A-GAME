@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import type { IAuth } from '~~/types'
 
 export default defineEventHandler(async (event) => {
@@ -14,12 +13,12 @@ export default defineEventHandler(async (event) => {
 
     let start : any, end : any
     if(type == 'day'){
-      start = dayjs().startOf('date')
-      end = dayjs().endOf('date')
+      start = DayJS().startOf('date')
+      end = DayJS().endOf('date')
     }
     if(type == 'month'){
-      start = dayjs().startOf('month')
-      end = dayjs().endOf('month')
+      start = DayJS().startOf('month')
+      end = DayJS().endOf('month')
     }
     if(type == 'day' || type == 'month'){
       matchPayment['verify.time'] = { $gte: start['$d'], $lte: end['$d'] }

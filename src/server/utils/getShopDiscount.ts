@@ -1,8 +1,6 @@
 import type { H3Event } from 'h3'
 import type { IDBShopConfig } from '~~/types'
 
-import dayjs from 'dayjs'
-
 export default (event: H3Event, body : IDBShopConfig) : number => {
   const defaultBonus = 0
   const limitDiscount = parseInt(String(body.discount.number || 0))
@@ -10,8 +8,8 @@ export default (event: H3Event, body : IDBShopConfig) : number => {
 
   if(!limitExpired) return limitDiscount
   else {
-    const now = dayjs(new Date()).unix()
-    const expired = dayjs(limitExpired).unix()
+    const now = DayJS(new Date()).unix()
+    const expired = DayJS(limitExpired).unix()
 
     if(now <= expired) return limitDiscount
     else return defaultBonus

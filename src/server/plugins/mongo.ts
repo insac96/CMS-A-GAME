@@ -1,15 +1,6 @@
 import type { IGlobalDB } from '~~/types'
-
 import mongoose from 'mongoose';
 import Model from '../model'
-
-// import dayjs from 'dayjs'
-// import utc from 'dayjs/plugin/utc'
-// import timezone from 'dayjs/plugin/timezone'
-
-// dayjs.extend(utc)
-// dayjs.extend(timezone)
-// dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
 
 declare global {
   var DB : IGlobalDB

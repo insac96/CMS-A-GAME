@@ -1,7 +1,5 @@
 import type { H3Event } from 'h3'
 
-import dayjs from 'dayjs'
-
 interface IBodyData {
   default: number,
   limit: {
@@ -17,8 +15,8 @@ export default (event: H3Event, body : IBodyData) : number => {
 
   if(limitBonus < 1 || (limitBonus > 0 && !limitExpired)) return defaultBonus
   else {
-    const now = dayjs(new Date()).unix()
-    const expired = dayjs(limitExpired).unix()
+    const now = DayJS(new Date()).unix()
+    const expired = DayJS(limitExpired).unix()
 
     if(now <= expired) return limitBonus
     else return defaultBonus

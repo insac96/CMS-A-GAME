@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import type { IAuth } from '~~/types'
 
 export default defineEventHandler(async (event) => {
@@ -15,8 +14,8 @@ export default defineEventHandler(async (event) => {
 
     const match : any = {}
     if(!!range && !!range['start'] && !!range['end']){
-      const start : any = dayjs(range['start']).startOf('date')
-      const end : any = dayjs(range['end']).endOf('date')
+      const start : any = DayJS(range['start']).startOf('date')
+      const end : any = DayJS(range['end']).endOf('date')
       match['time'] = { $gte: start['$d'], $lte: end['$d'] }
     }
 

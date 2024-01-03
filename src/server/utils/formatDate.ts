@@ -1,10 +1,8 @@
 import type { H3Event } from 'h3'
 import type { IFormatDate } from '~~/types'
 
-import dayjs from 'dayjs'
-
 export default (event: H3Event, date?: Date) : IFormatDate => {
-  const dateFormat = !!date ? dayjs(date) : null
+  const dateFormat = !!date ? DayJS(date) : null
   
   return {
     day: !!dateFormat ? dateFormat.get('date') : 0,
