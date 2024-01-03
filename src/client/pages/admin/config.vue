@@ -77,6 +77,10 @@
               <UInput v-model="state.contact.name" />
             </UFormGroup>
 
+            <UFormGroup label="Tên viết tắt">
+              <UInput v-model="state.contact.prefix" />
+            </UFormGroup>
+
             <UFormGroup label="Số điện thoại">
               <UInput v-model="state.contact.phone" />
             </UFormGroup>
@@ -187,6 +191,14 @@
               <UInput v-model="state.facebook.client_version" />
             </UFormGroup>
 
+            <UFormGroup label="Verify">
+              <UInput v-model="state.facebook.client_verify" />
+            </UFormGroup>
+
+            <UFormGroup label="Ads">
+              <UInput v-model="state.facebook.client_ads" />
+            </UFormGroup>
+
             <UiFlex justify="end" class="mt-4">
               <UButton @click="update('facebook')" :loading="updating">Cập nhật</UButton>
             </UiFlex>
@@ -207,6 +219,10 @@
 
             <UFormGroup label="Verify">
               <UInput v-model="state.google.client_verify" />
+            </UFormGroup>
+
+            <UFormGroup label="Ads">
+              <UInput v-model="state.google.client_ads" />
             </UFormGroup>
 
             <UiFlex justify="end" class="mt-4">
@@ -285,7 +301,8 @@ const state = ref({
     name: '',
     phone: '',
     email: '',
-    address: ''
+    address: '',
+    prefix: '',
   },
 
   social: {
@@ -315,11 +332,13 @@ const state = ref({
       client_secret: '',
       client_version: '',
       client_verify: '',
+      client_ads: ''
     },
     google: {
       client_id: '',
       client_secret: '',
       client_verify: '',
+      client_ads: ''
     },
     tiktok: {
       client_id: '',

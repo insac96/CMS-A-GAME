@@ -21,7 +21,8 @@ export const DBConfig = (mongoose : Mongoose) => {
       name: { type: String, default: '' },
       phone: { type: String, default: '' },
       email: { type: String, default: '' },
-      address: { type: String, default: '' }
+      address: { type: String, default: '' },
+      prefix: { type: String, default: 'CVV' },
     },
     social: {
       facebook: { type: String, default: '' },
@@ -49,11 +50,13 @@ export const DBConfig = (mongoose : Mongoose) => {
       client_secret: { type: String, default: '' },
       client_version: { type: String, default: '' },
       client_verify: { type: String, default: '' },
+      client_ads: { type: String, default: '' },
     },
     google: {
       client_id: { type: String, default: '' },
       client_secret: { type: String, default: '' },
       client_verify: { type: String, default: '' },
+      client_ads: { type: String, default: '' },
     },
     tiktok: {
       client_id: { type: String, default: '' },

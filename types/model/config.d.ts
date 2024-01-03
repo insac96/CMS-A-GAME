@@ -24,6 +24,7 @@ export interface IDBConfig {
     phone: string
     email: string
     address: string
+    prefix: string
   }
   social: {
     facebook: string
@@ -51,11 +52,13 @@ export interface IDBConfig {
     client_secret: string
     client_version: string
     client_verify: string
+    client_ads: string
   }
   google: {
     client_id: string
     client_secret: string
     client_verify: string
+    client_ads: string
   }
   tiktok: {
     client_id: string
@@ -86,6 +89,7 @@ export interface IDBConfigStore {
     phone: string
     email: string
     address: string
+    prefix: string
   }
   social: {
     facebook: string

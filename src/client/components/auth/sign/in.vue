@@ -14,7 +14,7 @@
       </UiFlex>
     </UForm>
 
-    <UDivider label="Hoặc đăng nhập nhanh" />
+    <UDivider class="mt-4" label="Hoặc đăng nhập nhanh" />
 
     <UiFlex justify="center" class="pt-5 gap-3">
       <AuthSignSocialFacebook />

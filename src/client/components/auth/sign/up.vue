@@ -80,7 +80,7 @@
             <UiText weight="semibold" size="sm">Mã mời của bạn</UiText>
           </UiFlex>
           
-          <UiText size="sm" weight="bold" color="primary">{{ `CVV-${state.username.toUpperCase()}` }}</UiText>
+          <UiText size="sm" weight="bold" color="primary">{{ `${configStore.config.contact.prefix || 'GAME'}-${state.username.toUpperCase()}` }}</UiText>
         </UiFlex>
 
         <UiFlex justify="end" class="mt-4">
@@ -93,6 +93,7 @@
 
 <script setup>
 const { $socket } = useNuxtApp()
+const configStore = useConfigStore()
 const authStore = useAuthStore()
 const emit = defineEmits(['done'])
 
@@ -176,7 +177,8 @@ const start = async () => {
 
     loading.value.start = false
     modal.value.referral = false
-    emit('done')
+    useTo().navigateToSSL('/ads/thankyou')
+    // emit('done')
   }
   catch(e){
     loading.value.start = false

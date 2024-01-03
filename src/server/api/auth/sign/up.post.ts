@@ -5,6 +5,7 @@ import type { IDBConfig, IDBUser } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const runtimeConfig = useRuntimeConfig()
+
     const { username, password, email, phone, referral_code } = await readBody(event)
 
     if (!username) throw 'Vui lòng nhập tài khoản'
@@ -27,7 +28,7 @@ export default defineEventHandler(async (event) => {
     if (!!password.match(/\s/g)) throw 'Mật khẩu không có khoảng cách'
 
     // Config
-    const config = await DB.Config.findOne({}).select('logo_image') as IDBConfig
+    const config = await DB.Config.findOne({}).select('logo_image contact') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trang'
 
     // Check User
@@ -48,7 +49,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Check Referral Code
-    const referral : any = { code: `CVV-${username.toUpperCase()}` }
+    const referral : any = { code: `${config.contact.prefix || 'GAME'}-${username.toUpperCase()}` }
     if(!!referral_code){
       const referraler = await DB.User.findOne({ 'referral.code': referral_code }).select('_id')
       if(!referraler) throw 'Mã mời không tồn tại'

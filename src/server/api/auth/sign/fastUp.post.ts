@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     if (password != confirm_password) throw 'Mật khẩu xác nhận không khớp'
 
     // Config
-    const config = await DB.Config.findOne({}).select('logo_image') as IDBConfig
+    const config = await DB.Config.findOne({}).select('logo_image contact') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trang'
 
     // Check User
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
     if(!!userCheck) throw 'Tài khoản đã tồn tại'
 
     // Check Referral Code
-    const referral : any = { code: `CVV-${username.toUpperCase()}` }
+    const referral : any = { code: `${config.contact.prefix || 'GAME'}-${username.toUpperCase()}` }
 
     // Check IP
     const IP = getRequestIP(event, { xForwardedFor: true })
