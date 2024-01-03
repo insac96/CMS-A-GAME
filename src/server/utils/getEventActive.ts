@@ -2,12 +2,12 @@ import type { H3Event } from 'h3'
 import type { IAuth } from '~~/types'
 
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
+// import utc from 'dayjs/plugin/utc'
+// import timezone from 'dayjs/plugin/timezone'
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
+// dayjs.extend(utc)
+// dayjs.extend(timezone)
+// dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
 
 
 const typeCheck : any = {

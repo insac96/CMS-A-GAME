@@ -1,14 +1,16 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
+// import utc from 'dayjs/plugin/utc'
+// import timezone from 'dayjs/plugin/timezone'
 import 'dayjs/locale/vi'
 
 dayjs.locale('vi')
-dayjs.extend(utc)
-dayjs.extend(timezone)
+
+// dayjs.extend(utc)
+// dayjs.extend(timezone)
+// dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
+
 dayjs.extend(relativeTime)
-dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
 
 export const useDayJs = () => {
   const fromTime = (start : Date, end? : Date, noSuffix : boolean = false) : string => {
