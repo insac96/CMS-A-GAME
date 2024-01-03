@@ -1,11 +1,4 @@
-import dayjs from 'dayjs'
-// import utc from 'dayjs/plugin/utc'
-// import timezone from 'dayjs/plugin/timezone'
 import type { IAuth } from '~~/types'
-
-// dayjs.extend(utc)
-// dayjs.extend(timezone)
-// dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
 
 export default defineEventHandler(async (event) => {
   try {
@@ -20,12 +13,12 @@ export default defineEventHandler(async (event) => {
 
     let start : any, end : any
     if(type == 'day'){
-      start = dayjs().startOf('date')
-      end = dayjs().endOf('date')
+      start = randDate(null, 'date').start
+      end = randDate(null, 'date').end
     }
     if(type == 'month'){
-      start = dayjs().startOf('month')
-      end = dayjs().endOf('month')
+      start = randDate(null, 'month').start
+      end = randDate(null, 'month').end
     }
     if(type == 'day' || type == 'month'){
       matchPayment['verify.time'] = { $gte: start['$d'], $lte: end['$d'] }

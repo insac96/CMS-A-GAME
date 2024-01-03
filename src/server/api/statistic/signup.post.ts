@@ -22,8 +22,8 @@ export default defineEventHandler(async (event) => {
 
     const match : any = {}
     if(!!range && !!range['start'] && !!range['end']){
-      const start : any = dayjs(range['start']).startOf('date')
-      const end : any = dayjs(range['end']).endOf('date')
+      const start : any = randDate(range['start'], 'date').start
+      const end : any = randDate(range['end'], 'date').end
       match['time'] = { $gte: start['$d'], $lte: end['$d'] }
     }
 

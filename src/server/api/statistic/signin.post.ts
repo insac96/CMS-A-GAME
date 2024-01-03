@@ -1,13 +1,5 @@
 import type { IAuth } from '~~/types'
 
-import dayjs from 'dayjs'
-// import utc from 'dayjs/plugin/utc'
-// import timezone from 'dayjs/plugin/timezone'
-
-// dayjs.extend(utc)
-// dayjs.extend(timezone)
-// dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
-
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
@@ -22,8 +14,8 @@ export default defineEventHandler(async (event) => {
 
     const match : any = {}
     if(!!range && !!range['start'] && !!range['end']){
-      const start : any = dayjs(range['start']).startOf('date')
-      const end : any = dayjs(range['end']).endOf('date')
+      const start : any = randDate(range['start'], 'date').start
+      const end : any = randDate(range['end'], 'date').end
       match['time'] = { $gte: start['$d'], $lte: end['$d'] }
     }
 

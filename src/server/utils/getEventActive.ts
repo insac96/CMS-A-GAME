@@ -1,15 +1,6 @@
 import type { H3Event } from 'h3'
 import type { IAuth } from '~~/types'
 
-import dayjs from 'dayjs'
-// import utc from 'dayjs/plugin/utc'
-// import timezone from 'dayjs/plugin/timezone'
-
-// dayjs.extend(utc)
-// dayjs.extend(timezone)
-// dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
-
-
 const typeCheck : any = {
   'login.month' : 'month',
   'pay.day.money' : 'day',
@@ -35,13 +26,13 @@ export default async (event: H3Event, data : any, type : string) : Promise<any> 
 
     const match : any = { user: auth._id, event: data._id }
     if(!!typeCheck[type] && typeCheck[type] == 'day'){
-      const start : any = dayjs().startOf('date')
-      const end : any = dayjs().endOf('date')
+      const start : any = randDate(null, 'date').start
+      const end : any = randDate(null, 'date').end
       match['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
     }
     if(!!typeCheck[type] && typeCheck[type] == 'month'){
-      const start : any = dayjs().startOf('month')
-      const end : any = dayjs().endOf('month')
+      const start : any = randDate(null, 'month').start
+      const end : any = randDate(null, 'month').end
       match['createdAt'] = { $gte: start['$d'], $lte: end['$d'] }
     }
 
