@@ -1,6 +1,15 @@
+import type { IGlobalDB } from '~~/types'
+
 import mongoose from 'mongoose';
 import Model from '../model'
-import type { IGlobalDB } from '~~/types'
+
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault('Asia/Ho_Chi_Minh')
 
 declare global {
   var DB : IGlobalDB
@@ -8,6 +17,7 @@ declare global {
 
 export default defineNitroPlugin(async (nitroApp) => {
   const runtimeConfig = useRuntimeConfig()
+  
   await mongoose.connect(runtimeConfig.mongoURI, { 
     dbName: runtimeConfig.mongoDB 
   })
