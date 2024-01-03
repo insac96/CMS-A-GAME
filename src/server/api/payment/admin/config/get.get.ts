@@ -1,8 +1,8 @@
 export default defineEventHandler(async (event) => {
   try {
-    const config = await DB.ShopConfig.findOne()
+    const config = await DB.PaymentConfig.findOne()
 
-    if(!config) throw 'Không tìm thấy cấu hình cửa hàng'
+    if(!config) throw 'Không tìm thấy cấu hình nạp tiền'
     return resp(event, { result: config })
   } 
   catch (e:any) {

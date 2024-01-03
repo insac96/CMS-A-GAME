@@ -1,10 +1,10 @@
 <template>
   <div>
-    <UiFlex class="mb-4">
-      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" size="lg" class="mr-auto"/>
+    <UiFlex class="mb-2">
+      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" size="sm" class="mr-auto"/>
     
-      <SelectDate v-model="page.range.start" placeholder="Bắt đầu" class="ml-2 max-w-[140px]"/>
-      <SelectDate v-model="page.range.end" placeholder="Kết thúc" class="ml-1 max-w-[140px]"/>
+      <SelectDate v-model="page.range.start" placeholder="Bắt đầu" size="sm" class="ml-2 max-w-[140px]"/>
+      <SelectDate v-model="page.range.end" placeholder="Kết thúc" size="sm" class="ml-1 max-w-[140px]"/>
     </UiFlex>
     
     <!-- Table -->

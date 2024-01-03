@@ -104,6 +104,7 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-5',
     children: [
+      { label: 'Cài đặt', to: '/admin/payment/config' }, 
       { label: 'Kênh nạp', to: '/admin/payment/gate' }, 
       { label: 'Danh sách', to: '/admin/payment' }, 
     ]

@@ -5,7 +5,7 @@ import { DBNews, DBNewsCategory } from './news'
 import { DBUser, DBUserLogin } from './user'
 import { DBLevel } from './level'
 import { DBGate } from './gate'
-import { DBPayment } from './payment'
+import { DBPaymentConfig, DBPayment } from './payment'
 import { DBWithdraw } from './withdraw'
 import { DBNotifyUser, DBNotifyAdmin } from './notify'
 import { DBItem, DBItemBox } from './item'
@@ -32,6 +32,8 @@ export default (mongoose : Mongoose) : IGlobalDB => {
     Level: DBLevel(mongoose),
 
     Gate: DBGate(mongoose),
+
+    PaymentConfig: DBPaymentConfig(mongoose),
     Payment: DBPayment(mongoose),
 
     Withdraw: DBWithdraw(mongoose),

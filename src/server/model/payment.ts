@@ -1,5 +1,27 @@
 import type { Mongoose } from 'mongoose'
-import type { IDBPayment } from '~~/types'
+import type { IDBPayment, IDBPaymentConfig } from '~~/types'
+
+export const DBPaymentConfig = (mongoose : Mongoose) => {
+  const schema = new mongoose.Schema<IDBPaymentConfig>({ 
+    maintenance: { type: Boolean, default: false },
+    pay: {
+      number: { type: Number, default: 0 },
+      expired: { type: Date }
+    }
+  }, {
+    timestamps: true
+  })
+
+  const model = mongoose.model('payment_config', schema, 'payment_config')
+
+  const autoCreate = async () => {
+    const count = await model.count({})
+    if(count == 0) return await model.create({})
+  }
+  autoCreate()
+  
+  return model 
+}
 
 export const DBPayment = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBPayment>({ 

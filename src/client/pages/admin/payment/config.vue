@@ -1,12 +1,12 @@
 <template>
-  <UiContent title="Config Shop" sub="Cài đặt cửa hàng" class="max-w-3xl mx-auto">
+  <UiContent title="Config Payment" sub="Cài đặt nạp tiền" class="max-w-3xl mx-auto">
       <UForm :state="state" @submit="update">
-        <UFormGroup label="Giảm giá">
-          <UInput v-model="state.discount.number" type="number" />
+        <UFormGroup label="Khuyến mại tích nạp">
+          <UInput v-model="state.pay.number" type="number" />
         </UFormGroup>
 
         <UFormGroup label="Thời hạn">
-          <SelectDate v-model="state.discount.expired" time />
+          <SelectDate v-model="state.pay.expired" time />
         </UFormGroup>
 
         <UiFlex>
@@ -25,14 +25,14 @@ const updating = ref(false)
 
 const state = ref({
   maintenance: null,
-  discount: {
+  pay: {
     number: null,
     expired: null
   }
 })
 
 const getConfig = async () => {
-  const config = await useAPI('shop/admin/config/get')
+  const config = await useAPI('payment/admin/config/get')
   state.value = Object.assign(state.value, config)
   load.value = false
 }
@@ -40,7 +40,7 @@ const getConfig = async () => {
 const update = async () => {
   try {
     updating.value = true
-    await useAPI('shop/admin/config/update', JSON.parse(JSON.stringify(state.value)))
+    await useAPI('payment/admin/config/update', JSON.parse(JSON.stringify(state.value)))
 
     getConfig()
     updating.value = false

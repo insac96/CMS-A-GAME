@@ -6,15 +6,15 @@
       footer: { padding: 'p-2 sm:p-2' },
     }">
       <template #header>
-        <UiFlex justify="between">
-          <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" />
-          <UForm @submit="getList">
-            <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm">
-              <template #trailing>
-                <UiText color="gray" size="xs">CODE</UiText>
-              </template>
-            </UInput>
+        <UiFlex>
+          <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1" />
+
+          <UForm @submit="getList" class="max-w-[9rem] mr-auto">
+            <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm"></UInput>
           </UForm>
+          
+          <SelectDate time v-model="page.range.start" placeholder="Bắt đầu" size="sm" class="ml-1 max-w-[140px]"/>
+          <SelectDate time v-model="page.range.end" placeholder="Kết thúc" size="sm" class="ml-1 max-w-[140px]"/>
         </UiFlex>
       </template>
 
@@ -49,8 +49,9 @@
       </UTable>
 
       <template #footer>
-        <UiFlex justify="end">
-          <UPagination v-model="page.current" :page-count="page.size" :total="page.total" :max="5" />
+        <UiFlex justify="between">
+          <UButton color="gray" icon="i-bx-check" v-if="totalSuccess != 0">{{ toMoney(totalSuccess) }}</UButton>
+          <UPagination class="ml-auto" v-model="page.current" :page-count="page.size" :total="page.total" :max="5" />
         </UiFlex>
       </template>
     </UCard>
@@ -136,6 +137,10 @@ const page = ref({
     key: null,
     by: 'code'
   },
+  range: {
+    start: null,
+    end: null
+  },
   total: 0,
   user: props.user || null
 })
@@ -144,6 +149,14 @@ watch(() => page.value.current, () => getList())
 watch(() => page.value.sort.column, () => getList())
 watch(() => page.value.sort.direction, () => getList())
 watch(() => page.value.search.key, (val) => !val && getList())
+watch(() => page.value.range.start, (val) => {
+  if(!!val && !!page.value.range.end) return getList()
+  if(!val && !page.value.range.end) return getList()
+})
+watch(() => page.value.range.end, (val) => {
+  if(!!val && !!page.value.range.start) return getList()
+  if(!val && !page.value.range.start) return getList()
+})
 
 const statusFormat = {
   0: { label: 'Đang chờ', color: 'orange' },
@@ -157,7 +170,6 @@ const stateUndo = ref({
   reason: null
 })
 const statePayment = ref(undefined)
-
 
 const openUndo = (row) => {
   stateUndo.value._id = row._id
@@ -183,6 +195,18 @@ const undoAction = async () => {
     loading.value.undo = false
   }
 }
+
+// Total
+const totalSuccess = computed(() => {
+  if(list.value.length == 0) return 0
+
+  let m = 0
+  list.value.forEach(i => {
+    if(i.status == 1) m = Number(m) + Number(i.money)
+  })
+
+  return m
+})
 
 const getList = async () => {
   try {

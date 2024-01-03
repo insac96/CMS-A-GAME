@@ -1,5 +1,5 @@
 import md5 from "md5"
-import type { IAuth, IDBGate, IDBLevel, IDBUser } from "~~/types"
+import type { IAuth, IDBGate, IDBLevel, IDBPaymentConfig, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -12,6 +12,11 @@ export default defineEventHandler(async (event) => {
     if(!!isNaN(parseInt(money)) || parseInt(money) < 1) throw 'Số tiền không hợp lệ'
     if(parseInt(money) < 10000) throw 'Số tiền phải lớn hơn hoặc bằng 10.000đ'
     if(parseInt(money) % 10000 != 0) return 'Số tiền phải là bội số của 10.000'
+
+    // Shop Config
+    const paymentConfig = await DB.PaymentConfig.findOne() as IDBPaymentConfig
+    if(!paymentConfig) throw 'Không tìm thấy cấu hình cổng nạp'
+    if(!!paymentConfig.maintenance) throw 'Chức năng nạp tiền đang bảo trì, vui lòng quay lại sau'
 
     // Check User
     const user = await DB.User.findOne({ _id: auth._id }).select('level pay') as IDBUser

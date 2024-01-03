@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
 
-    const { size, current, sort, search, user } = await readBody(event)
+    const { size, current, sort, search, user, range } = await readBody(event)
     if(!size || !current || !search) throw 'Dữ liệu phân trang sai'
     if(!sort.column || !sort.direction) throw 'Dữ liệu sắp xếp sai'
 
@@ -14,6 +14,9 @@ export default defineEventHandler(async (event) => {
     const match : any = { user: !!user ? user : auth._id }
     if(search.key && search.by){
       match['$text'] = { '$search': search.key }
+    }
+    if(!!range && !!range['start'] && !!range['end']){
+      match['createdAt'] = { $gte: new Date(range['start']), $lte: new Date(range['end']) }
     }
 
     const list = await DB.Payment

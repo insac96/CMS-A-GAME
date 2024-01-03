@@ -206,7 +206,7 @@
     </UModal>
 
     <!-- Modal Edit Wheel-->
-    <UModal v-model="modal.editWheel" preventClose>
+    <!-- <UModal v-model="modal.editWheel" preventClose>
       <UForm :state="stateEditWheel" @submit="editWheelAction" class="p-4" v-if="stateEditWheel.wheel">
         <UFormGroup label="Ngày">
           <UInput v-model="stateEditWheel.wheel.day" type="number" />
@@ -225,10 +225,10 @@
           <UButton color="gray" @click="modal.editWheel = false" :disabled="loading.editWheel" class="ml-1">Đóng</UButton>
         </UiFlex>
       </UForm>
-    </UModal>
+    </UModal> -->
 
     <!-- Modal Edit Dice-->
-    <UModal v-model="modal.editDice" preventClose>
+    <!-- <UModal v-model="modal.editDice" preventClose>
       <UForm :state="stateEditDice" @submit="editDiceAction" class="p-4" v-if="stateEditDice.dice">
         <UFormGroup label="Ngày">
           <UInput v-model="stateEditDice.dice.day.coin" type="number" />
@@ -247,10 +247,10 @@
           <UButton color="gray" @click="modal.editDice = false" :disabled="loading.editDice" class="ml-1">Đóng</UButton>
         </UiFlex>
       </UForm>
-    </UModal>
+    </UModal> -->
 
     <!-- Modal Edit Login-->
-    <UModal v-model="modal.editLogin" preventClose>
+    <!-- <UModal v-model="modal.editLogin" preventClose>
       <UForm :state="stateEditLogin" @submit="editLoginAction" class="p-4" v-if="stateEditLogin.login">
         <UFormGroup label="Tháng">
           <UInput v-model="stateEditLogin.login.month" type="number" />
@@ -265,7 +265,7 @@
           <UButton color="gray" @click="modal.editLogin = false" :disabled="loading.editLogin" class="ml-1">Đóng</UButton>
         </UiFlex>
       </UForm>
-    </UModal>
+    </UModal> -->
 
     <!-- Modal Send Item-->
     <UModal v-model="modal.sendItem" preventClose :ui="{width: 'sm:max-w-[800px]'}">
@@ -621,47 +621,47 @@ const editSpendAction = async () => {
   }
 }
 
-const editWheelAction = async () => {
-  try {
-    loading.value.editWheel = true
-    await useAPI('user/admin/editWheel', JSON.parse(JSON.stringify(stateEditWheel.value)))
+// const editWheelAction = async () => {
+//   try {
+//     loading.value.editWheel = true
+//     await useAPI('user/admin/editWheel', JSON.parse(JSON.stringify(stateEditWheel.value)))
 
-    loading.value.editWheel = false
-    modal.value.editWheel = false
-    getList()
-  }
-  catch (e) {
-    loading.value.editWheel = false
-  }
-}
+//     loading.value.editWheel = false
+//     modal.value.editWheel = false
+//     getList()
+//   }
+//   catch (e) {
+//     loading.value.editWheel = false
+//   }
+// }
 
-const editDiceAction = async () => {
-  try {
-    loading.value.editDice = true
-    await useAPI('user/admin/editDice', JSON.parse(JSON.stringify(stateEditDice.value)))
+// const editDiceAction = async () => {
+//   try {
+//     loading.value.editDice = true
+//     await useAPI('user/admin/editDice', JSON.parse(JSON.stringify(stateEditDice.value)))
 
-    loading.value.editDice = false
-    modal.value.editDice = false
-    getList()
-  }
-  catch (e) {
-    loading.value.editDice = false
-  }
-}
+//     loading.value.editDice = false
+//     modal.value.editDice = false
+//     getList()
+//   }
+//   catch (e) {
+//     loading.value.editDice = false
+//   }
+// }
 
-const editLoginAction = async () => {
-  try {
-    loading.value.editLogin = true
-    await useAPI('user/admin/editLogin', JSON.parse(JSON.stringify(stateEditLogin.value)))
+// const editLoginAction = async () => {
+//   try {
+//     loading.value.editLogin = true
+//     await useAPI('user/admin/editLogin', JSON.parse(JSON.stringify(stateEditLogin.value)))
 
-    loading.value.editLogin = false
-    modal.value.editLogin = false
-    getList()
-  }
-  catch (e) {
-    loading.value.editLogin = false
-  }
-}
+//     loading.value.editLogin = false
+//     modal.value.editLogin = false
+//     getList()
+//   }
+//   catch (e) {
+//     loading.value.editLogin = false
+//   }
+// }
 
 const exportExcel = async () => {
   try {

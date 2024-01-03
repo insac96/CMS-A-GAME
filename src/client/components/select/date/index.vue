@@ -16,6 +16,7 @@
             :model-value="show" 
             @click="togglePopover" 
             :placeholder="props.placeholder || 'Chọn thời gian'"
+            :size="size"
           />
           <UIcon 
             v-if="!!props.modelValue"
@@ -40,7 +41,8 @@ const { displayFull, displayTime } = useDayJs()
 const props = defineProps({ 
   modelValue: Date,
   time: Boolean,
-  placeholder: String
+  placeholder: String,
+  size: String
 })
 const emit = defineEmits(['update:modelValue'])
 

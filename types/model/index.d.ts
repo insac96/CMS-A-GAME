@@ -5,7 +5,7 @@ export { IDBNews, IDBNewsCategory } from './news'
 export { IDBUser, IDBUserLogin, IDBUserStore } from './user'
 export { IDBLevel } from './level'
 export { IDBGate } from './gate'
-export { IDBPayment } from './payment'
+export { IDBPaymentConfig, IDBPayment } from './payment'
 export { IDBWithdraw } from './withdraw'
 export { IDBNotifyUser, IDBNotifyAdmin } from './notify'
 export { IDBItem, IDBItemBox } from './item'
@@ -31,6 +31,8 @@ export interface IGlobalDB {
   Level: Model<IDBLevel>
 
   Gate: Model<IDBGate>
+
+  PaymentConfig: Model<IDBPaymentConfig>
   Payment: Model<IDBPayment>
 
   Withdraw: Model<IDBWithdraw>

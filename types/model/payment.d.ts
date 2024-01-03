@@ -1,5 +1,17 @@
 import type { Types } from 'mongoose'
 
+export interface IDBPaymentConfig {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+
+  maintenance: boolean
+  pay: {
+    number: number
+    expired: Date
+  }
+}
+
 export interface IDBPayment {
   _id: Types.ObjectId
   createdAt: Date

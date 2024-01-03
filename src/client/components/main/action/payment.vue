@@ -3,6 +3,17 @@
     <DataEmpty text="Vui lòng đăng nhập trước" icon="i-bx-credit-card" v-if="!authStore.isLogin" />
     
     <div v-else>
+      <UAlert title="Khuyến Mãi" icon="i-bxs-gift" color="red" variant="soft" class="mb-4" v-if="(!!savePayBonus && savePayBonus.number > 0)">
+        <template #description>
+          <UiText>
+            Tặng 
+            <b>{{ savePayBonus.number }}%</b> 
+            giá trị nạp vào tích nạp ngày 
+            <b v-if="savePayBonus.time">{{ savePayBonus.time }}</b>
+          </UiText>
+        </template>
+      </UAlert>
+
       <UForm ref="form" :state="state" :validate="validate" @submit="submit">
         <UFormGroup label="Giới hạn">
           <DataPaymentLimit v-model="limit" auth />
@@ -64,8 +75,11 @@
 <script setup>
 const { dayjs, displayFull } = useDayJs()
 const authStore = useAuthStore()
+
 const form = ref()
 const loading = ref(false)
+
+const config = ref(null)
 const limit = ref(undefined)
 const payment = ref(undefined)
 
@@ -105,6 +119,26 @@ watch(() => state.value.gate, () => {
     net: null
   }
   state.value.money = null
+})
+
+// Save Pay Bonus
+const savePayBonus = computed(() => {
+  if(!config.value) return null
+
+  let number = 0
+  let time = ''
+  const bonus = parseInt(config.value.pay?.number || 0)
+  const expired = config.value.pay?.expired || null
+
+  if(!expired) number = bonus, time = ''
+  else {
+    const nowTime = dayjs(Date.now()).unix()
+    const expiredTime = dayjs(expired).unix()
+    if(nowTime <= expiredTime) number = bonus, time = `đến ${displayFull(expired)}`
+    else number = 0, time = ''
+  }
+
+  return { number, time }
 })
 
 // Gate
@@ -178,6 +212,17 @@ const validate = (st) => {
   return errors
 }
 
+// Get Config
+const getConfig = async () => {
+  try {
+    const configData = await useAPI('payment/config')
+    config.value = configData
+  }
+  catch (e) {
+    config.value = null
+  }
+}
+
 // Submit
 const submit = async () => {
   try {
@@ -192,4 +237,6 @@ const submit = async () => {
     loading.value = false
   }
 }
+
+getConfig()
 </script>

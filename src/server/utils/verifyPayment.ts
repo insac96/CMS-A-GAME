@@ -1,6 +1,6 @@
 import type { H3Event } from 'h3'
 import type { Types } from 'mongoose'
-import { IDBGate, IDBLevel, IDBUser } from '~~/types'
+import { IDBGate, IDBLevel, IDBPaymentConfig, IDBUser } from '~~/types'
 
 interface IBodyData {
   _id: Types.ObjectId,
@@ -26,6 +26,9 @@ export default async (
     || parseInt(String(money)) < 0 
   ) throw 'Số tiền không hợp lệ'
   if(status == 2 && !reason) throw 'Không tìm thấy lý do từ chối'
+
+  // Config
+  const paymentConfig = await DB.PaymentConfig.findOne() as IDBPaymentConfig
 
   // Set Real Value
   let realNotify
@@ -77,6 +80,21 @@ export default async (
     const bonus = Math.floor(realMoney * ((levelBonus + gateBonus) / 100))
     const coin = realMoney + bonus
 
+    // Bonus Save Pay
+    let bonusSavePay = 0
+    if(!!paymentConfig){
+      const limitBonusSavePay = parseInt(String(paymentConfig.pay.number || 0))
+      const limitExpiredBonusSavePay = paymentConfig.pay.expired
+
+      if(!limitExpiredBonusSavePay) bonusSavePay = limitBonusSavePay
+      else {
+        const nowTime = DayJS(new Date()).unix()
+        const expiredTime = DayJS(limitExpiredBonusSavePay).unix()
+        if(nowTime <= expiredTime) bonusSavePay = limitBonusSavePay
+      }
+    }
+    bonusSavePay = Math.floor(realMoney * (bonusSavePay / 100))
+
     // Bonus Wheel
     let bonusWheel : number = 0
     const percentBonusWheel = parseInt(String(level.bonus_wheel))
@@ -87,7 +105,7 @@ export default async (
         'currency.coin': coin,
         'currency.wheel': bonusWheel,
         'pay.total.money': realMoney,
-        'pay.day.money': realMoney,
+        'pay.day.money': realMoney + bonusSavePay,
         'pay.month.money': realMoney,
         'pay.total.count': 1,
         'pay.day.count': 1,

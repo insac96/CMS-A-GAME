@@ -1,10 +1,10 @@
 <template>
   <div>
-    <UiFlex class="mb-4">
-      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" size="lg" class="mr-auto"/>
+    <UiFlex class="mb-2">
+      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" size="sm" class="mr-auto"/>
     
-      <SelectDate v-model="page.range.start" placeholder="Bắt đầu" class="ml-2 max-w-[140px]"/>
-      <SelectDate v-model="page.range.end" placeholder="Kết thúc" class="ml-1 max-w-[140px]"/>
+      <SelectDate v-model="page.range.start" placeholder="Bắt đầu" size="sm" class="ml-2 max-w-[140px]"/>
+      <SelectDate v-model="page.range.end" placeholder="Kết thúc" size="sm" class="ml-1 max-w-[140px]"/>
     </UiFlex>
     
     <!-- Table -->
@@ -14,26 +14,36 @@
       <UTable 
         v-model:sort="page.sort"
         :columns="selectedColumns" 
-        :rows="list"
+        :rows="listFormat"
       >
         <template #time-data="{ row }">
-          <UiText color="primary" weight="semibold">{{row.timeformat}} {{ useDayJs().displayTime(row.time) }}</UiText>
+          <UiText color="primary" weight="semibold">{{ row.time == 'ALL' ? 'Tổng' : useDayJs().displayTime(row.time) }}</UiText>
+        </template>
+
+        <template #count_total-data="{ row }">
+          <UiText 
+            :color="row.time == 'ALL' ? 'primary' : null"
+            :weight="row.time == 'ALL' ? 'bold' : null"
+          >{{ useMoney().toMoney(row.count_total) }}</UiText>
         </template>
 
         <template #money_total-data="{ row }">
-          {{  useMoney().toMoney(row.money_total) }}
+          <UiText 
+            :color="row.time == 'ALL' ? 'primary' : null"
+            :weight="row.time == 'ALL' ? 'bold' : null"
+          >{{ useMoney().toMoney(row.money_total) }}</UiText>
         </template>
 
         <template #money_card-data="{ row }">
-          {{  useMoney().toMoney(row.money_card) }}
+          <UiText>{{ useMoney().toMoney(row.money_card) }}</UiText>
         </template>
 
         <template #money_bank-data="{ row }">
-          {{  useMoney().toMoney(row.money_bank) }}
+          <UiText>{{ useMoney().toMoney(row.money_bank) }}</UiText>
         </template>
 
         <template #money_momo-data="{ row }">
-          {{  useMoney().toMoney(row.money_momo) }}
+          <UiText>{{ useMoney().toMoney(row.money_momo) }}</UiText>
         </template>
       </UTable>
     </UCard>
@@ -123,6 +133,40 @@ watch(() => page.value.range.end, (val) => {
 // Loading
 const loading = ref({
   load: true,
+})
+
+// Total
+const listFormat = computed(() => {
+  if(list.value.length == 0) return []
+
+  const total = {
+    time: 'ALL',
+    count_total: 0,
+    count_waiting: 0,
+    count_refuse: 0,
+    count_success: 0,
+    money_total: 0,
+    money_card: 0,
+    money_bank: 0,
+    money_momo: 0
+  }
+
+  list.value.forEach(i => {
+    total.count_total = Number(total.count_total) + Number(i.count_total || 0)
+    total.count_waiting = Number(total.count_waiting) + Number(i.count_waiting || 0)
+    total.count_refuse = Number(total.count_refuse) + Number(i.count_refuse || 0)
+    total.count_success = Number(total.count_success) + Number(i.count_success || 0)
+    total.money_card = Number(total.money_card) + Number(i.money_card || 0)
+    total.money_bank = Number(total.money_bank) + Number(i.money_bank || 0)
+    total.money_momo = Number(total.money_momo) + Number(i.money_momo || 0)
+    total.money_total = Number(total.money_total) + Number(i.money_total || 0)
+  })
+
+  let newList = []
+  newList.push(total)
+  
+  newList = newList.concat(list.value)
+  return newList
 })
  
 // Fetch

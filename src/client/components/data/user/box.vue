@@ -95,13 +95,14 @@
 <script setup>
 const { miniMoney } = useMoney()
 
-const emit = defineEmits(['action'])
+const emit = defineEmits(['action', 'update:userData'])
 
 const props = defineProps({
   profile: Object,
   fetchId: String,
   noAuth: Boolean,
-  reload: Number
+  reload: Number,
+  userData: Object
 })
 
 const typeFormat = {
@@ -130,6 +131,7 @@ const getUserBox = async () => {
     })
 
     user.value = get
+    emit('update:userData', get)
     setTimeout(() => loading.value = false, 500)
   }
   catch(e) {
