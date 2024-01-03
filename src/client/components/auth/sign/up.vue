@@ -177,7 +177,7 @@ const start = async () => {
 
     loading.value.start = false
     modal.value.referral = false
-    useTo().navigateToSSL('/ads/thankyou')
+    useTo().navigateToSSL('/thankyou')
     // emit('done')
   }
   catch(e){

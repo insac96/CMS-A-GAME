@@ -33,7 +33,7 @@ const openSign = () => {
 }
 
 const thankyou = async () => {
-  useTo().navigateToSSL('/ads/thankyou')
+  useTo().navigateToSSL('/thankyou')
 }
 
 const start = async () => {
