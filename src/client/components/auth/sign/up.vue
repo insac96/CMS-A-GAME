@@ -9,7 +9,7 @@
         <UInput icon="i-bxs-user" v-model="state.username" />
       </UFormGroup>
 
-      <UFormGroup label="Hòm thư" name="email">
+      <UFormGroup label="Email" name="email">
         <UInput icon="i-bxs-envelope" v-model="state.email" />
       </UFormGroup>
 

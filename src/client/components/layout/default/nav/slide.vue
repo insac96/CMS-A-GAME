@@ -14,6 +14,7 @@
       <UCard 
         class="flex flex-col flex-1 w-full" 
         :ui="{ 
+          base: 'overflow-y-auto',
           body: { base: 'grow overflow-y-auto' },
           ring: '', 
           divide: 'divide-y divide-gray-100 dark:divide-gray-800'
