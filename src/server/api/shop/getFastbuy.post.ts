@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const { item_id, item_name, price, server_id } = await readBody(event)
     if(!item_id) throw 'Không tìm thấy ID vật phẩm'
 
-    let item = await DB.Item.findOne({ item_id: item_id }).select('item_name item_image type') as IDBItem
+    let item = await DB.Item.findOne({ item_id: item_id, type: 'game_recharge' }).select('item_name item_image type') as IDBItem
     let shop = null
 
     if(!item){
