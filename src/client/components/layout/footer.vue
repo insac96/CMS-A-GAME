@@ -9,7 +9,8 @@
 
       <div class="text-xs font-semibold">
         <span class="text-gray-500 dark:text-gray-400 mr-1">Make by</span>
-        <span class="text-primary">CVV Studio</span>
+        <span class="text-primary" v-if="configStore.config.contact.prefix">{{ configStore.config.contact.prefix }} Studio</span>
+        <span class="text-primary" v-else>Raiden</span>
       </div>
     </UContainer>
   </footer>
