@@ -250,7 +250,7 @@
     </UModal> -->
 
     <!-- Modal Edit Login-->
-    <!-- <UModal v-model="modal.editLogin" preventClose>
+    <UModal v-model="modal.editLogin" preventClose>
       <UForm :state="stateEditLogin" @submit="editLoginAction" class="p-4" v-if="stateEditLogin.login">
         <UFormGroup label="Tháng">
           <UInput v-model="stateEditLogin.login.month" type="number" />
@@ -265,7 +265,7 @@
           <UButton color="gray" @click="modal.editLogin = false" :disabled="loading.editLogin" class="ml-1">Đóng</UButton>
         </UiFlex>
       </UForm>
-    </UModal> -->
+    </UModal>
 
     <!-- Modal Send Item-->
     <UModal v-model="modal.sendItem" preventClose :ui="{width: 'sm:max-w-[800px]'}">
@@ -521,7 +521,7 @@ const actions = (row) => [
       stateSendItem.value.user = row._id
       modal.value.sendItem = true
     }
-  }]
+  }],
   // [{
   //   label: 'Sửa d.liệu vòng quay',
   //   icon: 'i-bx-color',
@@ -539,15 +539,15 @@ const actions = (row) => [
   //     modal.value.editDice = true
   //   }
   // }],
-  // [{
-  //   label: 'Sửa đăng nhập',
-  //   icon: 'i-bx-calendar',
-  //   click: () => {
-  //     stateEditLogin.value.login = JSON.parse(JSON.stringify(row.login_data))
-  //     stateEditLogin.value._id = row._id
-  //     modal.value.editLogin = true
-  //   }
-  // }]
+  [{
+    label: 'Sửa đăng nhập',
+    icon: 'i-bx-calendar',
+    click: () => {
+      stateEditLogin.value.login = JSON.parse(JSON.stringify(row.login_data))
+      stateEditLogin.value._id = row._id
+      modal.value.editLogin = true
+    }
+  }]
 ]
  
 // Fetch
@@ -649,19 +649,19 @@ const editSpendAction = async () => {
 //   }
 // }
 
-// const editLoginAction = async () => {
-//   try {
-//     loading.value.editLogin = true
-//     await useAPI('user/admin/editLogin', JSON.parse(JSON.stringify(stateEditLogin.value)))
+const editLoginAction = async () => {
+  try {
+    loading.value.editLogin = true
+    await useAPI('user/admin/editLogin', JSON.parse(JSON.stringify(stateEditLogin.value)))
 
-//     loading.value.editLogin = false
-//     modal.value.editLogin = false
-//     getList()
-//   }
-//   catch (e) {
-//     loading.value.editLogin = false
-//   }
-// }
+    loading.value.editLogin = false
+    modal.value.editLogin = false
+    getList()
+  }
+  catch (e) {
+    loading.value.editLogin = false
+  }
+}
 
 const exportExcel = async () => {
   try {

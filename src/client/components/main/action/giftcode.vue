@@ -4,7 +4,11 @@
 
     <div v-else>
       <UForm :validate="validate" :state="state" @submit="submit">
-        <UFormGroup name="code">
+        <UFormGroup name="public" label="Mã công khai" v-show="!!giftcodes">
+          <DataGiftcodePublic v-model:giftcodes="giftcodes" />
+        </UFormGroup>
+
+        <UFormGroup name="code" label="Nhập mã">
           <UInput v-model="state.code" />
         </UFormGroup>
 
@@ -35,6 +39,7 @@ const modal = ref({
   history: false
 })
 
+const giftcodes = ref(undefined)
 const giftcode = ref(undefined)
 
 const state = ref({

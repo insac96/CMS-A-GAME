@@ -44,6 +44,10 @@
         <template #createdAt-data="{ row }">
           {{ useDayJs().displayFull(row.createdAt) }}
         </template>
+
+        <template #del-data="{ row }">
+          <UButton color="gray" icon="i-bx-trash" :disabled="loading.del" @click="delAction(row._id)"/>
+        </template>
       </UTable>
     </UCard>
 
@@ -61,8 +65,6 @@
 </template>
 
 <script setup>
-const { toMoney } = useMoney()
-
 // List
 const list = ref([])
 
@@ -84,6 +86,9 @@ const columns = [
     key: 'createdAt',
     label: 'Ngày nhận',
     sortable: true
+  },{
+    key: 'del',
+    label: 'Xóa',
   }
 ]
 const selectedColumns = ref([...columns])
@@ -146,6 +151,15 @@ const typeOptions = [
   { label: 'Giới thiệu bạn', value: 'referral.count' }
 ]
 
+// Actions
+const actions = (row) => [
+  [{
+    label: 'Xóa mốc',
+    icon: 'i-bx-trash',
+    click: () => delAction(row._id)
+  }]
+]
+
 // View User
 const viewUser = (_id) => {
   modal.value.user = true
@@ -165,6 +179,19 @@ const getList = async () => {
   catch (e) {
     loading.value.load = false
   } 
+}
+
+const delAction = async (_id) => {
+  try {
+    loading.value.del = true
+    await useAPI('event/admin/delHistory', { _id })
+
+    loading.value.del = false
+    getList()
+  }
+  catch (e) {
+    loading.value.del = false
+  }
 }
 
 getList()

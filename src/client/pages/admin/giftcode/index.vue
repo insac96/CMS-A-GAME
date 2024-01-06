@@ -33,6 +33,10 @@
           {{ row.expired ? useDayJs().displayFull(row.expired) : '...' }}
         </template>
 
+        <template #public-data="{ row }">
+          <UBadge :color="!!row.public ? 'green' : 'gray'" variant="soft">{{ !!row.public ? 'Có' : 'Không' }}</UBadge>
+        </template>
+
         <template #display-data="{ row }">
           <UBadge :color="row.display == 1 ? 'green' : 'gray'" variant="soft">{{ row.display == 1 ? 'Hiện' : 'Ẩn' }}</UBadge>
         </template>
@@ -70,11 +74,20 @@
           <SelectDate v-model="stateAdd.expired" time placeholder="..." />
         </UFormGroup>
 
+        <UFormGroup label="Công khai">
+          <SelectDisplay v-model="stateAdd.public" />
+        </UFormGroup>
+
         <UFormGroup label="Hiển thị">
           <SelectDisplay v-model="stateAdd.display" />
         </UFormGroup>
 
-        <UiFlex justify="end" class="mt-6">
+        <UiFlex class="mt-4">
+          <UiFlex class="mr-auto">
+            <UToggle v-model="stateAdd.public" />
+            <UiText size="xs" weight="bold" class="ml-2">Công Khai</UiText>
+          </UiFlex>
+
           <UButton type="submit" :loading="loading.add">Thêm</UButton>
           <UButton color="gray" @click="modal.add = false" :disabled="loading.add" class="ml-1">Đóng</UButton>
         </UiFlex>
@@ -100,7 +113,12 @@
           <SelectDisplay v-model="stateEdit.display" />
         </UFormGroup>
 
-        <UiFlex justify="end" class="mt-6">
+        <UiFlex class="mt-4">
+          <UiFlex class="mr-auto">
+            <UToggle v-model="stateEdit.public" />
+            <UiText size="xs" weight="bold" class="ml-2">Công Khai</UiText>
+          </UiFlex>
+
           <UButton type="submit" :loading="loading.edit">Sửa</UButton>
           <UButton color="gray" @click="modal.edit = false" :disabled="loading.edit" class="ml-1">Đóng</UButton>
         </UiFlex>
@@ -143,6 +161,10 @@ const columns = [
     label: 'Hết hạn',
     sortable: true
   },{
+    key: 'public',
+    label: 'Công khai',
+    sortable: true
+  },{
     key: 'display',
     label: 'Hiển thị',
     sortable: true
@@ -179,6 +201,7 @@ const stateAdd = ref({
   code: null,
   limit: 0,
   expired: null,
+  public: false,
   display: 1
 })
 const stateEdit = ref({
@@ -186,6 +209,7 @@ const stateEdit = ref({
   code: null,
   limit: null,
   expired: null,
+  public: false,
   display: null
 })
 const stateGift = ref({

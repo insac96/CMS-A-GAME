@@ -6,6 +6,7 @@ export const DBGiftcode = (mongoose : Mongoose) => {
     code: { type: String },
     limit: { type: Number, default: 0, index: true },
     server: [{ type: String }],
+    public: { type: Boolean, default: false },
     gift: [{
       item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },
       amount: { type: Number, index: true },

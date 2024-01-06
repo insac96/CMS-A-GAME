@@ -33,6 +33,8 @@ const emit = defineEmits(['done'])
 
 const loading = ref(false)
 
+const giftcodes = ref(null)
+
 const state = ref({
   username: undefined,
   password: undefined,

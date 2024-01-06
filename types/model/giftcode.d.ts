@@ -8,6 +8,7 @@ export interface IDBGiftcode {
   code: string
   limit: number
   server: Array<Types.ObjectId>
+  public: boolean
   gift: Array<{
     item: Types.ObjectId | IDBItem,
     amount: number

@@ -11,7 +11,11 @@
     <div class="absolute w-full h-full top-0 left-0 cursor-pointer" @click="openSign"></div>
 
     <UModal v-model="modal">
-      <LazyAuthSignFastUp @done="thankyou" :landing="landing._id"></LazyAuthSignFastUp>
+      <div class="p-2">
+        <UTabs v-model="tabItem" :items="tabItems"></UTabs>
+        <LazyAuthSignFastUp @done="thankyou" :landing="landing._id" v-if="tabItem == 0"></LazyAuthSignFastUp>
+        <DataGiftcodePublic v-if="tabItem == 1"></DataGiftcodePublic>
+      </div>
     </UModal>
   </div>
 </template>
@@ -26,6 +30,12 @@ const route = useRoute()
 const authStore = useAuthStore()
 const modal = ref(false)
 const landing = ref(undefined)
+
+const tabItem = ref(0) 
+const tabItems = [
+  { label: 'Đăng Ký', key: 'up' },
+  { label: 'Giftcode', key: 'giftcode' },
+]
 
 const openSign = () => {
   if(!!authStore.isLogin) return start()
