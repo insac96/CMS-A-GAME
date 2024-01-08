@@ -1,11 +1,12 @@
 <template>
   <div>
-    <UCard class="mb-2" v-if="!!authStore.isLogin && !!authStore.profile.referral_code">
+    <UCard class="mb-2" :ui="{ body: { padding: 'p-3 sm:p-3'} }" v-if="!!authStore.isLogin && !!authStore.profile.referral_code">
       <UiFlex justify="between" >
         <UiText size="sm" weight="semibold">Mã mời của bạn</UiText>
-        <UBadge size="md">
-          <UiText weight="semibold">{{ authStore.profile.referral_code }}</UiText>
-        </UBadge>
+        <UButtonGroup size="sm">
+          <UButton color="gray" >{{ authStore.profile.referral_code }}</UButton>
+          <UButton icon="i-bx-copy" @click="startCopy(authStore.profile.referral_code)" v-if="!!isSupported" />
+        </UButtonGroup>
       </UiFlex>
     </UCard>
 
@@ -43,6 +44,8 @@
 </template>
 
 <script setup>
+import { useClipboard } from '@vueuse/core'
+const { copy, isSupported } = useClipboard()
 const authStore = useAuthStore()
 watch(() => authStore.isLogin, () => getList())
 
@@ -85,6 +88,11 @@ const statusFormat = {
 const doneReceive = () => {
   modal.value.receive = false
   getList()
+}
+
+const startCopy = (text) => {
+  copy(text)
+  useNotify().success('Sao chép vào bộ nhớ tạm thành công')
 }
 
 const getList = async () => {

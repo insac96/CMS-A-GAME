@@ -15,6 +15,8 @@
         <UiText 
           class="mb-1 capitalize"
           weight="semibold"
+          @click="startCopy(user.username)"
+          pointer
         >{{ user.username }}</UiText>
         
         <UiFlex>
@@ -68,7 +70,7 @@
           <UiText weight="semibold" size="sm">Mã mời</UiText>
         </UiFlex>
         
-        <UiText size="sm" weight="bold" color="primary">{{ user.referral.code || '...' }}</UiText>
+        <UiText size="sm" weight="bold" color="primary" pointer @click="startCopy(user.referral.code)">{{ user.referral.code || '...' }}</UiText>
       </UiFlex>
 
       <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2">
@@ -77,7 +79,7 @@
           <UiText weight="semibold" size="sm">Hòm thư</UiText>
         </UiFlex>
 
-        <UiText size="sm" weight="bold" color="primary">{{ user.email || '...' }}</UiText>
+        <UiText size="sm" weight="bold" color="primary" pointer @click="startCopy(user.email)">{{ user.email || '...' }}</UiText>
       </UiFlex>
 
       <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2">
@@ -86,13 +88,17 @@
           <UiText weight="semibold" size="sm">Điện thoại</UiText>
         </UiFlex>
 
-        <UiText size="sm" weight="bold" color="primary">{{ user.phone || '...' }}</UiText>
+        <UiText size="sm" weight="bold" color="primary" pointer @click="startCopy(user.phone)">{{ user.phone || '...' }}</UiText>
       </UiFlex>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useClipboard } from '@vueuse/core'
+
+const { copy, isSupported } = useClipboard()
+
 const { miniMoney } = useMoney()
 
 const emit = defineEmits(['action', 'update:userData'])
@@ -116,6 +122,12 @@ const loading = ref(false)
 const user = ref(undefined)
 
 watch(() => props.reload, (val) => !!val && init())
+
+const startCopy = (text) => {
+  if(!isSupported.value || !text) return
+  copy(text)
+  useNotify().success('Sao chép vào bộ nhớ tạm thành công')
+}
 
 const goToAdmin = (type) => {
   if(type < 1) return
