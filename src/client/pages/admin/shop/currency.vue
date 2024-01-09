@@ -149,12 +149,14 @@ watch(() => page.value.sort.direction, () => getList())
 const stateAdd = ref({
   item: null,
   price: null,
+  item_amount: 1,
   limit: 0,
   display: 1
 })
 const stateEdit = ref({
   _id: null,
   price: null,
+  item_amount: 1,
   limit: null,
   display: null
 })
@@ -220,6 +222,7 @@ const getList = async () => {
 const addAction = async () => {
   try {
     loading.value.add = true
+    stateAdd.value.item_amount = 1
     await useAPI('shop/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
 
     loading.value.add = false
@@ -234,6 +237,7 @@ const addAction = async () => {
 const editAction = async () => {
   try {
     loading.value.edit = true
+    stateEdit.value.item_amount = 1
     await useAPI('shop/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
 
     loading.value.edit = false
