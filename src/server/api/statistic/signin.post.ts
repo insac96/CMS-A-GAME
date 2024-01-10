@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
         $project: {
           createdAt: 1,
           timeformat: {
-            $dateToString: { format: '%Y-%m-%d', date: '$createdAt' }
+            $dateToString: { format: '%Y-%m-%d', date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
           }
         }
       },
