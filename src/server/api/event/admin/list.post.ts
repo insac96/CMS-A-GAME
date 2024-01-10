@@ -1,11 +1,4 @@
-import type { IAuth } from "~~/types"
-
-const typeList = [
-  'login.month', 'login.total',
-  'pay.total.money', 'pay.day.money', 'pay.month.money',
-  'spend.total.coin', 'spend.day.coin', 'spend.month.coin',
-  'referral.count'
-]
+import type { IAuth, IDBEventConfig } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -15,7 +8,10 @@ export default defineEventHandler(async (event) => {
     const { size, current, sort, type } = await readBody(event)
     if(!size || !current) throw 'Dữ liệu phân trang sai'
     if(!sort.column || !sort.direction) throw 'Dữ liệu sắp xếp sai'
-    if(!type || !typeList.includes(type)) throw 'Kiểu sự kiện không hỗ trợ'
+    if(!type) throw 'Kiểu sự kiện không hỗ trợ'
+
+    const eventConfig = await DB.EventConfig.findOne({ type: type }).select('_id') as IDBEventConfig
+    if(!eventConfig) throw 'Kiểu sự kiện không hỗ trợ'
 
     const sorting : any = { }
     sorting[sort.column] = sort.direction == 'desc' ? -1 : 1

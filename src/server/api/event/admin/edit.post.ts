@@ -1,4 +1,4 @@
-import type { IAuth } from "~~/types"
+import type { IAuth, IDBEvent, IDBEventConfig } from "~~/types"
 
 const typeName : any = {
   'login.month' : 'Đăng nhập tháng', 
@@ -26,8 +26,11 @@ export default defineEventHandler(async (event) => {
       || parseInt(need) < 0
     ) throw 'Dữ liệu điều kiện mốc thưởng không hợp lệ'
 
-    const eventData = await DB.Event.findOne({ _id: _id }).select('type need')
+    const eventData = await DB.Event.findOne({ _id: _id }).select('type need') as IDBEvent
     if(!eventData) throw 'Dữ liệu mốc thưởng không tồn tại'
+
+    const eventConfig = await DB.EventConfig.findOne({ type: eventData.type }).select('name') as IDBEventConfig
+    if(!eventConfig) throw 'Kiểu sự kiện không hỗ trợ'
 
     if(eventData.need != need){
       const getByNeed = await DB.Event.findOne({ need: need, type: eventData.type }).select('_id')
@@ -37,7 +40,7 @@ export default defineEventHandler(async (event) => {
     delete body['_id']
     await DB.Event.updateOne({ _id: _id }, body)
 
-    logAdmin(event, `Sửa mốc <b>${eventData.need}</b> cho sự kiện <b>${typeName[eventData.type]}</b>`)
+    logAdmin(event, `Sửa mốc <b>${eventData.need}</b> cho sự kiện <b>${eventConfig.name}</b>`)
 
     return resp(event, { message: 'Sửa mốc thưởng thành công' })
   }

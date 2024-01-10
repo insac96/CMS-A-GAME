@@ -159,6 +159,7 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-10',
     children: [
+      { label: 'Cặt đặt', to: '/admin/event/config' }, 
       { label: 'Đăng nhập', to: '/admin/event/login' }, 
       { label: 'Tích nạp', to: '/admin/event/pay' }, 
       { label: 'Tiêu phí', to: '/admin/event/spend' },

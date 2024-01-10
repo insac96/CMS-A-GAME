@@ -1,6 +1,18 @@
 import type { Types } from 'mongoose'
 import type { IDBItem } from './item'
 
+export interface IDBEventConfig {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  
+  type: string
+  name: string
+  start: Date
+  end: Date
+  display: number
+}
+
 export interface IDBEvent {
   _id: Types.ObjectId
   createdAt: Date

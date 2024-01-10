@@ -1,4 +1,4 @@
-import type { IAuth, IDBEvent, IDBItem } from '~~/types'
+import type { IAuth, IDBEvent, IDBEventConfig, IDBItem } from '~~/types'
 
 const currencyTypeList = [
   'coin', 'wheel', 'notify'
@@ -37,6 +37,18 @@ export default defineEventHandler(async (event) => {
     // Check Event
     if(!eventData) throw 'Mốc thưởng không tồn tại'
     if(eventData.gift.length == 0) throw 'Mốc chưa có phần thưởng để nhận'
+
+    // Event Config
+    const eventConfig = await DB.EventConfig.findOne({ type: eventData.type }) as IDBEventConfig
+    if(!eventConfig) throw 'Kiểu sự kiện không hỗ trợ'
+
+    // Check Event Start, End, Display
+    if(eventConfig.display == 0) throw 'Sự kiện đang tạm ẩn, vui lòng quay lại sau'
+    const nowTime = DayJS(new Date()).unix()
+    const startTime = eventConfig.start ? DayJS(eventConfig.start).unix() : null
+    const endTime = eventConfig.end ? DayJS(eventConfig.end).unix() : null
+    if(!!startTime && nowTime < startTime) throw `Sự kiện chưa bắt đầu, vui lòng quay lại sau`
+    if(!!endTime && nowTime > endTime) throw `Sự kiện đã kết thúc, vui lòng quay lại sau`
 
     // Check Active
     const active = await getEventActive(event, eventData, eventData.type)

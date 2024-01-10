@@ -10,7 +10,7 @@ export { IDBWithdraw } from './withdraw'
 export { IDBNotifyUser, IDBNotifyAdmin } from './notify'
 export { IDBItem, IDBItemBox } from './item'
 export { IDBShopConfig, IDBShop, IDBShopHistory } from './shop'
-export { IDBEvent, IDBEventHistory } from './event'
+export { IDBEventConfig, IDBEvent, IDBEventHistory } from './event'
 export { IDBGiftcode, IDBGiftcodeHistory } from './giftcode'
 export { IDBDice, IDBDiceHistory, IDBDiceLuckyUser } from './dice'
 export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
@@ -47,6 +47,7 @@ export interface IGlobalDB {
   Shop: Model<IDBShop>
   ShopHistory: Model<IDBShopHistory>
 
+  EventConfig: Model<IDBEventConfig>
   Event: Model<IDBEvent>
   EventHistory: Model<IDBEventHistory>
 

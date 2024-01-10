@@ -1,16 +1,4 @@
-import type { IAuth } from "~~/types"
-
-const typeName : any = {
-  'login.month' : 'Đăng nhập tháng', 
-  'login.total': 'Đăng nhập tổng', 
-  'pay.total.money': 'Tích nạp tổng', 
-  'pay.day.money': 'Tích nạp ngày', 
-  'pay.month.money': 'Tích nạp tháng', 
-  'spend.total.coin': 'Tiêu phí tổng',
-  'spend.day.coin': 'Tiêu phí ngày',
-  'spend.month.coin': 'Tiêu phí tháng',
-  'referral.count': 'Giới thiệu bạn'
-}
+import type { IAuth, IDBEventConfig, IDBEvent } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -21,8 +9,11 @@ export default defineEventHandler(async (event) => {
     const { _id, gift } = body
     if(!_id || !gift) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    const eventData = await DB.Event.findOne({ _id: _id }).select('need type')
+    const eventData = await DB.Event.findOne({ _id: _id }).select('need type') as IDBEvent
     if(!eventData) throw 'Dữ liệu mốc thưởng không tồn tại'
+
+    const eventConfig = await DB.EventConfig.findOne({ type: eventData.type }).select('name') as IDBEventConfig
+    if(!eventConfig) throw 'Kiểu sự kiện không hỗ trợ'
 
     const giftFormat = gift.map((i : any) => ({
       item: i._id,
@@ -31,7 +22,7 @@ export default defineEventHandler(async (event) => {
     
     await DB.Event.updateOne({ _id: _id }, { gift: giftFormat })
 
-    logAdmin(event, `Cập nhật phần thưởng cho mốc <b>${eventData.need}</b> cho sự kiện <b>${typeName[eventData.type]}</b>`)
+    logAdmin(event, `Cập nhật phần thưởng cho mốc <b>${eventData.need}</b> cho sự kiện <b>${eventConfig.name}</b>`)
     return resp(event, { message: 'Sửa phần thưởng mốc thành công' })
   } 
   catch (e:any) {
