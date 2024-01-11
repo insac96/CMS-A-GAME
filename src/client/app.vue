@@ -67,7 +67,7 @@ useHead({
 })
 
 // Check SSL
-const sslCookie = useCookie('ssl-enabled')
+const sslCookie = useCookie('ssl-enabled', runtimeConfig.public.cookieConfig)
 if(!sslCookie.value && process.client){
   const cookies = document.cookie.split("; ")
   for (let c = 0; c < cookies.length; c++) {

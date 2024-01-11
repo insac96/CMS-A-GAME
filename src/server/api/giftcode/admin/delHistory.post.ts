@@ -8,10 +8,10 @@ export default defineEventHandler(async (event) => {
     const { _id } = await readBody(event)
     if(!_id) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    const histories = await DB.EventHistory.findOne({ _id: _id })
+    const histories = await DB.GiftcodeHistory.findOne({ _id: _id })
     if(!histories) throw 'Dữ liệu lịch sử không tồn tại'
 
-    await DB.EventHistory.deleteOne({ _id: _id })
+    await DB.GiftcodeHistory.deleteOne({ _id: _id })
     return resp(event, { message: 'Xóa dữ liệu thành công' })
   } 
   catch (e:any) {

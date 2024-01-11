@@ -64,6 +64,24 @@
         </UiFlex>
       </UForm>
     </UModal>
+
+    <!-- Modal Del -->
+    <UModal v-model="modal.del" preventClose>
+      <UForm :state="stateDel" @submit="delAction" class="p-4">
+        <UFormGroup label="Thời gian bắt đầu">
+          <SelectDate v-model="stateDel.start" time />
+        </UFormGroup>
+
+        <UFormGroup label="Thời gian kết thúc">
+          <SelectDate v-model="stateDel.end" time />
+        </UFormGroup>
+
+        <UiFlex justify="end" class="mt-6">
+          <UButton type="submit" :loading="loading.del">Xóa Ghi Chép</UButton>
+          <UButton color="gray" @click="modal.del = false" :disabled="loading.del" class="ml-1">Đóng</UButton>
+        </UiFlex>
+      </UForm>
+    </UModal>
   </UiContent>
 </template>
 
@@ -122,15 +140,23 @@ const stateEdit = ref({
   display: null
 })
 
+const stateDel = ref({
+  _id: null,
+  start: null,
+  end: null
+})
+
 // Modal
 const modal = ref({
-  edit: false
+  edit: false,
+  del: false
 })
 
 // Loading
 const loading = ref({
   load: true,
   edit: false,
+  del: false
 })
 
 // Actions
@@ -141,6 +167,13 @@ const actions = (row) => [
     click: () => {
       Object.keys(stateEdit.value).forEach(key => stateEdit.value[key] = row[key])
       modal.value.edit = true
+    }
+  }],[{
+    label: 'Xóa ghi chép',
+    icon: 'i-bx-trash',
+    click: () => {
+      stateDel.value._id = row._id
+      modal.value.del = true
     }
   }]
 ]
@@ -171,6 +204,19 @@ const editAction = async () => {
   }
   catch (e) {
     loading.value.edit = false
+  }
+}
+
+const delAction = async () => {
+  try {
+    loading.value.del = true
+    await useAPI('event/admin/config/del', JSON.parse(JSON.stringify(stateDel.value)))
+
+    loading.value.del = false
+    modal.value.del = false
+  }
+  catch (e) {
+    loading.value.del = false
   }
 }
 

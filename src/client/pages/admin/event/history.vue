@@ -151,15 +151,6 @@ const typeOptions = [
   { label: 'Giới thiệu bạn', value: 'referral.count' }
 ]
 
-// Actions
-const actions = (row) => [
-  [{
-    label: 'Xóa mốc',
-    icon: 'i-bx-trash',
-    click: () => delAction(row._id)
-  }]
-]
-
 // View User
 const viewUser = (_id) => {
   modal.value.user = true

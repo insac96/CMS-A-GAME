@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed bottom-4 left-4">
+  <div class="fixed bottom-4 left-4" v-if="configStore.config.contact.prefix != 'ANB'">
     <UiImg 
       src="/images/icon/gift.png" 
       :w="1" :h="1" 
@@ -17,6 +17,5 @@
 
 <script setup>
 const modal = ref(false)
-
-
+const configStore = useConfigStore()
 </script>
