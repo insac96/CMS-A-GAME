@@ -7,15 +7,17 @@ export default defineEventHandler(async (event) => {
 
     const { type } = await readBody(event)
 
-    let start : any, end : any
+    let start : any, end : any, format : any
     const now = DayJS(Date.now())
     if(type == 'day'){
       start = now.startOf('date')
       end = now.endOf('date')
+      format = '%Y-%m-%d'
     }
     if(type == 'month'){
       start = now.startOf('month')
       end = now.endOf('month')
+      format = '%Y-%m'
     }
 
     let payment : any, signin : any, signup : any
@@ -28,7 +30,7 @@ export default defineEventHandler(async (event) => {
           $project: {
             createdAt: 1,
             timeformat: {
-              $dateToString: { format: '%Y-%m-%d', date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
+              $dateToString: { format: format, date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
             },
             money: {
               total: { $cond: [{$eq: ['$status', 1]} , '$money', 0] },
@@ -50,7 +52,7 @@ export default defineEventHandler(async (event) => {
           $project: {
             createdAt: 1,
             timeformat: {
-              $dateToString: { format: '%Y-%m-%d', date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
+              $dateToString: { format: format, date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
             }
           }
         },
@@ -69,7 +71,7 @@ export default defineEventHandler(async (event) => {
           $project: {
             createdAt: 1,
             timeformat: {
-              $dateToString: { format: '%Y-%m-%d', date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
+              $dateToString: { format: format, date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
             }
           }
         },
