@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     if(!size || !current || !types || types.length == 0) throw 'Dữ liệu phân trang sai'
     if(!sort.column || !sort.direction) throw 'Dữ liệu sắp xếp sai'
 
-    const sorting : any = {}
+    const sorting : any = { pin: -1 }
     sorting[sort.column] = sort.direction == 'desc' ? -1 : 1
 
     const match : any = { type: { $in: types }}

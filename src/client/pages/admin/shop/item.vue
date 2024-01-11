@@ -56,6 +56,10 @@
           {{ row.limit == 0 ? 'Không giới hạn' : `${row.limit} lần` }}
         </template>
 
+        <template #pin-data="{ row }">
+          <UBadge :color="row.pin == 1 ? 'green' : 'gray'" variant="soft">{{ row.pin == 1 ? 'Có' : 'Không' }}</UBadge>
+        </template>
+
         <template #display-data="{ row }">
           <UBadge :color="row.display == 1 ? 'green' : 'gray'" variant="soft">{{ row.display == 1 ? 'Hiện' : 'Ẩn' }}</UBadge>
         </template>
@@ -101,7 +105,9 @@
           <SelectDisplay v-model="stateAdd.display" />
         </UFormGroup>
 
-        <UiFlex justify="end" class="mt-6">
+        <UiFlex class="mt-6">
+          <SelectPin v-model="stateAdd.pin" class="mr-auto"/>
+
           <UButton type="submit" :loading="loading.add">Thêm</UButton>
           <UButton color="gray" @click="modal.add = false" :disabled="loading.add" class="ml-1">Đóng</UButton>
         </UiFlex>
@@ -127,7 +133,9 @@
           <SelectDisplay v-model="stateEdit.display" />
         </UFormGroup>
 
-        <UiFlex justify="end" class="mt-6">
+        <UiFlex class="mt-6">
+          <SelectPin v-model="stateEdit.pin" class="mr-auto"/>
+
           <UButton type="submit" :loading="loading.edit">Sửa</UButton>
           <UButton color="gray" @click="modal.edit = false" :disabled="loading.edit" class="ml-1">Đóng</UButton>
         </UiFlex>
@@ -165,6 +173,10 @@ const columns = [
   },{
     key: 'limit',
     label: 'Giới hạn mua',
+    sortable: true
+  },{
+    key: 'pin',
+    label: 'Ghim',
     sortable: true
   },{
     key: 'display',
@@ -206,6 +218,7 @@ const stateAdd = ref({
   item_amount: 1,
   price: null,
   limit: 0,
+  pin: 0,
   display: 1
 })
 const stateEdit = ref({
@@ -213,6 +226,7 @@ const stateEdit = ref({
   item_amount: null,
   price: null,
   limit: null,
+  pin: null,
   display: null
 })
 

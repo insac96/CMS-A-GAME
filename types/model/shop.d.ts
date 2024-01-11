@@ -22,6 +22,7 @@ export interface IDBShop {
   item_amount: number
   price: number
   limit: number
+  pin: number
   display: number
 }
 
