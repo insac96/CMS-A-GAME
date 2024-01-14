@@ -86,7 +86,7 @@ const { dayjs, displayFull } = useDayJs()
 const { toMoney, miniMoney } = useMoney()
 
 const props = defineProps(['item', 'server'])
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'done'])
 
 const load = ref(true)
 const config = ref({
@@ -165,9 +165,10 @@ const validate = (state) => {
 const submit = async () => {
   try {
     buying.value = true
-    await useAPI('shop/buyItem', JSON.parse(JSON.stringify(state.value)))
+    const data = await useAPI('shop/buyItem', JSON.parse(JSON.stringify(state.value)))
 
     buying.value = false
+    emit('done', data)
     emit('close')
   }
   catch (e) {

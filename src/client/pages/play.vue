@@ -8,7 +8,7 @@
   ></iframe>
   
   <UModal v-model="fastBuy.modal" prevent-close>
-    <DataShopBuyItem :item="fastBuy.item" :server="fastBuy.server" @close="fastBuy.modal = false" class="p-4" />
+    <DataShopBuyItem :item="fastBuy.item" :server="fastBuy.server" @close="fastBuy.modal = false" @done="onDoneBy" class="p-4" />
   </UModal>
 </template>
 
@@ -26,6 +26,11 @@ const fastBuy = ref({
   item: null,
   server: null
 })
+
+const onDoneBy = async (data) => {
+  const iframe = document.querySelector("iframe")
+  iframe.contentWindow.postMessage(JSON.stringify(data), "*")
+}
 
 const onFastBuy = async (e) => {
   try {
