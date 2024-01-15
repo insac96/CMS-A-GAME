@@ -6,7 +6,6 @@ export default defineNuxtRouteMiddleware(async () => {
     if(authStore.profile.type < 1) throw 'Bạn không có quyền truy cập'
   }
   catch (e:any) {
-    if(process.server) return navigateTo('/')
-    if(process.client) return useTo().navigateToSSL('/')
+    return useTo().navigateToSSL('/')
   }
 })

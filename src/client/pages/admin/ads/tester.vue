@@ -98,6 +98,14 @@ const columns = [
     label: 'Truy cập',
     sortable: true
   },{
+    key: 'sign.in',
+    label: 'Đăng nhập',
+    sortable: true
+  },{
+    key: 'sign.up',
+    label: 'Đăng ký',
+    sortable: true
+  },{
     key: 'updatedAt',
     label: 'Cập nhật',
     sortable: true

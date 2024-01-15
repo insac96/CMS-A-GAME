@@ -8,7 +8,6 @@ export default defineNuxtRouteMiddleware(async () => {
     if(!playUrl.value) throw true
   }
   catch (e:any) {
-    if(process.server) return navigateTo('/')
-    if(process.client) return useTo().navigateToSSL('/')
+    return useTo().navigateToSSL('/')
   }
 })

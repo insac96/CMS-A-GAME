@@ -5,7 +5,7 @@ export default async (event: H3Event) : Promise<any> => {
   try {
     const config = await DB.Config.findOne().select('game') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
-    if(!config.game.api.os) throw 'Tính năng tìm máy chủ trong trò chơi đang bảo trì'
+    if(!config.game.api.os) throw 'Tính năng lấy thông tin VPS đang bảo trì'
 
     const send = await fetch(config.game.api.os, {
       method: 'post',

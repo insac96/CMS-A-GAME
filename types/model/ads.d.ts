@@ -8,6 +8,10 @@ export interface IDBAdsTester {
   code: string
   link: string
   view: number
+  sign: {
+    in: number
+    up: number
+  }
 }
 
 export interface IDBAdsLanding {

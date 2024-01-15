@@ -6,6 +6,10 @@ export const DBAdsTester = (mongoose : Mongoose) => {
     code: { type: String },
     link: { type: String },
     view: { type: Number, default: 0, index: true },
+    sign: {
+      in: { type: Number, default: 0, index: true },
+      up: { type: Number, default: 0, index: true }
+    }
   }, {
     timestamps: true
   })

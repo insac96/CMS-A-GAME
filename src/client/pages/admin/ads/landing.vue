@@ -12,7 +12,7 @@
     <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }">
       <LoadingTable v-if="loading.load" />
 
-      <UTable 
+      <UTable
         v-model:sort="page.sort"
         :columns="selectedColumns" 
         :rows="list"

@@ -1,24 +1,16 @@
 export const useTo = () => {
   const navigateToSSL = (path : string) => {
     const runtimeConfig = useRuntimeConfig()
+    const route = useRequestURL()
 
-    if(!!runtimeConfig.public.dev) {
-      navigateTo(path)
-    } 
+    if(!!runtimeConfig.public.dev) return navigateTo(path)
+
+    if(route.protocol == 'https:'){
+      return navigateTo(path)
+    }
     else {
-      if(process.client){
-        if (window.location.protocol == "https:") {
-          navigateTo(path)
-        }
-        else {
-          location.href = `https://${runtimeConfig.public.domain}${path}`
-        }
-      }
-      
-      if(process.server){
-        navigateTo(path)
-      }
-    } 
+      return navigateTo(`https://${runtimeConfig.public.domain}${path}`, { external: true })
+    }
   }
 
   return { navigateToSSL }
