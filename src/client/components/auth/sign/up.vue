@@ -21,7 +21,7 @@
         <UInput icon="i-bxs-lock" v-model="state.password" type="password" />
       </UFormGroup>
 
-      <UFormGroup label="Mã mời" name="referral_code" v-if="configStore.config.contact.prefix != 'ANB'">
+      <UFormGroup label="Mã mời" name="referral_code" v-if="!!configStore.config.enable.referral">
         <UInput icon="i-bx-barcode" v-model="state.referral_code" placeholder="Nhập mã mời nếu có" />
       </UFormGroup>
 
@@ -158,7 +158,7 @@ const submit = async () => {
     loading.value.signup = true
     await useAPI('auth/sign/up', JSON.parse(JSON.stringify(state.value)))
 
-    if(configStore.config.contact.prefix != 'ANB') { 
+    if(!!configStore.config.enable.referral) { 
       modal.value.referral = true
       loading.value.signup = false
       startTimeWait()

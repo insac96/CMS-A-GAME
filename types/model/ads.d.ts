@@ -1,5 +1,15 @@
 import type { Types } from 'mongoose'
 
+export interface IDBAdsTester {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  
+  code: string
+  link: string
+  view: number
+}
+
 export interface IDBAdsLanding {
   _id: Types.ObjectId
   createdAt: Date

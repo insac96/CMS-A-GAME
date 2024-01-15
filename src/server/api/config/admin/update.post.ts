@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
     const { change, name, short_name, description, logo_image } = data
     if(!change || !name || !short_name || !description) throw 'Dữ liệu đầu vào không hợp lệ'
     
+    if(change == 'enable') logAdmin(event, 'Cập nhật cài đặt <b>chức năng trang</b>')
     if(change == 'basic') logAdmin(event, 'Cập nhật thông tin <b>cơ bản</b> trang web')
     if(change == 'contact') logAdmin(event, 'Cập nhật thông tin <b>liên hệ</b> trang web')
     if(change == 'social') logAdmin(event, 'Cập nhật thông tin <b>mạng xã hội</b> trang web')

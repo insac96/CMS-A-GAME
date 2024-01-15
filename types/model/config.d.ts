@@ -15,6 +15,18 @@ export interface IDBConfig {
   about: string
   privacy: string
   terms: string
+  enable: {
+    signin: boolean
+    signup: boolean
+    play: boolean
+    referral: boolean
+    tester: boolean
+    landing: boolean
+  }
+  homepage: {
+    tester: Types.ObjectId
+    landing: Types.ObjectId
+  }
   download: {
     apk: string
     ios: string
@@ -80,6 +92,14 @@ export interface IDBConfigStore {
   logo_image: string
   logo_long_image: string
   makeby: string
+  enable: {
+    signin: boolean
+    signup: boolean
+    play: boolean
+    referral: boolean
+    tester: boolean
+    landing: boolean
+  }
   download: {
     apk: string
     ios: string

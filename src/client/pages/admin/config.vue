@@ -16,6 +16,52 @@
         </UButton>
       </template>
 
+      <template #enable>
+        <UCard>
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Đăng nhập</UiText>
+            <UToggle v-model="state.enable.signin" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Đăng ký</UiText>
+            <UToggle v-model="state.enable.signup" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Giới thiệu</UiText>
+            <UToggle v-model="state.enable.referral" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Chơi trò chơi</UiText>
+            <UToggle v-model="state.enable.play" />
+          </UiFlex>
+          
+          <div class="mb-4">
+            <UiFlex justify="between" class="mb-2">
+              <UiText weight="semibold">Tester Home</UiText>
+              <UToggle v-model="state.enable.tester" />
+            </UiFlex>
+
+            <SelectAdsTester v-model="state.homepage.tester" v-if="!!state.enable.tester" />
+          </div>
+
+          <div class="mb-4">
+            <UiFlex justify="between" class="mb-2">
+              <UiText weight="semibold">Landing Home</UiText>
+              <UToggle v-model="state.enable.landing" />
+            </UiFlex>
+
+            <SelectAdsLanding v-model="state.homepage.landing" v-if="!!state.enable.landing" />
+          </div>
+
+          <UiFlex justify="end" class="mt-4">
+            <UButton @click="update('cfg')" :loading="updating">Cập nhật</UButton>
+          </UiFlex>
+        </UCard>
+      </template>
+
       <template #basic>
         <UCard>
           <UForm :state="state">
@@ -292,6 +338,20 @@ const state = ref({
   logo_long_image: '',
   makeby: '',
 
+  enable: {
+    signin: true,
+    signup: true,
+    play: true,
+    referral: true,
+    tester: false,
+    landing: false
+  },
+
+  homepage: {
+    tester: null,
+    landing: null,
+  },
+
   download: {
     apk: '',
     ios: '',
@@ -353,6 +413,10 @@ const state = ref({
 })
 
 const menu = [
+{
+  label: 'Cho phép',
+  slot: 'enable'
+},
 {
   label: 'Cơ bản',
   slot: 'basic'

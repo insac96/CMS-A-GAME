@@ -28,8 +28,9 @@ export default defineEventHandler(async (event) => {
     if (!!password.match(/\s/g)) throw 'Mật khẩu không có khoảng cách'
 
     // Config
-    const config = await DB.Config.findOne({}).select('logo_image contact') as IDBConfig
+    const config = await DB.Config.findOne({}).select('logo_image contact enable') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trang'
+    if(!config.enable.signup) throw 'Chức năng đăng ký đang bảo trì'
 
     // Check User
     const userCheck = await DB.User

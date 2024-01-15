@@ -13,6 +13,18 @@ export const DBConfig = (mongoose : Mongoose) => {
     about: { type: String },
     privacy: { type: String },
     terms: { type: String },
+    enable: {
+      signin: { type: Boolean, default: true },
+      signup: { type: Boolean, default: true },
+      play: { type: Boolean, default: true },
+      referral: { type: Boolean, default: true },
+      tester: { type: Boolean, default: false },
+      landing: { type: Boolean, default: false },
+    },
+    homepage: {
+      tester: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_tester' },
+      landing: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_landing' },
+    },
     download: {
       apk: { type: String },
       ios: { type: String },

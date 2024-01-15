@@ -1,6 +1,6 @@
 import md5 from 'md5'
 import jwt from 'jsonwebtoken'
-import { IDBUser } from '~~/types'
+import { IDBConfig, IDBUser } from '~~/types'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -15,6 +15,10 @@ export default defineEventHandler(async (event) => {
     if(!user) throw 'Tài khoản không tồn tại'
     if(md5(password) != user.password) throw 'Mật khẩu không chính xác'
     if(user.block == 1) throw 'Tài khoản của bạn đang bị khóa'
+
+    const config = await DB.Config.findOne({}).select('enable') as IDBConfig
+    if(!config) throw 'Không tìm thấy cấu hình trang'
+    if(user.type < 1 && !config.enable.signin) throw 'Chức năng đăng nhập đang bảo trì'
 
     const token = jwt.sign({
       _id : user._id

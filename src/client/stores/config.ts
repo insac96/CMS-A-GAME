@@ -10,6 +10,14 @@ export const useConfigStore = defineStore('config', () => {
     logo_image: '',
     logo_long_image: '',
     makeby: '',
+    enable: {
+      signin: true,
+      signup: true,
+      play: true,
+      referral: true,
+      tester: false,
+      landing: false
+    },
     download: {
       apk: '',
       ios: ''

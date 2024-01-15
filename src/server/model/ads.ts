@@ -1,5 +1,18 @@
 import type { Mongoose } from 'mongoose'
-import type { IDBAdsLanding, IDBAdsFrom } from '~~/types'
+import type { IDBAdsTester, IDBAdsLanding, IDBAdsFrom } from '~~/types'
+
+export const DBAdsTester = (mongoose : Mongoose) => {
+  const schema = new mongoose.Schema<IDBAdsTester>({ 
+    code: { type: String },
+    link: { type: String },
+    view: { type: Number, default: 0, index: true },
+  }, {
+    timestamps: true
+  })
+
+  const model = mongoose.model('ads_tester', schema, 'ads_tester')
+  return model 
+}
 
 export const DBAdsLanding = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBAdsLanding>({ 

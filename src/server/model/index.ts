@@ -16,7 +16,7 @@ import { DBDice, DBDiceHistory, DBDiceLuckyUser } from './dice'
 import { DBWheel, DBWheelHistory, DBWheelLuckyUser } from './wheel'
 import { DBGameRankGift, DBGameRankGiftHistory } from './game'
 import { DBLogAdmin, DBLogAdminSendItem, DBLogUser, DBLogUserIP, DBLogBlockIP } from './log'
-import { DBAdsFrom, DBAdsLanding } from './ads'
+import { DBAdsFrom, DBAdsLanding, DBAdsTester } from './ads'
 
 import { DBSocketChat, DBSocketOnline } from './socket'
 
@@ -73,6 +73,7 @@ export default (mongoose : Mongoose) : IGlobalDB => {
     LogUser: DBLogUser(mongoose),
     LogUserIP: DBLogUserIP(mongoose),
 
+    AdsTester: DBAdsTester(mongoose),
     AdsLanding: DBAdsLanding(mongoose),
     AdsFrom: DBAdsFrom(mongoose),
 

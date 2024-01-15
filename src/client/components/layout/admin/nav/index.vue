@@ -64,6 +64,7 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-1',
     children: [
+      { label: 'Tester', to: '/admin/ads/tester' },
       { label: 'Landing', to: '/admin/ads/landing' },
       { label: 'Nguồn', to: '/admin/ads/from' }
     ]

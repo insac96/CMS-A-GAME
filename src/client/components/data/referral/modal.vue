@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed bottom-4 left-4" v-if="configStore.config.contact.prefix != 'ANB'">
+  <div class="fixed bottom-4 left-4" v-if="!!configStore.config.enable.referral">
     <UiImg 
       src="/images/icon/gift.png" 
       :w="1" :h="1" 

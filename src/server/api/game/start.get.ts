@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
     const url = await gameStart(event, auth.username)
 
     setCookie(event, 'play-url', url, runtimeConfig.public.cookieConfig)
-
     return resp(event, { result: 'Playing' })
   } 
   catch (e:any) {

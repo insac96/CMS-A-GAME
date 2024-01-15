@@ -22,7 +22,7 @@
 
 <script setup>
 definePageMeta({
-  layout: 'landing',
+  layout: 'ads',
 })
 
 const runtimeConfig = useRuntimeConfig()

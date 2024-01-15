@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import md5 from 'md5'
-import type { IDBUser } from "~~/types"
+import type { IDBUser, IDBConfig } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -12,11 +12,15 @@ export default defineEventHandler(async (event) => {
 
     const user = await DB.User
     .findOne({ username: username.toLowerCase() })
-    .select('phone password block') as IDBUser
+    .select('phone password block type') as IDBUser
 
     if(!user) throw 'Tài khoản không tồn tại'
     if(user.block == 1) throw 'Tài khoản đang bị khóa, không thể lấy lại mật khẩu'
     if(user.phone != phone) throw 'Số điện thoại của tài khoản không đúng'
+
+    const config = await DB.Config.findOne({}).select('enable') as IDBConfig
+    if(!config) throw 'Không tìm thấy cấu hình trang'
+    if(user.type < 1 && !config.enable.signin) throw 'Chức năng lấy mật khẩu đang bảo trì'
 
     const token = jwt.sign({
       _id : user._id

@@ -3,9 +3,9 @@ import type { IDBConfig } from '~~/types'
 
 export default async (event: H3Event, account : string) : Promise<any> => {
   try {
-    const config = await DB.Config.findOne().select('game') as IDBConfig
+    const config = await DB.Config.findOne().select('game enable.play') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
-    if(!config.game.api.start) throw 'Trò chơi đang bảo trì'
+    if(!config.enable.play || !config.game.api.start) throw 'Trò chơi đang bảo trì'
 
     const get = await fetch(config.game.api.start, {
       method: 'post',

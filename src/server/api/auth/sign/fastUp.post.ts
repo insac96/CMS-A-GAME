@@ -24,8 +24,9 @@ export default defineEventHandler(async (event) => {
     if (password != confirm_password) throw 'Mật khẩu xác nhận không khớp'
 
     // Config
-    const config = await DB.Config.findOne({}).select('logo_image contact') as IDBConfig
+    const config = await DB.Config.findOne({}).select('logo_image contact enable') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trang'
+    if(!config.enable.signup) throw 'Chức năng đăng ký đang bảo trì'
 
     // Check User
     const userCheck = await DB.User
