@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Tester" sub="Quản lý trang Tester">
+  <UiContent title="Teaser" sub="Quản lý trang Teaser">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
       <UForm :state="page" @submit="getList" class="mr-auto">
@@ -18,7 +18,7 @@
         :rows="list"
       >
         <template #url-data="{ row }">
-          {{ useMakeLink().link(`/ads/tester/${row.code}`) }}
+          {{ useMakeLink().link(`/ads/teaser/${row.code}`) }}
         </template>
 
         <template #updatedAt-data="{ row }">
@@ -98,10 +98,6 @@ const columns = [
     label: 'Truy cập',
     sortable: true
   },{
-    key: 'sign.in',
-    label: 'Đăng nhập',
-    sortable: true
-  },{
     key: 'sign.up',
     label: 'Đăng ký',
     sortable: true
@@ -173,7 +169,7 @@ const actions = (row) => [
       modal.value.edit = true
     }
   }],[{
-    label: 'Xóa Tester',
+    label: 'Xóa Teaser',
     icon: 'i-bx-trash',
     click: () => delAction(row._id)
   }]
@@ -181,14 +177,14 @@ const actions = (row) => [
 
 // Open Link
 const openLink = (code) => {
-  window.open(`/ads/tester/${code}`, '_blank')
+  window.open(`/ads/teaser/${code}`, '_blank')
 }
  
 // Fetch
 const getList = async () => {
   try {
     loading.value.load = true
-    const data = await useAPI('ads/tester/admin/list', JSON.parse(JSON.stringify(page.value)))
+    const data = await useAPI('ads/teaser/admin/list', JSON.parse(JSON.stringify(page.value)))
 
     loading.value.load = false
     list.value = data.list
@@ -202,7 +198,7 @@ const getList = async () => {
 const addAction = async () => {
   try {
     loading.value.add = true
-    await useAPI('ads/tester/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
+    await useAPI('ads/teaser/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
 
     loading.value.add = false
     modal.value.add = false
@@ -216,7 +212,7 @@ const addAction = async () => {
 const editAction = async () => {
   try {
     loading.value.edit = true
-    await useAPI('ads/tester/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
+    await useAPI('ads/teaser/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
 
     loading.value.edit = false
     modal.value.edit = false
@@ -230,7 +226,7 @@ const editAction = async () => {
 const delAction = async (_id) => {
   try {
     loading.value.del = true
-    await useAPI('ads/tester/admin/del', { _id })
+    await useAPI('ads/teaser/admin/del', { _id })
 
     loading.value.del = false
     getList()

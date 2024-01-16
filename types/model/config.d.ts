@@ -20,11 +20,11 @@ export interface IDBConfig {
     signup: boolean
     play: boolean
     referral: boolean
-    tester: boolean
+    teaser: boolean
     landing: boolean
   }
   homepage: {
-    tester: Types.ObjectId
+    teaser: Types.ObjectId
     landing: Types.ObjectId
   }
   download: {
@@ -97,7 +97,7 @@ export interface IDBConfigStore {
     signup: boolean
     play: boolean
     referral: boolean
-    tester: boolean
+    teaser: boolean
     landing: boolean
   }
   download: {

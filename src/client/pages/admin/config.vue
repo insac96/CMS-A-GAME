@@ -40,11 +40,11 @@
           
           <div class="mb-4">
             <UiFlex justify="between" class="mb-2">
-              <UiText weight="semibold">Tester Home</UiText>
-              <UToggle v-model="state.enable.tester" />
+              <UiText weight="semibold">Teaser Home</UiText>
+              <UToggle v-model="state.enable.teaser" />
             </UiFlex>
 
-            <SelectAdsTester v-model="state.homepage.tester" v-if="!!state.enable.tester" />
+            <SelectAdsTeaser v-model="state.homepage.teaser" v-if="!!state.enable.teaser" />
           </div>
 
           <div class="mb-4">
@@ -343,12 +343,12 @@ const state = ref({
     signup: true,
     play: true,
     referral: true,
-    tester: false,
+    teaser: false,
     landing: false
   },
 
   homepage: {
-    tester: null,
+    teaser: null,
     landing: null,
   },
 

@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import md5 from 'md5'
-import type { IDBAdsLanding, IDBConfig, IDBUser } from "~~/types"
+import type { IDBAdsTeaser, IDBConfig, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
     const runtimeConfig = useRuntimeConfig()
-    const { username, password, confirm_password, landing } = await readBody(event)
+    const { username, password, confirm_password, teaser } = await readBody(event)
 
     if (!username) throw 'Vui lòng nhập tài khoản'
     if (username.length < 6 || username.length > 15) throw 'Tài khoản trong khoảng 6-15 ký tự'
@@ -43,10 +43,10 @@ export default defineEventHandler(async (event) => {
     const logIP = await DB.LogUserIP.count({ ip: IP })
     if(logIP > 30) throw 'IP đã vượt quá giới hạn tạo tài khoản'
 
-    // Landing
-    const landingData = await DB.AdsLanding.findOne({ _id: landing }).select('_id') as IDBAdsLanding
-    if(!landingData) throw 'Mã Landing không tồn tại'
-    await DB.AdsLanding.updateOne({ _id: landing }, { $inc: { 'sign.up': 1 }})
+    // Teaser
+    const teaserData = await DB.AdsTeaser.findOne({ _id: teaser }).select('code') as IDBAdsTeaser
+    if(!teaserData) throw 'Mã Teaser không tồn tại'
+    await DB.AdsTeaser.updateOne({ _id: teaser }, { $inc: { 'sign.up': 1 }})
     
     // Create
     const user = await DB.User.create({
@@ -54,11 +54,12 @@ export default defineEventHandler(async (event) => {
       password: md5(password),
       avatar: config.logo_image || '/images/user/default.png',
       reg: {
-        landing: landingData._id
+        teaser: teaserData._id
       },
       referral: referral
     })
 
+    // Make Token And Cookie
     const token = jwt.sign({
       _id : user._id
     }, runtimeConfig.apiSecret, { expiresIn: '360d' })
@@ -67,24 +68,22 @@ export default defineEventHandler(async (event) => {
     user.token = token
     await user.save()
 
+    // Save IP
     await DB.LogUserIP.create({ user: user._id, ip: IP })
 
-    logUser(event, user._id, 'Đăng ký tài khoản nhanh tại Landing Page')
-    logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
-    
+    // Save Log And Send Notify
+    logUser(event, user._id, `Đăng ký tài khoản nhanh tại Teaser <b>${teaserData.code}</b> với IP <b>${IP}</b>`)
     await sendNotifyUser(event, {
       to: [ user._id ],
       color: 'primary',
       content: `Chào mừng thành viên mới, chúc bạn chơi game vui vẻ. Hãy nhớ truy cập trang thông tin và cập nhật <b>Email</b> và <b>Số điện thoại</b> để bảo mật tài khoản của mình nhé`
     })
-
     await sendNotifyUser(event, {
       to: [ user._id ],
       type: 3,
       color: 'blue',
       content: `Bạn đã đăng nhập với IP <b>${IP}</b>`
     })
-
     await createChat(event, 'bot', `Chào mừng thành viên mới <b>${user.username}</b>`)
 
     return resp(event, { message: 'Đăng ký thành công' })

@@ -1,11 +1,11 @@
 import md5 from 'md5'
 import jwt from 'jsonwebtoken'
-import { IDBConfig, IDBUser } from '~~/types'
+import { IDBConfig, IDBUser, IDBAdsLanding } from '~~/types'
 
 export default defineEventHandler(async (event) => {
   try {
     const runtimeConfig = useRuntimeConfig()
-    const { username, password } = await readBody(event)
+    const { username, password, landing } = await readBody(event)
     if(!username || !password) throw 'Vui lòng nhập đầy đủ thông tin'
 
     // Get User
@@ -23,7 +23,11 @@ export default defineEventHandler(async (event) => {
     if(!config) throw 'Không tìm thấy cấu hình trang'
     if(user.type < 1 && !config.enable.signin) throw 'Chức năng đăng nhập đang bảo trì'
 
-    // Create Token and Cookie
+    // Check Landing
+    const landingData = await DB.AdsLanding.findOne({ _id: landing }).select('code') as IDBAdsLanding
+    if(!landingData) throw 'Mã Landing không tồn tại'
+
+    // Set Token and Cookie
     const token = jwt.sign({
       _id : user._id
     }, runtimeConfig.apiSecret, { expiresIn: '360d' })
@@ -37,14 +41,18 @@ export default defineEventHandler(async (event) => {
     const logIP = await DB.LogUserIP.findOne({ user: user._id, ip: IP })
     if(!logIP) await DB.LogUserIP.create({ user: user._id, ip: IP })
 
-    // Send Notify and Save Log
-    logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
+    // Update Landing
+    await DB.AdsLanding.updateOne({ _id: landing }, { $inc: { 'sign.in': 1 }})
+
+    // Send Notify And Save Log
     await sendNotifyUser(event, {
       to: [ user._id ],
       type: 3,
       color: 'blue',
       content: `Bạn đã đăng nhập với IP <b>${IP}</b>`
     })
+
+    logUser(event, user._id, `Đăng nhập bằng Landing <b>${landingData.code}</b> với IP <b>${IP}</b>`)
     await createChat(event, 'bot', `<b>${user.username}</b> vừa truy cập`, true)
 
     return resp(event, { message: 'Đăng nhập thành công' })

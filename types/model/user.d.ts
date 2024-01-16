@@ -13,6 +13,7 @@ export interface IDBUser {
   avatar: string
   level: Types.ObjectId | IDBLevel
   reg: {
+    teaser: Types.ObjectId
     landing: Types.ObjectId
     from: Types.ObjectId
     platform: string

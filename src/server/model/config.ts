@@ -18,11 +18,11 @@ export const DBConfig = (mongoose : Mongoose) => {
       signup: { type: Boolean, default: true },
       play: { type: Boolean, default: true },
       referral: { type: Boolean, default: true },
-      tester: { type: Boolean, default: false },
+      teaser: { type: Boolean, default: false },
       landing: { type: Boolean, default: false },
     },
     homepage: {
-      tester: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_tester' },
+      teaser: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_teaser' },
       landing: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_landing' },
     },
     download: {

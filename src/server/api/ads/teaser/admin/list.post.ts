@@ -17,13 +17,13 @@ export default defineEventHandler(async (event) => {
       match['code'] = { $regex : search, $options : 'i' }
     }
 
-    const list = await DB.AdsTester
+    const list = await DB.AdsTeaser
     .find(match)
     .sort(sorting)
     .limit(size)
     .skip((current - 1) * size)
 
-    const total = await DB.AdsTester.count(match)
+    const total = await DB.AdsTeaser.count(match)
     return resp(event, { result: { list, total } })
   } 
   catch (e:any) {

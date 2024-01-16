@@ -8,12 +8,12 @@ export default defineEventHandler(async (event) => {
     const { _id } = await readBody(event)
     if(!_id) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    const tester = await DB.AdsTester.findOne({ _id: _id }).select('code')
-    if(!tester) throw 'Tester không tồn tại'
+    const teaser = await DB.AdsTeaser.findOne({ _id: _id }).select('code')
+    if(!teaser) throw 'Teaser không tồn tại'
 
-    await DB.AdsTester.deleteOne({ _id: _id })
+    await DB.AdsTeaser.deleteOne({ _id: _id })
 
-    await logAdmin(event, `Xóa Tester Page mã <b>${tester.code}</b>`)
+    await logAdmin(event, `Xóa Teaser Page mã <b>${teaser.code}</b>`)
     return resp(event, { message: 'Xóa thành công' })
   } 
   catch (e:any) {

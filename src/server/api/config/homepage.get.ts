@@ -1,12 +1,12 @@
-import { IDBAdsLanding, IDBAdsTester, IDBConfig } from "~~/types"
+import { IDBAdsLanding, IDBAdsTeaser, IDBConfig } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
     const config = await DB.Config.findOne().select('enable homepage') as IDBConfig
 
-    if(!!config.enable.tester && !!config.homepage.tester){
-      const tester = await DB.AdsTester.findOne({ _id: config.homepage.tester }) as IDBAdsTester
-      if(!!tester) return resp(event, { result: `/ads/tester/${tester.code}` })
+    if(!!config.enable.teaser && !!config.homepage.teaser){
+      const teaser = await DB.AdsTeaser.findOne({ _id: config.homepage.teaser }) as IDBAdsTeaser
+      if(!!teaser) return resp(event, { result: `/ads/teaser/${teaser.code}` })
     }
 
     if(!!config.enable.landing && !!config.homepage.landing){

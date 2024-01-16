@@ -16,14 +16,10 @@ const { imgLink } = useMakeLink()
 
 const runtimeConfig = useRuntimeConfig()
 const appConfig = useAppConfig()
-const route = useRoute()
 
 const configStore = useConfigStore()
 const authStore = useAuthStore()
 const socketStore = useSocketStore()
-
-const primaryCookie = useCookie('theme-primary', runtimeConfig.public.cookieConfig)
-const grayCookie = useCookie('theme-gray', runtimeConfig.public.cookieConfig)
 
 // Meta Seo
 useSeoMeta({
@@ -86,11 +82,9 @@ if(!sslCookie.value && process.client){
   sslCookie.value = true
 }
 
-// Add Cookie Ads From
-const fromCookie = useCookie('ads-from', runtimeConfig.public.cookieConfig)
-if(route.query.f) fromCookie.value = route.query.f
-
 // Set Theme
+const primaryCookie = useCookie('theme-primary', runtimeConfig.public.cookieConfig)
+const grayCookie = useCookie('theme-gray', runtimeConfig.public.cookieConfig)
 if(primaryCookie.value) appConfig.ui.primary = primaryCookie.value
 if(grayCookie.value) appConfig.ui.gray = grayCookie.value
 

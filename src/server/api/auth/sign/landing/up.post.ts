@@ -1,12 +1,11 @@
 import jwt from 'jsonwebtoken'
 import md5 from 'md5'
-import type { IDBConfig, IDBUser } from "~~/types"
+import type { IDBAdsLanding, IDBConfig, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
     const runtimeConfig = useRuntimeConfig()
-
-    const { username, password, email, phone, referral_code } = await readBody(event)
+    const { username, password, confirm_password, landing } = await readBody(event)
 
     if (!username) throw 'Vui lòng nhập tài khoản'
     if (username.length < 6 || username.length > 15) throw 'Tài khoản trong khoảng 6-15 ký tự'
@@ -17,47 +16,25 @@ export default defineEventHandler(async (event) => {
       || !!username.includes('robot')
     ) throw 'Tài khoản không hợp lệ'
 
-    if (!email) throw 'Vui lòng nhập Email'
-    if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) throw 'Định dạng Email không đúng'
-
-    if (!phone) throw 'Vui lòng nhập số điện thoại'
-    if (!phone.match(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g)) throw 'Định dạng số điện thoại không đúng'
-
     if (!password) throw 'Vui lòng nhập mật khẩu'
     if (password.length < 6 || password.length > 15) throw 'Mật khẩu trong khoảng 6-15 ký tự'
     if (!!password.match(/\s/g)) throw 'Mật khẩu không có khoảng cách'
+
+    if (!confirm_password) throw 'Vui lòng nhập mật khẩu xác nhận'
+    if (password != confirm_password) throw 'Mật khẩu xác nhận không khớp'
 
     // Config
     const config = await DB.Config.findOne({}).select('logo_image contact enable') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trang'
     if(!config.enable.signup) throw 'Chức năng đăng ký đang bảo trì'
 
-    // Check User
-    const userCheck = await DB.User
-    .findOne({ 
-      $or: [
-        { username: username },
-        { phone: phone },
-        { email: email }
-      ]
-    })
-    .select('username email phone') as IDBUser
-    
-    if(!!userCheck){
-      if(userCheck.username == username) throw 'Tài khoản đã tồn tại'
-      if(userCheck.phone == phone) throw 'Số điện thoại đã tồn tại'
-      if(userCheck.email == email) throw 'Địa chỉ Email đã tồn tại'
-    }
+    // Update Landing
+    const landingData = await DB.AdsLanding.findOne({ _id: landing }).select('code') as IDBAdsLanding
+    if(!landingData) throw 'Mã Landing không tồn tại'
 
-    // Check Referral Code
-    const referral : any = { code: `${config.contact.prefix || 'GAME'}-${username.toUpperCase()}` }
-    if(!!referral_code){
-      const referraler = await DB.User.findOne({ 'referral.code': referral_code }).select('_id')
-      if(!referraler) throw 'Mã mời không tồn tại'
-      
-      referral.person = referraler._id
-      await DB.User.updateOne({ _id: referraler._id }, { $inc: { 'referral.count': 1 }})
-    }
+    // Check User
+    const userCheck = await DB.User.findOne({ username: username }).select('username') as IDBUser
+    if(!!userCheck) throw 'Tài khoản đã tồn tại'
 
     // Check IP
     const IP = getRequestIP(event, { xForwardedFor: true })
@@ -65,19 +42,23 @@ export default defineEventHandler(async (event) => {
     if(logIP > 30) throw 'IP đã vượt quá giới hạn tạo tài khoản'
 
     // Create
+    const referral : any = { code: `${config.contact.prefix || 'GAME'}-${username.toUpperCase()}` }
     const user = await DB.User.create({
       username: username,
       password: md5(password),
-      phone: phone,
-      email: email,
       avatar: config.logo_image || '/images/user/default.png',
+      reg: {
+        landing: landingData._id
+      },
       referral: referral
     })
+    await DB.AdsLanding.updateOne({ _id: landing }, { $inc: { 'sign.up': 1 }})
 
     // Make Token And Cookie
     const token = jwt.sign({
       _id : user._id
     }, runtimeConfig.apiSecret, { expiresIn: '360d' })
+
     setCookie(event, 'token-auth', token, runtimeConfig.public.cookieConfig)
     user.token = token
     await user.save()
@@ -85,13 +66,12 @@ export default defineEventHandler(async (event) => {
     // Save IP
     await DB.LogUserIP.create({ user: user._id, ip: IP })
 
-    // Send Notify and Save Log
-    logUser(event, user._id, 'Đăng ký tài khoản ')
-    logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
+    // Save Log And Send Notify
+    logUser(event, user._id, `Đăng ký tài khoản nhanh tại Landing <b>${landingData.code}</b> với IP <b>${IP}</b>`)
     await sendNotifyUser(event, {
       to: [ user._id ],
       color: 'primary',
-      content: `Chào mừng thành viên mới, chúc bạn chơi game vui vẻ`
+      content: `Chào mừng thành viên mới, chúc bạn chơi game vui vẻ. Hãy nhớ truy cập trang thông tin và cập nhật <b>Email</b> và <b>Số điện thoại</b> để bảo mật tài khoản của mình nhé`
     })
     await sendNotifyUser(event, {
       to: [ user._id ],
@@ -100,7 +80,7 @@ export default defineEventHandler(async (event) => {
       content: `Bạn đã đăng nhập với IP <b>${IP}</b>`
     })
     await createChat(event, 'bot', `Chào mừng thành viên mới <b>${user.username}</b>`)
-    
+
     return resp(event, { message: 'Đăng ký thành công' })
   } 
   catch (e:any) {

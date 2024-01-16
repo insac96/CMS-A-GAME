@@ -13,8 +13,9 @@
     <UModal v-model="modal">
       <div class="p-2">
         <UTabs v-model="tabItem" :items="tabItems"></UTabs>
-        <LazyAuthSignFastUp @done="thankyou" :landing="landing._id" v-if="tabItem == 0"></LazyAuthSignFastUp>
-        <DataGiftcodePublic v-if="tabItem == 1"></DataGiftcodePublic>
+        <AuthSignLandingIn @done="thankyou" :landing="landing._id" v-if="tabItem == 0" />
+        <AuthSignLandingUp @done="thankyou" :landing="landing._id" v-if="tabItem == 1" />
+        <DataGiftcodePublic v-if="tabItem == 2"></DataGiftcodePublic>
       </div>
     </UModal>
   </div>
@@ -31,8 +32,9 @@ const authStore = useAuthStore()
 const modal = ref(false)
 const landing = ref(undefined)
 
-const tabItem = ref(0) 
+const tabItem = ref(1) 
 const tabItems = [
+  { label: 'Đăng Nhập', key: 'in' },
   { label: 'Đăng Ký', key: 'up' },
   { label: 'Giftcode', key: 'giftcode' },
 ]
@@ -62,10 +64,6 @@ const getLanding = async () => {
   try {
     const data = await useAPI('ads/landing/code', { code: route.params.code })
     landing.value = data
-
-    // Add Cookie Ads Landing
-    const fromCookie = useCookie('ads-landing', runtimeConfig.public.cookieConfig)
-    fromCookie.value = data
   }
   catch (e) {
     return false

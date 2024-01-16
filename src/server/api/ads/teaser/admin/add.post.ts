@@ -9,12 +9,12 @@ export default defineEventHandler(async (event) => {
     const { code, link } = body
     if(!code || !link) throw 'Dữ liệu đầu vào sai'
 
-    const checkDup = await DB.AdsTester.findOne({ code: code }).select('_id')
-    if(!!checkDup) throw 'Mã Tester đã tồn tại'
+    const checkDup = await DB.AdsTeaser.findOne({ code: code }).select('_id')
+    if(!!checkDup) throw 'Mã Teaser đã tồn tại'
 
-    await DB.AdsTester.create(body)
+    await DB.AdsTeaser.create(body)
     
-    await logAdmin(event, `Thêm Tester Page mã <b>${code}</b>`)
+    await logAdmin(event, `Thêm Teaser Page mã <b>${code}</b>`)
     return resp(event, { message: 'Thêm thành công' })
   } 
   catch (e:any) {

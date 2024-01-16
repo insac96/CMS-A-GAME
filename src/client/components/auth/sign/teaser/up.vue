@@ -25,21 +25,17 @@
 </template>
 
 <script setup>
-const { $socket } = useNuxtApp()
 const authStore = useAuthStore()
-
-const props = defineProps(['landing'])
+const props = defineProps(['teaser'])
 const emit = defineEmits(['done'])
 
 const loading = ref(false)
-
-const giftcodes = ref(null)
 
 const state = ref({
   username: undefined,
   password: undefined,
   confirm_password: undefined,
-  landing: undefined
+  teaser: undefined
 })
 
 const validate = (state) => {
@@ -66,12 +62,11 @@ const submit = async () => {
   try {
     loading.value = true
 
-    state.value.landing = props.landing
-    await useAPI('auth/sign/fastUp', JSON.parse(JSON.stringify(state.value)))
+    state.value.teaser = props.teaser
+    await useAPI('auth/sign/teaser/up', JSON.parse(JSON.stringify(state.value)))
 
     const auth = await useAPI('auth/get')
     authStore.setAuth(auth)
-    $socket.emit('login', authStore.profile._id)
 
     loading.value = false
     emit('done')

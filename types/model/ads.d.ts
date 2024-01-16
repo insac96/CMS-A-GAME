@@ -1,6 +1,6 @@
 import type { Types } from 'mongoose'
 
-export interface IDBAdsTester {
+export interface IDBAdsTeaser {
   _id: Types.ObjectId
   createdAt: Date
   updatedAt: Date

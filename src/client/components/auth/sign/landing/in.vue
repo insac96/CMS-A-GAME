@@ -21,13 +21,16 @@
 <script setup>
 const { $socket } = useNuxtApp()
 const authStore = useAuthStore()
+
+const props = defineProps(['landing'])
 const emit = defineEmits(['done'])
 
 const loading = ref(false)
 
 const state = ref({
   username: undefined,
-  password: undefined
+  password: undefined,
+  landing: undefined
 })
 
 const validate = (state) => {
@@ -42,7 +45,8 @@ const submit = async () => {
     if(!!loading.value) return
     loading.value = true
 
-    await useAPI('auth/sign/in', JSON.parse(JSON.stringify(state.value)))
+    state.value.landing = props.landing
+    await useAPI('auth/sign/landing/in', JSON.parse(JSON.stringify(state.value)))
 
     const auth = await useAPI('auth/get')
     authStore.setAuth(auth)

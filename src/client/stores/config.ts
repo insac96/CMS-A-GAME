@@ -15,7 +15,7 @@ export const useConfigStore = defineStore('config', () => {
       signup: true,
       play: true,
       referral: true,
-      tester: false,
+      teaser: false,
       landing: false
     },
     download: {
