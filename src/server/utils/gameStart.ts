@@ -5,7 +5,8 @@ export default async (event: H3Event, account : string) : Promise<any> => {
   try {
     const config = await DB.Config.findOne().select('game enable.play') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
-    if(!config.enable.play || !config.game.api.start) throw 'Trò chơi đang bảo trì'
+    if(!config.game.api.start) throw 'Trò chơi đang bảo trì'
+    if(event.context.auth.type < 1 && !config.enable.play) throw 'Trò chơi đang bảo trì'
 
     const get = await fetch(config.game.api.start, {
       method: 'post',
