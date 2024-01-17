@@ -26,7 +26,7 @@ export default async (event: H3Event, data : any, type : string) : Promise<any> 
 
     const history = await DB.EventHistory
     .findOne({ user: auth._id, event: data._id })
-    .select('_id')
+    .select('_id createdAt')
     .sort({ createdAt: -1 })
     .limit(1) as IDBEventHistory
 
