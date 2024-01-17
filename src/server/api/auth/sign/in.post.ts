@@ -23,6 +23,14 @@ export default defineEventHandler(async (event) => {
     if(!config) throw 'Không tìm thấy cấu hình trang'
     if(user.type < 1 && !config.enable.signin) throw 'Chức năng đăng nhập đang bảo trì'
 
+    // Update Ads From
+    const adsFromCode = getCookie(event, 'ads-from')
+    if(!!adsFromCode){
+      const adsFromData = await DB.AdsFrom.findOne({ code: adsFromCode }).select('_id')
+      if(!!adsFromData) await DB.AdsFrom.updateOne({ _id: adsFromData._id }, { $inc: { 'sign.in': 1 }})
+      else deleteCookie(event, 'ads-from', runtimeConfig.public.cookieConfig)
+    }
+
     // Create Token and Cookie
     const token = jwt.sign({
       _id : user._id

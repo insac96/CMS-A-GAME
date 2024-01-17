@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
 
     // Check Event Start, End, Display
     if(eventConfig.display == 0) throw 'Sự kiện đang tạm ẩn, vui lòng quay lại sau'
-    const nowTime = DayJS(new Date()).unix()
+    const nowTime = DayJS().unix()
     const startTime = eventConfig.start ? DayJS(eventConfig.start).unix() : null
     const endTime = eventConfig.end ? DayJS(eventConfig.end).unix() : null
     if(!!startTime && nowTime < startTime) throw `Sự kiện chưa bắt đầu, vui lòng quay lại sau`

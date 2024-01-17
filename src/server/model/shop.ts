@@ -1,5 +1,5 @@
 import type { Mongoose } from 'mongoose'
-import type { IDBShop, IDBShopConfig, IDBShopHistory } from '~~/types'
+import type { IDBShop, IDBShopBox, IDBShopBoxHistory, IDBShopConfig, IDBShopHistory } from '~~/types'
 
 export const DBShopConfig = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBShopConfig>({ 
@@ -52,5 +52,40 @@ export const DBShopHistory = (mongoose : Mongoose) => {
   })
 
   const model = mongoose.model('shop_histories', schema)
+  return model 
+}
+
+export const DBShopBox = (mongoose : Mongoose) => {
+  const schema = new mongoose.Schema<IDBShopBox>({ 
+    gift: [{
+      item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },
+      amount: { type: Number, index: true },
+    }],
+    amount: { type: Number, default: 1, index: true },
+    price: { type: Number, index: true },
+    limit: { type: Number, default: 0, index: true },
+    pin: { type: Number, default: 0, index: true },
+    display: { type: Number, default: 1, index: true },
+  }, {
+    timestamps: true
+  })
+
+  const model = mongoose.model('shop_boxs', schema)
+  return model 
+}
+
+export const DBShopBoxHistory = (mongoose : Mongoose) => {
+  const schema = new mongoose.Schema<IDBShopBoxHistory>({ 
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    box: { type: mongoose.Schema.Types.ObjectId, ref: 'shop_boxs' },
+    amount: { type: Number, default: 1, index: true },
+    price: { type: Number, index: true },
+    server: { type: String },
+    role: { type: String },
+  }, {
+    timestamps: true
+  })
+
+  const model = mongoose.model('shop_box_histories', schema)
   return model 
 }

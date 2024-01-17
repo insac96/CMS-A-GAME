@@ -38,3 +38,32 @@ export interface IDBShopHistory {
   server: string
   role: string
 }
+
+export interface IDBShopBox {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+
+  gift: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+  }>
+  amount: number
+  price: number
+  limit: number
+  pin: number
+  display: number
+}
+
+export interface IDBShopBoxHistory {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  
+  user: Types.ObjectId
+  box: Types.ObjectId
+  amount: number
+  price: number
+  server: string
+  role: string
+}

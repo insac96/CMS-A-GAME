@@ -3,7 +3,11 @@ export default defineEventHandler(async (event) => {
     const { types, key } = await readBody(event)
     
     const match : any = {
-      item_name: { $regex : key, $options : 'i' }
+      $or: [
+        { item_name: { $regex : key, $options : 'i' }},
+        { item_id: { $regex : key, $options : 'i' }},
+      ]
+      
     }
     if(!!types && types.length) match['type'] = { $in: types }
 

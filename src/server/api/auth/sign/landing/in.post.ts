@@ -44,6 +44,14 @@ export default defineEventHandler(async (event) => {
     // Update Landing
     await DB.AdsLanding.updateOne({ _id: landing }, { $inc: { 'sign.in': 1 }})
 
+    // Update Ads From
+    const adsFromCode = getCookie(event, 'ads-from')
+    if(!!adsFromCode){
+      const adsFromData = await DB.AdsFrom.findOne({ code: adsFromCode }).select('_id')
+      if(!!adsFromData) await DB.AdsFrom.updateOne({ _id: adsFromData._id }, { $inc: { 'sign.in': 1 }})
+      else deleteCookie(event, 'ads-from', runtimeConfig.public.cookieConfig)
+    }
+
     // Send Notify And Save Log
     await sendNotifyUser(event, {
       to: [ user._id ],

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import md5 from 'md5'
-import type { IDBAdsTeaser, IDBConfig, IDBUser } from "~~/types"
+import type { IDBAdsFrom, IDBAdsTeaser, IDBConfig, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -46,7 +46,6 @@ export default defineEventHandler(async (event) => {
     // Teaser
     const teaserData = await DB.AdsTeaser.findOne({ _id: teaser }).select('code') as IDBAdsTeaser
     if(!teaserData) throw 'Mã Teaser không tồn tại'
-    await DB.AdsTeaser.updateOne({ _id: teaser }, { $inc: { 'sign.up': 1 }})
     
     // Create
     const user = await DB.User.create({
@@ -58,6 +57,17 @@ export default defineEventHandler(async (event) => {
       },
       referral: referral
     })
+
+    // Update Ads Teaser
+    await DB.AdsTeaser.updateOne({ _id: teaser }, { $inc: { 'sign.up': 1 }})
+
+    // Update Ads From
+    const adsFromCode = getCookie(event, 'ads-from')
+    if(!!adsFromCode){
+      const adsFromData = await DB.AdsFrom.findOne({ code: adsFromCode }).select('_id')
+      if(!!adsFromData) await DB.AdsFrom.updateOne({ _id: adsFromData._id }, { $inc: { 'sign.up': 1 }})
+      else deleteCookie(event, 'ads-from', runtimeConfig.public.cookieConfig)
+    }
 
     // Make Token And Cookie
     const token = jwt.sign({

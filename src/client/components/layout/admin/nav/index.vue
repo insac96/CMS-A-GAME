@@ -66,7 +66,7 @@ const navItems = [
     children: [
       { label: 'Teaser', to: '/admin/ads/teaser' },
       { label: 'Landing', to: '/admin/ads/landing' },
-      { label: 'Nguồn', to: '/admin/ads/from' }
+      { label: 'From', to: '/admin/ads/from' }
     ]
   },
   {
@@ -126,7 +126,7 @@ const navItems = [
     slot: 'tab-7',
     children: [
       { label: 'Vật phẩm', to: '/admin/game/item' },
-      { label: 'Gói quà', to: '/admin/game/itembox' }, 
+      { label: 'Gói vật phẩm', to: '/admin/game/itembox' }, 
       // { label: 'Gửi vật phẩm', to: '/admin/game/send' },
       { label: 'Nhân vật', to: '/admin/game/roles' },
       { label: 'Quà xếp hạng', to: '/admin/game/rankgift' },

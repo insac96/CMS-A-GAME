@@ -52,7 +52,17 @@ export default defineEventHandler(async (event) => {
       },
       referral: referral
     })
+
+    // Update Landing
     await DB.AdsLanding.updateOne({ _id: landing }, { $inc: { 'sign.up': 1 }})
+
+    // Update Ads From
+    const adsFromCode = getCookie(event, 'ads-from')
+    if(!!adsFromCode){
+      const adsFromData = await DB.AdsFrom.findOne({ code: adsFromCode }).select('_id')
+      if(!!adsFromData) await DB.AdsFrom.updateOne({ _id: adsFromData._id }, { $inc: { 'sign.up': 1 }})
+      else deleteCookie(event, 'ads-from', runtimeConfig.public.cookieConfig)
+    }
 
     // Make Token And Cookie
     const token = jwt.sign({

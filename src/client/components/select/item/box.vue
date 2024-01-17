@@ -26,6 +26,7 @@ watch(item, (val) => {
   if(!val) return
   const box = options.value.find(i => i._id === val)
   emit('change', box ? box.gift : [])
+  item.value = null
 })
 
 const fetch = async () => {

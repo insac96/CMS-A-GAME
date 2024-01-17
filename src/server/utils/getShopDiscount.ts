@@ -8,7 +8,7 @@ export default (event: H3Event, body : IDBShopConfig) : number => {
 
   if(!limitExpired) return limitDiscount
   else {
-    const now = DayJS(new Date()).unix()
+    const now = DayJS().unix()
     const expired = DayJS(limitExpired).unix()
 
     if(now <= expired) return limitDiscount

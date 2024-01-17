@@ -15,7 +15,7 @@ export default (event: H3Event, body : IBodyData) : number => {
 
   if(limitBonus < 1 || (limitBonus > 0 && !limitExpired)) return defaultBonus
   else {
-    const now = DayJS(new Date()).unix()
+    const now = DayJS().unix()
     const expired = DayJS(limitExpired).unix()
 
     if(now <= expired) return limitBonus

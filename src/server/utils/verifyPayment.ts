@@ -88,7 +88,7 @@ export default async (
 
       if(!limitExpiredBonusSavePay) bonusSavePay = limitBonusSavePay
       else {
-        const nowTime = DayJS(new Date()).unix()
+        const nowTime = DayJS().unix()
         const expiredTime = DayJS(limitExpiredBonusSavePay).unix()
         if(nowTime <= expiredTime) bonusSavePay = limitBonusSavePay
       }

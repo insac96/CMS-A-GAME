@@ -130,8 +130,9 @@ const openEdit = (row, index) => {
 const mergeGift = (gift) => {
   if(!gift || gift.length == 0) return
 
-  const arr = list.value.concat(gift)
-  
+  const giftFormat = JSON.parse(JSON.stringify(gift))
+  const arr = list.value.concat(giftFormat)
+
   list.value = arr.reduce((a, c) => {
     const obj = a.find((obj) => obj._id === c._id)
     if(!obj) a.push(c)

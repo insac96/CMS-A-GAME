@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import type { IAuth } from '~~/types'
+import type { IAuth, IDBEventHistory } from '~~/types'
 
 const typeCheck : any = {
   'login.month' : 'month',
@@ -24,21 +24,33 @@ export default async (event: H3Event, data : any, type : string) : Promise<any> 
 
     if(data.need > check) return Promise.resolve(-1) // Chưa đạt điều kiện
 
-    const match : any = { user: auth._id, event: data._id }
-    if(!!typeCheck[type] && typeCheck[type] == 'day'){
-      const start : any = DayJS().startOf('date')
-      const end : any = DayJS().endOf('date')
-      match['createdAt'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
-    }
-    if(!!typeCheck[type] && typeCheck[type] == 'month'){
-      const start : any = DayJS().startOf('month')
-      const end : any = DayJS().endOf('month')
-      match['createdAt'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
-    }
+    const history = await DB.EventHistory
+    .findOne({ user: auth._id, event: data._id })
+    .select('_id')
+    .sort({ createdAt: -1 })
+    .limit(1) as IDBEventHistory
 
-    const history = await DB.EventHistory.findOne(match).select('_id')
     if(!history) return Promise.resolve(0) // Có thể nhận
-    else return Promise.resolve(1) // Đã nhận
+
+    if(!typeCheck[type]){
+      if(!!history) return Promise.resolve(1) // Đã nhận
+    }
+    else {
+      const time = DayJS(history.createdAt).unix()
+
+      if(typeCheck[type] == 'day'){
+        const start = DayJS().startOf('date').unix()
+        const end = DayJS().endOf('date').unix()
+        if(start <= time && time <= end) return Promise.resolve(1) // Đã nhận 
+        return Promise.resolve(0) // Có thể nhận
+      }
+      if(typeCheck[type] == 'month'){
+        const start = DayJS().startOf('month').unix()
+        const end = DayJS().endOf('month').unix()
+        if(start <= time && time <= end) return Promise.resolve(1) // Đã nhận 
+        return Promise.resolve(0) // Có thể nhận
+      }
+    }
   }
   catch (e:any) {
     return Promise.resolve(-3) // Lỗi không xác định
