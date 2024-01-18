@@ -8,7 +8,7 @@
           <UiText>
             Tặng 
             <b>{{ savePayBonus.number }}%</b> 
-            giá trị nạp vào tích nạp ngày 
+            giá trị nạp vào tích nạp ngày và tháng
             <b v-if="savePayBonus.time">{{ savePayBonus.time }}</b>
           </UiText>
         </template>

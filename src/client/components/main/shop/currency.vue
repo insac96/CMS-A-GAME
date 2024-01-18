@@ -21,7 +21,7 @@
 
     <!-- Main -->
     <div v-else>
-      <DataEmpty icon="i-bx-shopping-bag" text="Không có vật phẩm" v-if="list.length == 0"></DataEmpty>
+      <DataEmpty icon="i-bx-shopping-bag" text="Không có tiền tệ nào đang bày bán" v-if="list.length == 0"></DataEmpty>
 
       <div class="grid grid-cols-12 gap-2" v-if="list.length > 0">
         <DataShopBox

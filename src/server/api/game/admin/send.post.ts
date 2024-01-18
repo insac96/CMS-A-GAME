@@ -1,4 +1,4 @@
-import { IAuth, IDBUser } from "~~/types"
+import { IAuth } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -6,43 +6,46 @@ export default defineEventHandler(async (event) => {
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const body = await readBody(event)
-    const { user, server, role, title, content, reason, items } = body
-    if(!user || !server || !role || !reason || !Array.isArray(items)) throw 'Dữ liệu đầu vào không hợp lệ'
+    const { items, roles, title, content, reason } = body
+    if(roles.length < 1) throw 'Dữ liệu nhân vật không hợp lệ'
     if(items.length < 1) throw 'Dữ liệu vật phẩm không hợp lệ'
 
-    const userData = await DB.User.findOne({ _id: user }).select('_id username') as IDBUser
-    if(!userData) throw 'Tài khoản không tồn tại'
-
-    const itemLog = items.map(i => ({
+    const itemLog = items.map((i : any) => ({
       item: i._id,
       amount: i.amount
     }))
 
-    const itemSend = items.map(i => ({
+    const itemSend = items.map((i : any) => ({
       id: i.item_id,
       amount: i.amount
     }))
-    
-    await gameSendMail(event, {
-      account: userData.username,
-      server_id: server,
-      role_id: role,
-      title: title || 'GM Send',
-      content: content || 'Vật phẩm gửi từ GM',
-      items: itemSend
-    })
 
-    await DB.LogAdminSendItem.create({
-      from: auth._id,
-      to: userData._id,
-      server: server,
-      role: role,
-      reason: reason,
-      gift: itemLog
-    })
+    roles.forEach(async (data : any) => {
+      const user = data.user
+      const server = data.server
+      const role = data.role
 
-    logUser(event, userData._id, `Nhận <b>vật phẩm</b> từ quản trị viên <b>${auth.username}</b> với lý do <b>${reason}</b>`)
-    logAdmin(event, `Gửi vật phẩm cho <b>${userData.username}</b> tại máy chủ <b>${server}</b> với lý do <b>${reason}</b>`)
+      await gameSendMail(event, {
+        account: user.username,
+        server_id: server.server_id,
+        role_id: role.role_id,
+        title: title || 'GM Send',
+        content: content || 'Vật phẩm gửi từ GM',
+        items: itemSend
+      })
+  
+      await DB.LogAdminSendItem.create({
+        from: auth._id,
+        to: user._id,
+        server: server.server_id,
+        role: role.role_id,
+        reason: reason,
+        gift: itemLog
+      })
+  
+      logUser(event, user._id, `Nhận <b>vật phẩm</b> từ quản trị viên <b>${auth.username}</b> với lý do <b>${reason}</b>`)
+      logAdmin(event, `Gửi vật phẩm cho <b>${user.username}</b> tại máy chủ <b>${server}</b> với lý do <b>${reason}</b>`)
+    })
 
     return resp(event, { message: 'Gửi thành công' })
   } 

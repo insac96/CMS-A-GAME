@@ -1,5 +1,5 @@
 import type { Model } from 'mongoose'
-import type { IDBShopBox, IDBShopBoxHistory, IDBShopConfig } from './shop'
+import type { IDBShopPack, IDBShopPackHistory, IDBShopConfig } from './shop'
 
 export { IDBConfig, IDBConfigStore } from './config'
 export { IDBNews, IDBNewsCategory } from './news'
@@ -10,7 +10,7 @@ export { IDBPaymentConfig, IDBPayment } from './payment'
 export { IDBWithdraw } from './withdraw'
 export { IDBNotifyUser, IDBNotifyAdmin } from './notify'
 export { IDBItem, IDBItemBox } from './item'
-export { IDBShopConfig, IDBShop, IDBShopHistory, IDBShopBox, IDBShopBoxHistory } from './shop'
+export { IDBShopConfig, IDBShop, IDBShopHistory, IDBShopPack, IDBShopPackHistory } from './shop'
 export { IDBEventConfig, IDBEvent, IDBEventHistory } from './event'
 export { IDBGiftcode, IDBGiftcodeHistory } from './giftcode'
 export { IDBDice, IDBDiceHistory, IDBDiceLuckyUser } from './dice'
@@ -47,8 +47,8 @@ export interface IGlobalDB {
   ShopConfig: Model<IDBShopConfig>
   Shop: Model<IDBShop>
   ShopHistory: Model<IDBShopHistory>
-  ShopBox: Model<IDBShopBox>
-  ShopBoxHistory: Model<IDBShopBoxHistory>
+  ShopPack: Model<IDBShopPack>
+  ShopPackHistory: Model<IDBShopPackHistory>
 
   EventConfig: Model<IDBEventConfig>
   Event: Model<IDBEvent>

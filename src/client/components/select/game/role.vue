@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-const props = defineProps(['modelValue', 'server', 'user'])
-const emit = defineEmits(['update:modelValue'])
+const props = defineProps(['modelValue', 'roleData', 'server', 'user'])
+const emit = defineEmits(['update:modelValue', 'update:roleData'])
 
 const loading = ref(true)
 
@@ -26,7 +26,16 @@ const role = computed({
 }) 
 
 const options = ref([])
+
 const select = computed(() => options.value.find(i => i.value === role.value))
+
+watch(select, val => {
+  if(!val) return emit('update:roleData', undefined)
+  emit('update:roleData', {
+    role_id: val.value,
+    role_name: val.label
+  })
+})
 
 watch(() => props.server, (val) => !!val && fetch())
 watch(() => props.user, (val) => !!val && fetch())

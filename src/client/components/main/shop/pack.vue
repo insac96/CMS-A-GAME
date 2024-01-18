@@ -21,15 +21,16 @@
 
     <!-- Main -->
     <div v-else>
-      <DataEmpty icon="i-bx-shopping-bag" text="Không có vật phẩm nào đang bày bán" v-if="list.length == 0"></DataEmpty>
+      <DataEmpty icon="i-bx-shopping-bag" text="Không có gói nào đang bày bán" v-if="list.length == 0"></DataEmpty>
 
       <div class="grid grid-cols-12 gap-2" v-if="list.length > 0">
-        <DataShopBox
+        <DataShopPack
           class="xl:col-span-3 sm:col-span-4 col-span-6" 
-          v-for="item in list" :key="item._id"
-          :item="item"
+          v-for="pack in list" :key="pack._id"
+          :pack="pack"
           :config="config"
-          @click="buyItem(item)"
+          :max="2"
+          @click="buyPack(pack)"
         />
       </div>
     </div>
@@ -41,7 +42,7 @@
 
     <!-- Buy -->
     <UModal v-model="modal.buy" prevent-close v-if="authStore.isLogin">
-      <DataShopBuyItem :item="itemSelect" @close="modal.buy = false" class="p-4"/>
+      <DataShopBuyPack :pack="packSelect" @close="modal.buy = false" class="p-4"/>
     </UModal>
 
     <!-- Limit -->
@@ -78,18 +79,13 @@ const page = ref({
   },
   search: undefined,
   total: 0,
-  types: ['game_item'],
 })
 watch(() => page.value.sort, () => getList())
 watch(() => page.value.current, () => getList())
-watch(() => page.value.types, () => getList())
 watch(() => page.value.search, (val) => (!val && getList()))
 
-const itemSelect = ref(undefined)
-watch(() => modal.value.buy, (val) => (!val && (itemSelect.value = undefined)))
-
-const typeSelect = ref('game_item')
-watch(() => typeSelect.value, (val) => page.value.types = [val])
+const packSelect = ref(undefined)
+watch(() => modal.value.buy, (val) => (!val && (packSelect.value = undefined)))
 
 const menuList = computed(() => [
   [{
@@ -112,7 +108,7 @@ const menuList = computed(() => [
   }]
 ])
 
-const buyItem = (item) => {
+const buyPack = (pack) => {
   const toast = useToast()
   if(!authStore.isLogin) return toast.add({
     title: 'Xác thực',
@@ -121,7 +117,7 @@ const buyItem = (item) => {
     color: 'red'
   })
 
-  itemSelect.value = item
+  packSelect.value = pack
   modal.value.buy = true
 }
 
@@ -132,7 +128,7 @@ const getList = async () => {
     const configData = await useAPI('shop/config')
     config.value = Object.assign(config.value, configData)
 
-    const listData = await useAPI('shop/list', JSON.parse(JSON.stringify(page.value)))
+    const listData = await useAPI('shop/pack/list', JSON.parse(JSON.stringify(page.value)))
 
     loading.value = false
     page.value.total = listData.total

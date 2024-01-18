@@ -39,29 +39,29 @@ export interface IDBShopHistory {
   role: string
 }
 
-export interface IDBShopBox {
+export interface IDBShopPack {
   _id: Types.ObjectId
   createdAt: Date
   updatedAt: Date
 
+  name: string
   gift: Array<{
     item: Types.ObjectId | IDBItem,
     amount: number
   }>
-  amount: number
   price: number
   limit: number
   pin: number
   display: number
 }
 
-export interface IDBShopBoxHistory {
+export interface IDBShopPackHistory {
   _id: Types.ObjectId
   createdAt: Date
   updatedAt: Date
   
   user: Types.ObjectId
-  box: Types.ObjectId
+  pack: Types.ObjectId
   amount: number
   price: number
   server: string

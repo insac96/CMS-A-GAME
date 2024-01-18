@@ -35,10 +35,11 @@
 <script setup>
 const props = defineProps({
   modelValue: [ String, Array ],
-  multiple: Boolean
+  userData: Object,
+  multiple: Boolean,
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'update:userData'])
 const userSelect = ref(props.modelValue)
 const select = ref(undefined)
 
@@ -52,6 +53,15 @@ watch(userSelect, val => {
     if(!!val) return emit('update:modelValue', val._id)
     emit('update:modelValue', undefined)
   }
+})
+
+watch(select, val => {
+  if(!!props.multiple) return
+  if(!val) return emit('update:userData', undefined)
+  emit('update:userData', {
+    _id: val._id,
+    username: val.label
+  })
 })
 
 const reset = () => {

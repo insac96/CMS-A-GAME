@@ -125,9 +125,9 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-7',
     children: [
+      { label: 'Gửi thư', to: '/admin/game/send' },
       { label: 'Vật phẩm', to: '/admin/game/item' },
       { label: 'Gói vật phẩm', to: '/admin/game/itembox' }, 
-      // { label: 'Gửi vật phẩm', to: '/admin/game/send' },
       { label: 'Nhân vật', to: '/admin/game/roles' },
       { label: 'Quà xếp hạng', to: '/admin/game/rankgift' },
     ]
@@ -148,7 +148,8 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-9',
     children: [
-      { label: 'Cài đặt', to: '/admin/shop/config' }, 
+      { label: 'Cài đặt', to: '/admin/shop/config' },
+      { label: 'Gói', to: '/admin/shop/pack' },
       { label: 'Vật phẩm', to: '/admin/shop/item' },
       { label: 'Tiền tệ', to: '/admin/shop/currency' }, 
       { label: 'Lịch sử', to: '/admin/shop/history' }, 

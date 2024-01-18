@@ -1,14 +1,17 @@
-import type { IDBLevel, IDBUser, IDBShop, IDBItem, IAuth, IDBShopConfig } from "~~/types"
+import type { IDBLevel, IDBUser, IDBShopPack, IDBItem, IAuth, IDBShopConfig } from "~~/types"
+
+const currencyTypeList = [
+  'coin', 'wheel', 'notify'
+]
 
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
 
-    const { item, server, role, amount } = await readBody(event)
-    if(!item) throw 'Không tìm thấy ID vật phẩm'
+    const { pack, server, role } = await readBody(event)
+    if(!pack) throw 'Không tìm thấy ID vật phẩm'
     if(!server) throw 'Không tìm thấy ID máy chủ'
     if(!role) throw 'Không tìm thấy ID nhân vật'
-    if(!!isNaN(parseInt(amount)) || parseInt(amount) < 1) throw 'Số lượng không hợp lệ'
 
     // Shop Config
     const shopConfig = await DB.ShopConfig.findOne() as IDBShopConfig
@@ -21,15 +24,18 @@ export default defineEventHandler(async (event) => {
     const level = await DB.Level.findOne({ _id: user.level }).select('limit.spend discount') as IDBLevel
     if(!level) throw 'Không tìm thấy thông tin cấp độ'
 
-    // Shop Item Data
-    const shopData = await DB.Shop
-    .findOne({ _id: item }) 
-    .select('item item_amount price limit')
-    .populate({ path: 'item', select: 'item_id item_name type' }) as IDBShop
-    if(!shopData) throw 'Vật phẩm không tồn tại'
+    // Shop Pack Data
+    const shopPack = await DB.ShopPack
+    .findOne({ _id: pack }) 
+    .select('name gift price limit')
+    .populate({
+      path: 'gift.item',
+      select: 'item_id type'
+    }) as IDBShopPack
+    if(!shopPack) throw 'Gói không tồn tại'
 
     // Total Price
-    const price = shopData.price * parseInt(amount)
+    const price = shopPack.price
     const discountLevel = level.discount
     const discountSystem = getShopDiscount(event, shopConfig)
     const discount = discountLevel + discountSystem > 100 ? 100 : discountLevel + discountSystem
@@ -51,34 +57,42 @@ export default defineEventHandler(async (event) => {
     if(limitCoinMonth != -1 && limitCoinMonth <= 0) throw 'Bạn đã đạt giới hạn tiêu phí tháng này'
     if(limitCoinMonth != -1 && totalPrice > limitCoinMonth) throw `Tháng này bạn chỉ có thể tiêu tối đa ${limitCoinMonth.toLocaleString("vi-VN")} Xu`
 
-    // Item Data
-    const itemData = shopData.item as IDBItem
-    const itemType = itemData.type
-
     // Check Limit Buy
-    if(shopData.limit > 0){
-      const countBuy = await DB.ShopHistory.count({ user: auth._id, item: itemData._id, server: server })
-      if(countBuy >= shopData.limit) throw `Bạn đã đạt giới hạn mua lại vật phẩm này`
+    if(shopPack.limit > 0){
+      const countBuy = await DB.ShopPackHistory.count({ user: auth._id, pack: shopPack._id, server: server })
+      if(countBuy >= shopPack.limit) throw `Bạn đã đạt giới hạn mua lại gói này`
     }
 
-    // Send Item To Game
-    if(itemType == 'game_recharge'){
-      await gameSendRecharge(event, {
-        account: auth.username,
-        server_id: server,
-        role_id: role,
-        recharge_id: itemData.item_id,
-        save_pay: shopData.price
-      })
-    }
-    if(itemType == 'game_item'){
+    // Format Gift
+    const giftItem : Array<any> = []
+    const giftCurrency : any = {}
+
+    shopPack.gift.forEach(gift => {
+      const item = gift.item as IDBItem
+
+      if(item.type == 'game_item'){
+        giftItem.push({ id: item.item_id, amount: gift.amount })
+      }
+      if(!!currencyTypeList.includes(item.type)){
+        giftCurrency[`currency.${item.type}`] = gift.amount
+      }
+    })
+
+    // Send Gift
+    if(giftItem.length > 0){
       await gameSendMail(event, {
         account: auth.username,
         server_id: server,
         role_id: role,
         title: 'Web Shop',
-        content: 'Vật phẩm mua từ Web Shop',
-        items: [{ id: itemData.item_id, amount: parseInt(amount) * (shopData.item_amount || 1) }]
+        content: 'Gói mua từ cửa hàng trên Web',
+        items: giftItem
+      })
+    }
+      
+    if(Object.keys(giftCurrency).length){
+      await DB.User.updateOne({ _id: auth._id },{
+        $inc: giftCurrency
       })
     }
 
@@ -96,29 +110,17 @@ export default defineEventHandler(async (event) => {
     })
 
     // History
-    await DB.ShopHistory.create({
+    await DB.ShopPackHistory.create({
       user: auth._id,
-      item: itemData._id,
+      pack: shopPack._id,
       server: server,
       role: role,
       price: totalPrice,
-      amount: parseInt(amount)
     })
 
-    logUser(event, auth._id, `Dùng <b>${totalPrice.toLocaleString("vi-VN")}</b> để mua <b>x${amount} ${itemData.item_name}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
+    logUser(event, auth._id, `Dùng <b>${totalPrice.toLocaleString("vi-VN")} Xu</b> để mua gói <b>${shopPack.name}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
 
-    if(itemType == 'game_recharge'){
-      return resp(event, { message: 'Mua vật phẩm thành công', result: {
-        account: auth.username,
-        server_id: server,
-        role_id: role,
-        recharge_id: itemData.item_id,
-        save_pay: shopData.price
-      }})
-    }
-    else {
-      return resp(event, { message: 'Mua vật phẩm thành công' })
-    }
+    return resp(event, { message: 'Mua gói thành công' })
   } 
   catch (e:any) {
     return resp(event, { code: 400, message: e.toString() })

@@ -106,7 +106,7 @@ export default async (
         'currency.wheel': bonusWheel,
         'pay.total.money': realMoney,
         'pay.day.money': realMoney + bonusSavePay,
-        'pay.month.money': realMoney,
+        'pay.month.money': realMoney + bonusSavePay,
         'pay.total.count': 1,
         'pay.day.count': 1,
         'pay.month.count': 1,

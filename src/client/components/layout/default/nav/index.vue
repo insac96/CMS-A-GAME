@@ -60,6 +60,7 @@ const navItems = [
     defaultOpen: true,
     slot: 'tab-1',
     children: [
+      { label: 'Gói', to: '/main/shop/pack' }, 
       { label: 'Vật phẩm', to: '/main/shop/item' }, 
       { label: 'Tiền tệ', to: '/main/shop/currency' }, 
     ]

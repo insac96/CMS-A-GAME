@@ -17,13 +17,14 @@
 <script setup>
 const props = defineProps({
   modelValue: String,
+  serverData: Object,
   options: {
     type: Array,
     default: () => []
   },
   disabled: Boolean
 })
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'update:serverData'])
 
 const loading = ref(true)
 
@@ -34,6 +35,14 @@ const server = computed({
 
 const options = ref(props.options)
 const select = computed(() => options.value.find(i => i.value === server.value))
+
+watch(select, val => {
+  if(!val) return emit('update:serverData', undefined)
+  emit('update:serverData', {
+    server_id: val.value,
+    server_name: val.label
+  })
+})
 
 const fetch = async () => {
   try {
