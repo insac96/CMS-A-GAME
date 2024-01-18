@@ -26,7 +26,7 @@
       </UFormGroup>
 
       <UiFlex justify="end" class="mt-6">
-        <UButton type="submit" :loading="loading" class="mr-1">Gửi</UButton>
+        <UButton type="submit" :loading="loading" class="mr-1">Gửi Thư</UButton>
       </UiFlex>
     </UForm>
   </UiContent>
@@ -56,6 +56,7 @@ const submit = async () => {
     loading.value = true
     await useAPI('game/admin/send', JSON.parse(JSON.stringify(state.value)))
 
+    state.value.reason = null
     loading.value = false
   }
   catch(e) {
