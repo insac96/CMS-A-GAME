@@ -54,7 +54,7 @@ const validate = (state) => {
 const submit = async () => {
   try {
     loading.value = true
-    await useAPI('game/admin/sendMutil', JSON.parse(JSON.stringify(state.value)))
+    await useAPI('game/admin/sendMulti', JSON.parse(JSON.stringify(state.value)))
 
     state.value.reason = null
     loading.value = false

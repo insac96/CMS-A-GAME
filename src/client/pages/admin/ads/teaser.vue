@@ -21,6 +21,10 @@
           {{ useMakeLink().link(`/ads/teaser/${row.code}`) }}
         </template>
 
+        <template #pay-data="{ row }">
+          {{ useMoney().toMoney(row.pay) }}
+        </template>
+
         <template #updatedAt-data="{ row }">
           {{ useDayJs().displayFull(row.updatedAt) }}
         </template>
@@ -100,6 +104,10 @@ const columns = [
   },{
     key: 'sign.up',
     label: 'Đăng ký',
+    sortable: true
+  },{
+    key: 'pay',
+    label: 'Doanh thu',
     sortable: true
   },{
     key: 'updatedAt',

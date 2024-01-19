@@ -125,7 +125,7 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-7',
     children: [
-      { label: 'Gửi thư', to: '/admin/game/send' },
+      { label: 'Gửi thư', to: '/admin/game/sendMulti' },
       { label: 'Vật phẩm', to: '/admin/game/item' },
       { label: 'Gói vật phẩm', to: '/admin/game/itembox' }, 
       { label: 'Nhân vật', to: '/admin/game/roles' },

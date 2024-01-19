@@ -17,6 +17,14 @@
         :columns="selectedColumns" 
         :rows="list"
       >
+        <template #url-data="{ row }">
+          {{ useMakeLink().link(`?f=${row.code}`) }}
+        </template>
+
+        <template #pay-data="{ row }">
+          {{ useMoney().toMoney(row.pay) }}
+        </template>
+
         <template #updatedAt-data="{ row }">
           {{ useDayJs().displayFull(row.updatedAt) }}
         </template>
@@ -85,12 +93,11 @@ const columns = [
     key: 'code',
     label: 'Mã',
   },{
+    key: 'url',
+    label: 'Đường dẫn',
+  },{
     key: 'note',
     label: 'Ghi chú',
-  },{
-    key: 'view',
-    label: 'Truy cập',
-    sortable: true
   },{
     key: 'sign.in',
     label: 'Đăng nhập',
@@ -98,6 +105,10 @@ const columns = [
   },{
     key: 'sign.up',
     label: 'Đăng ký',
+    sortable: true
+  },{
+    key: 'pay',
+    label: 'Doanh thu',
     sortable: true
   },{
     key: 'updatedAt',

@@ -18,10 +18,29 @@ export default defineEventHandler(async (event) => {
     }
 
     const list = await DB.AdsFrom
-    .find(match)
-    .sort(sorting)
-    .limit(size)
-    .skip((current - 1) * size)
+    .aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "_id",
+          foreignField: "reg.from",
+          pipeline: [{
+            $project: {
+              pay: '$pay.total.money'
+            },
+          }],
+          as: "users"
+        }
+      },
+      { 
+        $addFields: { 
+          pay: { $sum: '$users.pay' }
+        }
+      },
+      { $sort: sorting },
+      { $skip: (current - 1) * size },
+      { $limit: size }
+    ])
 
     const total = await DB.AdsFrom.count(match)
     return resp(event, { result: { list, total } })

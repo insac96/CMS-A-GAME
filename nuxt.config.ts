@@ -52,12 +52,8 @@ export default defineNuxtConfig({
         { Sitemap: `${process.env.CLIENT_URL}/sitemap.xml` }
       ]
     }],
-    'nuxt-simple-sitemap'
+    // 'nuxt-simple-sitemap'
   ],
-
-  site: {
-    url: process.env.CLIENT_URL
-  },
 
   app: {
     head: {
@@ -86,12 +82,16 @@ export default defineNuxtConfig({
     ]
   },
 
-  sitemap: {
-    exclude: [
-      '/callback/**',
-      '/admin/**', '/admin',
-      '/.nuxt/**', '/.nuxt/',
-      '/user', '/play'
-    ]
-  }
+  site: {
+    url: process.env.CLIENT_URL
+  },
+
+  // sitemap: {
+  //   exclude: [
+  //     '/callback/**',
+  //     '/admin/**', '/admin',
+  //     '/.nuxt/**', '/.nuxt/',
+  //     '/user', '/play'
+  //   ]
+  // }
 })
