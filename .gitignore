@@ -13,9 +13,7 @@ logs
 
 node_modules
 package-lock.json
-dist/APIGame
 dist/server
-src/server/routes/upload
 
 .env
 image-*
