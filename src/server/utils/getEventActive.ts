@@ -36,18 +36,15 @@ export default async (event: H3Event, data : any, type : string) : Promise<any> 
       if(!!history) return Promise.resolve(1) // Đã nhận
     }
     else {
-      const time = DayJS(history.createdAt).unix()
+      const historyTime = formatDate(event, history.createdAt)
+      const nowTime = formatDate(event)
 
       if(typeCheck[type] == 'day'){
-        const start = DayJS().startOf('date').unix()
-        const end = DayJS().endOf('date').unix()
-        if(start <= time && time <= end) return Promise.resolve(1) // Đã nhận 
+        if(historyTime.day == nowTime.day && historyTime.month == nowTime.month && historyTime.year == nowTime.year) return Promise.resolve(1) // Đã nhận 
         return Promise.resolve(0) // Có thể nhận
       }
       if(typeCheck[type] == 'month'){
-        const start = DayJS().startOf('month').unix()
-        const end = DayJS().endOf('month').unix()
-        if(start <= time && time <= end) return Promise.resolve(1) // Đã nhận 
+        if(historyTime.month == nowTime.month && historyTime.year == nowTime.year) return Promise.resolve(1) // Đã nhận 
         return Promise.resolve(0) // Có thể nhận
       }
     }
