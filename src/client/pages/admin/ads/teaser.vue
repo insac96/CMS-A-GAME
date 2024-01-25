@@ -17,8 +17,12 @@
         :columns="selectedColumns" 
         :rows="list"
       >
-        <template #url-data="{ row }">
+        <!-- <template #url-data="{ row }">
           {{ useMakeLink().link(`/ads/teaser/${row.code}`) }}
+        </template> -->
+
+        <template #gift-data="{ row }">
+          <DataItemList :items="row.gift" class="min-w-[400px] max-w-[400px]" />
         </template>
 
         <template #pay-data="{ row }">
@@ -82,6 +86,18 @@
         </UiFlex>
       </UForm>
     </UModal>
+
+    <!--Modal Gift-->
+    <UModal v-model="modal.gift" preventClose :ui="{width: 'sm:max-w-[700px]'}">
+      <UForm :state="stateGift" @submit="giftAction" class="p-4">
+        <SelectItemList v-model="stateGift.gift" :types="['coin', 'wheel', 'notify', 'game_item']" />
+
+        <UiFlex justify="end" class="mt-4">
+          <UButton type="submit" :loading="loading.gift">Lưu</UButton>
+          <UButton color="gray" @click="modal.gift = false" :disabled="loading.gift" class="ml-1">Đóng</UButton>
+        </UiFlex>
+      </UForm>
+    </UModal>
   </UiContent>
 </template>
 
@@ -95,8 +111,8 @@ const columns = [
     key: 'code',
     label: 'Mã',
   },{
-    key: 'url',
-    label: 'Đường dẫn',
+    key: 'gift',
+    label: 'Phần thưởng',
   },{
     key: 'view',
     label: 'Truy cập',
@@ -147,11 +163,16 @@ const stateEdit = ref({
   code: null,
   link: null
 })
+const stateGift = ref({
+  _id: null,
+  gift: null
+})
 
 // Modal
 const modal = ref({
   add: false,
-  edit: false
+  edit: false,
+  gift: false
 })
 
 watch(() => modal.value.add, (val) => !val && (stateAdd.value = {
@@ -164,7 +185,8 @@ const loading = ref({
   load: true,
   add: false,
   edit: false,
-  del: false
+  del: false,
+  gift: false
 })
 
 // Actions
@@ -175,6 +197,14 @@ const actions = (row) => [
     click: () => {
       Object.keys(stateEdit.value).forEach(key => stateEdit.value[key] = row[key])
       modal.value.edit = true
+    }
+  },{
+    label: 'Sửa phần thưởng',
+    icon: 'i-bx-gift',
+    click: () => {
+      stateGift.value._id = row._id
+      stateGift.value.gift = JSON.parse((JSON.stringify(row.gift)))
+      modal.value.gift = true
     }
   }],[{
     label: 'Xóa Teaser',
@@ -228,6 +258,20 @@ const editAction = async () => {
   }
   catch (e) {
     loading.value.edit = false
+  }
+}
+
+const giftAction = async () => {
+  try {
+    loading.value.gift = true
+    await useAPI('ads/teaser/admin/editGift', JSON.parse(JSON.stringify(stateGift.value)))
+
+    loading.value.gift = false
+    modal.value.gift = false
+    getList()
+  }
+  catch (e) {
+    loading.value.gift = false
   }
 }
 

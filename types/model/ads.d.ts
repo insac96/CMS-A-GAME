@@ -9,9 +9,12 @@ export interface IDBAdsTeaser {
   link: string
   view: number
   sign: {
-    in: number
     up: number
   }
+  gift: [{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+  }]
 }
 
 export interface IDBAdsLanding {

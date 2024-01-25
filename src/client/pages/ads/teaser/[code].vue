@@ -35,6 +35,7 @@ definePageMeta({
   layout: 'ads'
 })
 
+const { imgLink } = useMakeLink()
 const configStore = useConfigStore()
 const authStore = useAuthStore()
 const route = useRoute()
@@ -52,6 +53,28 @@ onMounted(() => {
 onBeforeRouteLeave(() => {
   window.removeEventListener('message', runAction, false)
 })
+
+const typeFormat = {
+  'game_recharge': 'recharge',
+  'game_item': 'item',
+  'coin': 'coin',
+  'wheel': 'wheel',
+  'notify': 'notify',
+
+  'empty-gift': 'empty-gift',
+  'wheel_lose': 'wheel_lose'
+}
+
+const makeImgLink = (src, type) => {
+  if(!!src){
+    const imagePath = configStore.config.game.image
+    return imgLink(!imagePath ? src : `${imagePath}/${src}`)
+  }
+  else {
+    if(!!type) return imgLink(`/images/icon/${typeFormat[type]}.png`)
+    return null
+  }
+}
 
 const runAction = (e) => {
   const data = e.data
@@ -75,6 +98,18 @@ const getTeaser = async () => {
   try {
     const data = await useAPI('ads/teaser/code', { code: route.params.code })
     teaser.value = data
+
+    teaser.value.gift = teaser.value.gift.map(i => {
+      i.image = makeImgLink(i.image, i.type)
+      return i
+    })
+
+    if(process.client){
+      setTimeout(() => {
+        const iframe = document.querySelector('iframe')
+        iframe.contentWindow.postMessage(JSON.stringify(teaser.value), "*")
+      }, 1000)
+    }
   }
   catch (e) {
     return false

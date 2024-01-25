@@ -8,7 +8,11 @@ export const DBAdsTeaser = (mongoose : Mongoose) => {
     view: { type: Number, default: 0, index: true },
     sign: {
       up: { type: Number, default: 0, index: true }
-    }
+    },
+    gift: [{
+      item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },
+      amount: { type: Number, index: true },
+    }],
   }, {
     timestamps: true
   })

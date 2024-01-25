@@ -32,11 +32,42 @@ export default defineEventHandler(async (event) => {
           as: "users"
         }
       },
-      { 
-        $addFields: { 
-          pay: { $sum: '$users.pay' }
+      {
+        $lookup: {
+          from: "items",
+          localField: "gift.item",
+          foreignField: "_id",
+          pipeline: [{
+            $project: { item_name: 1, item_image: 1, type: 1 },
+          }],
+          as: "giftdata"
         }
       },
+      { 
+        $addFields: { 
+          pay: { $sum: '$users.pay' },
+          gift: {
+            $map: {
+              input: '$giftdata',
+              in: {
+                _id: '$$this._id',
+                name: '$$this.item_name',
+                image: '$$this.item_image',
+                type: '$$this.type',
+                amount: { 
+                  $getField: {
+                    field: 'amount',
+                    input: {
+                      $arrayElemAt: [ '$gift', { $indexOfArray: ['$gift.item', '$$this._id']} ]
+                    }
+                  }
+                },
+              }
+            }
+          }
+        }
+      },
+      { $project: { giftdata: 0 }},
       { $sort: sorting },
       { $skip: (current - 1) * size },
       { $limit: size }
