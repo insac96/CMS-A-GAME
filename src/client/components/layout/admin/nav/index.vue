@@ -96,7 +96,8 @@ const navItems = [
     slot: 'tab-4',
     children: [
       { label: 'Danh sách', to: '/admin/user' }, 
-      { label: 'Cấp độ', to: '/admin/user/level' }, 
+      { label: 'Cấp độ', to: '/admin/user/level' },
+      { label: 'Chức năng', to: '/admin/user/action' }, 
     ]
   },
   {

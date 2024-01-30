@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
 
     const user = await DB.User.findOne({_id: _id}).select('type username')
     if(!user) throw 'Người dùng không tồn tại'
-    if(user.type > 0 && auth.type < 2) throw 'Smod không thể sửa thông tin quản trị viên khác'
 
     const update : any = {
       'login.month': parseInt(month),

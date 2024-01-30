@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
     if(
       lastDate.day != nowDate.day 
       || lastDate.month != nowDate.month 
-      || lastDate.year != lastDate.year
+      || lastDate.year != nowDate.year
     ){
       user.login.month = user.login.month + 1
       user.login.total = user.login.total + 1

@@ -63,7 +63,7 @@
 
         <template #actions-data="{ row }">
           <UDropdown :items="actions(row)">
-            <UButton color="gray" :disabled="row.status > 0" :icon="row.status == 0 ? 'i-bx-dots-horizontal-rounded' : 'i-bx-block'"/>
+            <UButton color="gray" icon="i-bx-dots-horizontal-rounded"/>
           </UDropdown>
         </template>
       </UTable>
@@ -124,6 +124,7 @@
 </template>
 
 <script setup>
+const authStore = useAuthStore()
 const { toMoney } = useMoney()
 
 // List
@@ -200,6 +201,10 @@ const stateRefuse = ref({
   reason: null,
   status: null
 })
+const stateWaiting = ref({
+  _id: null,
+  redo: true
+})
 const stateUser = ref(undefined)
 const statePayment = ref(undefined)
 
@@ -207,6 +212,7 @@ const statePayment = ref(undefined)
 const modal = ref({
   success: false,
   refuse: false,
+  waiting: false,
   user: false,
   payment: false
 })
@@ -215,7 +221,8 @@ const modal = ref({
 const loading = ref({
   load: true,
   success: false,
-  refuse: false
+  refuse: false,
+  waiting: false,
 })
 
 // Status
@@ -244,6 +251,14 @@ const actions = (row) => [
       Object.keys(stateRefuse.value).forEach(key => stateRefuse.value[key] = row[key])
       stateRefuse.value.status = 2
       modal.value.refuse = true
+    }
+  }],[{
+    label: 'Chưa duyệt',
+    icon: 'i-bx-redo',
+    disabled: row.status == 0 || authStore.profile.type < 2,
+    click: () => {
+      stateWaiting.value._id = row._id
+      waitingAction()
     }
   }]
 ]
@@ -298,6 +313,20 @@ const refuseAction = async () => {
   }
   catch (e) {
     loading.value.refuse = false
+  }
+}
+
+const waitingAction = async () => {
+  try {
+    loading.value.waiting = true
+    await useAPI('payment/admin/verify', JSON.parse(JSON.stringify(stateWaiting.value)))
+
+    loading.value.waiting = false
+    modal.value.waiting = false
+    getList()
+  }
+  catch (e) {
+    loading.value.waiting = false
   }
 }
 

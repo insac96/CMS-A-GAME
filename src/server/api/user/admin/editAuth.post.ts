@@ -10,13 +10,12 @@ export default defineEventHandler(async (event) => {
     if(!_id) throw 'Dữ liệu đầu vào không hợp lệ'
     if(type < 0 || type > 2) throw 'Dữ liệu quyền hạn không hợp lệ'
     if(block < 0 || block > 1) throw 'Dữ liệu khóa không hợp lệ'
-    if(type > 0 && auth.type < 2) throw 'Smod không thể sửa quyền người dùng'
 
     const user = await DB.User.findOne({_id: _id})
     .select('username email phone type block') as IDBUser
 
     if(!user) throw 'Người dùng không tồn tại'
-    if(user.type > 0 && auth.type < 2) throw 'Smod không thể sửa thông tin quản trị viên khác'
+    if(user.type == 2 && auth.type < 2) throw 'Smod không thể sửa thông tin của Admin'
 
     const update : any = { type: type, block: block }
     const change = []
