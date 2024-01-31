@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
 
     const createdAt = formatDate(event, new Date())
     const filename = `excel-users-${createdAt.day}${createdAt.month}${createdAt.year}-${createdAt.hour}-${createdAt.minute}-${createdAt.timestamp}.xlsx`
-    const filePath = join('dist/static/excel', filename)
+    const filePath = join('dist/excel', filename)
     await workbook.xlsx.writeFile(filePath) as any
 
     return resp(event, { result: `/excel/${filename}` })

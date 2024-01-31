@@ -53,7 +53,6 @@ export default defineNuxtConfig({
       ]
     }],
     '@vite-pwa/nuxt'
-    // 'nuxt-simple-sitemap'
   ],
 
   app: {
@@ -83,16 +82,23 @@ export default defineNuxtConfig({
     ]
   },
 
-  site: {
-    url: process.env.CLIENT_URL
-  },
-
-  // sitemap: {
-  //   exclude: [
-  //     '/callback/**',
-  //     '/admin/**', '/admin',
-  //     '/.nuxt/**', '/.nuxt/',
-  //     '/user', '/play'
-  //   ]
-  // }
+  pwa: {
+    manifest: {
+      name: process.env.NAME,
+      short_name: process.env.SHORT_NAME,
+      description: 'CMS Game Online',
+      icons: [
+        { src: 'pwa/64.png', sizes: "64x64", type: 'image/png' },
+        { src: 'pwa/144.png', sizes: "144x144", type: 'image/png' },
+        { src: 'pwa/192.png', sizes: "192x192", type: 'image/png' },
+        { src: 'pwa/512.png', sizes: "512x512", type: 'image/png', purpose: 'any'  },
+        { src: 'pwa/512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+      ]
+    },
+    workbox: {
+      navigateFallback: '/',
+      sourcemap: true
+    },
+    registerType: 'autoUpdate'
+  }
 })
