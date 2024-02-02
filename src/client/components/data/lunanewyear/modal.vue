@@ -1,9 +1,9 @@
 <template>
   <UModal v-model="open" prevent-close :ui="{width: 'max-w-[300px]'}">
     <UiFlex type="col" justify="center" class="p-6">
-      <UiImg src="/images/icon/newyear.png" w="auto" h="auto" img-w="600" img-h="402" class="w-[70%] my-4 bounce-anim"></UiImg>
+      <UiImg src="/images/lunanewyear/dragon.gif" w="auto" h="auto" img-w="492" img-h="259" class="w-[80%] mb-4 beat-anim"></UiImg>
       <UiText color="primary" weight="bold" align="center" size="xl" class="mb-1">Tết Nguyên Đán</UiText>
-      <UiText color="gray" align="center" class="mb-4">Sự kiện đang diễn ra, đến xem ngay</UiText>
+      <UiText color="gray" align="center" class="mb-4">Sự kiện đang diễn ra, tham gia ngay để nhận được các vật phẩm giá trị</UiText>
 
       <UiFlex class="gap-1">
         <UButton @click="run">Đi Đến</UButton>

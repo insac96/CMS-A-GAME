@@ -18,10 +18,5 @@ dist/server
 .env
 image-*
 excel-*
-src/client/public/pwa/64.png
-src/client/public/pwa/180.png
-src/client/public/pwa/144.png
-src/client/public/pwa/192.png
-src/client/public/pwa/512.png
 
 
