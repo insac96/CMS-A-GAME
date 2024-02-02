@@ -34,6 +34,13 @@ export const DBUser = (mongoose : Mongoose) => {
       notify: { type: Number, default: 0, index: true },
       diamond: { type: Number, default: 0, index: true },
     },
+    lunanewyear: {
+      luckymoney: { type: Number, default: 0, index: true },
+      payment: {
+        day: { type: Number, default: 0, index: true },
+        receive: { type: Number, default: 0, index: true },
+      }
+    },
     pay: {
       total: {
         money: { type: Number, default: 0, index: true },

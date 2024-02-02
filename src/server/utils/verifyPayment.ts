@@ -1,6 +1,6 @@
 import type { H3Event } from 'h3'
 import type { Types } from 'mongoose'
-import { IDBGate, IDBLevel, IDBPaymentConfig, IDBUser } from '~~/types'
+import { IDBConfig, IDBGate, IDBLevel, IDBPayment, IDBPaymentConfig, IDBUser } from '~~/types'
 
 interface IBodyData {
   _id: Types.ObjectId,
@@ -28,6 +28,7 @@ export default async (
   if(status == 2 && !reason) throw 'Không tìm thấy lý do từ chối'
 
   // Config
+  const webConfig = await DB.Config.findOne().select('enable') as IDBConfig
   const paymentConfig = await DB.PaymentConfig.findOne() as IDBPaymentConfig
 
   // Set Real Value
@@ -44,7 +45,7 @@ export default async (
   if(payment.status > 0) throw 'Không thể thao tác trên giao dịch này'
 
   // Get Other
-  const user = await DB.User.findOne({ _id: payment.user }).select('level referral') as IDBUser
+  const user = await DB.User.findOne({ _id: payment.user }).select('level referral lunanewyear') as IDBUser
   if(!user) throw 'Không tìm thấy thông tin tài khoản'
   const level = await DB.Level.findOne({ _id: user.level }).select('bonus bonus_wheel') as IDBLevel
   if(!level) throw 'Không tìm thấy thông tin cấp độ tài khoản'
@@ -60,14 +61,22 @@ export default async (
     const bot = await DB.User.findOne({'username': 'bot'}).select('_id')
     verify_person = bot._id
   }
+
+  // Get Last Payment
+  const lastPaymentDone = await DB.Payment
+  .findOne({ user: user._id, status: 1 })
+  .select('verify')
+  .sort({ 'verify.time' : -1 })
+  .limit(1) as IDBPayment
   
   // Update Payment
+  const time = new Date()
   await DB.Payment.updateOne({ _id: _id }, {
     money: realMoney,
     status: realStatus,
     verify: {
       person: verify_person,
-      time: Date.now(),
+      time: time,
       reason: realReason
     }
   })
@@ -100,6 +109,7 @@ export default async (
     const percentBonusWheel = parseInt(String(level.bonus_wheel))
     if(percentBonusWheel > 0) bonusWheel = Math.floor(realMoney / percentBonusWheel)
 
+    // Update User
     await DB.User.updateOne({ _id: payment.user },{
       $inc: {
         'currency.coin': coin,
@@ -123,9 +133,7 @@ export default async (
       + <b>${levelBonus}%</b> thưởng cấp độ 
       + <b>${gateBonus}%</b> khuyến mại kênh nạp
     `
-
     logUser(event, user._id, `Nhận <b>${coin.toLocaleString('vi-VN')} xu, ${bonusWheel.toLocaleString('vi-VN')} lượt quay</b> từ giao dịch nạp tiền thành công <b>${payment.code}</b>`)
-    if(!!verifier) return logAdmin(event, `Chấp nhận giao dịch nạp tiền <b>${payment.code}</b> với số tiền <b>${realMoney.toLocaleString('vi-VN')}</b>`, verifier)
 
     // Update Diamond Referraler
     if(!!user.referral.person){
@@ -149,6 +157,39 @@ export default async (
         }
       }
     }
+
+    // Update Luna New Year Payment
+    if(!!webConfig.enable.lunanewyear){
+      if(user.lunanewyear.payment.day == 0) user.lunanewyear.payment.day = 1
+      else {
+        if(!lastPaymentDone) user.lunanewyear.payment.day = 1
+        else {
+          const payNowTime = formatDate(event, time)
+          const payLastTime = formatDate(event, lastPaymentDone.verify.time)
+
+          if(
+            payNowTime.day != payLastTime.day 
+            || payNowTime.month != payLastTime.month 
+            || payNowTime.year !=  payLastTime.year
+          ){
+            const nowStart = payNowTime.dayjs.startOf('day').unix()
+            const lastStart = payLastTime.dayjs.startOf('day').unix()
+            
+            if((nowStart - lastStart) > (24 * 60 * 60)){
+              user.lunanewyear.payment.day = 1
+              user.lunanewyear.payment.receive = 0
+            }
+            else {
+              user.lunanewyear.payment.day = user.lunanewyear.payment.day + 1
+            }
+          }
+        }
+      }
+
+      await user.save()
+    }
+
+    if(!!verifier) return logAdmin(event, `Chấp nhận giao dịch nạp tiền <b>${payment.code}</b> với số tiền <b>${realMoney.toLocaleString('vi-VN')}</b>`, verifier)
   }
   else {
     realNotify = `Bạn bị từ chối giao dịch <b>${payment.code}</b> với lý do <b>${realReason}</b>`

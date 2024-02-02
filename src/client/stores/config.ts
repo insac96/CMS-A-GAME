@@ -16,7 +16,8 @@ export const useConfigStore = defineStore('config', () => {
       play: true,
       referral: true,
       teaser: false,
-      landing: false
+      landing: false,
+      lunanewyear: false
     },
     download: {
       apk: '',

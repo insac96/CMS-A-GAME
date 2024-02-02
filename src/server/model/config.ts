@@ -20,6 +20,7 @@ export const DBConfig = (mongoose : Mongoose) => {
       referral: { type: Boolean, default: true },
       teaser: { type: Boolean, default: false },
       landing: { type: Boolean, default: false },
+      lunanewyear: { type: Boolean, default: false },
     },
     homepage: {
       teaser: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_teaser' },

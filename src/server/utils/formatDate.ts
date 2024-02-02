@@ -11,6 +11,7 @@ export default (event: H3Event, date?: Date) : IFormatDate => {
     hour: !!dateFormat ? dateFormat.get('hour') : 0,
     minute: !!dateFormat ? dateFormat.get('minute') : 0,
     timestamp: !!dateFormat ? dateFormat.unix() : 0,
-    source: date
+    source: date,
+    dayjs: dateFormat
   }
 }

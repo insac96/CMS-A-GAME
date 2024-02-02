@@ -3,6 +3,7 @@
   <NuxtLayout>
     <NuxtLoadingIndicator :height="2" />
     <NuxtPage />
+    
     <UNotifications />
     <SocketNoticeReload />
     <SocketNoticeSystem />

@@ -81,7 +81,7 @@ const open = (url) => {
 const get = async () => {
   try {
     loading.value = true
-    const data = await useAPI('config/about')
+    const data = await useAPI('config/contact')
 
     contact.value = Object.assign(contact.value, data.contact)
     social.value = Object.assign(social.value, data.social)

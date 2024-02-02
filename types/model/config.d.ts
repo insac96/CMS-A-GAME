@@ -22,6 +22,7 @@ export interface IDBConfig {
     referral: boolean
     teaser: boolean
     landing: boolean
+    lunanewyear: boolean
   }
   homepage: {
     teaser: Types.ObjectId
@@ -99,6 +100,7 @@ export interface IDBConfigStore {
     referral: boolean
     teaser: boolean
     landing: boolean
+    lunanewyear: boolean
   }
   download: {
     apk: string

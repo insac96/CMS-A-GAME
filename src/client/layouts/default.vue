@@ -1,5 +1,7 @@
 <template>
   <div class="relative h-full min-h-full">
+    <DataLunanewyearModal />
+    
     <LayoutDefaultHeader />
     
     <UContainer class="grid grid-cols-12 gap-0 min-h-[calc(100%-var(--header-size)-var(--footer-size))]">

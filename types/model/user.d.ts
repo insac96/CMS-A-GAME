@@ -33,8 +33,15 @@ export interface IDBUser {
   currency: {
     coin: number
     wheel: number
-    notify: number,
+    notify: number
     diamond: number
+  }
+  lunanewyear: {
+    luckymoney: number
+    payment: {
+      day: number
+      receive: number
+    }
   }
   pay: {
     total: {

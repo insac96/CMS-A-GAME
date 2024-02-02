@@ -41,6 +41,7 @@
       <template #tab-10><UVerticalNavigation :links="navItems[10].children" @click="emit('to')"/></template>
       <template #tab-11><UVerticalNavigation :links="navItems[11].children" @click="emit('to')"/></template>
       <template #tab-12><UVerticalNavigation :links="navItems[12].children" @click="emit('to')"/></template>
+      <template #tab-13><UVerticalNavigation :links="navItems[13].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -181,10 +182,21 @@ const navItems = [
     ]
   },
   {
+    label: 'Tết Nguyên Đán',
+    icon: 'i-bxs-party',
+    defaultOpen: false,
+    slot: 'tab-12',
+    children: [
+      { label: 'Lì xì may mắn', to: '/admin/lunanewyear/luckymoney' }, 
+      { label: 'Liên nạp tết', to: '/admin/lunanewyear/payment' }, 
+      { label: 'Nạp đúng mốc', to: '/admin/lunanewyear/paymission' }, 
+    ]
+  },
+  {
     label: 'Nhật ký',
     icon: 'i-bx-book',
     defaultOpen: false,
-    slot: 'tab-12',
+    slot: 'tab-13',
     children: [
       { label: 'Quản trị viên', to: '/admin/log/admin' }, 
       { label: 'Gửi vật phẩm', to: '/admin/log/adminSendItem' },

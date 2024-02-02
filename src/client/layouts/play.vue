@@ -1,5 +1,7 @@
 <template>
   <UiFlex type="col" class="relative w-full h-full min-w-full overflow-hidden">
+    <DataLunanewyearModal />
+    
     <LayoutPlayHeader v-if="!!showHeader" @hide="showHeader = false" />
 
     <LayoutPlayDrag v-show="!showHeader" @open="showHeader = true"/>

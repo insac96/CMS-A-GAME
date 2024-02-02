@@ -37,6 +37,11 @@
             <UiText weight="semibold">Chơi trò chơi</UiText>
             <UToggle v-model="state.enable.play" />
           </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Sự kiện tết</UiText>
+            <UToggle v-model="state.enable.lunanewyear" />
+          </UiFlex>
           
           <div class="mb-4">
             <UiFlex justify="between" class="mb-2">
@@ -344,7 +349,8 @@ const state = ref({
     play: true,
     referral: true,
     teaser: false,
-    landing: false
+    landing: false,
+    lunanewyear: false
   },
 
   homepage: {

@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
     `) as IDBConfig
 
     if(!config) throw 'Không tìm thấy cấu hình trang'
+
     return resp(event, { result: config })
   } 
   catch (e:any) {

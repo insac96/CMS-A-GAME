@@ -20,6 +20,7 @@ export interface IFormatDate {
   minute: number
   timestamp: number
   source: any
+  dayjs: any
 }
 
 export interface ISendNotifyUser {

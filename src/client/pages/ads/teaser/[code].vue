@@ -10,7 +10,7 @@
 
     <UModal v-model="modal.up">
       <div class="p-2">
-        <AuthSignLandingUp @done="modal.up = false, modal.giftcode = true" :teaser="teaser._id" />
+        <AuthSignTeaserUp @done="modal.up = false, modal.giftcode = true" :teaser="teaser._id" />
       </div>
     </UModal>
 
