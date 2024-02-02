@@ -15,7 +15,7 @@ interface ISendData {
 
 export default async (event: H3Event, data : ISendData) : Promise<void> => {
   try {
-    return Promise.resolve()
+    //return Promise.resolve()
 
     const config = await DB.Config.findOne().select('game') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
