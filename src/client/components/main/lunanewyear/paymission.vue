@@ -11,15 +11,15 @@
         <UiText class="LunaTitle text-white" size="xl">Nạp {{ useMoney().miniMoney(event.need) }}</UiText>
 
         <DataItemListMini amount-color="red" size="2xl" :items="event.gift" :max="3" class="mt-2 mb-3" />
-
+        
         <div class="LunaBtn" @click="openReceive(event)"></div>
       </UiFlex>
     </UiFlex>
 
     <UModal prevent-close v-model="open">
       <UForm :state="state" @submit="submit" class="p-4" v-if="eventSelect">
-        <UFormGroup label="Liên nạp">
-          <UInput :value="`Ngày ${eventSelect.need}`" readonly />
+        <UFormGroup label="Nạp ngày">
+          <UInput :value="useMoney().toMoney(eventSelect.need) + ' VNĐ'" readonly />
         </UFormGroup>
 
         <UFormGroup label="Máy chủ">
@@ -48,6 +48,7 @@
 </template>
 
 <script setup>
+const authStore = useAuthStore()
 const list = ref([])
 const open = ref(false)
 const loading = ref(false)
@@ -61,6 +62,7 @@ const state = ref({
 const eventSelect = ref(undefined)
 
 const openReceive = (event) => {
+  if(!authStore.isLogin) return authStore.setModal(true)
   eventSelect.value = event
   open.value = true
 }
@@ -74,6 +76,7 @@ const submit = async () => {
     await useAPI('lunanewyear/paymission/receive', JSON.parse(JSON.stringify(state.value)))
     
     loading.value = false
+    open.value = false
   }
   catch(e){
     loading.value = false

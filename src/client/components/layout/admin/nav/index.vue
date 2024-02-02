@@ -189,7 +189,8 @@ const navItems = [
     children: [
       { label: 'Lì xì may mắn', to: '/admin/lunanewyear/luckymoney' }, 
       { label: 'Liên nạp tết', to: '/admin/lunanewyear/payment' }, 
-      { label: 'Nạp đúng mốc', to: '/admin/lunanewyear/paymission' }, 
+      { label: 'Nạp đúng mốc', to: '/admin/lunanewyear/paymission' },
+      { label: 'Đập trứng', to: '/admin/lunanewyear/egg' }, 
     ]
   },
   {

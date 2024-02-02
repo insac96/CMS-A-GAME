@@ -160,6 +160,7 @@ export default async (
 
     // Update Luna New Year Payment
     if(!!webConfig.enable.lunanewyear){
+      // Payment
       if(user.lunanewyear.payment.day == 0) user.lunanewyear.payment.day = 1
       else {
         if(!lastPaymentDone) user.lunanewyear.payment.day = 1
@@ -186,6 +187,19 @@ export default async (
         }
       }
 
+      // Mission
+      const mission = await DB.LunaPayMission.findOne({ need: money })
+      if(!!mission){
+        const missionCheck = user.lunanewyear.paymission.find(i => i.money == money)
+        if(!missionCheck){
+          user.lunanewyear.paymission.push({
+            money: money,
+            receive: false
+          })
+        }
+      }
+
+      // Save
       await user.save()
     }
 

@@ -17,7 +17,7 @@ import { DBWheel, DBWheelHistory, DBWheelLuckyUser } from './wheel'
 import { DBGameRankGift, DBGameRankGiftHistory } from './game'
 import { DBLogAdmin, DBLogAdminSendItem, DBLogUser, DBLogUserIP, DBLogBlockIP } from './log'
 import { DBAdsFrom, DBAdsLanding, DBAdsTeaser } from './ads'
-import { DBLunaLuckyMoney, DBLunaPayment, DBLunaPayMission } from './lunanewyear'
+import { DBLunaEgg, DBLunaLuckyMoney, DBLunaPayment, DBLunaPayMission } from './lunanewyear'
 
 import { DBSocketChat, DBSocketOnline } from './socket'
 
@@ -85,6 +85,7 @@ export default (mongoose : Mongoose) : IGlobalDB => {
 
     LunaLuckyMoney: DBLunaLuckyMoney(mongoose),
     LunaPayment: DBLunaPayment(mongoose),
-    LunaPayMission: DBLunaPayMission(mongoose)
+    LunaPayMission: DBLunaPayMission(mongoose),
+    LunaEgg: DBLunaEgg(mongoose)
   }
 }

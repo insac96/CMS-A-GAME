@@ -29,9 +29,10 @@ export default defineEventHandler(async (event) => {
     // Check Active
     const user = await DB.User.findOne({ _id: auth._id }).select('lunanewyear') as IDBUser
     if(!user) throw 'Không tìm thấy thông tin tài khoản'
-    const { day, receive } = user.lunanewyear.payment
-    if(day < eventData.need) throw 'Bạn chưa đạt điều kiện để nhận mốc thưởng'
-    if(receive == eventData.need) throw 'Bạn đã nhận mốc thưởng này rồi'
+    const paymission = user.lunanewyear.paymission
+    const payCheck = paymission.find((i) => i.money == eventData.need)
+    if(!payCheck) throw 'Bạn chưa đạt điều kiện để nhận mốc thưởng'
+    if(!!payCheck.receive) throw 'Bạn đã nhận mốc thưởng này rồi'
 
     // Format Gift
     const giftItem : Array<any> = []
@@ -67,8 +68,8 @@ export default defineEventHandler(async (event) => {
     }
 
     // Update User
-    await DB.User.updateOne({ _id: auth._id }, {
-      'lunanewyear.payment.receive': eventData.need
+    await DB.User.updateOne({ _id: auth._id, 'lunanewyear.paymission.money': eventData.need }, {
+      $set: { 'lunanewyear.paymission.$.receive': true }
     })
     
     // Log User

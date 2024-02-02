@@ -48,6 +48,7 @@
 </template>
 
 <script setup>
+const authStore = useAuthStore()
 const list = ref([])
 const open = ref(false)
 const loading = ref(false)
@@ -61,6 +62,7 @@ const state = ref({
 const eventSelect = ref(undefined)
 
 const openReceive = (event) => {
+  if(!authStore.isLogin) return authStore.setModal(true)
   eventSelect.value = event
   open.value = true
 }
@@ -74,6 +76,7 @@ const submit = async () => {
     await useAPI('lunanewyear/payment/receive', JSON.parse(JSON.stringify(state.value)))
     
     loading.value = false
+    open.value = false
   }
   catch(e){
     loading.value = false

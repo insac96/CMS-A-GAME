@@ -6,11 +6,15 @@
       <UiText color="gray" align="center">Mỗi ngày đăng nhập, miễn phí 1 lần mở bao lì xì</UiText>
     </UiFlex>
     
-    <UiFlex justify="center" wrap class="md:py-8 py-0">
-      <UiFlex type="col" justify="end" class="relative md:w-[250px] md:h-[250px] w-[140px] h-[140px] md:m-8 m-4 cursor-pointer" v-for="i in 3" :key="i" @click="open = true">
+    <UiFlex justify="center" wrap class="md:mt-8 mt-0 mb-4">
+      <UiFlex type="col" justify="end" class="relative md:w-[250px] md:h-[250px] w-[140px] h-[140px] md:m-8 m-4 cursor-pointer" v-for="i in 3" :key="i" @click="openReceive">
         <UiImg src="/images/lunanewyear/luckymoney.png" class="jump-anim !absolute z-10 md:bottom-[80px] bottom-[45px] left-[25px] md:h-[170px] h-[80px]" />
         <UiImg src="/images/lunanewyear/table.png" class="md:w-[250px] w-[140px]" />
       </UiFlex>
+    </UiFlex>
+
+    <UiFlex justify="center" class="my-4" v-if="!!user">
+      <UiFlex class="LunaTitle-2" justify="center">{{ `Bạn có ${user.lunanewyear?.luckymoney || 0} lượt mở lì xì` }}</UiFlex>
     </UiFlex>
 
     <UModal prevent-close v-model="open">
@@ -49,10 +53,12 @@
 </template>
 
 <script setup>
+const authStore = useAuthStore()
 const open = ref(false)
 const reward = ref(false)
-
 const loading = ref(false)
+
+const user = ref(null)
 
 const state = ref({
   server: null,
@@ -60,6 +66,12 @@ const state = ref({
 })
 
 const gift = ref(undefined)
+
+const openReceive = () => {
+  if(!authStore.isLogin) return authStore.setModal(true)
+  if(!!user.value && user.value.lunanewyear.luckymoney < 1) return useNotify().error('Bạn đã hết lượt mở bao lì xì')
+  open.value = true
+}
 
 const submit = async () => {
   try {
@@ -79,4 +91,17 @@ const submit = async () => {
     loading.value = false
   }
 }
+
+const getLuckyMoney = async () => {
+  try {
+    const data = await useAPI('lunanewyear/luckymoney/get')
+    user.value = data.user
+  }
+  catch(e){
+    user.value = null
+  }
+}
+
+getLuckyMoney()
+watch(() => authStore.isLogin, (val) => !!val && getLuckyMoney())
 </script>

@@ -31,3 +31,36 @@ export interface IDBLunaPayMission {
   }>
   need: number
 }
+
+export interface IDBLunaEgg {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+
+  price: number
+  row1: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+    percent: number
+  }>
+  row2: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+    percent: number
+  }>
+  row3: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+    percent: number
+  }>
+  row4: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+    percent: number
+  }>
+  row5: Array<{
+    item: Types.ObjectId | IDBItem,
+    amount: number
+    percent: number
+  }>
+}

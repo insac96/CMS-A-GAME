@@ -1,5 +1,4 @@
 import type { Model } from 'mongoose'
-
 export { IDBConfig, IDBConfigStore } from './config'
 export { IDBNews, IDBNewsCategory } from './news'
 export { IDBUser, IDBUserLogin, IDBUserStore } from './user'
@@ -17,7 +16,7 @@ export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
 export { IDBGameRankGift, IDBGameRankGiftHistory } from './game'
 export { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from './log'
 export { IDBAdsTeaser, IDBAdsLanding, IDBAdsFrom } from './ads'
-export { IDBLunaLuckyMoney, IDBLunaPayMission, IDBLunaPayment } from './lunanewyear'
+export { IDBLunaLuckyMoney, IDBLunaPayMission, IDBLunaPayment, IDBLunaEgg } from './lunanewyear'
 
 export { IDBSocketOnline, IDBSocketChat } from './socket'
 
@@ -85,4 +84,5 @@ export interface IGlobalDB {
   LunaLuckyMoney: Model<IDBLunaLuckyMoney>
   LunaPayment: Model<IDBLunaPayment>
   LunaPayMission: Model<IDBLunaPayMission>
+  LunaEgg: Model<IDBLunaEgg>
 }

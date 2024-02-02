@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
     if(!user) throw 'Không tìm thấy thông tin tài khoản'
     const { day, receive } = user.lunanewyear.payment
     if(day < eventData.need) throw 'Bạn chưa đạt điều kiện để nhận mốc thưởng'
-    if(receive == eventData.need) throw 'Bạn đã nhận mốc thưởng này rồi'
+    if(receive >= eventData.need) throw 'Bạn đã nhận mốc thưởng này rồi'
 
     // Format Gift
     const giftItem : Array<any> = []

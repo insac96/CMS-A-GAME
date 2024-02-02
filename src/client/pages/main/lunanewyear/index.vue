@@ -6,13 +6,23 @@
       <UButton variant="link" color="yellow" @click="toPlay">Chơi Ngay</UButton>
     </UiFlex>
 
-    <MainLunanewyearLuckymoney class="mb-10" />
+    <MainLunanewyearLuckymoney class="mb-20" />
     <MainLunanewyearPayment class="mb-20" />
-    <MainLunanewyearPaymission class="mb-14" />
+    <MainLunanewyearPaymission class="mb-20" />
+    <MainLunanewyearEgg class="mb-20" />
 
     <UModal v-model="modal.payment">
       <div class="p-4">
         <MainActionPayment />
+      </div>
+    </UModal>
+
+    <UModal v-model="modal.sign">
+      <div class="p-2">
+        <UTabs v-model="tabItem" :items="tabItems"></UTabs>
+        <LazyAuthSignIn v-if="tabItem == 0" @done="modal.sign = false"></LazyAuthSignIn>
+        <LazyAuthSignUp v-if="tabItem == 1" @done="modal.sign = false"></LazyAuthSignUp>
+        <LazyAuthSignForgot v-if="tabItem == 2" @done="modal.sign = false"></LazyAuthSignForgot>
       </div>
     </UModal>
   </div>
@@ -30,6 +40,15 @@ const modal = ref({
   sign: false,
   payment: false
 })
+
+const tabItem = ref(0) 
+const tabItems = [
+  { label: 'Đăng nhập', key: 'in' },
+  { label: 'Đăng ký', key: 'up' },
+  { label: 'Mật khẩu', key: 'fotgot' },
+]
+watch(() => authStore.modal, (val) => !!val && (modal.value.sign = true))
+watch(() => modal.value.sign, (val) => !val && authStore.setModal(false))
 
 const toPay = () => {
   if(!authStore.isLogin) return authStore.setModal(true)
@@ -68,7 +87,8 @@ const toPlay = async () => {
   .LunaHeader
     width: 100%
     height: 50px
-    background: #470503
+    background: #101413
+    color: #fcf3d0 !important
     background-size: cover
     position: fixed
     z-index: 20
@@ -100,6 +120,14 @@ const toPlay = async () => {
   .LunaTitle
     font-family: "UT"
 
+  .LunaTitle-2
+    background-image: url(/images/lunanewyear/frame-3.png)
+    background-position: 0px -569px
+    width: 340px
+    height: 40px
+    font-weight: 600
+    
+
   .LunaPayment
     position: relative
     background-image: url(/images/lunanewyear/frame-1.png)
@@ -113,4 +141,13 @@ const toPlay = async () => {
     background-position: -702px 0px
     width: 351px
     height: 359px
+
+  .LunaEgg
+    cursor: pointer
+    filter: grayscale(0.2)
+    &:hover
+      animation: jump 1s ease infinite
+
+  .LunaEggOpen
+    filter: grayscale(0.9)
 </style>

@@ -3,7 +3,7 @@ import type { IDBConfig } from '~~/types'
 
 export default async (event: H3Event) : Promise<any> => {
   try {
-    //return Promise.resolve([{ server_id: 1, server_name: 'Test' }])
+    return Promise.resolve([{ server_id: 1, server_name: 'Test' }])
 
     const config = await DB.Config.findOne().select('game') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'

@@ -35,10 +35,41 @@ export const DBUser = (mongoose : Mongoose) => {
       diamond: { type: Number, default: 0, index: true },
     },
     lunanewyear: {
-      luckymoney: { type: Number, default: 0, index: true },
+      luckymoney: { type: Number, default: 1, index: true },
       payment: {
         day: { type: Number, default: 0, index: true },
         receive: { type: Number, default: 0, index: true },
+      },
+      paymission: [{
+        money: { type: Number, default: 0, index: true },
+        receive: { type: Boolean, default: false },
+      }],
+      egg: {
+        1: [{
+          item: { type: mongoose.Schema.Types.ObjectId, ref: 'items', index: true },
+          amount: { type: Number, index: true },
+          index: { type: Number, index: true },
+        }], 
+        2: [{
+          item: { type: mongoose.Schema.Types.ObjectId, ref: 'items', index: true },
+          amount: { type: Number, index: true },
+          index: { type: Number, index: true },
+        }], 
+        3: [{
+          item: { type: mongoose.Schema.Types.ObjectId, ref: 'items', index: true },
+          amount: { type: Number, index: true },
+          index: { type: Number, index: true },
+        }], 
+        4: [{
+          item: { type: mongoose.Schema.Types.ObjectId, ref: 'items', index: true },
+          amount: { type: Number, index: true },
+          index: { type: Number, index: true },
+        }], 
+        5: [{
+          item: { type: mongoose.Schema.Types.ObjectId, ref: 'items', index: true },
+          amount: { type: Number, index: true },
+          index: { type: Number, index: true },
+        }], 
       }
     },
     pay: {
