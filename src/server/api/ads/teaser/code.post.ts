@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
     if(!teaser) throw 'Teaser không tồn tại'
 
     const result : any = {}
+    result._id = teaser._id
     result.gift = teaser.gift.map((i : any) => ({
       name: (i.item as IDBItem).item_name,
       image: (i.item as IDBItem).item_image,
