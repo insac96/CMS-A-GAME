@@ -150,4 +150,5 @@ const toPlay = async () => {
 
   .LunaEggOpen
     filter: grayscale(0.9)
+    clip-path: polygon(33% 74%, 21% 62%, 10% 75%, 0 62%, 0 100%, 100% 100%, 100% 73%, 89% 60%, 79% 73%, 65% 61%, 56% 74%, 44% 61%)
 </style>

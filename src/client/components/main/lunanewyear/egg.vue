@@ -14,7 +14,7 @@
           <UiFlex justify="center" v-else>
             <UiImg src="/images/lunanewyear/egg.png" img-w="433" img-h="576" class="LunaEggOpen md:w-24 w-16"/>
             <div class="absolute">
-              <DataItem class="absolute" :item="{
+              <DataItem class="absolute translate-y-[7px]" :item="{
                 type: egg.item.type,
                 image: egg.item.item_image,
                 name: egg.item.item_name,
@@ -127,7 +127,25 @@ const getConfig = async () => {
     const data = await useAPI('lunanewyear/egg/get')
     eggConfig.value = data.config
     if(data.user){
-      eggUser.value = data.user
+      eggUser.value[1][0] = data.user[1][0] || null
+
+      eggUser.value[2][0] = data.user[2][0] || null
+      eggUser.value[2][1] = data.user[2][1] || null
+
+      eggUser.value[3][0] = data.user[3][0] || null
+      eggUser.value[3][1] = data.user[3][1] || null
+      eggUser.value[3][2] = data.user[3][2] || null
+
+      eggUser.value[4][0] = data.user[4][0] || null
+      eggUser.value[4][1] = data.user[4][1] || null
+      eggUser.value[4][2] = data.user[4][2] || null
+      eggUser.value[4][3] = data.user[4][3] || null
+
+      eggUser.value[5][0] = data.user[5][0] || null
+      eggUser.value[5][1] = data.user[5][1] || null
+      eggUser.value[5][2] = data.user[5][2] || null
+      eggUser.value[5][3] = data.user[5][3] || null
+      eggUser.value[5][4] = data.user[5][4] || null
     }
   }
   catch(e){
@@ -137,4 +155,5 @@ const getConfig = async () => {
 
 getConfig()
 watch(() => authStore.isLogin, (val) => !!val && getConfig())
+watch(() => reward.value, (val) => !!val && getConfig())
 </script>
