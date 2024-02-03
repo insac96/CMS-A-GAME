@@ -5,7 +5,7 @@
       <UiText class="LunaTitle mb-1" size="4xl" align="center">Lì Xì May Mắn</UiText>
       <UiText color="gray" align="center">Mỗi ngày đăng nhập, miễn phí 1 lần mở bao lì xì</UiText>
     </UiFlex>
-    
+
     <UiFlex justify="center" wrap class="md:mt-8 mt-0 mb-4">
       <UiFlex type="col" justify="end" class="relative md:w-[250px] md:h-[250px] w-[140px] h-[140px] md:m-8 m-4 cursor-pointer" v-for="i in 3" :key="i" @click="openReceive">
         <UiImg src="/images/lunanewyear/luckymoney.png" class="jump-anim !absolute z-10 md:bottom-[80px] bottom-[45px] left-[25px] md:h-[170px] h-[80px]" />
@@ -104,4 +104,5 @@ const getLuckyMoney = async () => {
 
 getLuckyMoney()
 watch(() => authStore.isLogin, (val) => !!val && getLuckyMoney())
+watch(() => reward.value, (val) => !!val && getLuckyMoney())
 </script>

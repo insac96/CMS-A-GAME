@@ -1,50 +1,52 @@
 
 <template>
-  <UContainer>
-    <UiFlex type="col" justify="center" class="mb-2 md:mb-8">
-      <UiText class="LunaTitle mb-1" size="4xl" align="center">Nạp Mốc Mỗi Ngày</UiText>
-      <UiText color="gray" align="center">Nạp đúng số tiền chỉ định, nhận quà cực sốc</UiText>
-    </UiFlex>
-
-    <UiFlex justify="center" wrap>
-      <UiFlex class="LunaPayMission" justify="center" type="col" v-for="event in list" :key="event._id">
-        <UiText class="LunaTitle text-white" size="xl">Nạp {{ useMoney().miniMoney(event.need) }}</UiText>
-
-        <DataItemListMini amount-color="red" size="2xl" :items="event.gift" :max="3" class="mt-2 mb-3" />
-        
-        <div class="LunaBtn" @click="openReceive(event)"></div>
+  <div class="LunaPage1 pt-[150px]">
+    <UContainer>
+      <UiFlex type="col" justify="center" class="mb-2 md:mb-8">
+        <UiText class="LunaTitle mb-1" size="4xl" align="center">Nạp Mốc Mỗi Ngày</UiText>
+        <UiText color="gray" align="center">Nạp đúng số tiền chỉ định, nhận quà cực sốc</UiText>
       </UiFlex>
-    </UiFlex>
 
-    <UModal prevent-close v-model="open">
-      <UForm :state="state" @submit="submit" class="p-4" v-if="eventSelect">
-        <UFormGroup label="Nạp ngày">
-          <UInput :value="useMoney().toMoney(eventSelect.need) + ' VNĐ'" readonly />
-        </UFormGroup>
+      <UiFlex justify="center" wrap>
+        <UiFlex class="LunaPayMission" justify="center" type="col" v-for="event in list" :key="event._id">
+          <UiText class="LunaTitle text-white" size="xl">Nạp {{ useMoney().miniMoney(event.need) }}</UiText>
 
-        <UFormGroup label="Máy chủ">
-          <SelectGameServer v-model="state.server" />
-        </UFormGroup>
-
-        <UFormGroup label="Nhân vật" v-if="state.server" >
-          <SelectGameRole v-model="state.role" :server="state.server" />
-        </UFormGroup>
-
-        <UFormGroup label="Phần thưởng">
-          <UCard>
-            <UiFlex justify="center">
-              <DataItemList :items="eventSelect.gift" />
-            </UiFlex>
-          </UCard>
-        </UFormGroup>
-
-        <UiFlex justify="end" class="mt-4">
-          <UButton @click="submit" :loading="loading" class="mr-1">Xác Nhận</UButton>
-          <UButton color="gray" :disabled="loading" @click="open = false">Đóng</UButton>
+          <DataItemListMini amount-color="red" size="2xl" :items="event.gift" :max="3" class="mt-2 mb-3" />
+          
+          <div class="LunaBtn" @click="openReceive(event)"></div>
         </UiFlex>
-      </UForm>
-    </UModal>
-  </UContainer>
+      </UiFlex>
+
+      <UModal prevent-close v-model="open">
+        <UForm :state="state" @submit="submit" class="p-4" v-if="eventSelect">
+          <UFormGroup label="Nạp ngày">
+            <UInput :value="useMoney().toMoney(eventSelect.need) + ' VNĐ'" readonly />
+          </UFormGroup>
+
+          <UFormGroup label="Máy chủ">
+            <SelectGameServer v-model="state.server" />
+          </UFormGroup>
+
+          <UFormGroup label="Nhân vật" v-if="state.server" >
+            <SelectGameRole v-model="state.role" :server="state.server" />
+          </UFormGroup>
+
+          <UFormGroup label="Phần thưởng">
+            <UCard>
+              <UiFlex justify="center">
+                <DataItemList :items="eventSelect.gift" />
+              </UiFlex>
+            </UCard>
+          </UFormGroup>
+
+          <UiFlex justify="end" class="mt-4">
+            <UButton @click="submit" :loading="loading" class="mr-1">Xác Nhận</UButton>
+            <UButton color="gray" :disabled="loading" @click="open = false">Đóng</UButton>
+          </UiFlex>
+        </UForm>
+      </UModal>
+    </UContainer>
+  </div>
 </template>
 
 <script setup>

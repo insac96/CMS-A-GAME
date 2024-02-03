@@ -82,7 +82,7 @@ export default defineNuxtConfig({
     ]
   },
 
-  pwa: {
+  //pwa: {
     // manifest: {
     //   name: process.env.NAME,
     //   short_name: process.env.SHORT_NAME,
@@ -100,5 +100,5 @@ export default defineNuxtConfig({
     //   sourcemap: true
     // },
     // registerType: 'autoUpdate'
-  }
+  //}
 })

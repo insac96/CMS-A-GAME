@@ -1,15 +1,15 @@
 <template>
-  <div class="LunaPage md:bg-[url(/images/lunanewyear/bg-pc.jpg)] bg-[url(/images/lunanewyear/bg-mobile.png)]">
-    <UiFlex class="LunaHeader gap-4" justify="center">
+  <div class="LunaPage  md:bg-[url(/images/lunanewyear/bg-pc.jpg)] bg-[url(/images/lunanewyear/bg-mobile.png)]">
+    <UiFlex class="LunaHeader bg-black/50 backdrop-blur-xl gap-4" justify="center">
       <UButton variant="link" color="yellow" @click="useTo().navigateToSSL('/main')">Tranh Chủ</UButton>
       <UButton variant="link" color="yellow" @click="toPay">Nạp Tiền</UButton>
       <UButton variant="link" color="yellow" @click="toPlay">Chơi Ngay</UButton>
     </UiFlex>
 
-    <MainLunanewyearLuckymoney class="mb-20" />
-    <MainLunanewyearPayment class="mb-20" />
-    <MainLunanewyearPaymission class="mb-20" />
-    <MainLunanewyearEgg class="mb-20" />
+    <MainLunanewyearLuckymoney class="mb-16" />
+    <MainLunanewyearPayment class="mb-8" />
+    <MainLunanewyearPaymission class="mb-16" />
+    <MainLunanewyearEgg class="mb-16" />
 
     <UModal v-model="modal.payment">
       <div class="p-4">
@@ -87,7 +87,6 @@ const toPlay = async () => {
   .LunaHeader
     width: 100%
     height: 50px
-    background: #101413
     color: #fcf3d0 !important
     background-size: cover
     position: fixed
@@ -105,6 +104,26 @@ const toPlay = async () => {
     &:hover
       filter: brightness(1.2)
 
+  .LunaBtnTitle
+    position: relative
+    background: url(/images/lunanewyear/btn.png)
+    background-position: center center
+    background-repeat: no-repeat
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    height: 35px
+    font-family: "UT"
+    color: #000000
+    padding: 0 16px
+    cursor: pointer
+    user-select: none
+    border-radius: 20px
+    transition: all 0.25s ease
+    &:hover
+      transform: scale(0.95)
+      filter: brightness(1.2)
+
   .LunaBtnText
     position: relative
     font-family: "UT"
@@ -117,6 +136,24 @@ const toPlay = async () => {
     align-items: center
     justify-content: center
 
+  .LunaPage1
+    min-height: 600px
+    background-image: url(/images/lunanewyear/bg1.png)
+    background-position: top right
+    background-repeat: no-repeat
+    background-size: auto 600px
+    @media only screen and (max-width: 768px)
+      background-size: auto 300px
+
+  .LunaPage2
+    min-height: 600px
+    background-image: url(/images/lunanewyear/bg2.png)
+    background-position: top left
+    background-repeat: no-repeat
+    background-size: auto 350px
+    @media only screen and (max-width: 768px)
+      background-size: auto 200px
+
   .LunaTitle
     font-family: "UT"
 
@@ -127,7 +164,6 @@ const toPlay = async () => {
     height: 40px
     font-weight: 600
     
-
   .LunaPayment
     position: relative
     background-image: url(/images/lunanewyear/frame-1.png)
