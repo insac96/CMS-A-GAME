@@ -14,11 +14,14 @@
 </template>
 
 <script setup>
+const { navigateToSSL } = useTo()
 const configStore = useConfigStore()
 const open = ref(configStore.config.enable.lunanewyear)
 
 const run = () => {
-  useTo().navigateToSSL('/main/lunanewyear')
   open.value = false
+  setTimeout(() => {
+    navigateToSSL('/main/lunanewyear')
+  }, 1000)
 }
 </script>
