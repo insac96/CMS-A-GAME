@@ -52,7 +52,7 @@ export default defineNuxtConfig({
         { Sitemap: `${process.env.CLIENT_URL}/sitemap.xml` }
       ]
     }],
-    '@vite-pwa/nuxt'
+    //'@vite-pwa/nuxt'
   ],
 
   app: {
