@@ -186,5 +186,64 @@ const toPlay = async () => {
 
   .LunaEggOpen
     filter: grayscale(0.9)
-    clip-path: polygon(33% 74%, 21% 62%, 10% 75%, 0 62%, 0 100%, 100% 100%, 100% 73%, 89% 60%, 79% 73%, 65% 61%, 56% 74%, 44% 61%)
+    clip-path: polygon(37% 65%, 30% 51%, 25% 66%, 14% 40%, 9% 100%, 92% 100%, 80% 46%, 75% 55%, 70% 63%, 60% 51%, 52% 63%, 44% 53%)
+
+  .LunaEggFrame
+    position: absolute
+    background-image: url(/images/lunanewyear/egg-frame.png)
+    animation: luna-egg-anim 1.5s steps(1) infinite
+    transform: scale(0.5)
+    cursor: url('/images/lunanewyear/bua.png'), auto
+    @media only screen and (max-width: 768px)
+      transform: scale(0.35)
+
+@keyframes luna-egg-anim
+  0%
+    width: 281px
+    height: 356px
+    background-position: 848px 357px
+  9.09%
+    width: 281px
+    height: 355px
+    background-position: 283px 0
+  18.18%
+    width: 281px
+    height: 352px
+    background-position: 565px 0
+  27.27%
+    width: 281px
+    height: 356px
+    background-position: 847px 0
+  36.36%
+    width: 281px
+    height: 356px
+    background-position: 566px 357px
+  45.45%
+    width: 282px
+    height: 356px
+    background-position: 1129px 0
+  54.54%
+    width: 280px
+    height: 354px
+    background-position: 0 0
+  63.63%
+    width: 279px
+    height: 356px
+    background-position: 1130px 357px
+  72.72%
+    width: 279px
+    height: 354px
+    background-position: 1411px 0
+  81.81%
+    width: 281px
+    height: 353px
+    background-position: 1411px 357px
+  90.9%
+    width: 282px
+    height: 356px
+    background-position: 0 357px
+  100%
+    width: 282px
+    height: 356px
+    background-position: 283px 357px
 </style>

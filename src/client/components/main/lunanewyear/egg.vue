@@ -1,6 +1,6 @@
 
 <template>
-  <div class="LunaPage2 pt-[150px]">
+  <div class="LunaPage2 LunaEggPage pt-[150px]">
     <UContainer>
       <UiFlex type="col" justify="center" class="mb-2">
         <UiText class="LunaTitle mb-1" size="4xl" align="center">Đập Trứng May Mắn</UiText>
@@ -14,10 +14,13 @@
       <UiFlex justify="center" type="col">
         <UiFlex v-for="(value, row) in eggUser" :key="row" class="md:gap-6 gap-2">
           <div v-for="(egg, index) in value" :key="index" class="inline">
-            <UiImg src="/images/lunanewyear/egg.png" img-w="433" img-h="576" class="LunaEgg md:w-24 w-16" v-if="!egg" @click="openReceive(row, index)"/>
+            <UiFlex class="relative md:w-24 md:h-32 w-16 h-24" justify="center" v-if="!egg" @click="openReceive(row, index)">
+              <div class="LunaEggFrame"></div>
+            </UiFlex>
             
-            <UiFlex justify="center" v-else>
-              <UiImg src="/images/lunanewyear/egg.png" img-w="433" img-h="576" class="LunaEggOpen md:w-24 w-16"/>
+            <UiFlex class="relative md:w-24 md:h-32 w-16 h-24" justify="center" v-else>
+              <div class="LunaEggFrame LunaEggOpen"></div>
+
               <div class="absolute">
                 <DataItem class="absolute translate-y-[7px]" :item="{
                   type: egg.item.type,
