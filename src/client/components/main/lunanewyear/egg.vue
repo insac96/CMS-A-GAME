@@ -175,25 +175,12 @@ const getConfig = async () => {
     const data = await useAPI('lunanewyear/egg/get')
     eggConfig.value = data.config
     if(data.user){
-      eggUser.value[1][0] = data.user[1][0] || null
-
-      eggUser.value[2][0] = data.user[2][0] || null
-      eggUser.value[2][1] = data.user[2][1] || null
-
-      eggUser.value[3][0] = data.user[3][0] || null
-      eggUser.value[3][1] = data.user[3][1] || null
-      eggUser.value[3][2] = data.user[3][2] || null
-
-      eggUser.value[4][0] = data.user[4][0] || null
-      eggUser.value[4][1] = data.user[4][1] || null
-      eggUser.value[4][2] = data.user[4][2] || null
-      eggUser.value[4][3] = data.user[4][3] || null
-
-      eggUser.value[5][0] = data.user[5][0] || null
-      eggUser.value[5][1] = data.user[5][1] || null
-      eggUser.value[5][2] = data.user[5][2] || null
-      eggUser.value[5][3] = data.user[5][3] || null
-      eggUser.value[5][4] = data.user[5][4] || null
+      for (const [key, value] of Object.entries(eggUser.value)) {
+        for (let i = 0; i < key; i++) {
+          const findIndex = data.user[key].findIndex(o => o.index == i)
+          eggUser.value[key][i] = findIndex == -1 ? null : data.user[key][findIndex]
+        }
+      }
     }
   }
   catch(e){
