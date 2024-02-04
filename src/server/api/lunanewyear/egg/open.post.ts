@@ -57,10 +57,14 @@ export default defineEventHandler(async (event) => {
     const rowUp = parseInt(row) - 1
     const eventData = await DB.LunaEgg
     .findOne()
-    .select(`price ${`row${row}`}`) as IDBLunaEgg
+    .select(`price${rowSelect} row${rowSelect}`) as IDBLunaEgg
 
     // Check Event
     if(!eventData) throw 'Cấu hình không tồn tại'
+
+    // @ts-expect-error
+    const price = eventData[`price${rowSelect}`]
+    if(!price) throw 'Không tìm thấy giá xu đập trứng'
 
     // @ts-expect-error
     const gift = eventData[`row${row}`]
@@ -69,7 +73,7 @@ export default defineEventHandler(async (event) => {
     // Get User
     const user = await DB.User.findOne({ _id: auth._id }).select('currency.coin lunanewyear.egg') as IDBUser
     if(!user) throw 'Không tìm thấy thông tin tài khoản'
-    if(user.currency.coin < eventData.price) throw 'Số dư xu không đủ để đập trứng'
+    if(user.currency.coin < price) throw 'Số dư xu không đủ để đập trứng'
 
     // @ts-expect-error
     const userEggRowSelect = user.lunanewyear.egg[rowSelect]
@@ -137,7 +141,7 @@ export default defineEventHandler(async (event) => {
 
     // Update User
     await DB.User.updateOne({ _id: auth._id }, { 
-      $inc: { 'currency.coin':  eventData.price * -1 }
+      $inc: { 'currency.coin':  price * -1 }
     })
 
     // @ts-expect-error

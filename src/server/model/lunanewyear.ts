@@ -46,7 +46,11 @@ export const DBLunaPayMission = (mongoose : Mongoose) => {
 
 export const DBLunaEgg = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBLunaEgg>({ 
-    price: { type: Number, index: true, default: 50000 },
+    price1: { type: Number, index: true, default: 400000 },
+    price2: { type: Number, index: true, default: 300000 },
+    price3: { type: Number, index: true, default: 200000 },
+    price4: { type: Number, index: true, default: 100000 },
+    price5: { type: Number, index: true, default: 50000 },
     row1: [{
       item: { type: mongoose.Schema.Types.ObjectId, ref: 'items', index: true },
       amount: { type: Number, index: true },
@@ -79,9 +83,17 @@ export const DBLunaEgg = (mongoose : Mongoose) => {
   const model = mongoose.model('luna_eggs', schema)
 
   const autoCreate = async () => {
-    const count = await model.count({})
-    if(count == 0){
+    const event = await model.findOne({})
+    if(!event){
       await model.create({})
+    }
+    else {
+      if(!event.price1) event.price1 = 50000
+      if(!event.price2) event.price2 = 50000
+      if(!event.price3) event.price3 = 50000
+      if(!event.price4) event.price4 = 50000
+      if(!event.price5) event.price5 = 50000
+      await event.save()
     }
   }
 

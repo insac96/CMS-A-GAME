@@ -37,7 +37,11 @@ export interface IDBLunaEgg {
   createdAt: Date
   updatedAt: Date
 
-  price: number
+  price1: number
+  price2: number
+  price3: number
+  price4: number
+  price5: number
   row1: Array<{
     item: Types.ObjectId | IDBItem,
     amount: number

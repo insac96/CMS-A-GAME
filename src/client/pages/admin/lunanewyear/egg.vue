@@ -5,47 +5,67 @@
     class="max-w-3xl mx-auto"
   >
     <UForm :state="state" @submit="submit">
-      <UFormGroup label="Giá 1 lần đập">
-        <UInput v-model="state.price" type="number"></UInput>
-      </UFormGroup>
+      <UAccordion
+        color="primary"
+        variant="soft"
+        size="md"
+        :items="menu"
+      >
+        <template #default="{ item, index, open }">
+          <UButton :color="open ? 'primary' : 'gray'" size="md" class="mb-2">
+            {{ item.label }}
+          </UButton>
+        </template>
 
-      <UFormGroup label="Quà tặng">
-        <UAccordion
-          color="primary"
-          variant="soft"
-          size="md"
-          :items="menu"
-        >
-          <template #default="{ item, index, open }">
-            <UButton :color="open ? 'primary' : 'gray'" size="md" class="mb-2">
-              {{ item.label }}
-            </UButton>
-          </template>
+        <template #row1>
+          <UFormGroup label="Giá đập">
+            <UInput v-model="state.price1" type="number"></UInput>
+          </UFormGroup>
 
-          <template #row1>
-            <SelectItemListRate v-model="state.row1" :types="['game_item', 'coin', 'wheel']" />
-          </template>
+          <SelectItemListRate v-model="state.row1" :types="['game_item', 'coin', 'wheel']" />
+        </template>
 
-          <template #row2>
-            <SelectItemListRate v-model="state.row2" :types="['game_item', 'coin', 'wheel']" />
-          </template>
+        <template #row2>
+          <UFormGroup label="Giá đập">
+            <UInput v-model="state.price2" type="number"></UInput>
+          </UFormGroup>
+          <SelectItemListRate v-model="state.row2" :types="['game_item', 'coin', 'wheel']" />
+        </template>
 
-          <template #row3>
-            <SelectItemListRate v-model="state.row3" :types="['game_item', 'coin', 'wheel']" />
-          </template>
+        <template #row3>
+          <UFormGroup label="Giá đập">
+            <UInput v-model="state.price3" type="number"></UInput>
+          </UFormGroup>
+          <SelectItemListRate v-model="state.row3" :types="['game_item', 'coin', 'wheel']" />
+        </template>
 
-          <template #row4>
-            <SelectItemListRate v-model="state.row4" :types="['game_item', 'coin', 'wheel']" />
-          </template>
+        <template #row4>
+          <UFormGroup label="Giá đập">
+            <UInput v-model="state.price4" type="number"></UInput>
+          </UFormGroup>
+          <SelectItemListRate v-model="state.row4" :types="['game_item', 'coin', 'wheel']" />
+        </template>
 
-          <template #row5>
-            <SelectItemListRate v-model="state.row5" :types="['game_item', 'coin', 'wheel']" />
-          </template>
-        </UAccordion>
-      </UFormGroup>
+        <template #row5>
+          <UFormGroup label="Giá đập">
+            <UInput v-model="state.price5" type="number"></UInput>
+          </UFormGroup>
+          <SelectItemListRate v-model="state.row5" :types="['game_item', 'coin', 'wheel']" />
+        </template>
+      </UAccordion>
 
       <UiFlex justify="end">
         <UButton type="submit" :loading="loading">Lưu Cấu Hình</UButton>
+      </UiFlex>
+    </UForm>
+
+    <UForm :state="stateReset" @submit="reset">
+      <UFormGroup label="Reset dữ liệu tài khoản">
+        <SelectUser v-model="stateReset.user"></SelectUser>
+      </UFormGroup>
+
+      <UiFlex justify="end">
+        <UButton type="submit" :loading="loading">Xác Nhận</UButton>
       </UiFlex>
     </UForm>
   </UiContent>
@@ -55,12 +75,20 @@
 const loading = ref(false)
 
 const state = ref({
-  price: 0,
+  price1: 0,
+  price2: 0,
+  price3: 0,
+  price4: 0,
+  price5: 0,
   row1: [],
   row2: [],
   row3: [],
   row4: [],
   row5: [],
+})
+
+const stateReset = ref({
+  user: null
 })
 
 const menu = [{
@@ -93,9 +121,20 @@ const submit = async () => {
   }
 }
 
+const reset = async () => {
+  try {
+    loading.value = true
+    await useAPI('lunanewyear/egg/admin/reset', JSON.parse(JSON.stringify(stateReset.value)))
+    loading.value = false
+  }
+  catch(e){
+    loading.value = false
+  }
+}
+
 const getConfig = async () => {
   const data = await useAPI('lunanewyear/egg/admin/get')
-  state.value = data
+  state.value = Object.assign(state.value, data)
 }
 
 getConfig()

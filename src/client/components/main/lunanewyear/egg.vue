@@ -68,7 +68,7 @@
           </UFormGroup>
 
           <UFormGroup label="Giá tiền">
-            <UInput :model-value="`${useMoney().toMoney(eggConfig.price)} Xu`" readonly />
+            <UInput :model-value="`${useMoney().toMoney(state.price)} Xu`" readonly />
           </UFormGroup>
 
           <UFormGroup label="Máy chủ">
@@ -144,13 +144,15 @@ const state = ref({
   server: null,
   role: null,
   row: null,
-  index: null
+  index: null,
+  price: null
 })
 
 const openReceive = (row, index) => {
   if(!authStore.isLogin) return authStore.setModal(true)
   state.value.row = row
   state.value.index = index
+  state.value.price = eggConfig.value[`price${row}`] || 0
   open.value = true
 }
 
