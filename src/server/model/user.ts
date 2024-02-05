@@ -120,8 +120,8 @@ export const DBUser = (mongoose : Mongoose) => {
       }
     },
     login: {
-      month: { type: Number, default: 0, index: true },
-      total: { type: Number, default: 0, index: true },
+      month: { type: Number, default: 1, index: true },
+      total: { type: Number, default: 1, index: true },
       update: { type: Date },
       last_ip: { type: String }
     },

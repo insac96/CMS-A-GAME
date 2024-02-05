@@ -1,7 +1,7 @@
 <template>
   <div class="LunaPage  md:bg-[url(/images/lunanewyear/bg-pc.jpg)] bg-[url(/images/lunanewyear/bg-mobile.png)]">
     <UiFlex class="LunaHeader bg-black/50 backdrop-blur-xl gap-4" justify="center">
-      <UButton variant="link" color="yellow" @click="useTo().navigateToSSL('/main')">Tranh Chủ</UButton>
+      <UButton variant="link" color="yellow" @click="useTo().navigateToSSL('/main')">Trang Chủ</UButton>
       <UButton variant="link" color="yellow" @click="toPay">Nạp Tiền</UButton>
       <UButton variant="link" color="yellow" @click="toPlay">Chơi Ngay</UButton>
     </UiFlex>
