@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     if(user.type < 1 && !user.reg.teaser) throw 'Tài khoản của bạn không có trong danh sách tham gia CloseBeta'
 
     const url = await gameStartCloseBeta(event, auth.username)
-    setCookie(event, 'play-closebeta-url', url, runtimeConfig.public.cookieConfig)
+    setCookie(event, 'play-url', url, runtimeConfig.public.cookieConfig)
     return resp(event, { result: 'Playing' })
   } 
   catch (e:any) {

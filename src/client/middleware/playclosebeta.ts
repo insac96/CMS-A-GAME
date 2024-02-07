@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async () => {
       
       await useAPI('game/closebeta')
 
-      const playUrl = useCookie('play-closebeta-url', runtimeConfig.public.cookieConfig)
+      const playUrl = useCookie('play-url', runtimeConfig.public.cookieConfig)
       if(!playUrl.value) throw true
     }
     catch (e:any) {

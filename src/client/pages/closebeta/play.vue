@@ -19,7 +19,7 @@ definePageMeta({
 })
 
 const runtimeConfig = useRuntimeConfig()
-const playCookie = useCookie('play-closebeta-url', runtimeConfig.public.cookieConfig)
+const playCookie = useCookie('play-url', runtimeConfig.public.cookieConfig)
 
 const fastBuy = ref({
   modal: false,
