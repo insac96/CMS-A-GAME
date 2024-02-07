@@ -10,7 +10,7 @@
 
     <UModal v-model="modal.up">
       <div class="p-2">
-        <AuthSignTeaserUp @done="modal.up = false, modal.giftcode = true" :teaser="teaser._id" />
+        <AuthSignTeaserUp @done="thankyou" :teaser="teaser._id" />
       </div>
     </UModal>
 
@@ -100,6 +100,11 @@ const runAction = (e) => {
 const toGroupBeta = (e) => {
   if(!configStore.config.social.messenger) return error('Chúng tôi sẽ cập nhật thông tin sau')
   window.open(configStore.config.social.messenger, '_blank')
+}
+
+const thankyou = async () => {
+  modal.value.up = false
+  useTo().navigateToSSL('/thankyou?type=teaser')
 }
 
 const getTeaser = async () => {

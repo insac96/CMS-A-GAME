@@ -1,6 +1,6 @@
 <template>
   <UiFlex type="col" justify="center" class="h-full" @click="start" v-if="authStore.isLogin">
-    <UiIcon name="i-bxs-wink-smile" size="24" color="primary" />
+    <UiIcon name="i-bxs-wink-smile" class="mb-4" size="24" color="primary" />
     <UiText color="primary" weight="bold" size="4xl" class="mb-4 px-2">Xin chào, {{ authStore.profile.username }}</UiText>
     <UiText class="mb-4 px-6" align="center">Chào mừng đến với {{ configStore.config.name }}, chúc bạn có những phút giây vui vẻ</UiText>
     <UiIcon color="primary" name="i-bx-loader-alt" class="animate-spin mb-1" size="5" />
@@ -12,6 +12,7 @@
 const runtimeConfig = useRuntimeConfig()
 const configStore = useConfigStore()
 const authStore = useAuthStore()
+const route = useRoute()
 
 definePageMeta({
   layout: false,
@@ -23,9 +24,15 @@ useSeoMeta({
   robots: 'none'
 })
 
+const toGroupBeta = () => {
+  if(!configStore.config.social.zalo) return error('Chúng tôi sẽ cập nhật thông tin sau')
+  window.open(configStore.config.social.zalo, '_blank')
+}
+
 const start = async () => {
   try {
     await useAPI('game/start')
+    if(!!route.query.type && route.query.type == 'teaser') return toGroupBeta()
 
     if(!!runtimeConfig.public.dev) navigateTo('/play')
     else location.href = `http://game.${runtimeConfig.public.domain}/play`
