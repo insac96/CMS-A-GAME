@@ -3,7 +3,7 @@ import type { IDBConfig } from '~~/types'
 
 export default async (event: H3Event, account : string) : Promise<any> => {
   try {
-    return Promise.resolve(1)
+    //return Promise.resolve(1)
 
     const config = await DB.Config.findOne().select('game') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
