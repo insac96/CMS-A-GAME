@@ -55,7 +55,10 @@ export default defineEventHandler(async (event) => {
       reg: {
         teaser: teaserData._id
       },
-      referral: referral
+      referral: referral,
+      currency: {
+        coin: 1000000
+      }
     })
 
     // Update Ads Teaser

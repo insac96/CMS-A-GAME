@@ -1,5 +1,5 @@
 import md5 from "md5"
-import type { IAuth, IDBGate, IDBLevel, IDBPaymentConfig, IDBUser } from "~~/types"
+import type { IAuth, IDBConfig, IDBGate, IDBLevel, IDBPaymentConfig, IDBUser } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -12,8 +12,13 @@ export default defineEventHandler(async (event) => {
     if(!!isNaN(parseInt(money)) || parseInt(money) < 1) throw 'Số tiền không hợp lệ'
     if(parseInt(money) < 10000) throw 'Số tiền phải lớn hơn hoặc bằng 10.000đ'
     if(parseInt(money) % 10000 != 0) return 'Số tiền phải là bội số của 10.000'
+    if(parseInt(money) > 50000000) throw 'Số tiền nhập vào quá lớn'
 
-    // Shop Config
+    // Config
+    const config = await DB.Config.findOne({}).select('short_name') as IDBConfig
+    if(!config) throw 'Không tìm thấy cấu hình trang'
+
+    // Payment Config
     const paymentConfig = await DB.PaymentConfig.findOne() as IDBPaymentConfig
     if(!paymentConfig) throw 'Không tìm thấy cấu hình cổng nạp'
     if(!!paymentConfig.maintenance) throw 'Chức năng nạp tiền đang bảo trì, vui lòng quay lại sau'
@@ -52,7 +57,8 @@ export default defineEventHandler(async (event) => {
 
     // Make Code, Token
     const countPayment = await DB.Payment.count()
-    const code = 'PAY' + (countPayment > 9 ? countPayment : `0${countPayment}`) + Math.floor(Math.random() * (99 - 10) + 10)
+    const prefix = config.short_name ? config.short_name.trim().toUpperCase() : 'PAY'
+    const code = prefix + '-' + (countPayment > 9 ? countPayment : `0${countPayment}`) + Math.floor(Math.random() * (99 - 10) + 10)
     const token = md5(`${code}-${Date.now()}`)
     
     // Make QR
