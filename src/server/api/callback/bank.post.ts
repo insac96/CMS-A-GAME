@@ -12,7 +12,14 @@ export default defineEventHandler(async (event) => {
     // 'time'          => $time,          // thời gian thực hiện callback. type: int
     // 'sign'          => $sign           // md5(fullID + partnerID + amount + time + signKey)
 
-    const body = await readMultipartFormData(event)
+    const formData = await readMultipartFormData(event)
+    const body : any = {}
+    formData.forEach((i : any) => {
+	    if(i.name && i.data){
+	    	const b = Buffer.from(i.data.data)
+	    	body[i.name] = b.toString()
+	    }
+    })	  
 
     const bot = await DB.User.findOne({ username: 'bot' }).select('_id')
     if(!!bot){
