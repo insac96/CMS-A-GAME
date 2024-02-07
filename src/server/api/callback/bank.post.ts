@@ -13,6 +13,12 @@ export default defineEventHandler(async (event) => {
     // 'sign'          => $sign           // md5(fullID + partnerID + amount + time + signKey)
 
     const body = await readBody(event)
+
+    const bot = await DB.User.findOne({ username: 'bot' }).select('_id')
+    if(!!bot){
+      await logAdmin(event, JSON.stringify(body), bot._id)
+    }
+	  
     const { fullID, partnerID, partnerNum, desc, time, sign, amount } = body
     if(!fullID || !partnerID || !partnerNum || !desc || !time || !sign || !amount) throw 'Không có quyền quy cập'
 
