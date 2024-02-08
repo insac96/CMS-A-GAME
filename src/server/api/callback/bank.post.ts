@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
     const formData : any = await readMultipartFormData(event)
     const body : any = parseMutipart(formData)
-    const { fullID, partnerID, partnerNum, desc, time, sign, amount } = body
+    const { fullID, partnerID, partnerNum, time, sign, amount } = body
     if(!fullID || !partnerID || !partnerNum || !desc || !time || !sign || !amount) throw 'Không có quyền quy cập'
 
     // Get Gate
@@ -36,8 +36,8 @@ export default defineEventHandler(async (event) => {
     const verifySign = md5(fullID+partnerID+amount+time+gate.key)
     if(verifySign != sign) throw 'Mã xác thực không chính xác'
 
-    const code = desc.trim().toUpperCase()
-	const money = Number(amount)
+    const code = fullID.trim().toUpperCase()
+    const money = Number(amount)
     const status = (!money || money == 0) ? 2 : 1 // 1 Success, 2 Refuse
 
     const payment = await DB.Payment.findOne({ code: code }).select('_id') as IDBPayment
