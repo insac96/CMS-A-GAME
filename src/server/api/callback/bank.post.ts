@@ -1,5 +1,16 @@
 import md5 from "md5"
 import type { IDBGate, IDBPayment } from "~~/types"
+import type { MultiPartData } from "h3"
+
+const parseMutipart = (data?: MultiPartData) => {
+  const arr = Array.isArray(data) ? data : []
+  const result = arr.reduce((prev: Record<string,any>, curr) => {
+    prev[String(curr.name)] = curr.data.toString('utf8')
+    return prev
+  }, [])
+  
+  return result
+}
 
 export default defineEventHandler(async (event) => {
   try {
@@ -12,20 +23,8 @@ export default defineEventHandler(async (event) => {
     // 'time'          => $time,          // thời gian thực hiện callback. type: int
     // 'sign'          => $sign           // md5(fullID + partnerID + amount + time + signKey)
 
-    const formData = await readMultipartFormData(event)
-    const body : any = {}
-    formData.forEach((i : any) => {
-	    if(i.name && i.data){
-	    	const b = Buffer.from(i.data.data)
-	    	body[i.name] = b.toString()
-	    }
-    })	  
-
-    const bot = await DB.User.findOne({ username: 'bot' }).select('_id')
-    if(!!bot){
-      await logAdmin(event, JSON.stringify(body), bot._id)
-    }
-	  
+    const formData : any = await readMultipartFormData(event)
+    const body : any = parseMutipart(formData)
     const { fullID, partnerID, partnerNum, desc, time, sign, amount } = body
     if(!fullID || !partnerID || !partnerNum || !desc || !time || !sign || !amount) throw 'Không có quyền quy cập'
 
