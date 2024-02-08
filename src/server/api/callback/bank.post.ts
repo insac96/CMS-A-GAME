@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     const formData : any = await readMultipartFormData(event)
     const body : any = parseMutipart(formData)
     const { fullID, partnerID, partnerNum, time, sign, amount } = body
-    if(!fullID || !partnerID || !partnerNum || !desc || !time || !sign || !amount) throw 'Không có quyền quy cập'
+    if(!fullID || !partnerID || !partnerNum || !time || !sign || !amount) throw 'Không có quyền quy cập'
 
     // Get Gate
     const gate = await DB.Gate.findOne({ number: partnerNum }).select('key') as IDBGate
@@ -53,6 +53,9 @@ export default defineEventHandler(async (event) => {
     resp(event, { message: 'Xử lý thành công' })
   } 
   catch (e:any) {
+    const bot = await DB.User.findOne({ username: 'bot' }).select('_id')
+    if(bot) await logAdmin(event, e.toString(), bot._id)
+    
     setResponseStatus(event, 500)
     return {
       message: e.toString()
