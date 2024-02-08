@@ -53,8 +53,8 @@ export default defineEventHandler(async (event) => {
     resp(event, { message: 'Xử lý thành công' })
   } 
   catch (e:any) {
-    const bot = await DB.User.findOne({ username: 'bot' }).select('_id')
-    if(bot) await logAdmin(event, e.toString(), bot._id)
+    // const bot = await DB.User.findOne({ username: 'bot' }).select('_id')
+    // if(bot) await logAdmin(event, e.toString(), bot._id)
     
     setResponseStatus(event, 500)
     return {
