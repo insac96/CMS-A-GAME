@@ -30,13 +30,13 @@
 </template>
 
 <script setup>
-const props = defineProps(['giftcode'])
+const props = defineProps(['giftcode', 'server'])
 const emit = defineEmits(['done', 'close'])
 
 const loading = ref(false)
 
 const state = ref({
-  server: null,
+  server: props.server || null,
   role: null,
   giftcode: props.giftcode ? props.giftcode._id : null,
 })

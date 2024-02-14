@@ -1,11 +1,11 @@
-import type { IAuth, IDBGiftcode, IDBItem } from '~~/types'
+import type { IDBItem, IDBGiftcode, IAuth } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
 
-    const { code } = await readBody(event)
-    if(!code) throw 'Không tìm thấy tên mã'
+    const { code, server_id } = await readBody(event)
+    if(!code) throw 'Không tìm thấy mã Giftcode'
 
     // Giftcode
     const giftcodeData = await DB.Giftcode
@@ -19,22 +19,31 @@ export default defineEventHandler(async (event) => {
     // Check Giftcode
     if(!giftcodeData) throw 'Mã không tồn tại'
     if(giftcodeData.gift.length == 0) throw 'Mã chưa có phần thưởng để nhận'
-    
+
     // Check Limit
     if(giftcodeData.limit > 0){
       const countReceive = await DB.GiftcodeHistory.count({ giftcode: giftcodeData._id })
       if(countReceive >= giftcodeData.limit) throw 'Mã này đã hết lượt sử dụng'
     }
 
+    // Check Received
+    const countReceiveAuth = await DB.GiftcodeHistory.count({ user: auth._id, giftcode: giftcodeData._id })
+    if(countReceiveAuth > 0) throw 'Bạn đã nhận mã này rồi'
+
     // Result
-    const result : any = JSON.parse(JSON.stringify(giftcodeData))
-    result.gift = giftcodeData.gift.map(gift => ({
+    const resultGiftcode : any = JSON.parse(JSON.stringify(giftcodeData))
+    resultGiftcode.gift = giftcodeData.gift.map(gift => ({
       name: (gift.item as IDBItem).item_name,
       image: (gift.item as IDBItem).item_image,
       type: (gift.item as IDBItem).type,
       amount: gift.amount
     }))
-    
+
+    const result = {
+      giftcode: resultGiftcode,
+      server: server_id
+    }
+
     return resp(event, { result: result })
   } 
   catch (e:any) {
