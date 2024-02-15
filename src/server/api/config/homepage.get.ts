@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
       if(!!landing) return resp(event, { result: `/ads/landing/${landing.code}` })
     }
 
-    return resp(event, { result: '/main' })
+    return resp(event, { result: '/' })
   } 
   catch (e:any) {
     return resp(event, { code: 500, message: e.toString() })
