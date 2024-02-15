@@ -37,9 +37,10 @@ const sign = async () => {
     const cookie = useCookie('token-auth', runtimeConfig.public.cookieConfig)
 
     cookie.value = token
-    setTimeout(() => {
-      useTo().navigateToSSL('/')
-    }, 500)
+
+    if(process.client){
+      location.reload()
+    }
   }
   catch (e) {
     loading.value = false

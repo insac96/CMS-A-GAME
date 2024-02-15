@@ -1,6 +1,6 @@
 <template>
   <div v-if="!!active">
-    <UDivider class="mt-4" label="Hoặc đăng nhập nhanh" />
+    <UDivider class="mt-4" :label="label || 'Hoặc đăng nhập nhanh'" />
 
     <UiFlex justify="center" class="pt-5 gap-3">
       <AuthSignSocialFacebook v-if="!!configStore.config.facebook.client_id && !!configStore.config.facebook.client_version" />
@@ -13,6 +13,7 @@
 
 <script setup>
 const configStore = useConfigStore()
+const props = defineProps(['label'])
 
 const active = computed(() => {
   if(

@@ -21,6 +21,8 @@
         <UButton type="submit" :loading="loading">Đăng Ký Nhanh</UButton>
       </UiFlex>
     </UForm>
+
+    <AuthSignSocial label="Hoặc đăng ký nhanh"/>
   </UCard>
 </template>
 
