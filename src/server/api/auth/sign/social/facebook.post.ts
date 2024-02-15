@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { IDBAdsFrom, IDBAdsLanding, IDBConfig, IDBUser } from '~~/types'
+import { IDBConfig, IDBUser } from '~~/types'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -77,16 +77,6 @@ export default defineEventHandler(async (event) => {
       typeSign = 'up'
     }
 
-    // Landing
-    let landingData
-    const adsLanding = getCookie(event, 'ads-landing')
-    if(!!adsLanding) landingData = await DB.AdsLanding.findOne({ _id: adsLanding }).select('_id') as IDBAdsLanding
-
-    // From Data
-    let fromData
-    const adsFrom = getCookie(event, 'ads-from')
-    if(!!adsFrom) fromData = await DB.AdsFrom.findOne({ code: adsFrom }).select('_id') as IDBAdsFrom
-
     // Log And Notify
     if(typeSign == 'in'){
       logUser(event, user._id, `Đăng nhập với IP <b>${IP}</b>`)
@@ -97,9 +87,6 @@ export default defineEventHandler(async (event) => {
         color: 'blue',
         content: ` Bạn đã đăng nhập bằng <b>Facebook</b> với IP <b>${IP}</b>`
       })
-
-      if(!!landingData) await DB.AdsLanding.updateOne({ _id: landingData._id }, { $inc: { 'sign.in': 1 }})
-      if(!!fromData) await DB.AdsFrom.updateOne({ _id: fromData._id }, { $inc: { 'sign.in': 1 }})
     }
     if(typeSign == 'up'){
       logUser(event, user._id, 'Đăng ký tài khoản')
@@ -109,15 +96,6 @@ export default defineEventHandler(async (event) => {
         color: 'primary',
         content: `Chào mừng thành viên mới, chúc bạn chơi game vui vẻ`
       })
-
-      if(!!landingData){
-        await DB.AdsLanding.updateOne({ _id: landingData._id }, { $inc: { 'sign.up': 1 }})
-        await DB.User.updateOne({ _id: user._id }, { 'reg.landing' : landingData._id })
-      }
-      if(!!fromData){
-        await DB.AdsFrom.updateOne({ _id: fromData._id }, { $inc: { 'sign.up': 1 }})
-        await DB.User.updateOne({ _id: user._id }, { 'reg.from' : fromData._id })
-      }
     }
 
     // Make Token
