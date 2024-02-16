@@ -151,6 +151,102 @@
         </UCard>
       </template>
 
+      <template #menu>
+        <UCard class="mb-4">
+          <UiText color="primary" weight="bold" class="mb-4">Chức năng</UiText>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Nạp xu</UiText>
+            <UToggle v-model="state.menu.action.payment" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Rút tiền</UiText>
+            <UToggle v-model="state.menu.action.withdraw" />
+          </UiFlex>
+
+          <UiFlex justify="between">
+            <UiText weight="semibold">Giftcode</UiText>
+            <UToggle v-model="state.menu.action.giftcode" />
+          </UiFlex>
+        </UCard>
+
+        <UCard class="mb-4">
+          <UiText color="primary" weight="bold" class="mb-4">Cửa hàng</UiText>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Gói</UiText>
+            <UToggle v-model="state.menu.shop.pack" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Vật phẩm</UiText>
+            <UToggle v-model="state.menu.shop.item" />
+          </UiFlex>
+
+          <UiFlex justify="between">
+            <UiText weight="semibold">Tiền tệ</UiText>
+            <UToggle v-model="state.menu.shop.currency" />
+          </UiFlex>
+        </UCard>
+
+        <UCard class="mb-4">
+          <UiText color="primary" weight="bold" class="mb-4">Sự kiện</UiText>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Đăng nhập</UiText>
+            <UToggle v-model="state.menu.event.login" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Tích nạp</UiText>
+            <UToggle v-model="state.menu.event.pay" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Tiêu phí</UiText>
+            <UToggle v-model="state.menu.event.spend" />
+          </UiFlex>
+
+          <UiFlex justify="between">
+            <UiText weight="semibold">Tết nguyên đán</UiText>
+            <UToggle v-model="state.menu.event.lunanewyear" />
+          </UiFlex>
+        </UCard>
+
+        <UCard class="mb-4">
+          <UiText color="primary" weight="bold" class="mb-4">MiniGame</UiText>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Vòng quay</UiText>
+            <UToggle v-model="state.menu.minigame.wheel" />
+          </UiFlex>
+
+          <UiFlex justify="between">
+            <UiText weight="semibold">Xúc xắc</UiText>
+            <UToggle v-model="state.menu.minigame.dice" />
+          </UiFlex>
+        </UCard>
+
+        <UCard>
+          <UiText color="primary" weight="bold" class="mb-4">Xếp hạng</UiText>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Cấp độ</UiText>
+            <UToggle v-model="state.menu.rank.level" />
+          </UiFlex>
+
+          <UiFlex justify="between">
+            <UiText weight="semibold">Lực chiến</UiText>
+            <UToggle v-model="state.menu.rank.power" />
+          </UiFlex>
+        </UCard>
+
+        <UiFlex justify="end" class="mt-4">
+          <UButton @click="update('menu')" :loading="updating">Cập nhật</UButton>
+        </UiFlex>
+      </template>
+
       <template #social>
         <UCard>
           <UForm :state="state">
@@ -343,6 +439,37 @@ const state = ref({
   logo_long_image: '',
   makeby: '',
 
+  menu: {
+    action: {
+      payment: false,
+      withdraw: false,
+      giftcode: false,
+    },
+    shop: {
+      pack: false,
+      item: false,
+      currency: false
+    },
+    event: {
+      login: false,
+      pay: false,
+      spend: false,
+      lunanewyear: false
+    },
+    minigame: {
+      wheel: false,
+      dice: false
+    },
+    rank: {
+      level: false,
+      power: false
+    },
+    social: {
+      facebook: false,
+      group: false,
+    }
+  },
+
   enable: {
     signin: true,
     signup: true,
@@ -434,6 +561,10 @@ const menu = [
 {
   label: 'Mạng xã hội',
   slot: 'social'
+},
+{
+  label: 'Menu',
+  slot: 'menu'
 },
 {
   label: 'Trò chơi',

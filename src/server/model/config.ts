@@ -13,6 +13,36 @@ export const DBConfig = (mongoose : Mongoose) => {
     about: { type: String },
     privacy: { type: String },
     terms: { type: String },
+    menu: {
+      action: {
+        payment: { type: Boolean, default: true },
+        withdraw: { type: Boolean, default: true },
+        giftcode: { type: Boolean, default: true },
+      },
+      shop: {
+        pack: { type: Boolean, default: true },
+        item: { type: Boolean, default: true },
+        currency: { type: Boolean, default: true },
+      },
+      event: {
+        login: { type: Boolean, default: true },
+        pay: { type: Boolean, default: true },
+        spend: { type: Boolean, default: true },
+        lunanewyear: { type: Boolean, default: true },
+      },
+      minigame: {
+        wheel: { type: Boolean, default: true },
+        dice: { type: Boolean, default: true },
+      },
+      rank: {
+        level: { type: Boolean, default: true },
+        power: { type: Boolean, default: true },
+      },
+      social: {
+        facebook: { type: Boolean, default: true },
+        group: { type: Boolean, default: true },
+      }
+    },
     enable: {
       signin: { type: Boolean, default: true },
       signup: { type: Boolean, default: true },

@@ -32,6 +32,13 @@ export default defineEventHandler(async (event) => {
     ){
       user.lunanewyear.luckymoney = 1
       user.lunanewyear.paymission = []
+      user.lunanewyear.egg = {
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        5: []
+      } 
       user.login.month = user.login.month + 1
       user.login.total = user.login.total + 1
       user.pay.day.money = 0

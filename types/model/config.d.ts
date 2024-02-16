@@ -15,6 +15,36 @@ export interface IDBConfig {
   about: string
   privacy: string
   terms: string
+  menu: {
+    action: {
+      payment: boolean
+      withdraw: boolean
+      giftcode: boolean
+    }
+    shop: {
+      pack: boolean
+      item: boolean
+      currency: boolean
+    }
+    event: {
+      login: boolean
+      pay: boolean
+      spend: boolean
+      lunanewyear: boolean
+    }
+    minigame: {
+      wheel: boolean
+      dice: boolean
+    }
+    rank: {
+      level: boolean
+      power: boolean
+    }
+    social: {
+      facebook: boolean
+      group: boolean
+    }
+  }
   enable: {
     signin: boolean
     signup: boolean
