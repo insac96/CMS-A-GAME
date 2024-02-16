@@ -103,7 +103,7 @@ const navItems = [
     slot: 'tab-5',
     children: [
       { label: 'Fanpage', to: configStore.config.social.facebook, target: '_blank' }, 
-      { label: 'Nhóm Zalo', to: configStore.config.social.zalo, target: '_blank' },
+      { label: 'Group', to: configStore.config.social.zalo, target: '_blank' },
     ]
   }
 ]

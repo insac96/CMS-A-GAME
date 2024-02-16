@@ -12,12 +12,12 @@
 
       <div class="ml-auto">
         <UButtonGroup size="sm" orientation="horizontal" class="ml-2" v-if="!noCoin">
-          <UButton :label="miniNum ? miniMoney(user.currency?.coin) : toMoney(user.currency?.coin)" color="gray" />
+          <UButton :label="miniNum ? miniMoney(user.currency?.coin) : toMoney(user.currency?.coin)" color="gray" @click="navigateToSSL('/action/payment')" />
           <UButton  color="primary" icon="i-bxs-dollar-circle"></UButton>
         </UButtonGroup>
 
         <UButtonGroup size="sm" orientation="horizontal" class="ml-2" v-if="!noWheel">
-          <UButton :label="miniNum ? miniMoney(user.currency?.wheel) : toMoney(user.currency?.wheel)" color="gray" />
+          <UButton :label="miniNum ? miniMoney(user.currency?.wheel) : toMoney(user.currency?.wheel)" color="gray" @click="navigateToSSL('/minigame/wheel')" />
           <UButton  color="primary" icon="i-bxs-color"></UButton>
         </UButtonGroup>
 
@@ -27,7 +27,7 @@
         </UButtonGroup>
 
         <UButtonGroup size="sm" orientation="horizontal" class="ml-2" v-if="!noDiamond">
-          <UButton :label="miniNum ? miniMoney(user.currency?.diamond) : toMoney(user.currency?.diamond)" color="gray" />
+          <UButton :label="miniNum ? miniMoney(user.currency?.diamond) : toMoney(user.currency?.diamond)" color="gray" @click="navigateToSSL('/action/withdraw')" />
           <UButton  color="primary" icon="i-bxs-diamond"></UButton>
         </UButtonGroup>
       </div>
@@ -37,6 +37,7 @@
 
 <script setup>
 const { miniMoney, toMoney } = useMoney()
+const { navigateToSSL } = useTo()
 const authStore = useAuthStore()
 
 const props = defineProps({

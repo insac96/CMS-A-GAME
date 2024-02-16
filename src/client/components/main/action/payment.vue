@@ -42,11 +42,11 @@
             <USelectMenu v-model="state.money" :options="card.money" value-attribute="value" size="lg" />
           </UFormGroup>
 
-          <UFormGroup label="Nhập số Seri" name="card_seri">
+          <UFormGroup label="Nhập số seri" name="card_seri">
             <UInput v-model="state.card.seri" />
           </UFormGroup>
 
-          <UFormGroup label="Nhập mã Pin" name="card_pin">
+          <UFormGroup label="Nhập mã thẻ cào" name="card_pin">
             <UInput v-model="state.card.pin" />
           </UFormGroup>
         </div>
@@ -182,7 +182,7 @@ const card = {
     { label: 'Vinaphone', value: 'VNP' },
   ],
   money: [
-    { label: '10.000', value: 10000 },
+    // { label: '10.000', value: 10000 },
     { label: '20.000', value: 20000 },
     { label: '30.000', value: 30000 },
     { label: '50.000', value: 50000 },

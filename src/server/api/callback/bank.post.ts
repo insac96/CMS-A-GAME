@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
     const verifySign = md5(fullID+partnerID+amount+time+gate.key)
     if(verifySign != sign) throw 'Mã xác thực không chính xác'
 
-    const code = fullID.trim().toUpperCase()
+    const code = fullID.trim().replace(/\s/g, '').toUpperCase()
     const money = Number(amount)
     const status = (!money || money == 0) ? 2 : 1 // 1 Success, 2 Refuse
 
