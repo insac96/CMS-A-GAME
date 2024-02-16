@@ -66,6 +66,8 @@
 </template>
 
 <script setup>
+const configStore = useConfigStore()
+
 const modal = ref({
   payment: false,
   giftcode: false,
@@ -91,34 +93,47 @@ const menu = [
     label: 'Giftcode',
     icon: 'i-bx-barcode-reader',
     click: () => modal.value.giftcode = true
-  }],[{
-    label: 'CH Vật phẩm',
-    icon: 'i-bx-shopping-bag',
-    click: () => modal.value.shop.item = true
-  },{
-    label: 'CH Tiền tệ',
-    icon: 'i-bx-money',
-    click: () => modal.value.shop.currency = true
-  }],[{
-    label: 'SK Đăng nhập',
-    icon: 'i-bx-calendar',
-    click: () => modal.value.event.login = true
-  },{
-    label: 'SK Tích nạp',
-    icon: 'i-bx-credit-card-alt',
-    click: () => modal.value.event.pay = true
-  },{
-    label: 'SK Tiêu phí',
-    icon: 'i-bx-wallet-alt',
-    click: () => modal.value.event.spend = true
-  }],[{
-    label: 'Vòng quay',
-    icon: 'i-bxs-color',
-    click: () => modal.value.wheel = true
-  },{
-    label: 'Xúc xắc',
-    icon: 'i-bx-dice-6',
-    click: () => modal.value.dice = true
-  }]
+  }],
+  [{
+    label: 'Sự kiện tết',
+    icon: 'i-bx-party',
+    click: () => useTo().navigateToSSL('/main/lunanewyear')
+  }],
+  [{
+    label: 'Hỗ trợ',
+    icon: 'i-bx-support',
+    click: () =>  window.open(configStore.config.social.zalo, '_blank')
+  }],
+  // [{
+  //   label: 'CH Vật phẩm',
+  //   icon: 'i-bx-shopping-bag',
+  //   click: () => modal.value.shop.item = true
+  // },{
+  //   label: 'CH Tiền tệ',
+  //   icon: 'i-bx-money',
+  //   click: () => modal.value.shop.currency = true
+  // }],
+  // [{
+  //   label: 'SK Đăng nhập',
+  //   icon: 'i-bx-calendar',
+  //   click: () => modal.value.event.login = true
+  // },{
+  //   label: 'SK Tích nạp',
+  //   icon: 'i-bx-credit-card-alt',
+  //   click: () => modal.value.event.pay = true
+  // },{
+  //   label: 'SK Tiêu phí',
+  //   icon: 'i-bx-wallet-alt',
+  //   click: () => modal.value.event.spend = true
+  // }],
+  // [{
+  //   label: 'Vòng quay',
+  //   icon: 'i-bxs-color',
+  //   click: () => modal.value.wheel = true
+  // },{
+  //   label: 'Xúc xắc',
+  //   icon: 'i-bx-dice-6',
+  //   click: () => modal.value.dice = true
+  // }]
 ]
 </script>

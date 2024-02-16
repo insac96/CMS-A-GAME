@@ -31,11 +31,11 @@
         </UiFlex>
       </template>
       <template #tab-0><UVerticalNavigation :links="navItems[0].children" @click="emit('to')"/></template>
-      <template #tab-1><UVerticalNavigation :links="navItems[1].children" @click="emit('to')"/></template>
+      <!-- <template #tab-1><UVerticalNavigation :links="navItems[1].children" @click="emit('to')"/></template>
       <template #tab-2><UVerticalNavigation :links="navItems[2].children" @click="emit('to')"/></template>
-      <template #tab-3><UVerticalNavigation :links="navItems[3].children" @click="emit('to')"/></template>
-      <template #tab-4><UVerticalNavigation :links="navItems[4].children" @click="emit('to')"/></template>
-      <template #tab-5><UVerticalNavigation :links="navItems[5].children" @click="emit('to')"/></template>
+      <template #tab-3><UVerticalNavigation :links="navItems[3].children" @click="emit('to')"/></template> -->
+      <template #tab-4><UVerticalNavigation :links="navItems[1].children" @click="emit('to')"/></template>
+      <template #tab-5><UVerticalNavigation :links="navItems[2].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -54,38 +54,38 @@ const navItems = [
       { label: 'Giftcode', to: '/main/action/giftcode' }
     ]
   },
-  {
-    label: 'Cửa Hàng',
-    icon: 'i-bx-shopping-bag',
-    defaultOpen: true,
-    slot: 'tab-1',
-    children: [
-      { label: 'Gói', to: '/main/shop/pack' }, 
-      { label: 'Vật phẩm', to: '/main/shop/item' }, 
-      { label: 'Tiền tệ', to: '/main/shop/currency' }, 
-    ]
-  },
-  {
-    label: 'Sự Kiện',
-    icon: 'i-bx-calendar',
-    defaultOpen: true,
-    slot: 'tab-2',
-    children: [
-      { label: 'Đăng nhập', to: '/main/event/login' }, 
-      { label: 'Tích nạp', to: '/main/event/pay' }, 
-      { label: 'Tiêu phí', to: '/main/event/spend' }
-    ]
-  },
-  {
-    label: 'Mini Game',
-    icon: 'i-bx-game',
-    defaultOpen: true,
-    slot: 'tab-3',
-    children: [
-      { label: 'Vòng quay', to: '/main/minigame/wheel' }, 
-      { label: 'Xúc xắc', to: '/main/minigame/dice' }
-    ]
-  },
+  // {
+  //   label: 'Cửa Hàng',
+  //   icon: 'i-bx-shopping-bag',
+  //   defaultOpen: true,
+  //   slot: 'tab-1',
+  //   children: [
+  //     { label: 'Gói', to: '/main/shop/pack' }, 
+  //     { label: 'Vật phẩm', to: '/main/shop/item' }, 
+  //     { label: 'Tiền tệ', to: '/main/shop/currency' }, 
+  //   ]
+  // },
+  // {
+  //   label: 'Sự Kiện',
+  //   icon: 'i-bx-calendar',
+  //   defaultOpen: true,
+  //   slot: 'tab-2',
+  //   children: [
+  //     { label: 'Đăng nhập', to: '/main/event/login' }, 
+  //     { label: 'Tích nạp', to: '/main/event/pay' }, 
+  //     { label: 'Tiêu phí', to: '/main/event/spend' }
+  //   ]
+  // },
+  // {
+  //   label: 'Mini Game',
+  //   icon: 'i-bx-game',
+  //   defaultOpen: true,
+  //   slot: 'tab-3',
+  //   children: [
+  //     { label: 'Vòng quay', to: '/main/minigame/wheel' }, 
+  //     { label: 'Xúc xắc', to: '/main/minigame/dice' }
+  //   ]
+  // },
   {
     label: 'Xếp Hạng',
     icon: 'i-bx-bar-chart-alt-2',
