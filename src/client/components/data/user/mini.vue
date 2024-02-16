@@ -12,13 +12,13 @@
 
       <div class="ml-auto">
         <UButtonGroup size="sm" orientation="horizontal" class="ml-2" v-if="!noCoin">
-          <UButton :label="miniNum ? miniMoney(user.currency?.coin) : toMoney(user.currency?.coin)" color="gray" @click="navigateToSSL('/action/payment')" />
-          <UButton  color="primary" icon="i-bxs-dollar-circle"></UButton>
+          <UButton :label="miniNum ? miniMoney(user.currency?.coin) : toMoney(user.currency?.coin)" color="gray" @click="navigateToSSL('/main/action/payment')" />
+          <UButton  color="primary" icon="i-bxs-dollar-circle" @click="navigateToSSL('/main/action/payment')"></UButton>
         </UButtonGroup>
 
         <UButtonGroup size="sm" orientation="horizontal" class="ml-2" v-if="!noWheel">
-          <UButton :label="miniNum ? miniMoney(user.currency?.wheel) : toMoney(user.currency?.wheel)" color="gray" @click="navigateToSSL('/minigame/wheel')" />
-          <UButton  color="primary" icon="i-bxs-color"></UButton>
+          <UButton :label="miniNum ? miniMoney(user.currency?.wheel) : toMoney(user.currency?.wheel)" color="gray" @click="navigateToSSL('/main/minigame/wheel')" />
+          <UButton  color="primary" icon="i-bxs-color" @click="navigateToSSL('/main/minigame/wheel')"></UButton>
         </UButtonGroup>
 
         <UButtonGroup size="sm" orientation="horizontal" class="ml-2" v-if="!noNotify">
@@ -27,8 +27,8 @@
         </UButtonGroup>
 
         <UButtonGroup size="sm" orientation="horizontal" class="ml-2" v-if="!noDiamond">
-          <UButton :label="miniNum ? miniMoney(user.currency?.diamond) : toMoney(user.currency?.diamond)" color="gray" @click="navigateToSSL('/action/withdraw')" />
-          <UButton  color="primary" icon="i-bxs-diamond"></UButton>
+          <UButton :label="miniNum ? miniMoney(user.currency?.diamond) : toMoney(user.currency?.diamond)" color="gray" @click="navigateToSSL('/main/action/withdraw')" />
+          <UButton  color="primary" icon="i-bxs-diamond" @click="navigateToSSL('/main/action/withdraw')"></UButton>
         </UButtonGroup>
       </div>
     </UiFlex>
