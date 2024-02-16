@@ -5,8 +5,8 @@
     </svg>
     <img v-else :src="useMakeLink().imgLink(configStore.config.logo_long_image)" class="w-auto h-[calc(var(--header-size)*0.6)] mr-2">
 
-    <UiText class="md:text-lg text-sm md:inline hidden" weight="bold" v-if="!configStore.config.logo_long_image">{{ text[0] }}</UiText>
-    <UiText class="md:text-lg text-sm md:inline hidden" weight="bold" color="primary" v-if="!configStore.config.logo_long_image">{{ text[1] }}</UiText>
+    <UiText class="md:text-lg text-sm" weight="bold" v-if="!configStore.config.logo_long_image">{{ text[0] }}</UiText>
+    <UiText class="md:text-lg text-sm" weight="bold" color="primary" v-if="!configStore.config.logo_long_image">{{ text[1] }}</UiText>
   </UiFlex>
 </template>
 

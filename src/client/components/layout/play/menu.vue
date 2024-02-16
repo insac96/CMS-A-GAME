@@ -9,15 +9,27 @@
       />
     </UDropdown>
 
-    <UModal v-model="modal.payment" preventClose>
-      <PlayModal title="Nạp xu" @close="modal.payment = false">
+    <UModal v-model="modal.action.payment" preventClose>
+      <PlayModal title="Nạp xu" @close="modal.action.payment = false">
         <MainActionPayment />
       </PlayModal>
     </UModal>
 
-    <UModal v-model="modal.giftcode" preventClose>
-      <PlayModal title="Giftcode" @close="modal.giftcode = false">
+    <UModal v-model="modal.action.withdraw" preventClose>
+      <PlayModal title="Rút tiền" @close="modal.action.withdraw = false">
+        <MainActionWithdraw />
+      </PlayModal>
+    </UModal>
+
+    <UModal v-model="modal.action.giftcode" preventClose>
+      <PlayModal title="Giftcode" @close="modal.action.giftcode = false">
         <MainActionGiftcode />
+      </PlayModal>
+    </UModal>
+
+    <UModal v-model="modal.shop.pack" preventClose :ui="{ width: 'lg:max-w-3xl md:max-w-2xl sm:max-w-xl' }">
+      <PlayModal title="Cửa hàng gói" @close="modal.shop.pack = false">
+        <MainShopPack />
       </PlayModal>
     </UModal>
 
@@ -51,14 +63,14 @@
       </PlayModal>
     </UModal>
 
-    <UModal v-model="modal.wheel" preventClose :ui="{ width: 'md:max-w-2xl sm:max-w-xl' }">
-      <PlayModal title="Vòng quay may mắn" @close="modal.wheel = false">
+    <UModal v-model="modal.minigame.wheel" preventClose :ui="{ width: 'md:max-w-2xl sm:max-w-xl' }">
+      <PlayModal title="Vòng quay may mắn" @close="modal.minigame.wheel = false">
         <MainMinigameWheel :history="false" />
       </PlayModal>
     </UModal>
 
-    <UModal v-model="modal.dice" preventClose :ui="{ width: 'md:max-w-2xl sm:max-w-xl' }">
-      <PlayModal title="Xúc xắc may mắn" @close="modal.dice = false">
+    <UModal v-model="modal.minigame.dice" preventClose :ui="{ width: 'md:max-w-2xl sm:max-w-xl' }">
+      <PlayModal title="Xúc xắc may mắn" @close="modal.minigame.dice = false">
         <MainMinigameDice :history="false" />
       </PlayModal>
     </UModal>
@@ -68,9 +80,13 @@
 <script setup>
 const configStore = useConfigStore()
 const modal = ref({
-  payment: false,
-  giftcode: false,
+  action: {
+    payment: false,
+    withdraw: false,
+    giftcode: false,
+  },
   shop: {
+    pack: false,
     item: false,
     currency: false
   },
@@ -79,8 +95,10 @@ const modal = ref({
     pay: false,
     spend: false
   },
-  wheel: false,
-  dice: false
+  minigame: {
+    wheel: false,
+    dice: false
+  }
 })
 
 const show = ref(configStore.config.menu)
@@ -94,12 +112,17 @@ const menu = computed(() => {
     if(!!show.value.action.payment) action.push({
       label: 'Nạp xu',
       icon: 'i-bx-credit-card',
-      click: () => modal.value.payment = true
+      click: () => modal.value.action.payment = true
+    })
+    if(!!show.value.action.withdraw) action.push({
+      label: 'Rút tiền',
+      icon: 'i-bx-money-withdraw',
+      click: () => modal.value.action.withdraw = true
     })
     if(!!show.value.action.giftcode) action.push({
       label: 'Giftcode',
       icon: 'i-bx-barcode-reader',
-      click: () => modal.value.giftcode = true
+      click: () => modal.value.action.giftcode = true
     })
     list.push(action)
   }
@@ -107,6 +130,11 @@ const menu = computed(() => {
   // Shop
   if(!!show.value.shop.item || !!show.value.shop.currency){
     const shop = []
+    if(!!show.value.shop.pack) shop.push({
+      label: 'CH Gói',
+      icon: 'i-bx-package',
+      click: () => modal.value.shop.pack = true
+    })
     if(!!show.value.shop.item) shop.push({
       label: 'CH Vật phẩm',
       icon: 'i-bx-shopping-bag',
@@ -152,14 +180,31 @@ const menu = computed(() => {
     if(!!show.value.minigame.wheel) minigame.push({
       label: 'Vòng quay',
       icon: 'i-bxs-color',
-      click: () => modal.value.wheel = true
+      click: () => modal.value.minigame.wheel = true
     })
     if(!!show.value.minigame.dice) minigame.push({
       label: 'Xúc xắc',
       icon: 'i-bx-dice-6',
-      click: () => modal.value.dice = true
+      click: () => modal.value.minigame.dice = true
     })
     list.push(minigame)
+  }
+
+  if(!!show.value.social.facebook || !!show.value.social.group){
+    const social = []
+
+    if(!!show.value.social.facebook) social.push({
+      label: 'Fanpage',
+      icon: 'i-bxl-facebook',
+      click: () => window.open(configStore.config.social.facebook, '_blank')
+    })
+    if(!!show.value.social.group) social.push({
+      label: 'Group',
+      icon: 'i-bxs-group',
+      click: () => window.open(configStore.config.social.zalo, '_blank')
+    })
+
+    list.push(social)
   }
 
   return list

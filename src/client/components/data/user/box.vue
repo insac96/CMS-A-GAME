@@ -131,8 +131,8 @@ const startCopy = (text) => {
 
 const goToAdmin = (type) => {
   if(type < 1) return
-  useTo().navigateToSSL('/admin')
   emit('action')
+  nextTick().then(() => useTo().navigateToSSL('/admin'), 500)
 }
 
 const getUserBox = async () => {

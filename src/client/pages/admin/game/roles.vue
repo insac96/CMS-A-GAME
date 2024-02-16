@@ -10,6 +10,7 @@
         </UiFlex>
       </UForm>
 
+      <UBadge color="gray" size="lg" class="ml-1">{{ page.total }} <UIcon name="i-bxs-user" class="ml-1" /></UBadge>
       <SelectGameServer v-model="page.server_id" size="sm" class="ml-1" />
     </UiFlex>
     
@@ -85,6 +86,10 @@ const columns = [
   },{
     key: 'power',
     label: 'Lực chiến',
+    sortable: true
+  },{
+    key: 'vip',
+    label: 'VIP',
     sortable: true
   },{
     key: 'knb',
