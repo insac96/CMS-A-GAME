@@ -94,11 +94,11 @@ const menu = [
     icon: 'i-bx-barcode-reader',
     click: () => modal.value.giftcode = true
   }],
-  [{
-    label: 'Sự kiện tết',
-    icon: 'i-bx-party',
-    click: () => useTo().navigateToSSL('/main/lunanewyear')
-  }],
+  // [{
+  //   label: 'Sự kiện tết',
+  //   icon: 'i-bx-party',
+  //   click: () => useTo().navigateToSSL('/main/lunanewyear')
+  // }],
   [{
     label: 'Hỗ trợ',
     icon: 'i-bx-support',
