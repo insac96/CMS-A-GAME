@@ -1,8 +1,8 @@
 <template>
-  <div id="BoxChat" class="relative w-full h-full overflow-x-hidden overflow-y-auto p-3">
+  <div id="BoxChat" class="relative w-full h-full max-h-full p-2">
     <LoadingTable class="rounded-none" v-if="!!loading" />
 
-    <UiFlex type="col" class="w-full gap-y-4" v-else>
+    <UiFlex type="col" class="w-full h-full overflow-x-hidden overflow-y-auto gap-y-4" v-else>
       <UiFlex v-for="chat in chats" :key="chat._id" class="w-full">
         <!-- Right -->
         <UiFlex 

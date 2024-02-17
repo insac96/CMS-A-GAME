@@ -12,7 +12,7 @@
 
     <USlideover v-model="open" :ui="{ width: 'w-screen md:max-w-sm max-w-xs'}">
       <UCard 
-        class="flex flex-col flex-1" 
+        class="flex flex-col flex-1 max-h-full" 
         :ui="{ 
           body: { base: 'flex grow overflow-hidden', padding: '' },
           header: { padding: '' },

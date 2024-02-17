@@ -97,10 +97,9 @@
 <script setup>
 import { useClipboard } from '@vueuse/core'
 
+const runtimeConfig = useRuntimeConfig()
 const { copy, isSupported } = useClipboard()
-
 const { miniMoney } = useMoney()
-
 const emit = defineEmits(['action', 'update:userData'])
 
 const props = defineProps({
@@ -131,8 +130,7 @@ const startCopy = (text) => {
 
 const goToAdmin = (type) => {
   if(type < 1) return
-  emit('action')
-  nextTick().then(() => useTo().navigateToSSL('/admin'))
+  window.location.href = `${runtimeConfig.public.clientURL}/admin`
 }
 
 const getUserBox = async () => {

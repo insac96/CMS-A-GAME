@@ -131,6 +131,7 @@ const navItems = [
       { label: 'Gửi thư', to: '/admin/game/send' },
       { label: 'Vật phẩm', to: '/admin/game/item' },
       { label: 'Gói vật phẩm', to: '/admin/game/itembox' }, 
+      { label: 'Máy chủ', to: '/admin/game/server' },
       { label: 'Nhân vật', to: '/admin/game/roles' },
       { label: 'Quà xếp hạng', to: '/admin/game/rankgift' },
     ]
