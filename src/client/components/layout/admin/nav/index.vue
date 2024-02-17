@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UButton block size="md" class="mb-2" @click="useTo().navigateToSSL('/')">Trang Chủ</UButton>
+    <UButton block size="md" class="mb-2" @click="openLink(runtimeConfig.public.clientURL)">Trang Chủ</UButton>
 
     <UAccordion 
       :items="navItems" 
@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+const runtimeConfig = useRuntimeConfig()
 const emit = defineEmits(['to'])
 const navItems = [
   {
@@ -205,4 +206,8 @@ const navItems = [
     ]
   }
 ]
+
+const openLink = (link) => {
+  window.location.href = link
+}
 </script>
