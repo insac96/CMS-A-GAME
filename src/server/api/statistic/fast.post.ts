@@ -2,10 +2,17 @@ import type { IAuth } from '~~/types'
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = await getAuth(event) as IAuth
-    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+    const { type, secret } = await readBody(event)
+    if(!type) throw 'Dữ liệu đầu vào không đủ'
 
-    const { type } = await readBody(event)
+    if(!secret){
+      const auth = await getAuth(event) as IAuth
+      if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+    }
+    else {
+      const runtimeConfig = useRuntimeConfig()
+      if(secret != runtimeConfig.apiSecret) throw 'Khóa bí mật không đúng'
+    }
 
     let start : any, end : any, format : any
     const now = DayJS(Date.now())
