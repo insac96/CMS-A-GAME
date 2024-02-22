@@ -42,6 +42,7 @@ const isActive = computed(() => {
 const submit = async () => {
   try {
     loading.value = true
+    await useAPI('auth/get')
     await useAPI('event/receive', JSON.parse(JSON.stringify(state.value)))
 
     loading.value = false

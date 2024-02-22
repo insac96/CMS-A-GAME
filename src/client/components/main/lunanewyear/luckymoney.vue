@@ -77,6 +77,7 @@ const submit = async () => {
   try {
     loading.value = true
 
+    await useAPI('auth/get')
     const data = await useAPI('lunanewyear/luckymoney/open', JSON.parse(JSON.stringify(state.value)))
     gift.value = data
 

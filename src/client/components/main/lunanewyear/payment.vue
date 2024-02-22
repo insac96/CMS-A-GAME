@@ -75,6 +75,7 @@ const submit = async () => {
     
     loading.value = true
     state.value.payment = eventSelect.value._id
+    await useAPI('auth/get')
     await useAPI('lunanewyear/payment/receive', JSON.parse(JSON.stringify(state.value)))
     
     loading.value = false
