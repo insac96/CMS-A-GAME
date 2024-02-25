@@ -97,6 +97,7 @@
 <script setup>
 import { useClipboard } from '@vueuse/core'
 
+const route = useRoute()
 const runtimeConfig = useRuntimeConfig()
 const { copy, isSupported } = useClipboard()
 const { miniMoney } = useMoney()
@@ -137,7 +138,8 @@ const getUserBox = async () => {
   try {
     loading.value = true
     const get = await useAPI('user/getBox', {
-      _id: props.fetchId
+      _id: props.fetchId,
+      secret: route.params._secret
     })
 
     user.value = get

@@ -35,6 +35,7 @@
 </template>
 
 <script setup>
+const route = useRoute()
 const { toMoney } = useMoney()
 const props = defineProps(['fetchId'])
 const loading = ref(true)
@@ -42,7 +43,10 @@ const withdraw = ref(undefined)
 
 const fetch = async () => {
   try {
-    const data = await useAPI('withdraw/get', { _id: props.fetchId })
+    const data = await useAPI('withdraw/get', { 
+      _id: props.fetchId,
+      secret: route.params._secret
+    })
     loading.value = false
     withdraw.value = data
   }

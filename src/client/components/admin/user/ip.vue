@@ -23,8 +23,11 @@
         </template>
 
         <template #action-data="{ row }">
-          <UButton v-if="!row.block" color="gray" size="xs" icon="i-bxs-lock-alt" @click="block(row.ip, 'block')" :loading="loading.block" />
-          <UButton v-if="!!row.block" color="gray" size="xs" icon="i-bxs-lock-open-alt" @click="block(row.ip, 'unblock')" :loading="loading.block" />
+          <span v-if="!!route.params._secret">...</span>
+          <div v-else>
+            <UButton v-if="!row.block" color="gray" size="xs" icon="i-bxs-lock-alt" @click="block(row.ip, 'block')" :loading="loading.block" />
+            <UButton v-if="!!row.block" color="gray" size="xs" icon="i-bxs-lock-open-alt" @click="block(row.ip, 'unblock')" :loading="loading.block" />
+          </div>
         </template>
       </UTable>
 
@@ -39,6 +42,8 @@
 
 <script setup>
 const props = defineProps(['user'])
+
+const route = useRoute()
 
 const loading = ref({
   load: true,
@@ -73,7 +78,8 @@ const page = ref({
     direction: 'desc'
   },
   total: 0,
-  user: props.user
+  user: props.user,
+  secret: route.params._secret
 })
 watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())

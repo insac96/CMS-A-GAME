@@ -31,6 +31,7 @@
 
 <script setup>
 const props = defineProps(['typeDefault', 'user'])
+const route = useRoute()
 const { toMoney } = useMoney()
 const authStore = useAuthStore()
 const loading = ref(false)
@@ -96,7 +97,8 @@ const getStatistical = async () => {
 
     loading.value = true
     const get = await useAPI('user/getStatistical', JSON.parse(JSON.stringify({
-      user: props.user
+      user: props.user,
+      secret: route.params._secret
     })))
 
     statistical.value = get

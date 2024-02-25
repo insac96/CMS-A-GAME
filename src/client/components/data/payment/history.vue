@@ -44,7 +44,8 @@
         </template>
 
         <template #undo-data="{ row }">
-          <UButton color="gray" size="xs" :disabled="row.status > 0" @click="openUndo(row)">Hủy</UButton>
+          <span v-if="!!route.params._secret">...</span>
+          <UButton v-else color="gray" size="xs" :disabled="row.status > 0" @click="openUndo(row)">Hủy</UButton>
         </template>
       </UTable>
 
@@ -87,6 +88,8 @@
 
 <script setup>
 const props = defineProps(['user'])
+
+const route = useRoute()
 
 const { toMoney } = useMoney()
 
@@ -142,7 +145,8 @@ const page = ref({
     end: null
   },
   total: 0,
-  user: props.user || null
+  user: props.user || null,
+  secret: route.params._secret
 })
 watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())

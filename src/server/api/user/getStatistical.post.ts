@@ -2,12 +2,22 @@ import type { IAuth } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = await getAuth(event) as IAuth
+    const { user, secret } = await readBody(event)
 
-    const { user } = await readBody(event)
-
+    let auth : IAuth | null = null
+    let userCheck = null
+    if(!secret){
+      auth = await getAuth(event) as IAuth
+      userCheck = !!user ? user : auth._id
+    }
+    else {
+      const runtimeConfig = useRuntimeConfig()
+      if(secret != runtimeConfig.apiSecret) throw 'Khóa bí mật không đúng'
+      userCheck = user
+    }
+    
     const userData = await DB.User
-    .findOne({ _id: !!user ? user : auth._id })
+    .findOne({ _id: userCheck })
     .select('login pay spend wheel dice referral')
     if(!userData) throw 'Không tìm thấy thông tin tài khoản'
 

@@ -35,6 +35,8 @@
 </template>
 
 <script setup>
+const route = useRoute()
+
 // List
 const list = ref([])
 
@@ -64,7 +66,8 @@ const page = ref({
     start: null,
     end: null
   },
-  total: 0
+  total: 0,
+  secret: route.params._secret || null
 })
 watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())

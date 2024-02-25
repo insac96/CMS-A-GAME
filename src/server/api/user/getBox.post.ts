@@ -2,11 +2,19 @@ import type { IAuth } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = await getAuth(event, false) as IAuth | null
-    const { _id } = await readBody(event)
+    const { _id, secret } = await readBody(event)
+
+    let auth : IAuth | null = null
+    if(!secret){
+      auth = await getAuth(event, false) as IAuth | null
+    }
+    else {
+      const runtimeConfig = useRuntimeConfig()
+      if(secret != runtimeConfig.apiSecret) throw 'Khóa bí mật không đúng'
+    }
 
     const select = ['username', 'avatar', 'level', 'type']
-    if(!!auth && (auth.type > 0 || auth._id == _id)){
+    if(!!secret || (!!auth && (auth.type > 0 || auth._id == _id))){
       select.push(...['currency', 'email', 'phone', 'block', 'referral', 'pay', 'spend'])
     }
 
@@ -20,7 +28,7 @@ export default defineEventHandler(async (event) => {
 
     if(!user) throw 'Không tìm thấy thông tin tài khoản'
 
-    if(!!user.phone && (!auth || (!!auth && auth.type < 1))){
+    if(!!user.phone && (!secret || !auth || (!!auth && auth.type < 1))){
       const fullNumber = user.phone
       const last4Digits = fullNumber.slice(-2)
       const maskedNumber = last4Digits.padStart(fullNumber.length, '*')

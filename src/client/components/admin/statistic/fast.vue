@@ -42,7 +42,8 @@
 </template>
 
 <script setup>
-const { toMoney, miniMoney } = useMoney()
+const route = useRoute()
+const { toMoney } = useMoney()
 
 const loading = ref(false)
 const tab = ref(0)
@@ -63,7 +64,10 @@ const type = computed(() => {
 const getData = async () => {
   try {
     loading.value = true
-    const get = await useAPI('statistic/fast', { type: type.value })
+    const get = await useAPI('statistic/fast', { 
+      type: type.value,
+      secret: route.params._secret || null
+    })
 
     data.value = get
     loading.value = false

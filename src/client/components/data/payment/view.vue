@@ -76,6 +76,7 @@
 <script setup>
 import { useClipboard } from '@vueuse/core'
 
+const route = useRoute()
 const { copy, isSupported } = useClipboard()
 const { toMoney } = useMoney()
 const props = defineProps(['fetchId'])
@@ -90,7 +91,10 @@ const startCopy = (text) => {
 
 const fetch = async () => {
   try {
-    const data = await useAPI('payment/get', { _id: props.fetchId })
+    const data = await useAPI('payment/get', { 
+      _id: props.fetchId,
+      secret: route.params._secret
+    })
     loading.value = false
     payment.value = data
   }

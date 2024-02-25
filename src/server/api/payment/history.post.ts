@@ -2,16 +2,26 @@ import type { IAuth } from "~~/types"
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = await getAuth(event) as IAuth
-
-    const { size, current, sort, search, user, range } = await readBody(event)
+    const { size, current, sort, search, user, range, secret } = await readBody(event)
     if(!size || !current || !search) throw 'Dữ liệu phân trang sai'
     if(!sort.column || !sort.direction) throw 'Dữ liệu sắp xếp sai'
+
+    let auth : IAuth | null = null
+    let userCheck = null
+    if(!secret){
+      auth = await getAuth(event) as IAuth
+      userCheck = !!user ? user : auth._id
+    }
+    else {
+      const runtimeConfig = useRuntimeConfig()
+      if(secret != runtimeConfig.apiSecret) throw 'Khóa bí mật không đúng'
+      userCheck = user
+    }
 
     const sorting : any = { }
     sorting[sort.column] = sort.direction == 'desc' ? -1 : 1
 
-    const match : any = { user: !!user ? user : auth._id }
+    const match : any = { user: userCheck }
     if(search.key && search.by){
       match['$text'] = { '$search': search.key }
     }

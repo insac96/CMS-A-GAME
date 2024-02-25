@@ -35,6 +35,8 @@
 <script setup>
 const props = defineProps(['user'])
 
+const route = useRoute()
+
 const loading = ref({
   load: true,
   block: false
@@ -64,7 +66,8 @@ const page = ref({
     direction: 'desc'
   },
   total: 0,
-  user: props.user
+  user: props.user,
+  secret: route.params._secret
 })
 watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())

@@ -48,6 +48,8 @@ const { toMoney } = useMoney()
 
 const props = defineProps(['reload', 'user'])
 
+const route = useRoute()
+
 const loading = ref({
   load: true
 })
@@ -84,7 +86,8 @@ const page = ref({
     direction: 'desc'
   },
   total: 0,
-  user: props.user || null
+  user: props.user || null,
+  secret: route.params._secret
 })
 
 watch(() => props.reload, () => getList())

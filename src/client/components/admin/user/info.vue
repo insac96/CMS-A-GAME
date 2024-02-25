@@ -2,7 +2,7 @@
   <div>
     <DataUserBox :fetch-id="user" v-model:user-data="userData">
       <template #more>
-        <UDropdown :items="actions()" v-if="userData">
+        <UDropdown :items="actions()" v-if="!!userData && !route.params._secret">
           <UButton color="gray" icon="i-bx-dots-horizontal-rounded" />
         </UDropdown>
       </template>
@@ -181,6 +181,8 @@
 
 <script setup>
 const props = defineProps(['user'])
+
+const route = useRoute()
 
 const userData = ref(null)
 
