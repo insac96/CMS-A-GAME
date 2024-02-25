@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
 
     if(!user) throw 'Không tìm thấy thông tin tài khoản'
 
-    if(!!user.phone && (!secret || !auth || (!!auth && auth.type < 1))){
+    if(!!user.phone && (!auth || (!!auth && auth.type < 1))){
       const fullNumber = user.phone
       const last4Digits = fullNumber.slice(-2)
       const maskedNumber = last4Digits.padStart(fullNumber.length, '*')
