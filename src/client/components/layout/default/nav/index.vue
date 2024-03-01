@@ -58,7 +58,7 @@ const navItems = computed(() => {
     }
 
     if(!!show.value.action.payment) action.children.push({ label: 'Nạp xu', to: '/main/action/payment' })
-    if(!!show.value.action.withdraw) action.children.push({ label: 'Rút tiền', to: '/main/action/withdraw' })
+    if(!!show.value.action.withdraw) action.children.push({ label: 'Đổi xu', to: '/main/action/withdraw' })
     if(!!show.value.action.giftcode) action.children.push({ label: 'Giftcode', to: '/main/action/giftcode' })
 
     list.push(action)
@@ -82,7 +82,7 @@ const navItems = computed(() => {
   }
 
   // Event
-  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend || !!show.value.event.lunanewyear){
+  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend || !!show.value.event.limitedevent){
     const action = {
       label: 'Sự Kiện',
       icon: 'i-bx-calendar',
@@ -94,7 +94,7 @@ const navItems = computed(() => {
     if(!!show.value.event.login) action.children.push({ label: 'Đăng nhập', to: '/main/event/login' })
     if(!!show.value.event.pay) action.children.push({ label: 'Tích nạp', to: '/main/event/pay' })
     if(!!show.value.event.spend) action.children.push({ label: 'Tiêu phí', to: '/main/event/spend' })
-    if(!!show.value.event.lunanewyear) action.children.push({ label: 'Tết nguyên đán', to: '/main/lunanewyear' })
+    if(!!show.value.event.limitedevent) action.children.push({ label: 'Hạn thời', to: '/main/limitedevent' })
 
     list.push(action)
   }

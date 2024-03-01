@@ -34,7 +34,7 @@ export const DBUser = (mongoose : Mongoose) => {
       notify: { type: Number, default: 0, index: true },
       diamond: { type: Number, default: 0, index: true },
     },
-    lunanewyear: {
+    limitedevent: {
       luckymoney: { type: Number, default: 1, index: true },
       payment: {
         day: { type: Number, default: 0, index: true },

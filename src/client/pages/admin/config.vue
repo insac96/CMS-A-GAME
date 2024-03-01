@@ -39,8 +39,8 @@
           </UiFlex>
 
           <UiFlex justify="between" class="mb-4">
-            <UiText weight="semibold">Sự kiện tết</UiText>
-            <UToggle v-model="state.enable.lunanewyear" />
+            <UiText weight="semibold">Sự kiện hạn thời</UiText>
+            <UToggle v-model="state.enable.limitedevent" />
           </UiFlex>
           
           <div class="mb-4">
@@ -161,7 +161,7 @@
           </UiFlex>
 
           <UiFlex justify="between" class="mb-4">
-            <UiText weight="semibold">Rút tiền</UiText>
+            <UiText weight="semibold">Đổi xu</UiText>
             <UToggle v-model="state.menu.action.withdraw" />
           </UiFlex>
 
@@ -209,8 +209,8 @@
           </UiFlex>
 
           <UiFlex justify="between">
-            <UiText weight="semibold">Tết nguyên đán</UiText>
-            <UToggle v-model="state.menu.event.lunanewyear" />
+            <UiText weight="semibold">Hạn thời</UiText>
+            <UToggle v-model="state.menu.event.limitedevent" />
           </UiFlex>
         </UCard>
 
@@ -454,7 +454,7 @@ const state = ref({
       login: false,
       pay: false,
       spend: false,
-      lunanewyear: false
+      limitedevent: false
     },
     minigame: {
       wheel: false,
@@ -477,7 +477,7 @@ const state = ref({
     referral: true,
     teaser: false,
     landing: false,
-    lunanewyear: false
+    limitedevent: false
   },
 
   homepage: {

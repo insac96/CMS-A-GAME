@@ -10,7 +10,7 @@
       </UiFlex>
     </UCard>
 
-    <div class="relative min-h-[200px]">
+    <div class="relative">
       <LoadingTable v-if="loading" />
 
       <div v-else>

@@ -45,7 +45,7 @@ export default async (
   if(payment.status > 0) throw 'Không thể thao tác trên giao dịch này'
 
   // Get Other
-  const user = await DB.User.findOne({ _id: payment.user }).select('level referral lunanewyear') as IDBUser
+  const user = await DB.User.findOne({ _id: payment.user }).select('level referral limitedevent') as IDBUser
   if(!user) throw 'Không tìm thấy thông tin tài khoản'
   const level = await DB.Level.findOne({ _id: user.level }).select('bonus bonus_wheel') as IDBLevel
   if(!level) throw 'Không tìm thấy thông tin cấp độ tài khoản'
@@ -139,31 +139,32 @@ export default async (
     if(!!user.referral.person){
       const referraler = await DB.User
       .findOne({ _id: user.referral.person })
-      .select('level')
-      .populate({ path: 'level', select: 'bonus_presentee_pay' })
+      .select('level username')
+      .populate({ path: 'level', select: 'bonus_presentee_pay' }) as IDBUser
 
       if(!!referraler){
-        const diamondBonus = parseInt(String(referraler.level.bonus_presentee_pay || 0))
+        const diamondBonus = parseInt(String((referraler.level as IDBLevel).bonus_presentee_pay || 0))
         if(diamondBonus > 0){
           const diamond = Math.floor(realMoney * (diamondBonus / 100))
 
           await DB.User.updateOne({ _id: referraler._id },{ $inc: { 'currency.diamond': diamond }})
+          logUser(event, user._id, `Nhận được <b>${diamond.toLocaleString('vi-VN')} Cống Hiến</b> từ giao dịch nạp tiền <b>${payment.code}</b> của bạn bè <b>${referraler.username}</b>`)
           await sendNotifyUser(event, {
             to: [ referraler._id ],
             type: 2,
             color: 'primary',
-            content: `Bạn nhận được <b>${diamond.toLocaleString('vi-VN')} Kim Cương</b> từ giao dịch nạp tiền của bạn bè`
+            content: `Bạn nhận được <b>${diamond.toLocaleString('vi-VN')} Cống Hiến</b> từ giao dịch nạp tiền của bạn bè <b>${referraler.username}</b>`
           })
         }
       }
     }
 
-    // Update Luna New Year Payment
-    if(!!webConfig.enable.lunanewyear){
+    // Update Limited Event Payment
+    if(!!webConfig.enable.limitedevent){
       // Payment
-      if(user.lunanewyear.payment.day == 0) user.lunanewyear.payment.day = 1
+      if(user.limitedevent.payment.day == 0) user.limitedevent.payment.day = 1
       else {
-        if(!lastPaymentDone) user.lunanewyear.payment.day = 1
+        if(!lastPaymentDone) user.limitedevent.payment.day = 1
         else {
           const payNowTime = formatDate(event, time)
           const payLastTime = formatDate(event, lastPaymentDone.verify.time)
@@ -177,22 +178,22 @@ export default async (
             const lastStart = payLastTime.dayjs.startOf('day').unix()
             
             if((nowStart - lastStart) > (24 * 60 * 60)){
-              user.lunanewyear.payment.day = 1
-              user.lunanewyear.payment.receive = 0
+              user.limitedevent.payment.day = 1
+              user.limitedevent.payment.receive = 0
             }
             else {
-              user.lunanewyear.payment.day = user.lunanewyear.payment.day + 1
+              user.limitedevent.payment.day = user.limitedevent.payment.day + 1
             }
           }
         }
       }
 
       // Mission
-      const mission = await DB.LunaPayMission.findOne({ need: money })
+      const mission = await DB.LimitedEventPayMission.findOne({ need: money })
       if(!!mission){
-        const missionCheck = user.lunanewyear.paymission.find(i => i.money == money)
+        const missionCheck = user.limitedevent.paymission.find(i => i.money == money)
         if(!missionCheck){
-          user.lunanewyear.paymission.push({
+          user.limitedevent.paymission.push({
             money: money,
             receive: false
           })

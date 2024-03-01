@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Withdraw" sub="Quản lý giao dịch rút tiền">
+  <UiContent title="Withdraw" sub="Quản lý giao dịch đổi xu">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
       <UForm :state="page" @submit="getList" class="mr-4">
@@ -86,19 +86,7 @@
           <UInput :model-value="stateSuccess.code" readonly />
         </UFormGroup>
 
-        <UFormGroup label="Ngân hàng">
-          <UInput :model-value="stateSuccess.bank.name" readonly />
-        </UFormGroup>
-
-        <UFormGroup label="Số tài khoản">
-          <UInput :model-value="stateSuccess.bank.number" readonly />
-        </UFormGroup>
-
-        <UFormGroup label="Người hưởng thụ">
-          <UInput :model-value="stateSuccess.bank.person" readonly />
-        </UFormGroup>
-
-        <UFormGroup label="Số tiền">
+        <UFormGroup label="Số xu">
           <UInput :model-value="toMoney(stateSuccess.diamond)" readonly />
         </UFormGroup>
 
@@ -145,7 +133,7 @@ const columns = [
     label: 'Người tạo',
   },{
     key: 'diamond',
-    label: 'Số tiền',
+    label: 'Số xu',
     sortable: true
   },{
     key: 'status',
@@ -193,7 +181,6 @@ watch(() => page.value.search.key, (val) => !val && getList())
 const stateSuccess = ref({
   _id: null,
   code: null,
-  bank: null,
   diamond: null,
   status: null
 })

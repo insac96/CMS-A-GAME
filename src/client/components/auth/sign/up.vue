@@ -29,65 +29,6 @@
         <UButton type="submit" :loading="loading.signup">Xác Nhận</UButton>
       </UiFlex>
     </UForm>
-
-    <UModal v-model="modal.referral" prevent-close>
-      <UCard>
-        <UAlert
-          icon="i-heroicons-command-line"
-          color="primary"
-          variant="subtle"
-          title="Đăng Ký Thành Công"
-          class="mb-4"
-        >
-          <template #description>
-            <UiText class="mb-1.5">- Hãy sử dụng mã mời để giới thiệu bạn bè cùng tham gia.</UiText>
-            <UiText class="mb-1.5">- Bạn sẽ nhận được Điểm Cống Hiến mỗi khi bạn bè của bạn nạp tiền thành công.</UiText>
-            <UiText class="mb-1.5">- Sử dụng điểm cống hiến có thể rút tiền về tài khoản ngân hàng của bạn.</UiText>
-            <UiText>- Ví dụ khi bạn bè bạn giới thiếu nạp <b>1.000.000đ</b>, bạn sẽ nhận được <b>500.000đ</b></UiText>
-          </template>
-        </UAlert>
-
-        <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2">
-          <UiFlex class="mr-6">
-            <UiIcon name="i-bx-user" size="5" class="mr-2" />
-            <UiText weight="semibold" size="sm">Tài khoản</UiText>
-          </UiFlex>
-          
-          <UiText size="sm" weight="bold" color="primary">{{ state.username }}</UiText>
-        </UiFlex>
-
-        <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2">
-          <UiFlex class="mr-6">
-            <UiIcon name="i-bx-envelope" size="5" class="mr-2" />
-            <UiText weight="semibold" size="sm">Email</UiText>
-          </UiFlex>
-          
-          <UiText size="sm" weight="bold" color="primary">{{ state.email }}</UiText>
-        </UiFlex>
-
-        <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2">
-          <UiFlex class="mr-6">
-            <UiIcon name="i-bx-phone" size="5" class="mr-2" />
-            <UiText weight="semibold" size="sm">Điện thoại</UiText>
-          </UiFlex>
-          
-          <UiText size="sm" weight="bold" color="primary">{{ state.phone }}</UiText>
-        </UiFlex>
-
-        <UiFlex justify="between" class="text-gray-500 dark:text-gray-400 py-2">
-          <UiFlex class="mr-6">
-            <UiIcon name="i-bx-barcode" size="5" class="mr-2" />
-            <UiText weight="semibold" size="sm">Mã mời của bạn</UiText>
-          </UiFlex>
-          
-          <UiText size="sm" weight="bold" color="primary">{{ `${configStore.config.contact.prefix || 'GAME'}-${state.username.toUpperCase()}` }}</UiText>
-        </UiFlex>
-
-        <UiFlex justify="end" class="mt-4">
-          <UButton color="gray" :loading="loading.start" :disabled="timewait > 0" @click="start">Đóng {{ timewait > 0 ? `(${timewait}s)` : '' }}</UButton>
-        </UiFlex>
-      </UCard>
-    </UModal>
   </UCard>
 </template>
 
@@ -100,10 +41,6 @@ const emit = defineEmits(['done'])
 const loading = ref({
   signup: false,
   start: false
-})
-
-const modal = ref({
-  referral: false
 })
 
 const timewait = ref(10)
@@ -157,15 +94,7 @@ const submit = async () => {
   try {
     loading.value.signup = true
     await useAPI('auth/sign/up', JSON.parse(JSON.stringify(state.value)))
-
-    if(!!configStore.config.enable.referral) { 
-      modal.value.referral = true
-      loading.value.signup = false
-      startTimeWait()
-    }
-    else {
-      start()
-    }
+    start()
   }
   catch (e) {
     loading.value.signup = false
@@ -181,9 +110,7 @@ const start = async () => {
     $socket.emit('login', authStore.profile._id)
 
     loading.value.start = false
-    modal.value.referral = false
     useTo().navigateToSSL('/thankyou')
-    // emit('done')
   }
   catch(e){
     loading.value.start = false

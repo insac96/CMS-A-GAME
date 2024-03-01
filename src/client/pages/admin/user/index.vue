@@ -314,6 +314,10 @@ const columns = [
     label: 'Đăng nhập',
     sortable: true
   },{
+    key: 'referral',
+    label: 'Mời',
+    sortable: true
+  },{
     key: 'ip',
     label: 'IP',
   },{

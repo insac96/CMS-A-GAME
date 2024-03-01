@@ -10,23 +10,8 @@
           <UiText size="sm" weight="semibold">{{ withdraw.code || '...' }}</UiText>
         </UiFlex>
 
-        <UiFlex justify="between" class="mb-6">
-          <UiText size="sm" color="gray" weight="semibold">Ngân hàng</UiText>
-          <UiText size="sm" weight="semibold">{{ withdraw.bank?.name || '...' }}</UiText>
-        </UiFlex>
-
-        <UiFlex justify="between" class="mb-6">
-          <UiText size="sm" color="gray" weight="semibold" mini>Số tài khoản</UiText>
-          <UiText size="sm" weight="semibold" align="right" class="ml-4">{{ withdraw.bank?.number || '...' }}</UiText>
-        </UiFlex>
-
-        <UiFlex justify="between" class="mb-6">
-          <UiText size="sm" color="gray" weight="semibold" mini>Người hưởng thụ</UiText>
-          <UiText size="sm" weight="semibold" align="right" class="ml-4">{{ withdraw.bank?.person || '...' }}</UiText>
-        </UiFlex>
-
         <UiFlex justify="between">
-          <UiText size="sm" color="gray" weight="semibold" mini>Số tiền</UiText>
+          <UiText size="sm" color="gray" weight="semibold" mini>Số cống hiến</UiText>
           <UiText size="sm" weight="semibold" align="right" class="ml-4">{{ withdraw.diamond ? toMoney(withdraw.diamond) : '...' }}</UiText>
         </UiFlex>
       </UCard>

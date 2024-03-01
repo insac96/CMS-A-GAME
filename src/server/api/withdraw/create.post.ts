@@ -6,9 +6,7 @@ export default defineEventHandler(async (event) => {
 
     // Check Body
     const body = await readBody(event)
-    const { bank, diamond } = body
-    if(!bank || !diamond) throw 'Dữ liệu đầu vào không hợp lệ'
-    if(!bank.name || !bank.person || !bank.number) throw 'Thông tin ngân hàng không hợp lệ'
+    const { diamond } = body
     if(!!isNaN(parseInt(diamond)) || parseInt(diamond) < 1) throw 'Số tiền không hợp lệ'
     if(parseInt(diamond) < 10000) throw 'Số tiền phải lớn hơn hoặc bằng 10.000đ'
     if(parseInt(diamond) % 10000 != 0) throw 'Số tiền phải là bội số của 10.000'
@@ -25,7 +23,6 @@ export default defineEventHandler(async (event) => {
     // Create
     const withdraw = await DB.Withdraw.create({
       user: auth._id,
-      bank: bank,
       diamond: parseInt(diamond),
       code: code
     })

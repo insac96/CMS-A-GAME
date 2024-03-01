@@ -25,7 +25,7 @@ export const useConfigStore = defineStore('config', () => {
         login: false,
         pay: false,
         spend: false,
-        lunanewyear: false
+        limitedevent: false
       },
       minigame: {
         wheel: false,
@@ -47,7 +47,7 @@ export const useConfigStore = defineStore('config', () => {
       referral: true,
       teaser: false,
       landing: false,
-      lunanewyear: false
+      limitedevent: false
     },
     download: {
       apk: '',

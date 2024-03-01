@@ -59,21 +59,24 @@ export default async (
 
   // Check Status
   if(realStatus == 1){
+    await DB.User.updateOne({ _id: user._id }, { $inc: { 'currency.coin': withdraw.diamond }})
+
     realNotify = `
-      Bạn được duyệt thành công giao dịch rút tiền 
+      Bạn được duyệt thành công giao dịch đổi xu 
       <b>${withdraw.code}</b>
-      . Vui lòng kiểm tra tài khoản ngân hàng số tiền
-      <b>${withdraw.diamond.toLocaleString('vi-VN')}</b>
+      nhận về
+      <b>${withdraw.diamond.toLocaleString('vi-VN')} Xu</b>
     `
 
-    if(!!verifier) return logAdmin(event, `Chấp nhận giao dịch rút tiền <b>${withdraw.code}</b> với số tiền <b>${withdraw.diamond.toLocaleString('vi-VN')}</b>`, verifier)
+    logUser(event, withdraw.user, `Nhận <b>${withdraw.diamond.toLocaleString('vi-VN')} xu</b> từ giao dịch đổi xu <b>${withdraw.code}</b>`)
+    if(!!verifier) return logAdmin(event, `Chấp nhận giao dịch đổi xu <b>${withdraw.code}</b> với số cống hiến <b>${withdraw.diamond.toLocaleString('vi-VN')}</b>`, verifier)
   }
 
   else {
     await DB.User.updateOne({ _id: withdraw.user }, { $inc: { 'currency.diamond': withdraw.diamond }})
 
     realNotify = `
-      Bạn bị từ chối giao dịch rút tiền 
+      Bạn bị từ chối giao dịch đổi xu 
       <b>${withdraw.code}</b> 
       với lý do 
       <b>${realReason}</b> 
@@ -82,8 +85,8 @@ export default async (
       điểm cống hiến
     `
 
-    logUser(event, withdraw.user, `Hoàn <b>${withdraw.diamond.toLocaleString('vi-VN')} cống hiến</b> từ giao dịch rút tiền thất bại <b>${withdraw.code}</b>`)
-    if(!!verifier) return logAdmin(event, `Từ chối giao dịch rút tiền <b>${withdraw.code}</b> với lý do <b>${realReason}</b>`, verifier)
+    logUser(event, withdraw.user, `Hoàn <b>${withdraw.diamond.toLocaleString('vi-VN')} cống hiến</b> từ giao dịch đổi xu thất bại <b>${withdraw.code}</b>`)
+    if(!!verifier) return logAdmin(event, `Từ chối giao dịch đổi xu <b>${withdraw.code}</b> với lý do <b>${realReason}</b>`, verifier)
   }
 
   // Send Notify

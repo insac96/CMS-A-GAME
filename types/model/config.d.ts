@@ -30,7 +30,7 @@ export interface IDBConfig {
       login: boolean
       pay: boolean
       spend: boolean
-      lunanewyear: boolean
+      limitedevent: boolean
     }
     minigame: {
       wheel: boolean
@@ -52,7 +52,7 @@ export interface IDBConfig {
     referral: boolean
     teaser: boolean
     landing: boolean
-    lunanewyear: boolean
+    limitedevent: boolean
   }
   homepage: {
     teaser: Types.ObjectId
@@ -130,7 +130,7 @@ export interface IDBConfigStore {
     referral: boolean
     teaser: boolean
     landing: boolean
-    lunanewyear: boolean
+    limitedevent: boolean
   }
   download: {
     apk: string

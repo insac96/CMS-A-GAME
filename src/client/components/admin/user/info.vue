@@ -37,6 +37,10 @@
           <DataPaymentHistory :user="user" />
         </template>
 
+        <template #referral>
+          <DataReferralList :user="user" />
+        </template>
+
         <template #shop>
           <DataShopHistory :user="user" />
         </template>
@@ -202,6 +206,10 @@ const menu = [
   {
     label: 'Nạp tiền',
     slot: 'payment'
+  },
+  {
+    label: 'Giới thiệu',
+    slot: 'referral'
   },
   {
     label: 'Cửa hàng',

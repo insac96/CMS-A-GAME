@@ -114,7 +114,7 @@ const navItems = [
     ]
   },
   {
-    label: 'Rút tiền',
+    label: 'Đổi xu',
     icon: 'i-bx-money-withdraw',
     defaultOpen: false,
     slot: 'tab-6',
@@ -184,15 +184,15 @@ const navItems = [
     ]
   },
   {
-    label: 'Tết Nguyên Đán',
+    label: 'Sự kiện hạn thời',
     icon: 'i-bxs-party',
     defaultOpen: false,
     slot: 'tab-12',
     children: [
-      { label: 'Lì xì may mắn', to: '/admin/lunanewyear/luckymoney' }, 
-      { label: 'Liên nạp tết', to: '/admin/lunanewyear/payment' }, 
-      { label: 'Nạp đúng mốc', to: '/admin/lunanewyear/paymission' },
-      { label: 'Đập trứng', to: '/admin/lunanewyear/egg' }, 
+      { label: 'Rút may mắn', to: '/admin/limitedevent/luckymoney' }, 
+      { label: 'Liên nạp', to: '/admin/limitedevent/payment' }, 
+      { label: 'Nạp đúng mốc', to: '/admin/limitedevent/paymission' },
+      { label: 'Đập trứng', to: '/admin/limitedevent/egg' }, 
     ]
   },
   {

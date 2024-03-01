@@ -36,7 +36,7 @@ export interface IDBUser {
     notify: number
     diamond: number
   }
-  lunanewyear: {
+  limitedevent: {
     luckymoney: number
     payment: {
       day: number

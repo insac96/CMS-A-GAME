@@ -5,7 +5,7 @@
     <div v-else>
       <UAlert
         title="Hướng Dẫn"
-        description="Bạn có thể nhận được điểm cống hiến từ các giao dịch nạp tiền thành công của bạn bè mà bạn giới thiệu. Sau đó bạn có thể dùng điểm cống hiến để rút tiền về tài khoản !"
+        description="Bạn có thể nhận được điểm cống hiến từ các giao dịch nạp tiền thành công của bạn bè mà bạn giới thiệu. Sau đó bạn có thể dùng điểm cống hiến để đổi thành xu !"
         color="primary"
         variant="subtle"
         class="mb-6"
@@ -16,25 +16,13 @@
           <DataUserMini no-coin no-notify no-wheel v-model:currency="currency" />
         </UFormGroup>
 
-        <UFormGroup label="Ngân hàng" name="bank_name">
-          <UInput v-model="state.bank.name" />
-        </UFormGroup>
-
-        <UFormGroup label="Số tài khoản" name="bank_number">
-          <UInput v-model="state.bank.number" />
-        </UFormGroup>
-
-        <UFormGroup label="Người hưởng thụ" name="bank_person">
-          <UInput v-model="state.bank.person" />
-        </UFormGroup>
-
-        <UFormGroup label="Số tiền rút" name="diamond">
+        <UFormGroup label="Số cống hiến rút" name="diamond">
           <UInput v-model="state.diamond" type="number" />
         </UFormGroup>
 
         <UiFlex justify="between" class="mt-4">
           <UButton color="gray" @click="modal.history = true">Lịch sử</UButton>
-          <UButton type="submit" :loading="loading">Tạo Giao Dịch</UButton>
+          <UButton type="submit" :loading="loading">Xác nhận</UButton>
         </UiFlex>
       </UForm>
     </div>
@@ -70,30 +58,17 @@ const currency = ref({
 })
 
 const state = ref({
-  bank: {
-    name: null,
-    person: null,
-    number: null
-  },
   diamond: null
 })
 
 watch(() => modal.value.withdraw, (val) => {
   if(!!val) return
   withdraw.value = undefined
-  state.value.bank = {
-    name: null,
-    person: null,
-    number: null
-  }
   state.value.diamond = null
 })
 
 const validate = (state) => {
   const errors = []
-  if (!state.bank.name) errors.push({ path: 'bank_name', message: 'Vui lòng nhập đầy đủ' })
-  if (!state.bank.person) errors.push({ path: 'bank_person', message: 'Vui lòng nhập đầy đủ' })
-  if (!state.bank.number) errors.push({ path: 'bank_number', message: 'Vui lòng nhập đầy đủ' })
   if (state.diamond <= 0) errors.push({ path: 'diamond', message: 'Số tiền không hợp lệ' })
   if (currency.value.diamond < state.diamond) errors.push({ path: 'user', message: 'Số dư cống hiến không đủ' }) 
   return errors

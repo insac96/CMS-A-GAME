@@ -16,7 +16,7 @@ export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
 export { IDBGameServerLogin, IDBGameRankGift, IDBGameRankGiftHistory } from './game'
 export { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from './log'
 export { IDBAdsTeaser, IDBAdsLanding, IDBAdsFrom } from './ads'
-export { IDBLunaLuckyMoney, IDBLunaPayMission, IDBLunaPayment, IDBLunaEgg } from './lunanewyear'
+export { IDBLimitedEventLuckyMoney, IDBLimitedEventPayMission, IDBLimitedEventPayment, IDBLimitedEventEgg } from './limitedevent'
 
 export { IDBSocketOnline, IDBSocketChat } from './socket'
 
@@ -82,8 +82,8 @@ export interface IGlobalDB {
   AdsLanding: Model<IDBAdsLanding>
   AdsFrom: Model<IDBAdsFrom>
 
-  LunaLuckyMoney: Model<IDBLunaLuckyMoney>
-  LunaPayment: Model<IDBLunaPayment>
-  LunaPayMission: Model<IDBLunaPayMission>
-  LunaEgg: Model<IDBLunaEgg>
+  LimitedEventLuckyMoney: Model<IDBLimitedEventLuckyMoney>
+  LimitedEventPayment: Model<IDBLimitedEventPayment>
+  LimitedEventPayMission: Model<IDBLimitedEventPayMission>
+  LimitedEventEgg: Model<IDBLimitedEventEgg>
 }

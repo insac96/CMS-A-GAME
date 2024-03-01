@@ -3,7 +3,7 @@
     <UTabs 
       v-model="tab" 
       :items="[
-        { label: 'Rút tiền mặt' },
+        { label: 'Đổi xu' },
         { label: 'Mời bạn cùng chơi' },
         { label: 'Quà từ người giới thiệu' },
       ]" 

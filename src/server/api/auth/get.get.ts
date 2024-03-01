@@ -30,9 +30,9 @@ export default defineEventHandler(async (event) => {
       || lastDate.month != nowDate.month 
       || lastDate.year != nowDate.year
     ){
-      user.lunanewyear.luckymoney = 1
-      user.lunanewyear.paymission = []
-      user.lunanewyear.egg = {
+      user.limitedevent.luckymoney = 1
+      user.limitedevent.paymission = []
+      user.limitedevent.egg = {
         1: [],
         2: [],
         3: [],

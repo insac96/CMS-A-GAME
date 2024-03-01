@@ -16,7 +16,7 @@
     </UModal>
 
     <UModal v-model="modal.action.withdraw" preventClose>
-      <PlayModal title="Rút tiền" @close="modal.action.withdraw = false">
+      <PlayModal title="Đổi xu" @close="modal.action.withdraw = false">
         <MainActionWithdraw />
       </PlayModal>
     </UModal>
@@ -115,7 +115,7 @@ const menu = computed(() => {
       click: () => modal.value.action.payment = true
     })
     if(!!show.value.action.withdraw) action.push({
-      label: 'Rút tiền',
+      label: 'Đổi xu',
       icon: 'i-bx-money-withdraw',
       click: () => modal.value.action.withdraw = true
     })
@@ -149,7 +149,7 @@ const menu = computed(() => {
   }
 
   // Event
-  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend || !!show.value.event.lunanewyear){
+  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend || !!show.value.event.limitedevent){
     const event = []
     if(!!show.value.event.login) event.push({
       label: 'SK Đăng nhập',
@@ -166,10 +166,10 @@ const menu = computed(() => {
       icon: 'i-bx-wallet-alt',
       click: () => modal.value.event.spend = true
     })
-    if(!!show.value.event.lunanewyear) event.push({
-      label: 'SK Tết Nguyên Đán',
+    if(!!show.value.event.limitedevent) event.push({
+      label: 'SK Hạn thời',
       icon: 'i-bx-party',
-      click: () => useTo().navigateToSSL('/main/lunanewyear')
+      click: () => useTo().navigateToSSL('/main/limitedevent')
     })
     list.push(event)
   }

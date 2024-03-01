@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Withdraw" sub="Giao dịch rút tiền">
+  <UiContent title="Withdraw" sub="Giao dịch đổi xu">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
       <UForm :state="page" @submit="getList" class="mr-4">

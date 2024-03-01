@@ -59,6 +59,7 @@ export default defineEventHandler(async (event) => {
           wheel: '$currency.wheel',
           notify: '$currency.notify',
           diamond: '$currency.diamond',
+          referral: '$referral.count',
           pay: '$pay.total.money',
           spend: '$spend.total.coin',
           login: '$login.total',

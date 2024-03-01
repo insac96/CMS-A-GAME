@@ -20,7 +20,7 @@
       <DataPaymentHistory />
     </UiContent>
 
-    <UiContent title="Withdraw" sub="Lịch sử rút tiền" class="mb-6">
+    <UiContent title="Withdraw" sub="Lịch sử đổi xu" class="mb-6">
       <DataWithdrawHistory />
     </UiContent>
 
