@@ -24,12 +24,12 @@
         </UFormGroup>
 
         <UFormGroup label="Khuyến mại" v-if="gateBonus && gateBonus.number > 0">
-          <UInput :model-value="`${gateBonus.number}% ${gateBonus.time}`" readonly />
+          <UInput :model-value="`+${gateBonus.number}% ${gateBonus.time}`" readonly />
         </UFormGroup>
 
         <div v-if="gateSelect && gateSelect.type != 1">
-          <UFormGroup label="Nhập số tiền" name="money">
-            <UInput v-model="state.money" type="number" />
+          <UFormGroup label="Nhập số tiền " name="money">
+            <UInput v-model="state.money" type="number" placeholder="Nhỏ nhất 20.000" />
           </UFormGroup>
         </div>
 
@@ -48,6 +48,12 @@
 
           <UFormGroup label="Nhập mã thẻ cào" name="card_pin">
             <UInput v-model="state.card.pin" />
+          </UFormGroup>
+        </div>
+
+        <div v-if="!!totalCoin">
+          <UFormGroup label="Tổng Xu nhận" name="money">
+            <UInput :model-value="`${useMoney().toMoney(totalCoin)} Xu`" readonly />
           </UFormGroup>
         </div>
 
@@ -172,6 +178,18 @@ const gateBonus = computed(() => {
   }
 
   return { number, time }
+})
+
+// Total Coin
+const totalCoin = computed(() => {
+  if(!gateBonus.value) return null
+  if(!state.value.money) return null
+  if(state.value.money < 20000) return null
+
+  const coin = state.value.money
+  const coinBonus = Math.floor((parseInt(state.value.money) * parseInt(gateBonus.value.number)) / 100)
+
+  return coin + coinBonus
 })
 
 // Card

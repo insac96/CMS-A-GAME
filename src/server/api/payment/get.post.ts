@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if(!payment) throw 'Giao dịch không tồn tại'
-    if(!secret || (!!auth && (auth as IAuth).type < 1)){
+    if(!secret && (!!auth && (auth as IAuth).type < 1)){
       if(payment.user.toString() !== (auth as IAuth)._id.toString()) throw 'Bạn không phải chủ giao dịch'
     }
     

@@ -59,8 +59,29 @@ export default defineEventHandler(async (event) => {
 
     // Check Limit Buy
     if(shopPack.limit > 0){
-      const countBuy = await DB.ShopPackHistory.count({ user: auth._id, pack: shopPack._id, server: server })
-      if(countBuy >= shopPack.limit) throw `Bạn đã đạt giới hạn mua lại gói này`
+      const now = DayJS(Date.now())
+      const start = now.startOf('date')
+      const end = now.endOf('date')
+      const historyDay = await DB.ShopPackHistory.aggregate([
+        {
+          $project: {
+            createdAt: 1,
+            timeformat: {
+              $dateToString: { format: '%Y-%m-%d', date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
+            }
+          }
+        },
+        {
+          $group: {
+            _id: '$timeformat',
+            time: { $min: '$createdAt' },
+            count: { $count: {} },
+          }
+        },
+        { $match: { $gte: new Date(start['$d']), $lte: new Date(end['$d']) } }
+      ])
+
+      if(!!historyDay[0] && historyDay[0].count >= shopPack.limit) throw `Hôm nay bạn đã đạt giới hạn mua gói này`
     }
 
     // Format Gift
