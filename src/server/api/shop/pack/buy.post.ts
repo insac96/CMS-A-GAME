@@ -78,7 +78,9 @@ export default defineEventHandler(async (event) => {
             count: { $count: {} },
           }
         },
-        { $match: { $gte: new Date(start['$d']), $lte: new Date(end['$d']) } }
+        { $match: { 
+          time: { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
+        }}
       ])
 
       if(!!historyDay[0] && historyDay[0].count >= shopPack.limit) throw `Hôm nay bạn đã đạt giới hạn mua gói này`
