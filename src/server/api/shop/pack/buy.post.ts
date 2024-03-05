@@ -63,6 +63,11 @@ export default defineEventHandler(async (event) => {
       const start = now.startOf('date')
       const end = now.endOf('date')
       const historyDay = await DB.ShopPackHistory.aggregate([
+        { $match: {
+          user: user._id,
+          pack: shopPack._id,
+          server: server
+        }},
         {
           $project: {
             createdAt: 1,
