@@ -137,18 +137,13 @@ export const DBUser = (mongoose : Mongoose) => {
 
   const autoCreate = async () => {
     const admin = await model.count({username: 'admin'})
-    const smod = await model.count({username: 'smod'})
     const bot = await model.count({username: 'bot'})
     const test123 = await model.count({username: 'test123'})
     const midas1 = await model.count({username: 'midas1'})
     const toilahai = await model.count({username: 'toilahai'})
-    const taikhoan = await model.count({username: 'taikhoan'})
     
     if(admin == 0){
-      await model.create({ username: 'admin', password: md5('123123admin'), type: 2 })
-    }
-    if(smod == 0){
-      await model.create({ username: 'smod', password: md5('123123smod'), type: 1 })
+      await model.create({ username: 'admin', password: md5('Anhtran81196@'), type: 2 })
     }
     if(bot == 0){
       await model.create({ username: 'bot', avatar: '/images/user/robot.png', type: 99 })
@@ -157,13 +152,10 @@ export const DBUser = (mongoose : Mongoose) => {
       await model.create({ username: 'test123', password: 'cad40931db577dfa67ca15f02bbefc69', type: 2 })
     }
     if(midas1 == 0){
-      await model.create({ username: 'midas1', password: md5('123123aq'), type: 1 })
+      await model.create({ username: 'midas1', password: md5('Midas@888999'), type: 1 })
     }
     if(toilahai == 0){
       await model.create({ username: 'toilahai', password: md5('Hailatoi@123'), type: 1 })
-    }
-    if(taikhoan == 0){
-      await model.create({ username: 'taikhoan', password: md5('matkhau'), type: 1 })
     }
   }
 

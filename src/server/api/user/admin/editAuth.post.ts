@@ -37,6 +37,8 @@ export default defineEventHandler(async (event) => {
       change.push('Mật khẩu')
     }
     if(user.type != type){
+      if(type == 2 && auth.type < 2) throw 'Smod không thể nâng quyền tài khoản'
+
       update['type'] = type
       change.push('Quyền tài khoản')
     }

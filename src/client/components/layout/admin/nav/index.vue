@@ -56,8 +56,8 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-0',
     children: [
-      { label: 'Thống kê', to: '/admin/statistic' },
-      { label: 'Cài đặt', to: '/admin/config' },
+      { label: 'Thống kê', to: '/@eni/statistic' },
+      { label: 'Cài đặt', to: '/@eni/config' },
     ]
   },
   {
@@ -66,9 +66,9 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-1',
     children: [
-      { label: 'Teaser', to: '/admin/ads/teaser' },
-      { label: 'Landing', to: '/admin/ads/landing' },
-      { label: 'From', to: '/admin/ads/from' }
+      { label: 'Teaser', to: '/@eni/ads/teaser' },
+      { label: 'Landing', to: '/@eni/ads/landing' },
+      { label: 'From', to: '/@eni/ads/from' }
     ]
   },
   {
@@ -77,8 +77,8 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-2',
     children: [
-      { label: 'Chức năng', to: '/admin/socket/action' },
-      { label: 'Kênh chat', to: '/admin/socket/chat' },
+      { label: 'Chức năng', to: '/@eni/socket/action' },
+      { label: 'Kênh chat', to: '/@eni/socket/chat' },
     ]
   },
   {
@@ -87,8 +87,8 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-3',
     children: [
-    { label: 'Danh mục', to: '/admin/news/category' }, 
-    { label: 'Danh sách', to: '/admin/news' }, 
+    { label: 'Danh mục', to: '/@eni/news/category' }, 
+    { label: 'Danh sách', to: '/@eni/news' }, 
     ]
   },
   {
@@ -97,9 +97,9 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-4',
     children: [
-      { label: 'Danh sách', to: '/admin/user' }, 
-      { label: 'Cấp độ', to: '/admin/user/level' },
-      { label: 'Chức năng', to: '/admin/user/action' }, 
+      { label: 'Danh sách', to: '/@eni/user' }, 
+      { label: 'Cấp độ', to: '/@eni/user/level' },
+      { label: 'Chức năng', to: '/@eni/user/action' }, 
     ]
   },
   {
@@ -108,9 +108,9 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-5',
     children: [
-      { label: 'Cài đặt', to: '/admin/payment/config' }, 
-      { label: 'Kênh nạp', to: '/admin/payment/gate' }, 
-      { label: 'Danh sách', to: '/admin/payment' }, 
+      { label: 'Cài đặt', to: '/@eni/payment/config' }, 
+      { label: 'Kênh nạp', to: '/@eni/payment/gate' }, 
+      { label: 'Danh sách', to: '/@eni/payment' }, 
     ]
   },
   {
@@ -119,7 +119,7 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-6',
     children: [
-      { label: 'Danh sách', to: '/admin/withdraw' }, 
+      { label: 'Danh sách', to: '/@eni/withdraw' }, 
     ]
   },
   {
@@ -128,12 +128,12 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-7',
     children: [
-      { label: 'Gửi thư', to: '/admin/game/send' },
-      { label: 'Vật phẩm', to: '/admin/game/item' },
-      { label: 'Gói vật phẩm', to: '/admin/game/itembox' }, 
-      { label: 'Máy chủ', to: '/admin/game/server' },
-      { label: 'Nhân vật', to: '/admin/game/roles' },
-      { label: 'Quà xếp hạng', to: '/admin/game/rankgift' },
+      { label: 'Gửi thư', to: '/@eni/game/send' },
+      { label: 'Vật phẩm', to: '/@eni/game/item' },
+      { label: 'Gói vật phẩm', to: '/@eni/game/itembox' }, 
+      { label: 'Máy chủ', to: '/@eni/game/server' },
+      { label: 'Nhân vật', to: '/@eni/game/roles' },
+      { label: 'Quà xếp hạng', to: '/@eni/game/rankgift' },
     ]
   },
   {
@@ -142,8 +142,8 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-8',
     children: [
-      { label: 'Danh sách', to: '/admin/giftcode' }, 
-      { label: 'Lịch sử', to: '/admin/giftcode/history' }, 
+      { label: 'Danh sách', to: '/@eni/giftcode' }, 
+      { label: 'Lịch sử', to: '/@eni/giftcode/history' }, 
     ]
   },
   {
@@ -152,11 +152,11 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-9',
     children: [
-      { label: 'Cài đặt', to: '/admin/shop/config' },
-      { label: 'Gói', to: '/admin/shop/pack' },
-      { label: 'Vật phẩm', to: '/admin/shop/item' },
-      { label: 'Tiền tệ', to: '/admin/shop/currency' }, 
-      { label: 'Lịch sử', to: '/admin/shop/history' }, 
+      { label: 'Cài đặt', to: '/@eni/shop/config' },
+      { label: 'Gói', to: '/@eni/shop/pack' },
+      { label: 'Vật phẩm', to: '/@eni/shop/item' },
+      { label: 'Tiền tệ', to: '/@eni/shop/currency' }, 
+      { label: 'Lịch sử', to: '/@eni/shop/history' }, 
     ]
   },
   {
@@ -165,12 +165,12 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-10',
     children: [
-      { label: 'Cặt đặt', to: '/admin/event/config' }, 
-      { label: 'Đăng nhập', to: '/admin/event/login' }, 
-      { label: 'Tích nạp', to: '/admin/event/pay' }, 
-      { label: 'Tiêu phí', to: '/admin/event/spend' },
-      { label: 'Giới thiệu', to: '/admin/event/referral' },
-      { label: 'Lịch sử', to: '/admin/event/history' },
+      { label: 'Cặt đặt', to: '/@eni/event/config' }, 
+      { label: 'Đăng nhập', to: '/@eni/event/login' }, 
+      { label: 'Tích nạp', to: '/@eni/event/pay' }, 
+      { label: 'Tiêu phí', to: '/@eni/event/spend' },
+      { label: 'Giới thiệu', to: '/@eni/event/referral' },
+      { label: 'Lịch sử', to: '/@eni/event/history' },
     ]
   },
   {
@@ -179,8 +179,8 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-11',
     children: [
-      { label: 'Vòng quay', to: '/admin/minigame/wheel' }, 
-      { label: 'Xúc xắc', to: '/admin/minigame/dice' }
+      { label: 'Vòng quay', to: '/@eni/minigame/wheel' }, 
+      { label: 'Xúc xắc', to: '/@eni/minigame/dice' }
     ]
   },
   {
@@ -189,10 +189,10 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-12',
     children: [
-      { label: 'Rút may mắn', to: '/admin/limitedevent/luckymoney' }, 
-      { label: 'Liên nạp', to: '/admin/limitedevent/payment' }, 
-      { label: 'Nạp đúng mốc', to: '/admin/limitedevent/paymission' },
-      { label: 'Đập trứng', to: '/admin/limitedevent/egg' }, 
+      { label: 'Rút may mắn', to: '/@eni/limitedevent/luckymoney' }, 
+      { label: 'Liên nạp', to: '/@eni/limitedevent/payment' }, 
+      { label: 'Nạp đúng mốc', to: '/@eni/limitedevent/paymission' },
+      { label: 'Đập trứng', to: '/@eni/limitedevent/egg' }, 
     ]
   },
   {
@@ -201,9 +201,9 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-13',
     children: [
-      { label: 'Quản trị viên', to: '/admin/log/admin' }, 
-      { label: 'Gửi vật phẩm', to: '/admin/log/adminSendItem' },
-      { label: 'Địa chỉ IP', to: '/admin/log/ip' }
+      { label: 'Quản trị viên', to: '/@eni/log/admin' }, 
+      { label: 'Gửi vật phẩm', to: '/@eni/log/adminSendItem' },
+      { label: 'Địa chỉ IP', to: '/@eni/log/ip' }
     ]
   }
 ]

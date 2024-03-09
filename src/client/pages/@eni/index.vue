@@ -32,9 +32,9 @@ const cfgStore = useConfigStore()
 const config = computed(() => cfgStore.config)
 
 const menus = [
-  { label: 'Thống kê', icon: 'i-bxs-bar-chart-alt-2', to: '/admin/statistic' },
-  { label: 'Nạp tiền', icon: 'i-bxs-credit-card', color: 'gray', to: '/admin/payment' },
-  { label: 'Thành viên', icon: 'i-bxs-user', color: 'gray', to: '/admin/user' },
-  { label: 'Cài đặt', icon: 'i-bxs-cog', color: 'gray', to: '/admin/config' },
+  { label: 'Thống kê', icon: 'i-bxs-bar-chart-alt-2', to: '/@eni/statistic' },
+  { label: 'Nạp tiền', icon: 'i-bxs-credit-card', color: 'gray', to: '/@eni/payment' },
+  { label: 'Thành viên', icon: 'i-bxs-user', color: 'gray', to: '/@eni/user' },
+  { label: 'Cài đặt', icon: 'i-bxs-cog', color: 'gray', to: '/@eni/config' },
 ]
 </script>

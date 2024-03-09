@@ -47,6 +47,7 @@ export default defineNuxtConfig({
         { UserAgent: '*' },
         { Disallow: '/callback/*' },
         { Disallow: '/admin/*' },
+        { Disallow: '/@eni/*' },
         { Disallow: '/.nuxt/*' },
         { BlankLine: true },
         { Sitemap: `${process.env.CLIENT_URL}/sitemap.xml` }
