@@ -24,6 +24,12 @@ useSeoMeta({
   robots: 'none'
 })
 
+useHead({
+  script: [
+    { children: `fbq('track', 'ThankYou');`}
+  ],
+})
+
 const start = async () => {
   try {
     await useAPI('game/start')
