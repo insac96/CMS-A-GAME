@@ -47,6 +47,10 @@ const start = async () => {
   }
 }
 
-const init = () => setTimeout(() => process.client && start(), 1000)
+const init = () => setTimeout(() => {
+  if(route.query.test) return
+  process.client && start()
+}, 5000)
+
 init()
 </script>
