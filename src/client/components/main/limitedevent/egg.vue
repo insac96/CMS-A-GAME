@@ -193,3 +193,22 @@ getConfig()
 watch(() => authStore.isLogin, (val) => !!val && getConfig())
 watch(() => reward.value, (val) => !!val && getConfig())
 </script>
+
+<style lang="sass">
+.LimitedEventEgg, .LimitedEventEggOpen
+  position: relative
+  cursor: pointer
+  border-radius: 1rem
+  transition: all 0.25s ease
+  &__Img
+    position: absolute
+    object-fit: cover
+
+.LimitedEventEgg
+  &:hover
+    transform: scale(0.95)
+
+.LimitedEventEggOpen
+  &__Img
+    filter: grayscale(1)
+</style>

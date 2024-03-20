@@ -53,8 +53,18 @@ export default defineNuxtConfig({
         { Sitemap: `${process.env.CLIENT_URL}/sitemap.xml` }
       ]
     }],
+    'nuxt-rate-limit'
     //'@vite-pwa/nuxt'
   ],
+
+  nuxtRateLimit: {
+    routes: {
+      '/api/*': {
+        maxRequests: 100,
+        intervalSeconds: 60,
+      },
+    },
+  },
 
   app: {
     head: {
