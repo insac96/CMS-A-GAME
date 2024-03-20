@@ -83,3 +83,112 @@ html, body
 
 .beat-anim
   animation: beat 1s infinite alternate
+
+
+// Limited Event
+@font-face
+  font-family: "UT"
+  src: url(/fonts/UT.woff2)
+
+.LimitedEventPage
+  position: relative
+  width: 100%
+  min-height: 100%
+  background-color: #fee7eb
+  color: #660621
+  font-family: UT
+  &__Top
+    height: 45vw
+    max-height: 45vw
+    overflow: hidden
+    position: relative
+    &::before, &::after
+      border: none
+    img
+      position: absolute
+      &::before, &::after
+        border: none
+      &:first-child
+        width: 100%
+        object-fit: cover
+      &:last-child
+        width: 120%
+        bottom: 0
+
+  &__Title
+    position: relative
+    margin-bottom: 2rem
+    &__Text
+      position: absolute
+      text-align: center
+      bottom: 1rem
+
+  &__Title-2
+    background: url(/images/limitedevent/title-2.png) no-repeat top center / 100%
+    width: 200px
+    height: 37px
+    text-align: center
+    color: #fff
+
+  &__Btn
+    background: url(/images/limitedevent/btn.png) no-repeat top center / 100%
+    cursor: pointer
+
+
+.LimitedEventPayMission
+  position: relative
+  background: url(/images/limitedevent/payment.png) no-repeat
+  background-position: center
+  background-size: cover
+  cursor: pointer
+  transition: all 0.25s ease
+  &:hover
+    transform: scale(0.95)
+  &__Text
+    color: #fff
+    position: absolute
+    bottom: 0
+    width: 100%
+    text-align: center
+
+.LimitedEventPayment
+  position: relative
+  background: url(/images/limitedevent/payment-2.png) no-repeat
+  background-position: center
+  background-size: cover
+  cursor: pointer
+  transition: all 0.25s ease
+  &:hover
+    transform: scale(0.95)
+  &__Text
+    color: #fff
+    position: absolute
+    bottom: 0
+    width: 100%
+    text-align: center
+
+
+.LimitedEventPageLuckyMoney
+  background: url(/images/limitedevent/card.png) no-repeat top center / 100%
+  transition: all 0.25s ease
+  cursor: pointer
+  &:hover, &:active
+    background: url(/images/limitedevent/card-active.png) no-repeat top center / 100%
+    
+
+.LimitedEventEgg, .LimitedEventEggOpen
+  position: relative
+  cursor: pointer
+  border-radius: 1rem
+  transition: all 0.25s ease
+  &__Img
+    position: absolute
+    object-fit: cover
+
+.LimitedEventEgg
+  &:hover
+    transform: scale(0.95)
+
+.LimitedEventEggOpen
+  &__Img
+    filter: grayscale(1)

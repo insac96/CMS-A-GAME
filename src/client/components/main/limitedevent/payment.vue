@@ -92,22 +92,3 @@ const getList = async () => {
 
 getList()
 </script>
-
-
-<style lang="sass">
-.LimitedEventPayment
-  position: relative
-  background: url(/images/limitedevent/payment-2.png) no-repeat
-  background-position: center
-  background-size: cover
-  cursor: pointer
-  transition: all 0.25s ease
-  &:hover
-    transform: scale(0.95)
-  &__Text
-    color: #fff
-    position: absolute
-    bottom: 0
-    width: 100%
-    text-align: center
-</style>

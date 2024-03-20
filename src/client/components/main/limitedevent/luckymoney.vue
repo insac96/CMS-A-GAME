@@ -105,13 +105,3 @@ getLuckyMoney()
 watch(() => authStore.isLogin, (val) => !!val && getLuckyMoney())
 watch(() => reward.value, (val) => !!val && getLuckyMoney())
 </script>
-
-<style lang="sass">
-.LimitedEventPageLuckyMoney
-  background: url(/images/limitedevent/card.png) no-repeat top center / 100%
-  transition: all 0.25s ease
-  cursor: pointer
-  &:hover, &:active
-    background: url(/images/limitedevent/card-active.png) no-repeat top center / 100%
-    
-</style>
