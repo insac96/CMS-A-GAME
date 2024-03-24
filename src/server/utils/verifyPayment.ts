@@ -45,7 +45,7 @@ export default async (
   if(payment.status > 0) throw 'Không thể thao tác trên giao dịch này'
 
   // Get Other
-  const user = await DB.User.findOne({ _id: payment.user }).select('level referral limitedevent') as IDBUser
+  const user = await DB.User.findOne({ _id: payment.user }).select('level referral') as IDBUser
   if(!user) throw 'Không tìm thấy thông tin tài khoản'
   const level = await DB.Level.findOne({ _id: user.level }).select('bonus bonus_wheel') as IDBLevel
   if(!level) throw 'Không tìm thấy thông tin cấp độ tài khoản'
@@ -157,51 +157,6 @@ export default async (
           })
         }
       }
-    }
-
-    // Update Limited Event Payment
-    if(!!webConfig.enable.limitedevent){
-      // Payment
-      if(user.limitedevent.payment.day == 0) user.limitedevent.payment.day = 1
-      else {
-        if(!lastPaymentDone) user.limitedevent.payment.day = 1
-        else {
-          const payNowTime = formatDate(event, time)
-          const payLastTime = formatDate(event, lastPaymentDone.verify.time)
-
-          if(
-            payNowTime.day != payLastTime.day 
-            || payNowTime.month != payLastTime.month 
-            || payNowTime.year !=  payLastTime.year
-          ){
-            const nowStart = payNowTime.dayjs.startOf('day').unix()
-            const lastStart = payLastTime.dayjs.startOf('day').unix()
-            
-            if((nowStart - lastStart) > (24 * 60 * 60)){
-              user.limitedevent.payment.day = 1
-              user.limitedevent.payment.receive = 0
-            }
-            else {
-              user.limitedevent.payment.day = user.limitedevent.payment.day + 1
-            }
-          }
-        }
-      }
-
-      // Mission
-      const mission = await DB.LimitedEventPayMission.findOne({ need: money })
-      if(!!mission){
-        const missionCheck = user.limitedevent.paymission.find(i => i.money == money)
-        if(!missionCheck){
-          user.limitedevent.paymission.push({
-            money: money,
-            receive: false
-          })
-        }
-      }
-
-      // Save
-      await user.save()
     }
 
     if(!!verifier) return logAdmin(event, `Chấp nhận giao dịch nạp tiền <b>${payment.code}</b> với số tiền <b>${realMoney.toLocaleString('vi-VN')}</b>`, verifier)

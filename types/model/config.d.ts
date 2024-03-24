@@ -30,7 +30,6 @@ export interface IDBConfig {
       login: boolean
       pay: boolean
       spend: boolean
-      limitedevent: boolean
     }
     minigame: {
       wheel: boolean
@@ -50,12 +49,9 @@ export interface IDBConfig {
     signup: boolean
     play: boolean
     referral: boolean
-    teaser: boolean
     landing: boolean
-    limitedevent: boolean
   }
   homepage: {
-    teaser: Types.ObjectId
     landing: Types.ObjectId
   }
   download: {
@@ -75,6 +71,7 @@ export interface IDBConfig {
     zalo: string
   }
   game: {
+    mobile: boolean
     image: string
     secret: string
     landing: string
@@ -128,9 +125,7 @@ export interface IDBConfigStore {
     signup: boolean
     play: boolean
     referral: boolean
-    teaser: boolean
     landing: boolean
-    limitedevent: boolean
   }
   download: {
     apk: string
@@ -149,6 +144,7 @@ export interface IDBConfigStore {
     zalo: string
   }
   game: {
+    mobile: boolean
     image: string
     landing: string
   }

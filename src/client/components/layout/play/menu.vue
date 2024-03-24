@@ -149,7 +149,7 @@ const menu = computed(() => {
   }
 
   // Event
-  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend || !!show.value.event.limitedevent){
+  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend){
     const event = []
     if(!!show.value.event.login) event.push({
       label: 'SK Đăng nhập',
@@ -165,11 +165,6 @@ const menu = computed(() => {
       label: 'SK Tiêu phí',
       icon: 'i-bx-wallet-alt',
       click: () => modal.value.event.spend = true
-    })
-    if(!!show.value.event.limitedevent) event.push({
-      label: 'SK Hạn thời',
-      icon: 'i-bx-party',
-      click: () => useTo().navigateToSSL('/main/limitedevent')
     })
     list.push(event)
   }

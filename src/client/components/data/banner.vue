@@ -2,7 +2,7 @@
   <UiContent :title="config.name" :sub="config.description">
     <template #right-head>
       <UiFlex class="ml-4">
-        <PlayBtn text="Chơi" size="sm"></PlayBtn>
+        <PlayBtn v-if="!config.game.mobile" text="Chơi" size="sm"></PlayBtn>
         <UButton icon="i-bxl-android" color="gray" class="ml-1" v-if="!!config.download.apk" @click="download(config.download.apk)"></UButton>
         <UButton icon="i-bxl-apple" color="gray" class="ml-1" v-if="!!config.download.ios" @click="download(config.download.ios)"></UButton>
       </UiFlex>

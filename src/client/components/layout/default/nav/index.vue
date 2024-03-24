@@ -82,7 +82,7 @@ const navItems = computed(() => {
   }
 
   // Event
-  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend || !!show.value.event.limitedevent){
+  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend){
     const action = {
       label: 'Sự Kiện',
       icon: 'i-bx-calendar',
@@ -94,7 +94,6 @@ const navItems = computed(() => {
     if(!!show.value.event.login) action.children.push({ label: 'Đăng nhập', to: '/main/event/login' })
     if(!!show.value.event.pay) action.children.push({ label: 'Tích nạp', to: '/main/event/pay' })
     if(!!show.value.event.spend) action.children.push({ label: 'Tiêu phí', to: '/main/event/spend' })
-    if(!!show.value.event.limitedevent) action.children.push({ label: 'Hạn thời', to: '/main/limitedevent' })
 
     list.push(action)
   }

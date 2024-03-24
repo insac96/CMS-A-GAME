@@ -24,8 +24,7 @@ export const useConfigStore = defineStore('config', () => {
       event: {
         login: false,
         pay: false,
-        spend: false,
-        limitedevent: false
+        spend: false
       },
       minigame: {
         wheel: false,
@@ -45,9 +44,7 @@ export const useConfigStore = defineStore('config', () => {
       signup: true,
       play: true,
       referral: true,
-      teaser: false,
-      landing: false,
-      limitedevent: false
+      landing: false
     },
     download: {
       apk: '',
@@ -66,6 +63,7 @@ export const useConfigStore = defineStore('config', () => {
       zalo: '',
     },
     game: {
+      mobile: false,
       image: '',
       landing: ''
     },

@@ -27,8 +27,7 @@ export const DBConfig = (mongoose : Mongoose) => {
       event: {
         login: { type: Boolean, default: true },
         pay: { type: Boolean, default: true },
-        spend: { type: Boolean, default: true },
-        limitedevent: { type: Boolean, default: true },
+        spend: { type: Boolean, default: true }
       },
       minigame: {
         wheel: { type: Boolean, default: true },
@@ -48,12 +47,9 @@ export const DBConfig = (mongoose : Mongoose) => {
       signup: { type: Boolean, default: true },
       play: { type: Boolean, default: true },
       referral: { type: Boolean, default: true },
-      teaser: { type: Boolean, default: false },
-      landing: { type: Boolean, default: false },
-      limitedevent: { type: Boolean, default: false },
+      landing: { type: Boolean, default: false }
     },
     homepage: {
-      teaser: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_teaser' },
       landing: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_landing' },
     },
     download: {
@@ -73,6 +69,7 @@ export const DBConfig = (mongoose : Mongoose) => {
       zalo: { type: String, default: '' },
     },
     game: {
+      mobile: { type: Boolean, default: false },
       image: { type: String, default: '' },
       secret: { type: String, default: '' },
       landing: { type: String, default: '' },

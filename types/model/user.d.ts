@@ -13,7 +13,6 @@ export interface IDBUser {
   avatar: string
   level: Types.ObjectId | IDBLevel
   reg: {
-    teaser: Types.ObjectId
     landing: Types.ObjectId
     from: Types.ObjectId
     platform: string
@@ -35,44 +34,6 @@ export interface IDBUser {
     wheel: number
     notify: number
     diamond: number
-  }
-  limitedevent: {
-    luckymoney: number
-    payment: {
-      day: number
-      receive: number
-    }
-    paymission: Array<{
-      money: number
-      receive: boolean
-    }>
-    egg: {
-      1: Array<{
-        item: Types.ObjectId | IDBItem,
-        amount: number
-        index: number
-      }>
-      2: Array<{
-        item: Types.ObjectId | IDBItem,
-        amount: number
-        index: number
-      }>
-      3: Array<{
-        item: Types.ObjectId | IDBItem,
-        amount: number
-        index: number
-      }>
-      4: Array<{
-        item: Types.ObjectId | IDBItem,
-        amount: number
-        index: number
-      }>
-      5: Array<{
-        item: Types.ObjectId | IDBItem,
-        amount: number
-        index: number
-      }>
-    }
   }
   pay: {
     total: {

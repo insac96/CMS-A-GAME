@@ -41,7 +41,6 @@
       <template #tab-10><UVerticalNavigation :links="navItems[10].children" @click="emit('to')"/></template>
       <template #tab-11><UVerticalNavigation :links="navItems[11].children" @click="emit('to')"/></template>
       <template #tab-12><UVerticalNavigation :links="navItems[12].children" @click="emit('to')"/></template>
-      <template #tab-13><UVerticalNavigation :links="navItems[13].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -66,7 +65,6 @@ const navItems = [
     defaultOpen: false,
     slot: 'tab-1',
     children: [
-      { label: 'Teaser', to: '/@eni/ads/teaser' },
       { label: 'Landing', to: '/@eni/ads/landing' },
       { label: 'From', to: '/@eni/ads/from' }
     ]
@@ -184,22 +182,10 @@ const navItems = [
     ]
   },
   {
-    label: 'Sự kiện hạn thời',
-    icon: 'i-bxs-party',
-    defaultOpen: false,
-    slot: 'tab-12',
-    children: [
-      { label: 'Rút may mắn', to: '/@eni/limitedevent/luckymoney' }, 
-      { label: 'Liên nạp', to: '/@eni/limitedevent/payment' }, 
-      { label: 'Nạp đúng mốc', to: '/@eni/limitedevent/paymission' },
-      { label: 'Đập trứng', to: '/@eni/limitedevent/egg' }, 
-    ]
-  },
-  {
     label: 'Nhật ký',
     icon: 'i-bx-book',
     defaultOpen: false,
-    slot: 'tab-13',
+    slot: 'tab-12',
     children: [
       { label: 'Quản trị viên', to: '/@eni/log/admin' }, 
       { label: 'Gửi vật phẩm', to: '/@eni/log/adminSendItem' },

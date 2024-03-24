@@ -38,20 +38,6 @@
             <UToggle v-model="state.enable.play" />
           </UiFlex>
 
-          <UiFlex justify="between" class="mb-4">
-            <UiText weight="semibold">Sự kiện hạn thời</UiText>
-            <UToggle v-model="state.enable.limitedevent" />
-          </UiFlex>
-          
-          <div class="mb-4">
-            <UiFlex justify="between" class="mb-2">
-              <UiText weight="semibold">Teaser Home</UiText>
-              <UToggle v-model="state.enable.teaser" />
-            </UiFlex>
-
-            <SelectAdsTeaser v-model="state.homepage.teaser" v-if="!!state.enable.teaser" />
-          </div>
-
           <div class="mb-4">
             <UiFlex justify="between" class="mb-2">
               <UiText weight="semibold">Landing Home</UiText>
@@ -207,11 +193,6 @@
             <UiText weight="semibold">Tiêu phí</UiText>
             <UToggle v-model="state.menu.event.spend" />
           </UiFlex>
-
-          <UiFlex justify="between">
-            <UiText weight="semibold">Hạn thời</UiText>
-            <UToggle v-model="state.menu.event.limitedevent" />
-          </UiFlex>
         </UCard>
 
         <UCard class="mb-4">
@@ -272,6 +253,11 @@
       <template #game>
         <UCard>
           <UForm :state="state">
+            <UiFlex justify="between" class="mb-4">
+              <UiText weight="semibold">Game Mobile</UiText>
+              <UToggle v-model="state.game.mobile" />
+            </UiFlex>
+
             <UFormGroup label="Secret">
               <UInput v-model="state.game.secret" />
             </UFormGroup>
@@ -453,8 +439,7 @@ const state = ref({
     event: {
       login: false,
       pay: false,
-      spend: false,
-      limitedevent: false
+      spend: false
     },
     minigame: {
       wheel: false,
@@ -475,13 +460,10 @@ const state = ref({
     signup: true,
     play: true,
     referral: true,
-    teaser: false,
-    landing: false,
-    limitedevent: false
+    landing: false
   },
 
   homepage: {
-    teaser: null,
     landing: null,
   },
 
@@ -505,6 +487,7 @@ const state = ref({
   },
 
   game: {
+    mobile: false,
     image: '',
     secret: '',
     api: {
