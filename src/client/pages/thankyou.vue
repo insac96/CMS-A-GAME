@@ -33,7 +33,7 @@ useHead({
 const start = async () => {
   try {
     if(!!configStore.config.thankyou.link){
-      return window.open(configStore.config.thankyou.link)
+      return location.href = configStore.config.thankyou.link
     }
 
     else {
@@ -50,7 +50,7 @@ const start = async () => {
 const init = () => setTimeout(() => {
   if(route.query.test) return
   process.client && start()
-}, 5000)
+}, 2000)
 
 init()
 </script>
