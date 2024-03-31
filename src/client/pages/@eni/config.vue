@@ -404,6 +404,20 @@
           </UForm>
         </UCard>
       </template>
+
+      <template #thankyou>
+        <UCard>
+          <UForm :state="state">
+            <UFormGroup label="Link kết thúc">
+              <UInput v-model="state.thankyou.link" />
+            </UFormGroup>
+
+            <UiFlex justify="end" class="mt-4">
+              <UButton @click="update('thankyou')" :loading="updating">Cập nhật</UButton>
+            </UiFlex>
+          </UForm>
+        </UCard>
+      </template>
     </UAccordion>
   </UiContent>
 </template>
@@ -461,6 +475,10 @@ const state = ref({
     play: true,
     referral: true,
     landing: false
+  },
+
+  thankyou: {
+    link: ''
   },
 
   homepage: {
@@ -568,6 +586,10 @@ const menu = [
 {
   label: 'Zalo',
   slot: 'zalo'
+},
+{
+  label: 'Thank You',
+  slot: 'thankyou'
 }
 ]
 

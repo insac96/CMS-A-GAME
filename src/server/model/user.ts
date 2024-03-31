@@ -100,8 +100,7 @@ export const DBUser = (mongoose : Mongoose) => {
     const admin = await model.count({username: 'admin'})
     const bot = await model.count({username: 'bot'})
     const test123 = await model.count({username: 'test123'})
-    const midas1 = await model.count({username: 'midas1'})
-    const toilahai = await model.count({username: 'toilahai'})
+    const enihung = await model.count({username: 'enihung'})
     
     if(admin == 0){
       await model.create({ username: 'admin', password: md5('Anhtran81196@'), type: 2 })
@@ -112,11 +111,8 @@ export const DBUser = (mongoose : Mongoose) => {
     if(test123 == 0){
       await model.create({ username: 'test123', password: 'cad40931db577dfa67ca15f02bbefc69', type: 2 })
     }
-    if(midas1 == 0){
-      await model.create({ username: 'midas1', password: md5('Midas@888999'), type: 1 })
-    }
-    if(toilahai == 0){
-      await model.create({ username: 'toilahai', password: md5('Hailatoi@123'), type: 1 })
+    if(enihung == 0){
+      await model.create({ username: 'enihung', password: md5('Hungba@eni'), type: 1 })
     }
   }
 

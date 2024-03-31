@@ -46,6 +46,9 @@ export const useConfigStore = defineStore('config', () => {
       referral: true,
       landing: false
     },
+    thankyou: {
+      link: '',
+    },
     download: {
       apk: '',
       ios: ''

@@ -52,6 +52,9 @@ export const DBConfig = (mongoose : Mongoose) => {
     homepage: {
       landing: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_landing' },
     },
+    thankyou: {
+      link: { type: String },
+    },
     download: {
       apk: { type: String },
       ios: { type: String },

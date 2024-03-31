@@ -32,10 +32,15 @@ useHead({
 
 const start = async () => {
   try {
-    await useAPI('game/start')
+    if(!!configStore.config.thankyou.link){
+      return window.open(configStore.config.thankyou.link)
+    }
 
-    if(!!runtimeConfig.public.dev) navigateTo('/play')
-    else location.href = `http://game.${runtimeConfig.public.domain}/play`
+    else {
+      await useAPI('game/start')
+      if(!!runtimeConfig.public.dev) navigateTo('/play')
+      else location.href = `http://game.${runtimeConfig.public.domain}/play`
+    }
   }
   catch (e) {
     useTo().navigateToSSL('/')

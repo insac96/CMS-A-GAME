@@ -54,6 +54,9 @@ export interface IDBConfig {
   homepage: {
     landing: Types.ObjectId
   }
+  thankyou: {
+    link: string
+  }
   download: {
     apk: string
     ios: string
@@ -126,6 +129,9 @@ export interface IDBConfigStore {
     play: boolean
     referral: boolean
     landing: boolean
+  }
+  thankyou: {
+    link: string
   }
   download: {
     apk: string
