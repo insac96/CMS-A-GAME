@@ -9,14 +9,13 @@ export const DBConfig = (mongoose : Mongoose) => {
     og_image: { type: String },
     logo_image: { type: String },
     logo_long_image: { type: String },
-    makeby: { type: String, default: 'Galvin' },
+    makeby: { type: String, default: 'Raiden' },
     about: { type: String },
     privacy: { type: String },
     terms: { type: String },
     menu: {
       action: {
         payment: { type: Boolean, default: true },
-        withdraw: { type: Boolean, default: true },
         giftcode: { type: Boolean, default: true },
       },
       shop: {
@@ -25,9 +24,12 @@ export const DBConfig = (mongoose : Mongoose) => {
         currency: { type: Boolean, default: true },
       },
       event: {
+        referral: { type: Boolean, default: true },
         login: { type: Boolean, default: true },
         pay: { type: Boolean, default: true },
-        spend: { type: Boolean, default: true }
+        spend: { type: Boolean, default: true },
+        paymusty: { type: Boolean, default: true },
+        paydays: { type: Boolean, default: true },
       },
       minigame: {
         wheel: { type: Boolean, default: true },
@@ -64,7 +66,7 @@ export const DBConfig = (mongoose : Mongoose) => {
       phone: { type: String, default: '' },
       email: { type: String, default: '' },
       address: { type: String, default: '' },
-      prefix: { type: String, default: 'CVV' },
+      prefix: { type: String, default: 'ENI' },
     },
     social: {
       facebook: { type: String, default: '' },
@@ -72,10 +74,10 @@ export const DBConfig = (mongoose : Mongoose) => {
       zalo: { type: String, default: '' },
     },
     game: {
+      ip: { type: String, default: '' },
       mobile: { type: Boolean, default: false },
-      image: { type: String, default: '' },
-      secret: { type: String, default: '' },
-      landing: { type: String, default: '' },
+      image: { type: String, default: '/item' },
+      secret: { type: String, default: '@Secret' },
       api: {
         start: { type: String, default: '' },
         server: { type: String, default: '' },

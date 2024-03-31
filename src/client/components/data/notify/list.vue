@@ -22,14 +22,6 @@
             <UBadge :color="item.color" size="xs" variant="soft" class="mr-px" v-if="item.to[0] && item.to[0].watched == 0">
               <UiIcon name="i-bxs-low-vision" />
             </UBadge>
-
-            <UBadge :color="item.color" size="xs" variant="soft" class="cursor-pointer mr-px" v-if="item.global == 1" @click="showEditGlobal(item, index)">
-              <UiIcon name="i-bx-world" />
-            </UBadge>
-            
-            <UBadge :color="item.color" size="xs" variant="soft" class="mr-px" v-if="item.pin == 1">
-              <UiIcon name="i-bxs-pin" />
-            </UBadge>
           </div>
 
           <UiText
@@ -71,16 +63,6 @@
   <UModal v-model="modalUserBox">
     <DataUserBox :fetch-id="userSelect" />
   </UModal>
-
-  <!-- Modal Edit Global -->
-  <UModal v-model="modalEditGlobal">
-    <AdminNotifyUserEditGlobal
-      :notify="notifyGlobalSelect.data" 
-      @cancel="cancelEditGlobal" 
-      @edit="doneEditGlobal" 
-      @delete="doneDeleteGlobal" 
-    />
-  </UModal>
 </template>
 
 <script setup>
@@ -98,39 +80,6 @@ const userSelect = ref(undefined)
 const showUserBox = (_id) => {
   userSelect.value = _id
   modalUserBox.value = true
-}
-
-// Edit Global
-const modalEditGlobal = ref(false)
-const notifyGlobalSelect = ref({
-  index: undefined,
-  data: undefined
-})
-const showEditGlobal = (notify, index) => {
-  if(authStore.profile?.type < 1) return
-  if(notify.global == 0) return
-
-  notifyGlobalSelect.value.index = index
-  notifyGlobalSelect.value.data = notify
-  modalEditGlobal.value = true
-}
-const cancelEditGlobal = () => {
-  notifyGlobalSelect.value.index = undefined
-  notifyGlobalSelect.value.data = undefined
-  modalEditGlobal.value = false
-}
-const doneEditGlobal = (update) => {
-  const index = notifyGlobalSelect.value.index
-  const notify = list.value[index]
-  if(notify){
-    list.value[index] = Object.assign(notify, update)
-  }
-  cancelEditGlobal()
-}
-const doneDeleteGlobal = () => {
-  const index = notifyGlobalSelect.value.index
-  list.value.splice(index, 1)
-  cancelEditGlobal()
 }
 
 // Go to Link

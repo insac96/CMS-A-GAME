@@ -12,7 +12,7 @@
         chip-position="bottom-right"
         :ui="{
           chip: {
-            base: 'text-white dark:text-white ring-0 font-bold'
+            base: 'bg-gray-600 dark:bg-gray-700 text-white dark:text-white ring-0 font-bold p-1.5 py-2'
           }
         }"
       />
@@ -37,7 +37,6 @@ const typeFormat = {
   'game_item': 'item',
   'coin': 'coin',
   'wheel': 'wheel',
-  'notify': 'notify',
 
   'empty-gift': 'empty-gift',
   'wheel_lose': 'wheel_lose'

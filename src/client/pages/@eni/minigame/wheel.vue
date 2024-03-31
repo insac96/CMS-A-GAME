@@ -58,7 +58,7 @@
     <UModal v-model="modal.add" preventClose>
       <UForm :state="stateAdd" @submit="addAction" class="p-4">
         <UFormGroup label="Vật phẩm">
-          <SelectItem v-model="stateAdd.item" :types="['game_item', 'coin', 'wheel', 'notify', 'wheel_lose']" />
+          <SelectItem v-model="stateAdd.item" :types="['game_item', 'coin', 'wheel', 'wheel_lose']" />
         </UFormGroup>
 
         <UFormGroup label="Số lượng">
@@ -195,7 +195,6 @@ const typeFormat = {
   'game_item': 'Vật phẩm',
   'coin': 'Xu Web',
   'wheel': 'Lượt quay',
-  'notify': 'Lượt gửi tin',
   'wheel_lose': 'Mất lượt',
 }
 

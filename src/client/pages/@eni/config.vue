@@ -48,7 +48,7 @@
           </div>
 
           <UiFlex justify="end" class="mt-4">
-            <UButton @click="update('cfg')" :loading="updating">Cập nhật</UButton>
+            <UButton @click="update('enable')" :loading="updating">Cập nhật</UButton>
           </UiFlex>
         </UCard>
       </template>
@@ -146,11 +146,6 @@
             <UToggle v-model="state.menu.action.payment" />
           </UiFlex>
 
-          <UiFlex justify="between" class="mb-4">
-            <UiText weight="semibold">Đổi xu</UiText>
-            <UToggle v-model="state.menu.action.withdraw" />
-          </UiFlex>
-
           <UiFlex justify="between">
             <UiText weight="semibold">Giftcode</UiText>
             <UToggle v-model="state.menu.action.giftcode" />
@@ -169,15 +164,15 @@
             <UiText weight="semibold">Vật phẩm</UiText>
             <UToggle v-model="state.menu.shop.item" />
           </UiFlex>
-
-          <UiFlex justify="between">
-            <UiText weight="semibold">Tiền tệ</UiText>
-            <UToggle v-model="state.menu.shop.currency" />
-          </UiFlex>
         </UCard>
 
         <UCard class="mb-4">
           <UiText color="primary" weight="bold" class="mb-4">Sự kiện</UiText>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Mời bạn</UiText>
+            <UToggle v-model="state.menu.event.referral" />
+          </UiFlex>
 
           <UiFlex justify="between" class="mb-4">
             <UiText weight="semibold">Đăng nhập</UiText>
@@ -192,6 +187,16 @@
           <UiFlex justify="between" class="mb-4">
             <UiText weight="semibold">Tiêu phí</UiText>
             <UToggle v-model="state.menu.event.spend" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Nạp đơn</UiText>
+            <UToggle v-model="state.menu.event.paymusty" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Liên nạp</UiText>
+            <UToggle v-model="state.menu.event.paydays" />
           </UiFlex>
         </UCard>
 
@@ -254,52 +259,16 @@
         <UCard>
           <UForm :state="state">
             <UiFlex justify="between" class="mb-4">
-              <UiText weight="semibold">Game Mobile</UiText>
+              <UiText weight="semibold">Mobile</UiText>
               <UToggle v-model="state.game.mobile" />
             </UiFlex>
 
+            <UFormGroup label="Địa chỉ IP">
+              <UInput v-model="state.game.ip" />
+            </UFormGroup>
+
             <UFormGroup label="Secret">
               <UInput v-model="state.game.secret" />
-            </UFormGroup>
-
-            <UFormGroup label="Path Image">
-              <UInput v-model="state.game.image" />
-            </UFormGroup>
-
-            <UFormGroup label="API Get OS">
-              <UInput v-model="state.game.api.os" />
-            </UFormGroup>
-            
-            <UFormGroup label="API Get Start">
-              <UInput v-model="state.game.api.start" />
-            </UFormGroup>
-
-            <UFormGroup label="API Get Server">
-              <UInput v-model="state.game.api.server" />
-            </UFormGroup>
-
-            <UFormGroup label="API Get Role">
-              <UInput v-model="state.game.api.role" />
-            </UFormGroup>
-
-            <UFormGroup label="API Get All Role">
-              <UInput v-model="state.game.api.roles" />
-            </UFormGroup>
-
-            <UFormGroup label="API Rank Level">
-              <UInput v-model="state.game.api.rank_level" />
-            </UFormGroup>
-
-            <UFormGroup label="API Rank Power">
-              <UInput v-model="state.game.api.rank_power" />
-            </UFormGroup>
-
-            <UFormGroup label="API Send Mail">
-              <UInput v-model="state.game.api.mail" />
-            </UFormGroup>
-
-            <UFormGroup label="API Send Recharge">
-              <UInput v-model="state.game.api.recharge" />
             </UFormGroup>
 
             <UiFlex justify="end" class="mt-4">
@@ -418,12 +387,32 @@
           </UForm>
         </UCard>
       </template>
+
+      <template #other>
+        <UCard>
+          <UiFlex justify="between" class="mb-4">
+            <UiText color="gray" size="sm">Reopen</UiText>
+            <UButton color="gray" @click="action('reopen')">Thực hiện</UButton>
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
+            <UiText color="gray" size="sm">Xóa thông báo</UiText>
+            <UButton color="gray" @click="action('del-notify')">Thực hiện</UButton>
+          </UiFlex>
+
+          <UiFlex justify="between">
+            <UiText color="gray" size="sm">Đặt lại cấu hình</UiText>
+            <UButton color="gray" @click="action('reset-config')">Thực hiện</UButton>
+          </UiFlex>
+        </UCard>
+      </template>
     </UAccordion>
   </UiContent>
 </template>
 
 <script setup>
 const { bootConfig } = useConfigStore()
+const { error } = useNotify()
 
 const load = ref(true)
 const updating = ref(false)
@@ -442,7 +431,6 @@ const state = ref({
   menu: {
     action: {
       payment: false,
-      withdraw: false,
       giftcode: false,
     },
     shop: {
@@ -451,9 +439,12 @@ const state = ref({
       currency: false
     },
     event: {
+      referral: false,
       login: false,
       pay: false,
-      spend: false
+      spend: false,
+      paymusty: false,
+      paydays: false
     },
     minigame: {
       wheel: false,
@@ -505,20 +496,9 @@ const state = ref({
   },
 
   game: {
+    ip: '',
     mobile: false,
-    image: '',
     secret: '',
-    api: {
-      start: '',
-      server: '',
-      role: '',
-      roles: '',
-      rank_level: '',
-      rank_power: '',
-      mail: '',
-      recharge: '',
-      os: ''
-    }
   },
 
   facebook: {
@@ -590,6 +570,10 @@ const menu = [
 {
   label: 'Thank You',
   slot: 'thankyou'
+},
+{
+  label: 'Khác',
+  slot: 'other'
 }
 ]
 
@@ -610,6 +594,22 @@ const update = async (change) => {
     updating.value = false
   }
   catch(e) {
+    updating.value = false
+  }
+}
+
+const action = async (type) => {
+  try {
+    if(!!updating.value) return error('Có 1 tiến trình đang xử lý, vui lòng đợi')
+    
+    updating.value = true
+    await useAPI('config/admin/action', {
+      type: type
+    })
+
+    updating.value = false
+  }
+  catch (e) {
     updating.value = false
   }
 }

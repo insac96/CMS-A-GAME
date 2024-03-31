@@ -107,15 +107,6 @@ const statusFormat = {
 // Active
 const activeConfig = computed(() => {
   if(!!loading.value) return { active: false, title: 'Đang tải...' }
-  if(config.value.display == 0) return { active: false, title: 'Sự kiện đang tạm ẩn, vui lòng quay lại sau'}
-  if(list.value.length == 0) return { active: false, title: 'Sự kiện chưa cập nhật phần thưởng, vui lòng quay lại sau'}
-
-  const nowTime = dayjs(Date.now()).unix()
-  const startTime = config.value.start ? dayjs(config.value.start).unix() : null
-  const endTime = config.value.end ? dayjs(config.value.end).unix() : null
-
-  if(!!startTime && nowTime < startTime) return { active: false, title: `Sự kiện sẽ bắt đầu vào ngày ${displayFull(config.value.start)}, vui lòng quay lại sau` }
-  if(!!endTime && nowTime > endTime) return { active: false, title: `Sự kiện đã kết thúc, vui lòng quay lại sau` }
   return { active: true }
 })
 

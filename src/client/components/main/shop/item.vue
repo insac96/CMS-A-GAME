@@ -5,6 +5,21 @@
       <UForm :state="page" @submit="getList" class="mr-1 max-w-[150px] sm:max-w-[220px]">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
+
+      <USelectMenu 
+        v-model="page.types" 
+        value-attribute="value"
+        option-attribute="label"
+        :options="[
+          { label: 'Vật phẩm', value: ['game_item'] },
+          { label: 'Gói nạp', value: ['game_recharge'] },
+        ]"
+        class="mr-auto"
+      >
+        <template #label>
+          <span>{{ page.types[0] == 'game_item' ? 'Vật phẩm' : 'Gói nạp' }}</span>
+        </template>
+      </USelectMenu>
       
       <UDropdown :items="menuList">
         <UButton icon="i-bx-dots-vertical-rounded" color="white" size="sm"></UButton>

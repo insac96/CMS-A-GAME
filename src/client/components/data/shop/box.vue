@@ -53,8 +53,7 @@ const { dayjs, displayFull } = useDayJs()
 const typeFormat = {
   'game_recharge': 'Gói Nạp',
   'game_item': 'Vật Phẩm',
-  'wheel': 'Tiền Tệ',
-  'notify': 'Tiền Tệ'
+  'wheel': 'Tiền Tệ'
 }
 
 const systemDiscount = computed(() => {

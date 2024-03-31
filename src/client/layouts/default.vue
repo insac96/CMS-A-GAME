@@ -20,8 +20,6 @@
       </div>
     </UContainer>
 
-    <DataReferralModal />
-
     <LayoutFooter />
   </div>
 </template>

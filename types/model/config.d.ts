@@ -18,7 +18,6 @@ export interface IDBConfig {
   menu: {
     action: {
       payment: boolean
-      withdraw: boolean
       giftcode: boolean
     }
     shop: {
@@ -27,9 +26,12 @@ export interface IDBConfig {
       currency: boolean
     }
     event: {
+      referral: boolean
       login: boolean
       pay: boolean
       spend: boolean
+      paymusty: boolean
+      paydays: boolean
     }
     minigame: {
       wheel: boolean
@@ -74,10 +76,10 @@ export interface IDBConfig {
     zalo: string
   }
   game: {
+    ip: string
     mobile: boolean
     image: string
     secret: string
-    landing: string
     api: {
       start: string
       role: string
@@ -123,6 +125,37 @@ export interface IDBConfigStore {
   logo_image: string
   logo_long_image: string
   makeby: string
+  menu: {
+    action: {
+      payment: boolean
+      giftcode: boolean
+    }
+    shop: {
+      pack: boolean
+      item: boolean
+      currency: boolean
+    }
+    event: {
+      referral: boolean
+      login: boolean
+      pay: boolean
+      spend: boolean
+      paymusty: boolean
+      paydays: boolean
+    }
+    minigame: {
+      wheel: boolean
+      dice: boolean
+    }
+    rank: {
+      level: boolean
+      power: boolean
+    }
+    social: {
+      facebook: boolean
+      group: boolean
+    }
+  }
   enable: {
     signin: boolean
     signup: boolean
@@ -152,7 +185,6 @@ export interface IDBConfigStore {
   game: {
     mobile: boolean
     image: string
-    landing: string
   }
   facebook: {
     client_id: string

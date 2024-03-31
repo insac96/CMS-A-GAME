@@ -1,14 +1,17 @@
 import type { IDBLevel, IDBUser, IDBShop, IDBItem, IAuth, IDBShopConfig } from "~~/types"
 
+const moneyType = ['coin', 'diamond']
+
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
 
-    const { item, server, role, amount } = await readBody(event)
+    const { item, server, role, amount, money : buyBy } = await readBody(event)
     if(!item) throw 'Không tìm thấy ID vật phẩm'
     if(!server) throw 'Không tìm thấy ID máy chủ'
     if(!role) throw 'Không tìm thấy ID nhân vật'
     if(!!isNaN(parseInt(amount)) || parseInt(amount) < 1) throw 'Số lượng không hợp lệ'
+    if(!moneyType.includes(buyBy)) throw 'Tiền tệ không hỗ trợ'
 
     // Shop Config
     const shopConfig = await DB.ShopConfig.findOne() as IDBShopConfig
@@ -16,7 +19,7 @@ export default defineEventHandler(async (event) => {
     if(!!shopConfig.maintenance) throw 'Cửa hàng đang bảo trì, vui lòng quay lại sau'
 
     // Check User
-    const user = await DB.User.findOne({ _id: auth._id }).select('currency.coin level spend') as IDBUser
+    const user = await DB.User.findOne({ _id: auth._id }).select('currency.coin currency.diamond level spend') as IDBUser
     if(!user) throw 'Không tìm thấy thông tin tài khoản'
     const level = await DB.Level.findOne({ _id: user.level }).select('limit.spend discount') as IDBLevel
     if(!level) throw 'Không tìm thấy thông tin cấp độ'
@@ -34,7 +37,9 @@ export default defineEventHandler(async (event) => {
     const discountSystem = getShopDiscount(event, shopConfig)
     const discount = discountLevel + discountSystem > 100 ? 100 : discountLevel + discountSystem
     const totalPrice = Math.floor(price - Math.floor(price * discount / 100))
-    if(totalPrice > user.currency.coin) throw 'Số dư xu không đủ'
+
+    // @ts-expect-error
+    if(totalPrice > user.currency[buyBy]) throw 'Số dư không đủ'
 
     // Check Limit Spend
     const spend = user.spend
@@ -85,7 +90,7 @@ export default defineEventHandler(async (event) => {
     // Update User
     await DB.User.updateOne({ _id: auth._id },{
       $inc: {
-        'currency.coin': totalPrice * -1,
+        [`currency.${buyBy}`]: totalPrice * -1,
         'spend.total.coin': totalPrice,
         'spend.day.coin': totalPrice,
         'spend.month.coin': totalPrice,
@@ -105,7 +110,7 @@ export default defineEventHandler(async (event) => {
       amount: parseInt(amount)
     })
 
-    logUser(event, auth._id, `Dùng <b>${totalPrice.toLocaleString("vi-VN")}</b> để mua <b>x${amount} ${itemData.item_name}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
+    logUser(event, auth._id, `Dùng <b>${totalPrice.toLocaleString("vi-VN")} ${buyBy == 'coin' ? 'Xu' : 'Cống Hiến'}</b> để mua <b>x${amount} ${itemData.item_name}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
 
     if(itemType == 'game_recharge'){
       return resp(event, { message: 'Mua vật phẩm thành công', result: {

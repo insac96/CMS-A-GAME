@@ -1,9 +1,5 @@
 <template>
   <div>
-    <UiFlex justify="end" class="mb-2" >
-      <UButton size="sm" color="gray" @click="modal.statistical = true" v-if="!!authStore.isLogin">Thống kê</UButton>
-    </UiFlex>
-
     <div class="relative min-h-[200px]">
       <LoadingTable v-if="loading" />
 
@@ -13,7 +9,7 @@
         <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }" v-else>
           <UTable :rows="list" :columns="columns">
             <template #need-data="{ row }">
-              <UiText weight="semibold">{{ useMoney().toMoney(row.need) }} Bạn</UiText>
+              <UiText weight="semibold">{{ useMoney().toMoney(row.need) }} Ngày</UiText>
             </template>
 
             <template #gift-data="{ row }">
@@ -62,12 +58,12 @@ const config = ref({
   display: 0
 })
 const list = ref([])
-const type = ref('referral.count')
+const type = ref('paydays')
 watch(() => type.value, () => getList())
 
 const columns = [{
   key: 'need',
-  label: 'Mời',
+  label: 'Liên nạp',
 },{
   key: 'gift',
   label: 'Phần thưởng',

@@ -47,7 +47,7 @@
 
       <UiFlex type="col" class="p-2 w-4/12">
         <UiText size="xs" color="gray" class="mb-1">Cống Hiến</UiText>
-        <UiText weight="bold" @click="useTo().navigateToSSL('/main/action/withdraw'), emit('action')" pointer>{{ miniMoney(user.currency?.diamond) }}</UiText>
+        <UiText weight="bold" pointer>{{ miniMoney(user.currency?.diamond) }}</UiText>
       </UiFlex>
 
       <UiFlex type="col" class="p-2 w-4/12">

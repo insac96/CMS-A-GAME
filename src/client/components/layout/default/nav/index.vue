@@ -58,14 +58,13 @@ const navItems = computed(() => {
     }
 
     if(!!show.value.action.payment) action.children.push({ label: 'Nạp xu', to: '/main/action/payment' })
-    if(!!show.value.action.withdraw) action.children.push({ label: 'Đổi xu', to: '/main/action/withdraw' })
     if(!!show.value.action.giftcode) action.children.push({ label: 'Giftcode', to: '/main/action/giftcode' })
 
     list.push(action)
   }
 
   // Shop
-  if(!!show.value.shop.pack || !!show.value.shop.item || !!show.value.shop.currency){
+  if(!!show.value.shop.pack || !!show.value.shop.item){
     const action = {
       label: 'Cửa Hàng',
       icon: 'i-bx-shopping-bag',
@@ -76,13 +75,12 @@ const navItems = computed(() => {
 
     if(!!show.value.shop.pack) action.children.push({ label: 'Gói', to: '/main/shop/pack' })
     if(!!show.value.shop.item) action.children.push({ label: 'Vật phẩm', to: '/main/shop/item' })
-    if(!!show.value.shop.currency) action.children.push({ label: 'Tiền tệ', to: '/main/shop/currency' })
 
     list.push(action)
   }
 
   // Event
-  if(!!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend){
+  if(!!show.value.event.referral || !!show.value.event.login || !!show.value.event.pay || !!show.value.event.spend || !!show.value.event.paymusty || !!show.value.event.paydays){
     const action = {
       label: 'Sự Kiện',
       icon: 'i-bx-calendar',
@@ -91,10 +89,13 @@ const navItems = computed(() => {
       children: []
     }
 
+    if(!!show.value.event.referral) action.children.push({ label: 'Mời bạn', to: '/main/event/referral' })
     if(!!show.value.event.login) action.children.push({ label: 'Đăng nhập', to: '/main/event/login' })
     if(!!show.value.event.pay) action.children.push({ label: 'Tích nạp', to: '/main/event/pay' })
     if(!!show.value.event.spend) action.children.push({ label: 'Tiêu phí', to: '/main/event/spend' })
-
+    if(!!show.value.event.paymusty) action.children.push({ label: 'Đơn nạp', to: '/main/event/paymusty' })
+    if(!!show.value.event.paydays) action.children.push({ label: 'Liên nạp', to: '/main/event/paydays' })
+    
     list.push(action)
   }
 

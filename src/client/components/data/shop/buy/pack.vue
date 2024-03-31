@@ -14,7 +14,7 @@
     <!-- Form -->
     <UForm :state="state" :validate="validate" @submit="submit" v-if="!load && !config.maintenance">
       <UFormGroup>
-        <DataUserMini v-model:level="level" v-model:currency="currency" no-wheel no-notify no-diamond />
+        <DataUserMini v-model:level="level" v-model:currency="currency" :no-coin="state.money == 'diamond'" :no-diamond="state.money == 'coin'" no-wheel />
       </UFormGroup>
 
       <UFormGroup label="Máy chủ" name="server">
@@ -23,6 +23,10 @@
 
       <UFormGroup label="Nhân vật" name="role" v-if="!!state.server">
         <SelectGameRole v-model="state.role" :server="state.server" />
+      </UFormGroup>
+
+      <UFormGroup label="Mua bằng" name="money">
+        <SelectMoney v-model="state.money" />
       </UFormGroup>
 
       <UFormGroup label="Giảm giá hệ thống" v-if="systemDiscount && systemDiscount.number > 0">
@@ -59,7 +63,7 @@
 
           <UiFlex justify="between" class="text-sm font-semibold p-2" v-if="totalPrice != null">
             <UiText color="gray" class="mr-6">Thành tiền</UiText>
-            <UiText color="primary" weight="bold" align="right">{{ `${toMoney(totalPrice)} Xu` }}</UiText>
+            <UiText color="primary" weight="bold" align="right">{{ `${toMoney(totalPrice)} ${state.money == 'coin' ? 'Xu' : 'CH'}` }}</UiText>
           </UiFlex>
         </UCard>
       </UFormGroup>
@@ -104,6 +108,7 @@ const state = ref({
   server: props.server ? props.server : null,
   role: null,
   pack: props.pack ? props.pack._id : null,
+  money: 'coin'
 })
 
 const systemDiscount = computed(() => {

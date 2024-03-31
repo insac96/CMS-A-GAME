@@ -25,13 +25,16 @@ export const DBUser = (mongoose : Mongoose) => {
       code: { type: String },
       person: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
       count: { type: Number, default: 0, index: true },
-      receive_gift: { type: Number, default: 0, index: true },
     },
     currency: {
       coin: { type: Number, default: 0, index: true },
       wheel: { type: Number, default: 0, index: true },
-      notify: { type: Number, default: 0, index: true },
       diamond: { type: Number, default: 0, index: true },
+    },
+    paymusty: [{ type: Number, default: 0, index: true }],
+    paydays: {
+      day: { type: Number, default: 0, index: true },
+      receive: { type: Number, default: 0, index: true },
     },
     pay: {
       total: {

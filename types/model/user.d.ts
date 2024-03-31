@@ -27,13 +27,16 @@ export interface IDBUser {
     code: string
     person: Types.ObjectId
     count: number
-    receive_gift: number
   }
   currency: {
     coin: number
     wheel: number
-    notify: number
     diamond: number
+  }
+  paymusty: Array<number>
+  paydays: {
+    day: number
+    receive: number
   }
   pay: {
     total: {

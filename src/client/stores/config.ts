@@ -13,7 +13,6 @@ export const useConfigStore = defineStore('config', () => {
     menu: {
       action: {
         payment: false,
-        withdraw: false,
         giftcode: false,
       },
       shop: {
@@ -22,9 +21,11 @@ export const useConfigStore = defineStore('config', () => {
         currency: false
       },
       event: {
+        referral: false,
         login: false,
         pay: false,
-        spend: false
+        spend: false,
+        paymusty: false
       },
       minigame: {
         wheel: false,
@@ -67,8 +68,7 @@ export const useConfigStore = defineStore('config', () => {
     },
     game: {
       mobile: false,
-      image: '',
-      landing: ''
+      image: ''
     },
     facebook: {
       client_id: '',

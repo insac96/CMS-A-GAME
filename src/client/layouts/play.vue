@@ -1,13 +1,8 @@
 <template>
-  <UiFlex type="col" class="relative w-full h-full min-w-full overflow-hidden">
-    <LayoutPlayHeader v-if="!!showHeader" @hide="showHeader = false" />
-
-    <LayoutPlayDrag v-show="!showHeader" @open="showHeader = true"/>
-
-    <UiFlex justify="center" class="grow w-full overflow-hidden">
+  <div class="relative w-full h-full min-w-full min-h-full max-w-full max-h-full overflow-hidden">
+      <LayoutPlayDrag />
       <slot></slot>
-    </UiFlex>
-  </UiFlex>
+  </div>
 </template>
 
 <script setup>
@@ -18,6 +13,4 @@ useSeoMeta({
 
 const authStore = useAuthStore()
 watch(() => authStore.isLogin, (val) => !val && useTo().navigateToSSL('/'))
-
-const showHeader = ref(false)
 </script>

@@ -21,26 +21,32 @@ export const DBEventConfig = (mongoose : Mongoose) => {
     const event2 = await model.count({ type: 'login.total' })
     if(!event2) await model.create({ type: 'login.total', name: 'Đăng nhập tổng' })
 
-    const event9 = await model.count({ type: 'pay.total.money' })
-    if(!event9) await model.create({ type: 'pay.total.money', name: 'Tích nạp tổng' })
+    const event3 = await model.count({ type: 'pay.total.money' })
+    if(!event3) await model.create({ type: 'pay.total.money', name: 'Tích nạp tổng' })
 
-    const event3 = await model.count({ type: 'pay.day.money' })
-    if(!event3) await model.create({ type: 'pay.day.money', name: 'Tích nạp ngày' })
+    const event4 = await model.count({ type: 'pay.day.money' })
+    if(!event4) await model.create({ type: 'pay.day.money', name: 'Tích nạp ngày' })
 
-    const event4 = await model.count({ type: 'pay.month.money' })
-    if(!event4) await model.create({ type: 'pay.month.money', name: 'Tích nạp tháng' })
+    const event5 = await model.count({ type: 'pay.month.money' })
+    if(!event5) await model.create({ type: 'pay.month.money', name: 'Tích nạp tháng' })
 
-    const event5 = await model.count({ type: 'spend.total.coin' })
-    if(!event5) await model.create({ type: 'spend.total.coin', name: 'Tiêu phí tổng' })
+    const event6 = await model.count({ type: 'spend.total.coin' })
+    if(!event6) await model.create({ type: 'spend.total.coin', name: 'Tiêu phí tổng' })
 
-    const event6 = await model.count({ type: 'spend.day.coin' })
-    if(!event6) await model.create({ type: 'spend.day.coin', name: 'Tiêu phí ngày' })
+    const event7 = await model.count({ type: 'spend.day.coin' })
+    if(!event7) await model.create({ type: 'spend.day.coin', name: 'Tiêu phí ngày' })
 
-    const event7 = await model.count({ type: 'spend.month.coin' })
-    if(!event7) await model.create({ type: 'spend.month.coin', name: 'Tiêu phí tháng' })
+    const event8 = await model.count({ type: 'spend.month.coin' })
+    if(!event8) await model.create({ type: 'spend.month.coin', name: 'Tiêu phí tháng' })
 
-    const event8 = await model.count({ type: 'referral.count' })
-    if(!event8) await model.create({ type: 'referral.count', name: 'Giới thiệu bạn' })
+    const event9 = await model.count({ type: 'referral.count' })
+    if(!event9) await model.create({ type: 'referral.count', name: 'Giới thiệu bạn' })
+
+    const event10 = await model.count({ type: 'paymusty' })
+    if(!event10) await model.create({ type: 'paymusty', name: 'Nạp đơn' })
+
+    const event11 = await model.count({ type: 'paydays' })
+    if(!event11) await model.create({ type: 'paydays', name: 'Liên nạp' })
   }
 
   autoCreate()

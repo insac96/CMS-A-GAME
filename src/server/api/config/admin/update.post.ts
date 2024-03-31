@@ -6,8 +6,8 @@ export default defineEventHandler(async (event) => {
     if(auth.type < 1) throw 'Bạn không phải quản trị viên'
 
     const data = await readBody(event)
-    const { change, name, short_name, description, logo_image } = data
-    if(!change || !name || !short_name || !description) throw 'Dữ liệu đầu vào không hợp lệ'
+    const { change, logo_image, game, enable } = data
+    if(!change) throw 'Dữ liệu đầu vào không hợp lệ'
     
     if(change == 'enable') logAdmin(event, 'Cập nhật cài đặt <b>chức năng trang</b>')
     if(change == 'basic') logAdmin(event, 'Cập nhật thông tin <b>cơ bản</b> trang web')
@@ -21,6 +21,29 @@ export default defineEventHandler(async (event) => {
     if(change == 'menu') logAdmin(event, 'Cập nhật cấu hình <b>Menu</b>')
     if(change == 'thankyou') logAdmin(event, 'Cập nhật cấu hình <b>Thank You</b>')
 
+    // Game API
+    if(change == 'game'){
+      if(!!game.ip){
+        data.game.api = {
+          start: `http://${game.ip}/api/action/start.php`,
+          server: `http://${game.ip}/api/action/server.php`,
+          role: `http://${game.ip}/api/action/role.php`,
+          roles: `http://${game.ip}/api/action/roles.php`,
+          rank_level: `http://${game.ip}/api/action/rank_level.php`,
+          rank_power: `http://${game.ip}/api/action/rank_power.php`,
+          mail: `http://${game.ip}/api/action/mail.php`,
+          recharge: `http://${game.ip}/api/action/recharge.php`,
+          os: `http://${game.ip}/api/action/os.php`,
+        }
+      }
+    }
+
+    // Referral
+    if(change == 'enable'){
+      if(!enable.referral) data.menu.event.referral = false
+    }
+
+    // Update
     delete data['_id']
     delete data['change']
     await DB.Config.updateMany({}, data)

@@ -1,7 +1,7 @@
 import type { IAuth, IDBEvent, IDBEventConfig, IDBItem } from '~~/types'
 
 const currencyTypeList = [
-  'coin', 'wheel', 'notify'
+  'coin', 'wheel'
 ]
 
 const typeName : any = {
@@ -13,7 +13,9 @@ const typeName : any = {
   'spend.total.coin': 'Tiêu phí tổng',
   'spend.day.coin': 'Tiêu phí ngày',
   'spend.month.coin': 'Tiêu phí tháng',
-  'referral.count': 'Giới thiệu bạn'
+  'referral.count': 'Giới thiệu bạn',
+  'paymusty': 'Nạp đơn',
+  'paydays': 'Liên nạp'
 }
 
 export default defineEventHandler(async (event) => {
@@ -27,12 +29,11 @@ export default defineEventHandler(async (event) => {
 
     // Event
     const eventData = await DB.Event
-    .findOne({ _id: eventID, display: 1 })
+    .findOne({ _id: eventID })
     .populate({
       path: 'gift.item',
-      select: 'item_id type'
-    })
-    .select('-createdAt -updateAt -display') as IDBEvent
+      select: 'item_id type need'
+    }) as IDBEvent
 
     // Check Event
     if(!eventData) throw 'Mốc thưởng không tồn tại'
@@ -41,14 +42,6 @@ export default defineEventHandler(async (event) => {
     // Event Config
     const eventConfig = await DB.EventConfig.findOne({ type: eventData.type }) as IDBEventConfig
     if(!eventConfig) throw 'Kiểu sự kiện không hỗ trợ'
-
-    // Check Event Start, End, Display
-    if(eventConfig.display == 0) throw 'Sự kiện đang tạm ẩn, vui lòng quay lại sau'
-    const nowTime = DayJS().unix()
-    const startTime = eventConfig.start ? DayJS(eventConfig.start).unix() : null
-    const endTime = eventConfig.end ? DayJS(eventConfig.end).unix() : null
-    if(!!startTime && nowTime < startTime) throw `Sự kiện chưa bắt đầu, vui lòng quay lại sau`
-    if(!!endTime && nowTime > endTime) throw `Sự kiện đã kết thúc, vui lòng quay lại sau`
 
     // Check Active
     const active = await getEventActive(event, eventData, eventData.type)
@@ -76,7 +69,7 @@ export default defineEventHandler(async (event) => {
         server_id: server,
         role_id: role,
         title: 'Web Event',
-        content: 'Vật phẩm nhận từ sự kiện trên Web',
+        content: `Vật phẩm nhận từ sự kiện ${typeName[eventData.type]} trên Web`,
         items: giftItem
       })
     }
@@ -84,6 +77,13 @@ export default defineEventHandler(async (event) => {
     if(Object.keys(giftCurrency).length){
       await DB.User.updateOne({ _id: auth._id },{
         $inc: giftCurrency
+      })
+    }
+
+    // Pay Days
+    if(eventData.type == 'paydays'){
+      await DB.User.updateOne({ _id: auth._id }, {
+        'paydays.receive': eventData.need
       })
     }
     
@@ -99,12 +99,6 @@ export default defineEventHandler(async (event) => {
     const change : any = []
     if(!!giftCurrency[`currency.coin`] && giftCurrency[`currency.coin`] > 0){
       change.push(`${giftCurrency[`currency.coin`].toLocaleString('vi-VN')} xu`) 
-    }
-    if(!!giftCurrency[`currency.wheel`] && giftCurrency[`currency.wheel`] > 0){
-      change.push(`${giftCurrency[`currency.wheel`].toLocaleString('vi-VN')} lượt quay`) 
-    }
-    if(!!giftCurrency[`currency.notify`] && giftCurrency[`currency.notify`] > 0){
-      change.push(`${giftCurrency[`currency.notify`].toLocaleString('vi-VN')} lượt gửi thông báo`) 
     }
 
     logUser(event, auth._id, `Nhận thưởng mốc <b>${eventData.need.toLocaleString('vi-VN')}</b> của sự kiện <b>${typeName[eventData.type]}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)

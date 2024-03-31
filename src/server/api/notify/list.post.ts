@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
 
-    const { type, page } = await readBody(event)
+    const { page } = await readBody(event)
     if(!page) throw 'Thiếu dữ liệu phân trang'
 
     const { size, current, sort } = page
@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
         { global: 1 }
       ]
     }
-    if(type != undefined) filter['type'] = Number(type)
 
     // Make Sort
     const sorting : any = { pin: -1 }

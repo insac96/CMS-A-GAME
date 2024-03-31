@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
       })
   
       logUser(event, user._id, `Nhận <b>vật phẩm</b> từ quản trị viên <b>${auth.username}</b> với lý do <b>${reason}</b>`)
-      logAdmin(event, `Gửi vật phẩm cho <b>${user.username}</b> tại máy chủ <b>${server}</b> với lý do <b>${reason}</b>`)
+      logAdmin(event, `Gửi vật phẩm cho <b>${user.username}</b> tại máy chủ <b>${server.server_id}</b> với lý do <b>${reason}</b>`)
     })
 
     return resp(event, { message: 'Gửi thành công' })

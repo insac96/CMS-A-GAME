@@ -135,18 +135,6 @@
         </UiFlex>
       </UForm>
     </UModal>
-
-     <!-- Modal Edit Gift Invited -->
-     <UModal v-model="modal.editGiftInvited" preventClose>
-      <UForm :state="stateEditGiftInvited" @submit="editGiftInvitedAction" class="p-4">
-        <SelectItemList v-model="stateEditGiftInvited.gift_invited" :types="['coin', 'wheel', 'notify', 'game_item']" />
-
-        <UiFlex justify="end" class="mt-6">
-          <UButton type="submit" :loading="loading.editGiftInvited">Sửa</UButton>
-          <UButton color="gray" @click="modal.editGiftInvited = false" :disabled="loading.editGiftInvited" class="ml-1">Đóng</UButton>
-        </UiFlex>
-      </UForm>
-    </UModal>
   </UiContent>
 </template>
 
@@ -229,18 +217,12 @@ const stateEditLimit = ref({
   limit: null
 })
 
-const stateEditGiftInvited = ref({
-  _id: null,
-  gift_invited: null
-})
-
 // Modal
 const modal = ref({
   add: false,
   editInfo: false,
   editNeed: false,
   editLimit: false,
-  editGiftInvited: false
 })
 
 watch(() => modal.value.add, (val) => !val && (stateAdd.value = {
@@ -258,8 +240,7 @@ const loading = ref({
   editInfo: false,
   editNeed: false,
   editLimit: false,
-  del: false,
-  editGiftInvited: false
+  del: false
 })
 
 // Actions
@@ -285,14 +266,6 @@ const actions = (row) => [
     click: () => {
       Object.keys(stateEditLimit.value).forEach(key => stateEditLimit.value[key] = row[key])
       modal.value.editLimit = true
-    }
-  }],[{
-    label: 'Sửa quà cho bạn bè',
-    icon: 'i-bx-gift',
-    click: () => {
-      stateEditGiftInvited.value._id = row._id
-      stateEditGiftInvited.value.gift_invited = JSON.parse((JSON.stringify(row.gift_invited)))
-      modal.value.editGiftInvited = true
     }
   }],[{
     label: 'Xóa cấp độ',
@@ -370,20 +343,6 @@ const editLimitAction = async () => {
   }
   catch (e) {
     loading.value.editLimit = false
-  }
-}
-
-const editGiftInvitedAction = async () => {
-  try {
-    loading.value.editGiftInvited = true
-    await useAPI('level/admin/editGiftInvited', JSON.parse(JSON.stringify(stateEditGiftInvited.value)))
-
-    loading.value.editGiftInvited = false
-    modal.value.editGiftInvited = false
-    getList()
-  }
-  catch (e) {
-    loading.value.editGiftInvited = false
   }
 }
 

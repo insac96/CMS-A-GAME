@@ -40,7 +40,6 @@
       <template #tab-9><UVerticalNavigation :links="navItems[9].children" @click="emit('to')"/></template>
       <template #tab-10><UVerticalNavigation :links="navItems[10].children" @click="emit('to')"/></template>
       <template #tab-11><UVerticalNavigation :links="navItems[11].children" @click="emit('to')"/></template>
-      <template #tab-12><UVerticalNavigation :links="navItems[12].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -97,7 +96,6 @@ const navItems = [
     children: [
       { label: 'Danh sách', to: '/@eni/user' }, 
       { label: 'Cấp độ', to: '/@eni/user/level' },
-      { label: 'Chức năng', to: '/@eni/user/action' }, 
     ]
   },
   {
@@ -112,23 +110,14 @@ const navItems = [
     ]
   },
   {
-    label: 'Đổi xu',
-    icon: 'i-bx-money-withdraw',
-    defaultOpen: false,
-    slot: 'tab-6',
-    children: [
-      { label: 'Danh sách', to: '/@eni/withdraw' }, 
-    ]
-  },
-  {
     label: 'Trò chơi',
     icon: 'i-bx-cube-alt',
     defaultOpen: false,
-    slot: 'tab-7',
+    slot: 'tab-6',
     children: [
       { label: 'Gửi thư', to: '/@eni/game/send' },
       { label: 'Vật phẩm', to: '/@eni/game/item' },
-      { label: 'Gói vật phẩm', to: '/@eni/game/itembox' }, 
+      { label: 'Bộ vật phẩm', to: '/@eni/game/itembox' }, 
       { label: 'Máy chủ', to: '/@eni/game/server' },
       { label: 'Nhân vật', to: '/@eni/game/roles' },
       { label: 'Quà xếp hạng', to: '/@eni/game/rankgift' },
@@ -138,7 +127,7 @@ const navItems = [
     label: 'Giftcode',
     icon: 'i-bx-barcode-reader',
     defaultOpen: false,
-    slot: 'tab-8',
+    slot: 'tab-7',
     children: [
       { label: 'Danh sách', to: '/@eni/giftcode' }, 
       { label: 'Lịch sử', to: '/@eni/giftcode/history' }, 
@@ -148,12 +137,11 @@ const navItems = [
     label: 'Cửa hàng',
     icon: 'i-bx-shopping-bag',
     defaultOpen: false,
-    slot: 'tab-9',
+    slot: 'tab-8',
     children: [
       { label: 'Cài đặt', to: '/@eni/shop/config' },
       { label: 'Gói', to: '/@eni/shop/pack' },
       { label: 'Vật phẩm', to: '/@eni/shop/item' },
-      { label: 'Tiền tệ', to: '/@eni/shop/currency' }, 
       { label: 'Lịch sử', to: '/@eni/shop/history' }, 
     ]
   },
@@ -161,13 +149,14 @@ const navItems = [
     label: 'Sự Kiện',
     icon: 'i-bx-calendar',
     defaultOpen: false,
-    slot: 'tab-10',
+    slot: 'tab-9',
     children: [
-      { label: 'Cặt đặt', to: '/@eni/event/config' }, 
+      { label: 'Mời bạn', to: '/@eni/event/referral' },
       { label: 'Đăng nhập', to: '/@eni/event/login' }, 
       { label: 'Tích nạp', to: '/@eni/event/pay' }, 
       { label: 'Tiêu phí', to: '/@eni/event/spend' },
-      { label: 'Giới thiệu', to: '/@eni/event/referral' },
+      { label: 'Nạp đơn', to: '/@eni/event/paymusty' }, 
+      { label: 'Liên nạp', to: '/@eni/event/paydays' }, 
       { label: 'Lịch sử', to: '/@eni/event/history' },
     ]
   },
@@ -175,7 +164,7 @@ const navItems = [
     label: 'Mini Game',
     icon: 'i-bx-game',
     defaultOpen: false,
-    slot: 'tab-11',
+    slot: 'tab-10',
     children: [
       { label: 'Vòng quay', to: '/@eni/minigame/wheel' }, 
       { label: 'Xúc xắc', to: '/@eni/minigame/dice' }
@@ -185,7 +174,7 @@ const navItems = [
     label: 'Nhật ký',
     icon: 'i-bx-book',
     defaultOpen: false,
-    slot: 'tab-12',
+    slot: 'tab-11',
     children: [
       { label: 'Quản trị viên', to: '/@eni/log/admin' }, 
       { label: 'Gửi vật phẩm', to: '/@eni/log/adminSendItem' },

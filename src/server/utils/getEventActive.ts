@@ -1,12 +1,13 @@
 import type { H3Event } from 'h3'
-import type { IAuth, IDBEventHistory } from '~~/types'
+import type { IAuth, IDBEventHistory, IDBUser } from '~~/types'
 
 const typeCheck : any = {
   'login.month' : 'month',
   'pay.day.money' : 'day',
   'pay.month.money' : 'month',
   'spend.day.coin': 'day', 
-  'spend.month.coin': 'month'
+  'spend.month.coin': 'month',
+  'paymusty': 'day', 
 }
 
 export default async (event: H3Event, data : any, type : string) : Promise<any> => {
@@ -16,13 +17,26 @@ export default async (event: H3Event, data : any, type : string) : Promise<any> 
 
     let check : any
     const user = await DB.User.findOne({ _id: auth._id }).select(`${type}`)
-    const typeArray = type.split('.')
-    typeArray.forEach((i : string) => {
-      if(!check) check = user[i]
-      else check = check[i]
-    })
 
-    if(data.need > check) return Promise.resolve(-1) // Chưa đạt điều kiện
+    if(type == 'paymusty'){
+      check = user[type].find((i:any) => i == data.need)
+      if(!check) return Promise.resolve(-1) // Chưa đạt điều kiện 
+    }
+    else if(type == 'paydays'){
+      const { day, receive } = user[type]
+      if(day < data.need) return Promise.resolve(-1) // Chưa đạt điều kiện
+      if(receive >= data.need) return Promise.resolve(1) // Đã nhận
+      return Promise.resolve(0) // Có thể nhận
+    }
+    else {
+      const typeArray = type.split('.')
+      typeArray.forEach((i : string) => {
+        if(!check) check = user[i]
+        else check = check[i]
+      })
+
+      if(data.need > check) return Promise.resolve(-1) // Chưa đạt điều kiện
+    }
 
     const history = await DB.EventHistory
     .findOne({ user: auth._id, event: data._id })

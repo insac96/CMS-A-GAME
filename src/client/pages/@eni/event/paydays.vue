@@ -1,8 +1,9 @@
 <template>
-  <UiContent title="Currency Shop" sub="Quản lý cửa hàng tiền tệ">
+  <UiContent title="Payment Event" sub="Quản lý mốc thưởng sự kiện nạp tiền">
     <UiFlex class="mb-4">
-      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-auto"/>
-      <UButton color="gray" @click="modal.add = true" class="ml-2">Thêm mới</UButton>
+      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1"/>
+
+      <UButton class="ml-auto" color="gray" @click="modal.add = true">Thêm mốc</UButton>
     </UiFlex>
     
     <!-- Table -->
@@ -11,27 +12,21 @@
 
       <UTable 
         v-model:sort="page.sort"
-        :columns="selectedColumns" 
+        :columns="selectedColumns"
         :rows="list"
       >
-        <template #image-data="{ row }">
-          <DataItemImage :src="row.image" :type="row.type" />
+        <template #need-data="{ row }">
+          <UiText weight="semibold">{{ toMoney(row.need) }}</UiText>
         </template>
 
-        <template #type-data="{ row }">
-          <UBadge color="gray" variant="soft">
-            {{ typeFormat[row.type] }}
-          </UBadge>
-        </template>
-
-        <template #price-data="{ row }">
-          <UiText weight="semibold">{{ toMoney(row.price) }}</UiText>
+        <template #gift-data="{ row }">
+          <DataItemList :items="row.gift" class="min-w-[400px] max-w-[400px]" />
         </template>
 
         <template #display-data="{ row }">
           <UBadge :color="row.display == 1 ? 'green' : 'gray'" variant="soft">{{ row.display == 1 ? 'Hiện' : 'Ẩn' }}</UBadge>
         </template>
-
+        
         <template #updatedAt-data="{ row }">
           {{ useDayJs().displayFull(row.updatedAt) }}
         </template>
@@ -53,12 +48,8 @@
     <!-- Modal Add -->
     <UModal v-model="modal.add" preventClose>
       <UForm :state="stateAdd" @submit="addAction" class="p-4">
-        <UFormGroup label="Vật phẩm">
-          <SelectItem v-model="stateAdd.item" :types="page.types" />
-        </UFormGroup>
-
-        <UFormGroup label="Giá tiền">
-          <UInput v-model="stateAdd.price" type="number" />
+        <UFormGroup label="Yêu cầu">
+          <UInput v-model="stateAdd.need" type="number" />
         </UFormGroup>
 
         <UFormGroup label="Hiển thị">
@@ -75,8 +66,8 @@
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
       <UForm :state="stateEdit" @submit="editAction" class="p-4">
-        <UFormGroup label="Giá tiền">
-          <UInput v-model="stateEdit.price" type="number" />
+        <UFormGroup label="Yêu cầu">
+          <UInput v-model="stateEdit.need" type="number" />
         </UFormGroup>
 
         <UFormGroup label="Hiển thị">
@@ -89,31 +80,36 @@
         </UiFlex>
       </UForm>
     </UModal>
+
+    <!--Modal Gift-->
+    <UModal v-model="modal.gift" preventClose :ui="{width: 'sm:max-w-[700px]'}">
+      <UForm :state="stateGift" @submit="giftAction" class="p-4">
+        <SelectItemList v-model="stateGift.gift" :types="['coin', 'wheel', 'game_item']" />
+
+        <UiFlex justify="end" class="mt-4">
+          <UButton type="submit" :loading="loading.gift">Lưu</UButton>
+          <UButton color="gray" @click="modal.gift = false" :disabled="loading.gift" class="ml-1">Đóng</UButton>
+        </UiFlex>
+      </UForm>
+    </UModal>
   </UiContent>
 </template>
 
 <script setup>
 const { toMoney } = useMoney()
+
 // List
 const list = ref([])
 
 // Columns
 const columns = [
   {
-    key: 'image',
-    label: 'Vật phẩm',
-  },{
-    key: 'name',
-    label: 'Tên',
+    key: 'need',
+    label: 'Yêu cầu',
     sortable: true
   },{
-    key: 'type',
-    label: 'Loại',
-    sortable: true
-  },{
-    key: 'price',
-    label: 'Giá tiền',
-    sortable: true
+    key: 'gift',
+    label: 'Phần thưởng',
   },{
     key: 'display',
     label: 'Hiển thị',
@@ -134,43 +130,44 @@ const page = ref({
   size: 10,
   current: 1,
   sort: {
-    column: 'updatedAt',
-    direction: 'desc'
+    column: 'need',
+    direction: 'asc'
   },
-  types: ['wheel', 'notify'],
+  type: 'paydays',
   total: 0
 })
 watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())
 watch(() => page.value.sort.column, () => getList())
 watch(() => page.value.sort.direction, () => getList())
+watch(() => page.value.type, (val) => getList() && (stateAdd.value.type = val))
 
 // State
 const stateAdd = ref({
-  item: null,
-  price: null,
-  item_amount: 1,
-  limit: 0,
+  type: page.value.type,
+  need: null,
   display: 1
 })
 const stateEdit = ref({
   _id: null,
-  price: null,
-  item_amount: 1,
-  limit: null,
+  need: null,
   display: null
+})
+const stateGift = ref({
+  _id: null,
+  gift: null
 })
 
 // Modal
 const modal = ref({
   add: false,
-  edit: false
+  edit: false,
+  gift: false
 })
 
 watch(() => modal.value.add, (val) => !val && (stateAdd.value = {
-  item: null,
-  price: null,
-  limit: 0,
+  type: page.value.type,
+  need: null,
   display: 1
 }))
 
@@ -179,14 +176,9 @@ const loading = ref({
   load: true,
   add: false,
   edit: false,
+  gift: false,
   del: false
 })
-
-// Type
-const typeFormat = {
-  'wheel': 'Lượt quay',
-  'notify': 'Lượt gửi tin'
-}
 
 // Actions
 const actions = (row) => [
@@ -197,8 +189,16 @@ const actions = (row) => [
       Object.keys(stateEdit.value).forEach(key => stateEdit.value[key] = row[key])
       modal.value.edit = true
     }
+  },{
+    label: 'Sửa phần thưởng',
+    icon: 'i-bx-gift',
+    click: () => {
+      stateGift.value._id = row._id
+      stateGift.value.gift = JSON.parse((JSON.stringify(row.gift)))
+      modal.value.gift = true
+    }
   }],[{
-    label: 'Xóa vật phẩm',
+    label: 'Xóa mốc',
     icon: 'i-bx-trash',
     click: () => delAction(row._id)
   }]
@@ -208,7 +208,7 @@ const actions = (row) => [
 const getList = async () => {
   try {
     loading.value.load = true
-    const data = await useAPI('shop/admin/list', JSON.parse(JSON.stringify(page.value)))
+    const data = await useAPI('event/admin/list', JSON.parse(JSON.stringify(page.value)))
 
     loading.value.load = false
     list.value = data.list
@@ -222,8 +222,7 @@ const getList = async () => {
 const addAction = async () => {
   try {
     loading.value.add = true
-    stateAdd.value.item_amount = 1
-    await useAPI('shop/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
+    await useAPI('event/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
 
     loading.value.add = false
     modal.value.add = false
@@ -237,8 +236,7 @@ const addAction = async () => {
 const editAction = async () => {
   try {
     loading.value.edit = true
-    stateEdit.value.item_amount = 1
-    await useAPI('shop/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
+    await useAPI('event/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
 
     loading.value.edit = false
     modal.value.edit = false
@@ -249,10 +247,24 @@ const editAction = async () => {
   }
 }
 
+const giftAction = async () => {
+  try {
+    loading.value.gift = true
+    await useAPI('event/admin/editGift', JSON.parse(JSON.stringify(stateGift.value)))
+
+    loading.value.gift = false
+    modal.value.gift = false
+    getList()
+  }
+  catch (e) {
+    loading.value.gift = false
+  }
+}
+
 const delAction = async (_id) => {
   try {
     loading.value.del = true
-    await useAPI('shop/admin/del', { _id })
+    await useAPI('event/admin/del', { _id })
 
     loading.value.del = false
     getList()

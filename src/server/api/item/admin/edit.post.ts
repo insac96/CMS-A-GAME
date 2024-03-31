@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const {_id, item_id, item_name, item_image } = body
     if(!_id || !item_id || !item_name) throw 'Dữ liệu đầu vào không hợp lệ'
 
-    const item = await DB.Item.findOne({ _id: _id }).select('item_id type')
+    const item = await DB.Item.findOne({ _id: _id }).select('item_id item_name type')
     if(!item) throw 'Vật phẩm không tồn tại'
     if(!typeList.includes(item.type)) throw 'Không thể sửa vật phẩm mặc định'
 

@@ -1,7 +1,7 @@
 import type { IDBUser, IDBLevel, IDBWheel, IDBItem, IAuth } from "~~/types"
 
 const currencyTypeList = [
-  'coin', 'wheel', 'notify'
+  'coin', 'wheel'
 ]
 
 const getRandomGift = (list : Array<IDBWheel>) : IDBWheel => {
@@ -111,12 +111,6 @@ export default defineEventHandler(async (event) => {
       // Log User
       if(item.type == 'coin'){
         logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> xu từ <b>vòng quay may mắn</b>`)
-      }
-      if(item.type == 'wheel'){
-        logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> lượt quay từ <b>vòng quay may mắn</b>`)
-      }
-      if(item.type == 'notify'){
-        logUser(event, auth._id, `Nhận <b>${resultGift.amount.toLocaleString('vi-VN')}</b> lượt gửi thông báo từ <b>vòng quay may mắn</b>`)
       }
 
       // Lucky User

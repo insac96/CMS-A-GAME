@@ -2,7 +2,7 @@
   <NuxtLink v-if="news" :to="`/main/news/${news._id}`">
     <UCard
       :ui="{ 
-        base: 'relative transition-all ',
+        base: 'relative transition-all overflow-hidden',
         background: 'hover:bg-gray-100 dark:hover:bg-gray-800',
         rounded: 'rounded-xl',
         shadow: 'shadow-md hover:shadow-lg',

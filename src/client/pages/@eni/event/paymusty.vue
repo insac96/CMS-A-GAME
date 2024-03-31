@@ -1,7 +1,9 @@
 <template>
-  <UiContent title="Config Event" sub="Quản lý cấu hình sự kiện">
+  <UiContent title="Payment Event" sub="Quản lý mốc thưởng sự kiện nạp tiền">
     <UiFlex class="mb-4">
-      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" />
+      <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1"/>
+
+      <UButton class="ml-auto" color="gray" @click="modal.add = true">Thêm mốc</UButton>
     </UiFlex>
     
     <!-- Table -->
@@ -13,18 +15,18 @@
         :columns="selectedColumns"
         :rows="list"
       >
-        <template #start-data="{ row }">
-          {{ row.start ? useDayJs().displayFull(row.start) : '...' }}
+        <template #need-data="{ row }">
+          <UiText weight="semibold">{{ toMoney(row.need) }}</UiText>
         </template>
 
-        <template #end-data="{ row }">
-          {{ row.end ? useDayJs().displayFull(row.end) : '...' }}
+        <template #gift-data="{ row }">
+          <DataItemList :items="row.gift" class="min-w-[400px] max-w-[400px]" />
         </template>
 
         <template #display-data="{ row }">
           <UBadge :color="row.display == 1 ? 'green' : 'gray'" variant="soft">{{ row.display == 1 ? 'Hiện' : 'Ẩn' }}</UBadge>
         </template>
-
+        
         <template #updatedAt-data="{ row }">
           {{ useDayJs().displayFull(row.updatedAt) }}
         </template>
@@ -43,15 +45,29 @@
       <UPagination v-model="page.current" :page-count="page.size" :total="page.total" :max="4" />
     </UiFlex>
 
+    <!-- Modal Add -->
+    <UModal v-model="modal.add" preventClose>
+      <UForm :state="stateAdd" @submit="addAction" class="p-4">
+        <UFormGroup label="Yêu cầu">
+          <UInput v-model="stateAdd.need" type="number" />
+        </UFormGroup>
+
+        <UFormGroup label="Hiển thị">
+          <SelectDisplay v-model="stateAdd.display" />
+        </UFormGroup>
+
+        <UiFlex justify="end" class="mt-6">
+          <UButton type="submit" :loading="loading.add">Thêm</UButton>
+          <UButton color="gray" @click="modal.add = false" :disabled="loading.add" class="ml-1">Đóng</UButton>
+        </UiFlex>
+      </UForm>
+    </UModal>
+
     <!-- Modal Edit -->
     <UModal v-model="modal.edit" preventClose>
       <UForm :state="stateEdit" @submit="editAction" class="p-4">
-        <UFormGroup label="Bắt đầu">
-          <SelectDate v-model="stateEdit.start" time />
-        </UFormGroup>
-
-        <UFormGroup label="Kết thúc">
-          <SelectDate v-model="stateEdit.end" time />
+        <UFormGroup label="Yêu cầu">
+          <UInput v-model="stateEdit.need" type="number" />
         </UFormGroup>
 
         <UFormGroup label="Hiển thị">
@@ -65,20 +81,14 @@
       </UForm>
     </UModal>
 
-    <!-- Modal Del -->
-    <UModal v-model="modal.del" preventClose>
-      <UForm :state="stateDel" @submit="delAction" class="p-4">
-        <UFormGroup label="Thời gian bắt đầu">
-          <SelectDate v-model="stateDel.start" time />
-        </UFormGroup>
+    <!--Modal Gift-->
+    <UModal v-model="modal.gift" preventClose :ui="{width: 'sm:max-w-[700px]'}">
+      <UForm :state="stateGift" @submit="giftAction" class="p-4">
+        <SelectItemList v-model="stateGift.gift" :types="['coin', 'wheel', 'game_item']" />
 
-        <UFormGroup label="Thời gian kết thúc">
-          <SelectDate v-model="stateDel.end" time />
-        </UFormGroup>
-
-        <UiFlex justify="end" class="mt-6">
-          <UButton type="submit" :loading="loading.del">Xóa Ghi Chép</UButton>
-          <UButton color="gray" @click="modal.del = false" :disabled="loading.del" class="ml-1">Đóng</UButton>
+        <UiFlex justify="end" class="mt-4">
+          <UButton type="submit" :loading="loading.gift">Lưu</UButton>
+          <UButton color="gray" @click="modal.gift = false" :disabled="loading.gift" class="ml-1">Đóng</UButton>
         </UiFlex>
       </UForm>
     </UModal>
@@ -86,22 +96,20 @@
 </template>
 
 <script setup>
+const { toMoney } = useMoney()
+
 // List
 const list = ref([])
 
 // Columns
 const columns = [
   {
-    key: 'name',
-    label: 'Tên sự kiện',
-  },{
-    key: 'start',
-    label: 'Bắt đầu',
+    key: 'need',
+    label: 'Yêu cầu',
     sortable: true
   },{
-    key: 'end',
-    label: 'Kết thúc',
-    sortable: true
+    key: 'gift',
+    label: 'Phần thưởng',
   },{
     key: 'display',
     label: 'Hiển thị',
@@ -122,40 +130,53 @@ const page = ref({
   size: 10,
   current: 1,
   sort: {
-    column: 'updatedAt',
-    direction: 'desc'
+    column: 'need',
+    direction: 'asc'
   },
+  type: 'paymusty',
   total: 0
 })
 watch(() => page.value.size, () => getList())
 watch(() => page.value.current, () => getList())
 watch(() => page.value.sort.column, () => getList())
 watch(() => page.value.sort.direction, () => getList())
+watch(() => page.value.type, (val) => getList() && (stateAdd.value.type = val))
 
 // State
+const stateAdd = ref({
+  type: page.value.type,
+  need: null,
+  display: 1
+})
 const stateEdit = ref({
   _id: null,
-  start: null,
-  end: null,
+  need: null,
   display: null
 })
-
-const stateDel = ref({
+const stateGift = ref({
   _id: null,
-  start: null,
-  end: null
+  gift: null
 })
 
 // Modal
 const modal = ref({
+  add: false,
   edit: false,
-  del: false
+  gift: false
 })
+
+watch(() => modal.value.add, (val) => !val && (stateAdd.value = {
+  type: page.value.type,
+  need: null,
+  display: 1
+}))
 
 // Loading
 const loading = ref({
   load: true,
+  add: false,
   edit: false,
+  gift: false,
   del: false
 })
 
@@ -168,13 +189,18 @@ const actions = (row) => [
       Object.keys(stateEdit.value).forEach(key => stateEdit.value[key] = row[key])
       modal.value.edit = true
     }
-  }],[{
-    label: 'Xóa ghi chép',
-    icon: 'i-bx-trash',
+  },{
+    label: 'Sửa phần thưởng',
+    icon: 'i-bx-gift',
     click: () => {
-      stateDel.value._id = row._id
-      modal.value.del = true
+      stateGift.value._id = row._id
+      stateGift.value.gift = JSON.parse((JSON.stringify(row.gift)))
+      modal.value.gift = true
     }
+  }],[{
+    label: 'Xóa mốc',
+    icon: 'i-bx-trash',
+    click: () => delAction(row._id)
   }]
 ]
  
@@ -182,7 +208,7 @@ const actions = (row) => [
 const getList = async () => {
   try {
     loading.value.load = true
-    const data = await useAPI('event/admin/config/list', JSON.parse(JSON.stringify(page.value)))
+    const data = await useAPI('event/admin/list', JSON.parse(JSON.stringify(page.value)))
 
     loading.value.load = false
     list.value = data.list
@@ -193,10 +219,24 @@ const getList = async () => {
   } 
 }
 
+const addAction = async () => {
+  try {
+    loading.value.add = true
+    await useAPI('event/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
+
+    loading.value.add = false
+    modal.value.add = false
+    getList()
+  }
+  catch (e) {
+    loading.value.add = false
+  }
+}
+
 const editAction = async () => {
   try {
     loading.value.edit = true
-    await useAPI('event/admin/config/edit', JSON.parse(JSON.stringify(stateEdit.value)))
+    await useAPI('event/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
 
     loading.value.edit = false
     modal.value.edit = false
@@ -207,13 +247,27 @@ const editAction = async () => {
   }
 }
 
-const delAction = async () => {
+const giftAction = async () => {
+  try {
+    loading.value.gift = true
+    await useAPI('event/admin/editGift', JSON.parse(JSON.stringify(stateGift.value)))
+
+    loading.value.gift = false
+    modal.value.gift = false
+    getList()
+  }
+  catch (e) {
+    loading.value.gift = false
+  }
+}
+
+const delAction = async (_id) => {
   try {
     loading.value.del = true
-    await useAPI('event/admin/config/del', JSON.parse(JSON.stringify(stateDel.value)))
+    await useAPI('event/admin/del', { _id })
 
     loading.value.del = false
-    modal.value.del = false
+    getList()
   }
   catch (e) {
     loading.value.del = false
