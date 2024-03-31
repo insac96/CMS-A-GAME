@@ -24,6 +24,10 @@
       <DataShopHistory />
     </UiContent>
 
+    <UiContent title="Giftcode" sub="Lịch sử ma quà tặng" class="mb-6">
+      <DataGiftcodeHistory />
+    </UiContent>
+
     <UiContent title="Event" sub="Lịch sử nhận sự kiện">
       <DataEventHistory />
     </UiContent>

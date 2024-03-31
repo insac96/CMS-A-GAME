@@ -104,7 +104,8 @@ const typeFormat = {
   'spend.month.coin': 'Tiêu phí tháng',
   'spend.total.coin': 'Tiêu phí tổng',
   'referral.count': 'Giới thiệu bạn',
-  'paymusty': 'Nạp đơn ngày'
+  'paymusty': 'Nạp đơn ngày',
+  'paydays': 'Liên nạp'
 }
 
 const typeOptions = [
@@ -118,7 +119,8 @@ const typeOptions = [
   { label: 'Tiêu phí tháng', value: 'spend.month.coin' },
   { label: 'Tiêu phí tổng', value: 'spend.total.coin' },
   { label: 'Giới thiệu bạn', value: 'referral.count' },
-  { label: 'Nạp đơn ngày', value: 'paymusty' }
+  { label: 'Nạp đơn ngày', value: 'paymusty' },
+  { label: 'Liên nạp', value: 'paydays' },
 ]
 
 const getList = async () => {

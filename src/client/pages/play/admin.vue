@@ -1,7 +1,8 @@
 <template>
   <iframe 
+    v-if="!!playCookie"
     title="Playing Game"
-    :src="playCookie"
+    :src="playCookie.url"
     width="100%"
     height="100%"
     class="Iframe"
@@ -19,11 +20,11 @@
 <script setup>
 definePageMeta({
   layout: 'play',
-  middleware: 'play-guest'
+  middleware: 'play-admin'
 })
 
 const runtimeConfig = useRuntimeConfig()
-const playCookie = useCookie('play-url', runtimeConfig.public.cookieConfig)
+const playCookie = useCookie('play-admin-url', runtimeConfig.public.cookieConfig)
 
 // Recharge Game
 const fastShop = ref({

@@ -65,6 +65,8 @@
 </template>
 
 <script setup>
+const runtimeConfig = useRuntimeConfig()
+
 // List
 const list = ref([])
 
@@ -189,12 +191,16 @@ const openSend = async (row) => {
 const openPlay = async (row) => {
   try {
     loading.value.play = true
-    const url = await useAPI('game/admin/start', {
-      username: row.account
+    await useAPI('game/admin/start', {
+      username: row.account,
+      server: page.value.server_id,
+      role: row.role_id
     })
 
-    window.open(url, '_blank')
     loading.value.play = false
+
+    if(!!runtimeConfig.public.dev) navigateTo('/play/admin')
+    else location.href = `http://game.${runtimeConfig.public.domain}/play/admin`
   }
   catch (e) {
     loading.value.play = false

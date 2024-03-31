@@ -13,6 +13,18 @@
 
     <div class="fixed bg-black/50 w-full h-full top-0 left-0" style="z-index: 99;" v-if="!!dragging"></div>
 
+    <UModal v-model="modal.admin.user" preventClose :ui="{ width: 'lg:max-w-3xl md:max-w-2xl sm:max-w-xl' }">
+      <PlayModal title="Tài khoản" @close="modal.admin.user = false">
+        <AdminUserInfo v-if="!!playCookie && !!playCookie.user" :user="playCookie.user" />
+      </PlayModal>
+    </UModal>
+
+    <UModal v-model="modal.admin.mail" preventClose :ui="{ width: 'lg:max-w-3xl md:max-w-2xl sm:max-w-xl' }">
+      <PlayModal title="Gửi vật phẩm" @close="modal.admin.mail = false">
+        <AdminGameSend v-if="!!playCookie && !!playCookie.user" :user="playCookie.user" :role="playCookie.role || null" :server="playCookie.server || null" @close="modal.admin.mail = false" />
+      </PlayModal>
+    </UModal>
+
     <UModal v-model="modal.action.payment" preventClose>
       <PlayModal title="Nạp xu" @close="modal.action.payment = false">
         <MainActionPayment />
@@ -90,13 +102,21 @@
 <script setup>
 import { useDraggable } from '@vueuse/core'
 
+const runtimeConfig = useRuntimeConfig()
 const configStore = useConfigStore()
+const authStore = useAuthStore()
 const show = ref(configStore.config.menu)
 
 const el = ref(null)
 const dragging = ref(false)
 
+const playCookie = useCookie('play-admin-url', runtimeConfig.public.cookieConfig)
+
 const modal = ref({
+  admin: {
+    user: false,
+    mail: false
+  },
   action: {
     payment: false,
     giftcode: false,
@@ -140,6 +160,25 @@ const menu = computed(() => {
       click: () => useTo().navigateToSSL('/')
     }]
   ]
+
+  // Admin
+  if(authStore.profile.type > 1){
+    const admin = [{
+      label: 'Quản trị viên',
+      icon: 'i-bx-shield',
+      click: () => useTo().navigateToSSL('/admin')
+    },{
+      label: 'Tài khoản',
+      icon: 'i-bx-user',
+      click: () => modal.value.admin.user = true
+    },{
+      label: 'Gửi vật phẩm',
+      icon: 'i-bx-envelope',
+      click: () => modal.value.admin.mail = true
+    }]
+
+    list.push(admin)
+  }
 
   // Action
   if(!!show.value.action.payment || !!show.value.action.giftcode){
