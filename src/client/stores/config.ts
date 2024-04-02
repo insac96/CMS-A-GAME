@@ -25,7 +25,8 @@ export const useConfigStore = defineStore('config', () => {
         login: false,
         pay: false,
         spend: false,
-        paymusty: false
+        paymusty: false,
+        paydays: false
       },
       minigame: {
         wheel: false,

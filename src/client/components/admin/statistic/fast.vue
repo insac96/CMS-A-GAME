@@ -1,7 +1,13 @@
 <template>
   <div>
     <UiFlex class="mb-2">
-      <UTabs class="w-full sm:w-auto" v-model="tab" :items="[{ label: 'Ngày' }, { label: 'Tháng' }, { label: 'Tổng' }]" />
+      <UTabs class="w-full sm:w-auto" v-model="tab" :items="[
+        { label: 'Hôm nay' }, 
+        { label: 'Hôm qua' }, 
+        { label: 'Tháng này' }, 
+        { label: 'Tháng trước' }, 
+        { label: 'Tổng' }
+      ]" />
     </UiFlex>
     
     <div class="grid grid-cols-12 gap-2">
@@ -91,9 +97,11 @@ const data = ref({
 watch(tab, () => getData())
 
 const type = computed(() => {
-  if(tab.value == 0) return 'day'
-  if(tab.value == 1) return 'month'
-  if(tab.value == 2) return 'total'
+  if(tab.value == 0) return 'today'
+  if(tab.value == 1) return 'yesterday'
+  if(tab.value == 2) return 'month'
+  if(tab.value == 3) return 'lastmonth'
+  if(tab.value == 4) return 'total'
 })
 
 const onlineTotal = computed(() => socketStore.online.member + socketStore.online.admin)

@@ -51,10 +51,6 @@
           {{ `${row.login || 0} ngày` }}
         </template>
 
-        <template #ip-data="{ row }">
-          {{ row.ip || '...' }}
-        </template>
-
         <template #block-data="{ row }">
           <UBadge :color="row.block == 1 ? 'red' : 'gray'" variant="soft">{{ row.block == 1 ? 'Có' : 'Không' }}</UBadge>
         </template>
@@ -265,9 +261,6 @@ const columns = [
     key: 'referral',
     label: 'Mời',
     sortable: true
-  },{
-    key: 'ip',
-    label: 'IP',
   },{
     key: 'block',
     label: 'Khóa',

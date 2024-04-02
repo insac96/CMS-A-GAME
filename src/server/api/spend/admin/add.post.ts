@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
     if(!title || !reason || !time) throw 'Vui lòng nhập đầy đủ thông tin'
     if(!!isNaN(parseInt(money)) || parseInt(money) < 0) throw 'Dữ liệu tiền tệ không hợp lệ'
     if(!Array.isArray(images)) throw 'Dữ liệu hình ảnh không hợp lệ'
-    if(images.length == 0) throw 'Vui lòng thêm ít nhất 1 hình ảnh'
 
     body.time = new Date(time)
     await DB.Spend.create(body)

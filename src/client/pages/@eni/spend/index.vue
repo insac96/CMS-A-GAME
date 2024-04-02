@@ -15,7 +15,7 @@
         :rows="list"
       >
         <template #title-data="{ row }">
-          <UiText class="min-w-[200px] max-w-[200px] whitespace-normal">{{ row.title }}</UiText>
+          <UiText class="whitespace-normal">{{ row.title }}</UiText>
         </template>
 
         <template #money-data="{ row }">
@@ -23,7 +23,8 @@
         </template>
 
         <template #images-data="{ row }">
-          <UiImgs :src="row.images" />
+          <UiImgs v-if="row.images && row.images.length > 0" :src="row.images" />
+          <span v-else>...</span>
         </template>
 
         <template #time-data="{ row }">

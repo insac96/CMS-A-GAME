@@ -15,21 +15,41 @@ export default defineEventHandler(async (event) => {
     }
 
     let start : any, end : any, format : any
+    let payment : any, signin : any, signup : any, spend : any
     const now = DayJS(Date.now())
-    if(type == 'day'){
-      start = now.startOf('date')
-      end = now.endOf('date')
+    const yesterday = now.add(-1, 'day')
+    const lastmonth = now.add(-1, 'month')
+
+    // Today, Yesterday
+    if(type == 'today' || type == 'yesterday'){
+      if(type == 'today'){
+        start = now.startOf('date')
+        end = now.endOf('date')
+      }
+      if(type == 'yesterday'){
+        start = yesterday.startOf('date')
+        end = yesterday.endOf('date')
+      }
+
       format = '%Y-%m-%d'
     }
-    if(type == 'month'){
-      start = now.startOf('month')
-      end = now.endOf('month')
+
+    // This Month, Last Month
+    if(type == 'month' || type == 'lastmonth'){
+      if(type == 'month'){
+        start = now.startOf('month')
+        end = now.endOf('month')
+      }
+      if(type == 'lastmonth'){
+        start = lastmonth.startOf('date')
+        end = lastmonth.endOf('date')
+      }
+      
       format = '%Y-%m'
     }
 
-    let payment : any, signin : any, signup : any, spend : any
-    
-    if(type == 'day' || type == 'month'){
+    // Not Total
+    if(type != 'total'){
       const match : any = {}
       match['time'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
 
@@ -124,6 +144,7 @@ export default defineEventHandler(async (event) => {
       ])
     }
 
+    // Is Total
     if(type == 'total') {
       payment = await DB.Payment.aggregate([
         { $match: { 'status': 1 }},
@@ -149,6 +170,7 @@ export default defineEventHandler(async (event) => {
       signup = [{ count: users }]
     }
 
+    // Result
     return resp(event, {
       result: {
         payment: payment[0] ? payment[0]['money'] : 0,
