@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
     if(!Array.isArray(images)) throw 'Dữ liệu hình ảnh không hợp lệ'
 
     body.time = new Date(time)
+    body.user = auth._id
     await DB.Spend.create(body)
     logAdmin(event, `Thêm mục chi tiêu <b>${title}</b>`)
     

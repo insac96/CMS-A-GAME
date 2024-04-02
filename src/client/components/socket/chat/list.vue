@@ -1,8 +1,8 @@
 <template>
-  <div id="BoxChat" class="relative w-full h-full max-h-full p-2">
+  <div class="relative w-full h-full max-h-full p-2">
     <LoadingTable class="rounded-none" v-if="!!loading" />
 
-    <UiFlex type="col" class="w-full h-full overflow-x-hidden overflow-y-auto gap-y-4" v-else>
+    <UiFlex type="col" id="BoxChat" class="w-full h-full overflow-x-hidden overflow-y-auto gap-y-4" v-else>
       <UiFlex v-for="chat in chats" :key="chat._id" class="w-full">
         <!-- Right -->
         <UiFlex 
@@ -115,7 +115,7 @@ const getList = async () => {
 
     list.value = data
     loading.value = false
-    setTimeout(() => toBottom(), 100)
+    if(process.client) setTimeout(() => toBottom(), 100)
   }
   catch {
     loading.value = false
@@ -123,8 +123,6 @@ const getList = async () => {
 }
 
 onMounted(() => {
-  if(process.client) getList()
-
   $socket.on('chat-push', (data) => {
     if(!list.value) list.value = []
     list.value.push(data)
@@ -134,5 +132,5 @@ onMounted(() => {
   $socket.on('chat-reload', () => getList())
 })
 
-
+getList()
 </script>

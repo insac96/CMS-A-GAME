@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
 
     delete body['_id']
     body.time = new Date(time)
+    body.user = auth._id
     await DB.Spend.updateOne({ _id: _id }, body)
     logAdmin(event, `Sửa thông tin mục chi tiêu <b>${spend.title}</b>`)
 
