@@ -41,8 +41,8 @@ export default defineEventHandler(async (event) => {
         end = now.endOf('month')
       }
       if(type == 'lastmonth'){
-        start = lastmonth.startOf('date')
-        end = lastmonth.endOf('date')
+        start = lastmonth.startOf('month')
+        end = lastmonth.endOf('month')
       }
       
       format = '%Y-%m'

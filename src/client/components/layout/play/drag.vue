@@ -6,7 +6,7 @@
         strategy: 'absolute',
         scroll: 'true'
       }">
-        <UiImg v-if="!!configStore.config.logo_image" :src="configStore.config.logo_image" w="1" h="1" img-w="100" img-h="100" class="w-full h-full" />
+        <UiImg v-if="!!configStore.config.logo_image" :src="configStore.config.logo_image" w="1" h="1" img-w="100" img-h="100" class="w-full h-full rounded-full" />
         <UiIcon v-else name="i-bx-menu" color="primary" size="8" />
       </UDropdown>
     </div>
