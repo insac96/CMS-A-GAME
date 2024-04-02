@@ -7,8 +7,9 @@
     </UiFlex>
 
     <AdminStatisticPayment v-if="tab == 0"/>
-    <AdminStatisticSignin v-if="tab == 1"/>
-    <AdminStatisticSignup v-if="tab == 2"/>
+    <AdminStatisticSpend v-if="tab == 1"/>
+    <AdminStatisticSignin v-if="tab == 2"/>
+    <AdminStatisticSignup v-if="tab == 3"/>
   </UiContent>
 </template>
 
@@ -17,6 +18,7 @@ const tab = ref(0)
 
 const tabs = [
   { label: 'Nạp tiền', key: 'payment' },
+  { label: 'Chi tiêu', key: 'spend' },
   { label: 'Đăng nhập', key: 'signin' },
   { label: 'Đăng ký', key: 'signup' },
 ]

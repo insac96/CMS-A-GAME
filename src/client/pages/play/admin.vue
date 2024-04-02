@@ -7,6 +7,8 @@
     height="100%"
     class="Iframe"
   ></iframe>
+
+  <LayoutPlayDrag :admin="true" />
   
   <UModal v-model="fastShop.modal" prevent-close>
     <DataShopBuyItem :item="fastShop.item" :server="fastShop.server" @close="fastShop.modal = false" @done="onDoneBuy" class="p-4" />

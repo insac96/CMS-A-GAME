@@ -40,6 +40,7 @@
       <template #tab-9><UVerticalNavigation :links="navItems[9].children" @click="emit('to')"/></template>
       <template #tab-10><UVerticalNavigation :links="navItems[10].children" @click="emit('to')"/></template>
       <template #tab-11><UVerticalNavigation :links="navItems[11].children" @click="emit('to')"/></template>
+      <template #tab-12><UVerticalNavigation :links="navItems[12].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -55,14 +56,25 @@ const navItems = [
     slot: 'tab-0',
     children: [
       { label: 'Thống kê', to: '/@eni/statistic' },
+      { label: 'Chi tiêu', to: '/@eni/spend' },
       { label: 'Cài đặt', to: '/@eni/config' },
+    ]
+  },
+  {
+    label: 'Địa chỉ IP',
+    icon: 'i-bxs-barcode',
+    defaultOpen: false,
+    slot: 'tab-1',
+    children: [
+      { label: 'White List', to: '/@eni/ip/whitelist' },
+      { label: 'Danh sách', to: '/@eni/ip/log' },
     ]
   },
   {
     label: 'Quảng cáo',
     icon: 'i-bx-spreadsheet',
     defaultOpen: false,
-    slot: 'tab-1',
+    slot: 'tab-2',
     children: [
       { label: 'Landing', to: '/@eni/ads/landing' },
       { label: 'From', to: '/@eni/ads/from' }
@@ -72,7 +84,7 @@ const navItems = [
     label: 'Thời gian thực',
     icon: 'i-bxs-timer',
     defaultOpen: false,
-    slot: 'tab-2',
+    slot: 'tab-3',
     children: [
       { label: 'Chức năng', to: '/@eni/socket/action' },
       { label: 'Kênh chat', to: '/@eni/socket/chat' },
@@ -82,7 +94,7 @@ const navItems = [
     label: 'Tin tức',
     icon: 'i-bx-news',
     defaultOpen: false,
-    slot: 'tab-3',
+    slot: 'tab-4',
     children: [
     { label: 'Danh mục', to: '/@eni/news/category' }, 
     { label: 'Danh sách', to: '/@eni/news' }, 
@@ -92,7 +104,7 @@ const navItems = [
     label: 'Tài khoản',
     icon: 'i-bx-user',
     defaultOpen: false,
-    slot: 'tab-4',
+    slot: 'tab-5',
     children: [
       { label: 'Danh sách', to: '/@eni/user' }, 
       { label: 'Cấp độ', to: '/@eni/user/level' },
@@ -102,7 +114,7 @@ const navItems = [
     label: 'Nạp tiền',
     icon: 'i-bx-credit-card',
     defaultOpen: false,
-    slot: 'tab-5',
+    slot: 'tab-6',
     children: [
       { label: 'Cài đặt', to: '/@eni/payment/config' }, 
       { label: 'Kênh nạp', to: '/@eni/payment/gate' }, 
@@ -113,7 +125,7 @@ const navItems = [
     label: 'Trò chơi',
     icon: 'i-bx-cube-alt',
     defaultOpen: false,
-    slot: 'tab-6',
+    slot: 'tab-7',
     children: [
       { label: 'Gửi thư', to: '/@eni/game/send' },
       { label: 'Vật phẩm', to: '/@eni/game/item' },
@@ -127,7 +139,7 @@ const navItems = [
     label: 'Giftcode',
     icon: 'i-bx-barcode-reader',
     defaultOpen: false,
-    slot: 'tab-7',
+    slot: 'tab-8',
     children: [
       { label: 'Danh sách', to: '/@eni/giftcode' }, 
       { label: 'Lịch sử', to: '/@eni/giftcode/history' }, 
@@ -137,7 +149,7 @@ const navItems = [
     label: 'Cửa hàng',
     icon: 'i-bx-shopping-bag',
     defaultOpen: false,
-    slot: 'tab-8',
+    slot: 'tab-9',
     children: [
       { label: 'Cài đặt', to: '/@eni/shop/config' },
       { label: 'Gói', to: '/@eni/shop/pack' },
@@ -149,7 +161,7 @@ const navItems = [
     label: 'Sự Kiện',
     icon: 'i-bx-calendar',
     defaultOpen: false,
-    slot: 'tab-9',
+    slot: 'tab-10',
     children: [
       { label: 'Mời bạn', to: '/@eni/event/referral' },
       { label: 'Đăng nhập', to: '/@eni/event/login' }, 
@@ -164,7 +176,7 @@ const navItems = [
     label: 'Mini Game',
     icon: 'i-bx-game',
     defaultOpen: false,
-    slot: 'tab-10',
+    slot: 'tab-11',
     children: [
       { label: 'Vòng quay', to: '/@eni/minigame/wheel' }, 
       { label: 'Xúc xắc', to: '/@eni/minigame/dice' }
@@ -174,11 +186,10 @@ const navItems = [
     label: 'Nhật ký',
     icon: 'i-bx-book',
     defaultOpen: false,
-    slot: 'tab-11',
+    slot: 'tab-12',
     children: [
       { label: 'Quản trị viên', to: '/@eni/log/admin' }, 
       { label: 'Gửi vật phẩm', to: '/@eni/log/adminSendItem' },
-      { label: 'Địa chỉ IP', to: '/@eni/log/ip' }
     ]
   }
 ]

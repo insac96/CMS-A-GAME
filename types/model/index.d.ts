@@ -5,6 +5,7 @@ export { IDBUser, IDBUserLogin, IDBUserStore } from './user'
 export { IDBLevel } from './level'
 export { IDBGate } from './gate'
 export { IDBPaymentConfig, IDBPayment } from './payment'
+export { IDBSpend } from './spend'
 export { IDBNotifyUser, IDBNotifyAdmin } from './notify'
 export { IDBItem, IDBItemBox } from './item'
 export { IDBShopConfig, IDBShop, IDBShopHistory, IDBShopPack, IDBShopPackHistory } from './shop'
@@ -15,6 +16,7 @@ export { IDBWheel, IDBWheelHistory, IDBWheelLuckyUser } from './wheel'
 export { IDBGameServerLogin, IDBGameRankGift, IDBGameRankGiftHistory } from './game'
 export { IDBLogAdmin, IDBLogAdminSendItem, IDBLogUser, IDBLogUserIP, IDBLogBlockIP } from './log'
 export { IDBAdsLanding, IDBAdsFrom } from './ads'
+export { IDBAdminIP } from './ip'
 
 export { IDBSocketOnline, IDBSocketChat } from './socket'
 
@@ -32,6 +34,8 @@ export interface IGlobalDB {
 
   PaymentConfig: Model<IDBPaymentConfig>
   Payment: Model<IDBPayment>
+
+  Spend: Model<IDBSpend>
 
   NotifyUser: Model<IDBNotifyUser>
   NotifyAdmin: Model<IDBNotifyAdmin>
@@ -76,4 +80,6 @@ export interface IGlobalDB {
 
   AdsLanding: Model<IDBAdsLanding>
   AdsFrom: Model<IDBAdsFrom>
+
+  AdminIP: Model<IDBAdminIP>
 }

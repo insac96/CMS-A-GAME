@@ -15,6 +15,7 @@ export interface IDBConfig {
   about: string
   privacy: string
   terms: string
+  gm_password: string
   menu: {
     action: {
       payment: boolean
@@ -52,6 +53,7 @@ export interface IDBConfig {
     play: boolean
     referral: boolean
     landing: boolean
+    signup_count: number
   }
   homepage: {
     landing: Types.ObjectId

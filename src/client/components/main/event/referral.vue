@@ -1,8 +1,8 @@
 <template>
   <div>
-    <UiFlex justify="end" class="mb-2" >
+    <!-- <UiFlex justify="end" class="mb-2" >
       <UButton size="sm" color="gray" @click="modal.statistical = true" v-if="!!authStore.isLogin">Thống kê</UButton>
-    </UiFlex>
+    </UiFlex> -->
 
     <div class="relative min-h-[200px]">
       <LoadingTable v-if="loading" />
@@ -44,7 +44,6 @@
 </template>
 
 <script setup>
-const { dayjs, displayFull } = useDayJs()
 const authStore = useAuthStore()
 watch(() => authStore.isLogin, () => getList())
 

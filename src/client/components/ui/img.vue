@@ -11,7 +11,7 @@
       :height="props.imgH"
       quality="100"
       format="webp"
-      fit="cover"
+      :fit="fit"
       :loading="!!preload ? 'eager' : 'lazy'"
       :preload="preload"
       placeholder="/images/placeholder.png"
@@ -38,6 +38,7 @@ const { imgLink } = useMakeLink()
 const props = defineProps({
   src: String,
   imgSize: String,
+  fit: { type: String, default: 'cover' },
   imgW: [ String, Number ],
   imgH: [ String, Number ],
   w: [ String, Number ],

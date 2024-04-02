@@ -63,7 +63,7 @@
           <UInput v-model="stateAdd.title" />
         </UFormGroup>
 
-        <UFormGroup label="Mô tẩ">
+        <UFormGroup label="Mô tả">
           <UTextarea v-model="stateAdd.description" autoresize />
         </UFormGroup>
 
@@ -99,7 +99,7 @@
           <UInput v-model="stateEdit.title" />
         </UFormGroup>
 
-        <UFormGroup label="Mô tẩ">
+        <UFormGroup label="Mô tả">
           <UTextarea v-model="stateEdit.description" autoresize />
         </UFormGroup>
 

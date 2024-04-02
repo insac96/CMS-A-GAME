@@ -5,6 +5,7 @@ export default defineEventHandler(async (event) => {
     const config = await DB.Config
     .findOne()
     .select(`
+      -gm_password
       -about -privacy -terms 
       -game.api -game.secret
       -facebook.client_secret 

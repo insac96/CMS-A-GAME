@@ -38,8 +38,11 @@ export default defineEventHandler(async (event) => {
 
     // Check IP
     const IP = getRequestIP(event, { xForwardedFor: true })
-    const logIP = await DB.LogUserIP.count({ ip: IP })
-    if(logIP > 30) throw 'IP đã vượt quá giới hạn tạo tài khoản'
+    const adminIP = await DB.AdminIP.count({ ip: IP })
+    if(adminIP == 0){
+      const logIP = await DB.LogUserIP.count({ ip: IP })
+      if(logIP > config.enable.signup_count) throw 'IP đã vượt quá giới hạn tạo tài khoản'
+    }
 
     // Create
     const referral : any = { code: `${config.contact.prefix || 'GAME'}-${username.toUpperCase()}` }

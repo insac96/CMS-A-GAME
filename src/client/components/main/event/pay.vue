@@ -1,24 +1,8 @@
 <template>
   <div>
     <UiFlex class="mb-2" >
-      <USelectMenu 
-        v-model="type" 
-        size="sm"
-        value-attribute="value"
-        option-attribute="label"
-        :options="[
-          { label: 'Tích nạp ngày', value: 'pay.day.money' },
-          { label: 'Tích nạp tháng', value: 'pay.month.money' },
-          { label: 'Tích nạp tổng', value: 'pay.total.money' },
-        ]"
-        class="mr-auto"
-      >
-        <template #label>
-          <UiText mini>{{ typeFormat[type] }}</UiText>
-        </template>
-      </USelectMenu>  
-
-      <UButton size="sm" color="gray" @click="modal.statistical = true" v-if="!!authStore.isLogin">Thống kê</UButton>
+      <UTabs v-model="tab" :items="tabs"></UTabs>
+      <!-- <UButton size="sm" color="gray" @click="modal.statistical = true" v-if="!!authStore.isLogin">Thống kê</UButton> -->
     </UiFlex>
 
     <div class="relative min-h-[200px]">
@@ -80,11 +64,13 @@ const config = ref({
 })
 const list = ref([])
 const type = ref('pay.day.money')
-const typeFormat = {
-  'pay.day.money': 'Tích nạp ngày',
-  'pay.month.money': 'Tích nạp tháng',
-  'pay.total.money': 'Tích nạp tổng'
-}
+const tab = ref(0)
+const tabs = [
+  { label: 'Ngày', key: 'pay.day.money' },
+  { label: 'Tháng', key: 'pay.month.money' },
+  { label: 'Năm', key: 'pay.total.money' },
+]
+watch(() => tab.value, (val) => type.value = tabs[val]['key'])
 watch(() => type.value, () => getList())
 
 const columns = [{

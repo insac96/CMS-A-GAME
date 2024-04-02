@@ -80,7 +80,7 @@ export default defineEventHandler(async (event) => {
       await DB.Config.updateMany({}, {
         name: 'Game',
         short_name: 'GAME',
-        description: 'A Online Game Web',
+        description: 'Một sản phẩm của ENI Group',
         og_image: '',
         logo_image: '',
         logo_long_image: '',
@@ -187,6 +187,13 @@ export default defineEventHandler(async (event) => {
           client_secret: '',
           client_verify: '',
         }
+      })
+    }
+
+    if(type == 'change-gm-password'){
+      if(!data.gm_password) throw 'Vui lòng nhập đủ thông tin'
+      await DB.Config.updateMany({}, {
+        gm_password: data.gm_password
       })
     }
 

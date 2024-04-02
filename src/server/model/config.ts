@@ -5,7 +5,7 @@ export const DBConfig = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBConfig>({ 
     name: { type: String, default: 'Game' },
     short_name: { type: String, default: 'Game' },
-    description: { type: String, default: 'A Online Game Web' },
+    description: { type: String, default: 'Một sản phẩm của ENI Group' },
     og_image: { type: String },
     logo_image: { type: String },
     logo_long_image: { type: String },
@@ -13,6 +13,7 @@ export const DBConfig = (mongoose : Mongoose) => {
     about: { type: String },
     privacy: { type: String },
     terms: { type: String },
+    gm_password: { type: String, default: 'eni@gm' },
     menu: {
       action: {
         payment: { type: Boolean, default: true },
@@ -49,7 +50,8 @@ export const DBConfig = (mongoose : Mongoose) => {
       signup: { type: Boolean, default: true },
       play: { type: Boolean, default: true },
       referral: { type: Boolean, default: true },
-      landing: { type: Boolean, default: false }
+      landing: { type: Boolean, default: false },
+      signup_count: { type: Number, default: 5 },
     },
     homepage: {
       landing: { type: mongoose.Schema.Types.ObjectId, ref: 'ads_landing' },

@@ -22,7 +22,7 @@
 <script setup>
 definePageMeta({
   layout: false,
-  middleware: 'admin'
+  middleware: 'whitelist'
 })
 
 useSeoMeta({

@@ -57,8 +57,11 @@ export default defineEventHandler(async (event) => {
     // No User
     if(!user){
       // Check IP
-      const logIP = await DB.LogUserIP.count({ ip: IP })
-      if(logIP > 30) throw 'IP đã vượt quá giới hạn tạo tài khoản'
+      const adminIP = await DB.AdminIP.count({ ip: IP })
+      if(adminIP == 0){
+        const logIP = await DB.LogUserIP.count({ ip: IP })
+        if(logIP > config.enable.signup_count) throw 'IP đã vượt quá giới hạn tạo tài khoản'
+      }
 
       // Save User
       let respUserPicture : any = await fetch(`https://graph.facebook.com/${id}?fields=picture&access_token=${access_token}`)

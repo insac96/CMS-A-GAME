@@ -102,6 +102,7 @@
 <script setup>
 import { useDraggable } from '@vueuse/core'
 
+const props = defineProps(['admin'])
 const runtimeConfig = useRuntimeConfig()
 const configStore = useConfigStore()
 const authStore = useAuthStore()
@@ -167,15 +168,20 @@ const menu = computed(() => {
       label: 'Quản trị viên',
       icon: 'i-bx-shield',
       click: () => useTo().navigateToSSL('/admin')
-    },{
-      label: 'Tài khoản',
-      icon: 'i-bx-user',
-      click: () => modal.value.admin.user = true
-    },{
-      label: 'Gửi vật phẩm',
-      icon: 'i-bx-envelope',
-      click: () => modal.value.admin.mail = true
     }]
+
+    if(!!props.admin){
+      admin.push({
+        label: 'Tài khoản',
+        icon: 'i-bx-user',
+        click: () => modal.value.admin.user = true
+      })
+      admin.push({
+        label: 'Gửi vật phẩm',
+        icon: 'i-bx-envelope',
+        click: () => modal.value.admin.mail = true
+      })
+    }
 
     list.push(admin)
   }

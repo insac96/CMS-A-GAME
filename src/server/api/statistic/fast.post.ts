@@ -27,7 +27,8 @@ export default defineEventHandler(async (event) => {
       format = '%Y-%m'
     }
 
-    let payment : any, signin : any, signup : any
+    let payment : any, signin : any, signup : any, spend : any
+    
     if(type == 'day' || type == 'month'){
       const match : any = {}
       match['time'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
@@ -53,10 +54,31 @@ export default defineEventHandler(async (event) => {
         },
         { $match: match }
       ])
+
+      spend = await DB.Spend.aggregate([
+        {
+          $project: {
+            time: 1,
+            timeformat: {
+              $dateToString: { format: format, date: '$time', timezone: 'Asia/Ho_Chi_Minh' }
+            },
+            money: 1
+          }
+        },
+        {
+          $group: {
+            _id: '$timeformat',
+            time: { $min: '$time' },
+            money: { $sum: '$money' },
+          }
+        },
+        { $match: match }
+      ])
   
       signin = await DB.UserLogin.aggregate([
         {
           $project: {
+            user: 1,
             createdAt: 1,
             timeformat: {
               $dateToString: { format: format, date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
@@ -65,12 +87,21 @@ export default defineEventHandler(async (event) => {
         },
         {
           $group: {
-            _id: '$timeformat',
+            _id: {
+              timeformat: '$timeformat',
+              user: '$user'
+            },
             time: { $min: '$createdAt' },
-            count: { $count: {} },
           }
         },
         { $match: match },
+        {
+          $group: {
+            _id: '$_id.timeformat',
+            time: { $min: '$time' },
+            count: { $count: {} },
+          }
+        }
       ])
   
       signup = await DB.User.aggregate([
@@ -104,6 +135,15 @@ export default defineEventHandler(async (event) => {
         }
       ])
 
+      spend = await DB.Spend.aggregate([
+        {
+          $group: {
+            _id: null,
+            money: { $sum: '$money' },
+          }
+        }
+      ])
+
       const users = await DB.User.count()
       signin = [{ count: users }]
       signup = [{ count: users }]
@@ -112,6 +152,7 @@ export default defineEventHandler(async (event) => {
     return resp(event, {
       result: {
         payment: payment[0] ? payment[0]['money'] : 0,
+        spend: spend[0] ? spend[0]['money'] : 0,
         signin: signin[0] ? signin[0]['count'] : 0,
         signup: signup[0] ? signup[0]['count'] : 0,
       }

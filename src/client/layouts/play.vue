@@ -1,6 +1,5 @@
 <template>
   <div class="relative w-full h-full min-w-full min-h-full max-w-full max-h-full overflow-hidden">
-      <LayoutPlayDrag />
       <slot></slot>
   </div>
 </template>

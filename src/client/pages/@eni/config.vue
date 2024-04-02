@@ -47,6 +47,11 @@
             <SelectAdsLanding v-model="state.homepage.landing" v-if="!!state.enable.landing" />
           </div>
 
+          <UiFlex justify="between" class="mb-2">
+            <UiText weight="semibold">Số tài khoản trên 1 IP</UiText>
+            <UInput size="xs" class="w-[35px]" v-model="state.enable.signup_count" />
+          </UiFlex>
+
           <UiFlex justify="end" class="mt-4">
             <UButton @click="update('enable')" :loading="updating">Cập nhật</UButton>
           </UiFlex>
@@ -391,6 +396,12 @@
       <template #other>
         <UCard>
           <UiFlex justify="between" class="mb-4">
+            <UiText color="gray">Mật khẩu ủy quyền</UiText>
+            <UInput size="sm" class="w-[80px] ml-auto mr-1" v-model="state.gm_password" type="password" />
+            <UButton @click="action('change-gm-password')">Lưu</UButton>
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
             <UiText color="gray" size="sm">Reopen</UiText>
             <UButton color="gray" @click="action('reopen')">Thực hiện</UButton>
           </UiFlex>
@@ -427,6 +438,7 @@ const state = ref({
   logo_image: '',
   logo_long_image: '',
   makeby: '',
+  gm_password: '',
 
   menu: {
     action: {
@@ -465,7 +477,8 @@ const state = ref({
     signup: true,
     play: true,
     referral: true,
-    landing: false
+    landing: false,
+    signup_count: 0
   },
 
   thankyou: {
@@ -604,7 +617,8 @@ const action = async (type) => {
     
     updating.value = true
     await useAPI('config/admin/action', {
-      type: type
+      type: type,
+      gm_password: state.value.gm_password
     })
 
     updating.value = false
