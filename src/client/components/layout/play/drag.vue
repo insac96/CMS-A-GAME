@@ -163,7 +163,7 @@ const menu = computed(() => {
   ]
 
   // Admin
-  if(authStore.profile.type > 1){
+  if(authStore.profile.type > 0){
     const admin = [{
       label: 'Quản trị viên',
       icon: 'i-bx-shield',
