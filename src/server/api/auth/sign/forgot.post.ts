@@ -9,12 +9,14 @@ export default defineEventHandler(async (event) => {
     if(!username || !phone || !password) throw 'Vui lòng nhập đủ thông tin'
     if (password.length < 6 || password.length > 15) throw 'Mật khẩu trong khoảng 6-15 ký tự'
     if (!!password.match(/\s/g)) throw 'Mật khẩu không có khoảng cách'
+    if (!phone.match(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g)) throw 'Định dạng số điện thoại không đúng'
 
     const user = await DB.User
     .findOne({ username: username.toLowerCase() })
     .select('phone password block type') as IDBUser
 
     if(!user) throw 'Tài khoản không tồn tại'
+    if(user.type > 0) throw 'Không thể lấy lại mật khẩu của quản trị viên'
     if(user.block == 1) throw 'Tài khoản đang bị khóa, không thể lấy lại mật khẩu'
     if(user.phone != phone) throw 'Số điện thoại của tài khoản không đúng'
 
