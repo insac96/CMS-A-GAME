@@ -25,6 +25,13 @@ export default defineEventHandler(async (event) => {
     // Check Giftcode
     if(!giftcodeData) throw 'Mã không tồn tại'
     if(giftcodeData.gift.length == 0) throw 'Mã chưa có phần thưởng để nhận'
+
+    // Check Time
+    if(giftcodeData.expired){
+      const now = DayJS().unix()
+      const expired = DayJS(giftcodeData.expired).unix()
+      if(now > expired) throw 'Mã đã hết hạn sử dụng'
+    }
     
     // Check Active
     if(giftcodeData.limit > 0){
