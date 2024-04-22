@@ -7,12 +7,13 @@
       </UForm>
 
       <USelectMenu 
+        v-if="!!configStore.config.game.mobile"
         v-model="page.types" 
         value-attribute="value"
         option-attribute="label"
         :options="[
-          { label: 'Vật phẩm', value: ['game_item'] },
           { label: 'Gói nạp', value: ['game_recharge'] },
+          { label: 'Vật phẩm', value: ['game_item'] },
         ]"
         class="mr-auto"
       >
@@ -68,6 +69,7 @@
 
 <script setup>
 const authStore = useAuthStore()
+const configStore = useConfigStore()
 
 const config = ref({
   maintenance: true,

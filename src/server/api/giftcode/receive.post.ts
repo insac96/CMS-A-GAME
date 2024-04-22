@@ -85,7 +85,7 @@ export default defineEventHandler(async (event) => {
     // Log User
     const change : any = []
     if(!!giftCurrency[`currency.coin`] && giftCurrency[`currency.coin`] > 0){
-      change.push(`${giftCurrency[`currency.coin`].toLocaleString('vi-VN')} xu`) 
+      change.push(`${giftCurrency[`currency.coin`].toLocaleString('vi-VN')} xu`)
     }
 
     logUser(event, auth._id, `Sử dụng giftcode <b>${giftcodeData.code}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
