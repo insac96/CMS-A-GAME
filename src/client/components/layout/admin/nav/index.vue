@@ -41,6 +41,7 @@
       <template #tab-10><UVerticalNavigation :links="navItems[10].children" @click="emit('to')"/></template>
       <template #tab-11><UVerticalNavigation :links="navItems[11].children" @click="emit('to')"/></template>
       <template #tab-12><UVerticalNavigation :links="navItems[12].children" @click="emit('to')"/></template>
+      <template #tab-13><UVerticalNavigation :links="navItems[13].children" @click="emit('to')"/></template>
     </UAccordion>
   </div>
 </template>
@@ -183,10 +184,20 @@ const navItems = [
     ]
   },
   {
+    label: 'Xếp hạng',
+    icon: 'i-bx-bar-chart-alt-2',
+    defaultOpen: false,
+    slot: 'tab-12',
+    children: [
+      { label: 'Nạp tiền', to: '/@eni/rank/payment' }, 
+      { label: 'Tiêu phí', to: '/@eni/rank/spend' },
+    ]
+  },
+  {
     label: 'Nhật ký',
     icon: 'i-bx-book',
     defaultOpen: false,
-    slot: 'tab-12',
+    slot: 'tab-13',
     children: [
       { label: 'Quản trị viên', to: '/@eni/log/admin' }, 
       { label: 'Gửi vật phẩm', to: '/@eni/log/adminSendItem' },

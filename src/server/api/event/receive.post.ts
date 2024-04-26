@@ -82,9 +82,18 @@ export default defineEventHandler(async (event) => {
 
     // Pay Days
     if(eventData.type == 'paydays'){
-      await DB.User.updateOne({ _id: auth._id }, {
-        'paydays.receive': eventData.need
-      })
+      const endDay = await DB.Event.findOne({ type: 'paydays' }).sort({ need: -1 }).select('need') as IDBEvent
+      if(endDay.need == eventData.need){
+        await DB.User.updateOne({ _id: auth._id }, {
+          'paydays.day': 0,
+          'paydays.receive': 0,
+        })
+      }
+      else {
+        await DB.User.updateOne({ _id: auth._id }, {
+          'paydays.receive': eventData.need
+        })
+      }
     }
     
     // History

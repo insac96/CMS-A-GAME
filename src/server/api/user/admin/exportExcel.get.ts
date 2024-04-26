@@ -18,12 +18,12 @@ export default defineEventHandler(async (event) => {
     ]
 
     const users = await DB.User.aggregate([
-      { $match : {
-        $and: [
-          { phone: { $exists: true }},
-          { email: { $exists: true }},
-        ]
-      }},
+      // { $match : {
+      //   $and: [
+      //     { phone: { $exists: true }},
+      //     { email: { $exists: true }},
+      //   ]
+      // }},
       { $project: {
         username: 1, phone: 1, email: 1,
         payment: '$pay.total.money'
