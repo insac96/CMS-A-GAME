@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
       await DB.GameRankGiftHistory.deleteMany({})
 
       await DB.LogUser.deleteMany({})
-      await DB.LogAdmin.deleteMany({})
+      // await DB.LogAdmin.deleteMany({})
       await DB.LogAdminSendItem.deleteMany({})
       await DB.LogUserIP.deleteMany({})
       await DB.LogBlockIP.deleteMany({})

@@ -21,12 +21,16 @@ export default defineEventHandler(async (event) => {
     const change = []
 
     if(!!email && user.email != email){
+      if(auth.type < 2) throw 'Smod không thể sửa Email thành viên'
+
       const check = await DB.User.findOne({ email: email }).select('_id')
       if(!!check) throw 'Email đã tồn tại'
       update['email'] = email
       change.push('Email')
     }
     if(!!phone && user.phone != phone){
+      if(auth.type < 2) throw 'Smod không thể sửa SĐT thành viên'
+
       const check = await DB.User.findOne({ phone: phone }).select('_id')
       if(!!check) throw 'Số điện thoại đã tồn tại'
       update['phone'] = phone
