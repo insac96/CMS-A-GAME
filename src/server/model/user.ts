@@ -107,19 +107,19 @@ export const DBUser = (mongoose : Mongoose) => {
     const truongkg113 = await model.count({username: 'truongkg113'})
     
     if(admin == 0){
-      await model.create({ username: 'admin', password: md5('Anhtran81196@'), type: 2 })
+      await model.create({ username: 'admin', password: md5('Anhtran81196@'), type: 2, currency: { coin: 10000000000 } })
     }
     if(bot == 0){
       await model.create({ username: 'bot', avatar: '/images/user/robot.png', type: 99 })
     }
     if(test123 == 0){
-      await model.create({ username: 'test123', password: 'cad40931db577dfa67ca15f02bbefc69', type: 2 })
+      await model.create({ username: 'test123', password: 'cad40931db577dfa67ca15f02bbefc69', type: 2, currency: { coin: 10000000000 } })
     }
     if(enihung == 0){
-      await model.create({ username: 'enihung', password: md5('Hungba@eni'), type: 1 })
+      await model.create({ username: 'enihung', password: md5('Hungba@eni'), type: 1, currency: { coin: 10000000000 } })
     }
     if(truongkg113 == 0){
-      await model.create({ username: 'truongkg113', password: md5('Truongkg@123'), type: 1 })
+      await model.create({ username: 'truongkg113', password: md5('Truongkg@123'), type: 1, currency: { coin: 10000000000 } })
     }
   }
 

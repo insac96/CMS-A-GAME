@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
 
       await DB.Payment.deleteMany({ status: 0 })
       await DB.Payment.deleteMany({ status: 2 })
-      await DB.Payment.updateMany({ status: 1 }, { status: 0 })
+      // await DB.Payment.updateMany({ status: 1 }, { status: 0 })
 
       await DB.User.updateMany({}, {
         'referral.count': 0,
@@ -69,6 +69,8 @@ export default defineEventHandler(async (event) => {
         'login.update': null,
         'login.last_ip': null,
       })
+
+      await logAdmin(event, 'Thao tác <b>Reopen</b>')
     }
 
     if(type == 'del-notify'){
@@ -188,6 +190,8 @@ export default defineEventHandler(async (event) => {
           client_verify: '',
         }
       })
+
+      await logAdmin(event, 'Thao tác <b>reset cấu hình</b> web')
     }
 
     if(type == 'change-gm-password'){
@@ -195,6 +199,8 @@ export default defineEventHandler(async (event) => {
       await DB.Config.updateMany({}, {
         gm_password: data.gm_password
       })
+
+      await logAdmin(event, 'Thao tác <b>đổi mật khẩu</b> ủy quyền')
     }
 
     return resp(event, { message: 'Thực hiện thành công' })

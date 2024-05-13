@@ -176,6 +176,24 @@
       </UForm>
     </UModal>
 
+    <!-- Modal Edit Login-->
+    <UModal v-model="modal.editLogin" preventClose>
+      <UForm :state="stateEditLogin" @submit="editLoginAction" class="p-4" v-if="stateEditLogin.login">
+        <UFormGroup label="Tháng">
+          <UInput v-model="stateEditLogin.login.month" type="number" />
+        </UFormGroup>
+
+        <UFormGroup label="Tổng">
+          <UInput v-model="stateEditLogin.login.total" type="number" />
+        </UFormGroup>
+
+        <UiFlex justify="end" class="mt-6">
+          <UButton type="submit" :loading="loading.editLogin">Sửa dữ liệu đăng nhập</UButton>
+          <UButton color="gray" @click="modal.editLogin = false" :disabled="loading.editLogin" class="ml-1">Đóng</UButton>
+        </UiFlex>
+      </UForm>
+    </UModal>
+
     <!-- Modal Send Item-->
     <UModal v-model="modal.sendItem" preventClose :ui="{width: 'sm:max-w-[800px]'}">
       <AdminGameSend class="p-4" :user="stateSendItem.user" @close="modal.sendItem = false" />
@@ -239,6 +257,7 @@ const modal = ref({
   editCurrency: false,
   editPay: false,
   editSpend: false,
+  editLogin: false,
   sendItem: false
 })
 
@@ -248,6 +267,7 @@ const loading = ref({
   editCurrency: false,
   editPay: false,
   editSpend: false,
+  editLogin: false,
 })
 
 // Stage
@@ -285,6 +305,11 @@ const stateEditSpend = ref({
   _id: null,
   spend: null,
   reason: null
+})
+
+const stateEditLogin = ref({
+  _id: null,
+  login: null
 })
 
 const stateSendItem = ref({
@@ -352,6 +377,14 @@ const actions = () => [
       stateEditSpend.value._id = userData.value._id
       modal.value.editSpend = true
     }
+  },{
+    label: 'Sửa đăng nhập',
+    icon: 'i-bx-calendar',
+    click: () => {
+      stateEditLogin.value.login = JSON.parse(JSON.stringify(userData.value.login))
+      stateEditLogin.value._id = userData.value._id
+      modal.value.editLogin = true
+    }
   }],
   [{
     label: 'Gửi vật phẩm',
@@ -412,6 +445,20 @@ const editSpendAction = async () => {
   }
   catch (e) {
     loading.value.editSpend = false
+  }
+}
+
+const editLoginAction = async () => {
+  try {
+    loading.value.editLogin = true
+    await useAPI('user/admin/editLogin', JSON.parse(JSON.stringify(stateEditLogin.value)))
+
+    loading.value.editLogin = false
+    modal.value.editLogin = false
+    getList()
+  }
+  catch (e) {
+    loading.value.editLogin = false
   }
 }
 </script>

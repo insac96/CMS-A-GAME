@@ -10,6 +10,10 @@
       </UForm>
 
       <UButton class="ml-auto" :loading="loading.exportExcel" @click="exportExcel">Xuất Excel</UButton>
+
+      <UDropdown :items="actionsAll(row)" class="ml-1">
+        <UButton color="gray" icon="i-bx-reset" :loading="loading.reset" />
+      </UDropdown>
     </UiFlex>
     
     <!-- Table -->
@@ -344,16 +348,6 @@ const stateEditLogin = ref({
   login: null
 })
 
-const stateEditWheel = ref({
-  _id: null,
-  wheel: null
-})
-
-const stateEditDice = ref({
-  _id: null,
-  dice: null
-})
-
 const stateSendItem = ref({
   user: null
 })
@@ -367,8 +361,6 @@ const modal = ref({
   editPay: false,
   editSpend: false,
   editLogin: false,
-  editWheel: false,
-  editDice: false,
   sendItem: false
 })
 
@@ -398,8 +390,6 @@ const loading = ref({
   editPay: false,
   editSpend: false,
   editLogin: false,
-  editWheel: false,
-  editDice: false,
   exportExcel: false
 })
 
@@ -458,6 +448,14 @@ const actions = (row) => [
       stateEditSpend.value._id = row._id
       modal.value.editSpend = true
     }
+  },{
+    label: 'Sửa đăng nhập',
+    icon: 'i-bx-calendar',
+    click: () => {
+      stateEditLogin.value.login = JSON.parse(JSON.stringify(row.login_data))
+      stateEditLogin.value._id = row._id
+      modal.value.editLogin = true
+    }
   }],
   [{
     label: 'Gửi vật phẩm',
@@ -466,34 +464,50 @@ const actions = (row) => [
       stateSendItem.value.user = row._id
       modal.value.sendItem = true
     }
-  }],
-  // [{
-  //   label: 'Sửa d.liệu vòng quay',
-  //   icon: 'i-bx-color',
-  //   click: () => {
-  //     stateEditWheel.value.wheel = JSON.parse(JSON.stringify(row.wheel_data))
-  //     stateEditWheel.value._id = row._id
-  //     modal.value.editWheel = true
-  //   }
-  // },{
-  //   label: 'Sửa d.liệu xúc xắc',
-  //   icon: 'i-bx-dice-6',
-  //   click: () => {
-  //     stateEditDice.value.dice = JSON.parse(JSON.stringify(row.dice_data))
-  //     stateEditDice.value._id = row._id
-  //     modal.value.editDice = true
-  //   }
-  // }],
-  [{
-    label: 'Sửa đăng nhập',
-    icon: 'i-bx-calendar',
-    click: () => {
-      stateEditLogin.value.login = JSON.parse(JSON.stringify(row.login_data))
-      stateEditLogin.value._id = row._id
-      modal.value.editLogin = true
-    }
   }]
 ]
+
+const actionsAll = () => [[
+  {
+    label: 'Tiền tệ',
+    click: () => resetAction('currency')
+  },
+],[
+  {
+    label: 'Tích nạp ngày',
+    click: () => resetAction('pay.day')
+  },
+  {
+    label: 'Tích nạp tháng',
+    click: () => resetAction('pay.month')
+  },
+  {
+    label: 'Tích nạp tổng',
+    click: () => resetAction('pay.total')
+  }
+],[
+  {
+    label: 'Tiêu phí ngày',
+    click: () => resetAction('spend.day')
+  },
+  {
+    label: 'Tiêu phí tháng',
+    click: () => resetAction('spend.month')
+  },
+  {
+    label: 'Tiêu phí tổng',
+    click: () => resetAction('spend.total')
+  }
+],[
+  {
+    label: 'Đăng nhập tháng',
+    click: () => resetAction('login.month')
+  },
+  {
+    label: 'Đăng nhập tổng',
+    click: () => resetAction('login.total')
+  }
+]]
  
 // Fetch
 const getList = async () => {
@@ -566,34 +580,6 @@ const editSpendAction = async () => {
   }
 }
 
-// const editWheelAction = async () => {
-//   try {
-//     loading.value.editWheel = true
-//     await useAPI('user/admin/editWheel', JSON.parse(JSON.stringify(stateEditWheel.value)))
-
-//     loading.value.editWheel = false
-//     modal.value.editWheel = false
-//     getList()
-//   }
-//   catch (e) {
-//     loading.value.editWheel = false
-//   }
-// }
-
-// const editDiceAction = async () => {
-//   try {
-//     loading.value.editDice = true
-//     await useAPI('user/admin/editDice', JSON.parse(JSON.stringify(stateEditDice.value)))
-
-//     loading.value.editDice = false
-//     modal.value.editDice = false
-//     getList()
-//   }
-//   catch (e) {
-//     loading.value.editDice = false
-//   }
-// }
-
 const editLoginAction = async () => {
   try {
     loading.value.editLogin = true
@@ -620,6 +606,21 @@ const exportExcel = async () => {
   }
   catch (e) {
     loading.value.exportExcel = false
+  }
+}
+
+const resetAction = async (type) => {
+  try {
+    loading.value.reset = true
+    await useAPI('user/admin/reset', {
+      type: type
+    })
+
+    loading.value.reset = false
+    getList()
+  }
+  catch (e) {
+    loading.value.reset = false
   }
 }
 

@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
     const select = ['username', 'avatar', 'level', 'type']
     if(!!secret || (!!auth && (auth.type > 0 || auth._id == _id))){
-      select.push(...['currency', 'email', 'phone', 'block', 'referral', 'pay', 'spend'])
+      select.push(...['currency', 'email', 'phone', 'block', 'referral', 'pay', 'spend', 'login'])
     }
 
     const user = await DB.User
