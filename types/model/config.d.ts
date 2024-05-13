@@ -16,6 +16,7 @@ export interface IDBConfig {
   privacy: string
   terms: string
   gm_password: string
+  license: boolean
   menu: {
     action: {
       payment: boolean

@@ -14,6 +14,7 @@ export const DBConfig = (mongoose : Mongoose) => {
     privacy: { type: String },
     terms: { type: String },
     gm_password: { type: String, default: 'eni@gm' },
+    license: { type: Boolean, default: false },
     menu: {
       action: {
         payment: { type: Boolean, default: true },
