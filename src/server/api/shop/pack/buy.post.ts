@@ -67,6 +67,8 @@ export default defineEventHandler(async (event) => {
       const now = DayJS(Date.now())
       const start = now.startOf('date')
       const end = now.endOf('date')
+      const matchTime = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
+
       const historyDay = await DB.ShopPackHistory.aggregate([
         { $match: {
           user: user._id,
@@ -89,7 +91,7 @@ export default defineEventHandler(async (event) => {
           }
         },
         { $match: { 
-          time: { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
+          time: matchTime
         }}
       ])
 

@@ -47,8 +47,7 @@ const onFastShop = async (detail) => {
 }
 
 const onDoneBuy = async (data) => {
-  const iframe = document.querySelector("iframe")
-  iframe.contentWindow.postMessage(JSON.stringify(data), "*")
+  
 }
 
 // Giftcode Game

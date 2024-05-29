@@ -170,10 +170,10 @@ const validate = (state) => {
 const submit = async () => {
   try {
     buying.value = true
-    const data = await useAPI('shop/buyItem', JSON.parse(JSON.stringify(state.value)))
+    await useAPI('shop/buyItem', JSON.parse(JSON.stringify(state.value)))
 
     buying.value = false
-    emit('done', data)
+    emit('done')
     emit('close')
   }
   catch (e) {

@@ -13,7 +13,7 @@
 
       <UTable 
         v-model:sort="page.sort"
-        :columns="selectedColumns" 
+        :columns="selectedColumns"
         :rows="listFormat"
       >
         <template #time-data="{ row }">

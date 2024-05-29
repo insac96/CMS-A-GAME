@@ -112,18 +112,7 @@ export default defineEventHandler(async (event) => {
 
     logUser(event, auth._id, `Dùng <b>${totalPrice.toLocaleString("vi-VN")} ${buyBy == 'coin' ? 'Xu' : 'Cống Hiến'}</b> để mua <b>x${amount} ${itemData.item_name}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
 
-    if(itemType == 'game_recharge'){
-      return resp(event, { message: 'Mua vật phẩm thành công', result: {
-        account: auth.username,
-        server_id: server,
-        role_id: role,
-        recharge_id: itemData.item_id,
-        save_pay: shopData.price
-      }})
-    }
-    else {
-      return resp(event, { message: 'Mua vật phẩm thành công' })
-    }
+    return resp(event, { message: 'Mua vật phẩm thành công' })
   } 
   catch (e:any) {
     return resp(event, { code: 400, message: e.toString() })
