@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+const { $socket } = useNuxtApp()
+
 useSeoMeta({
   title: () => `Playing Game`,
   robots: 'none'
