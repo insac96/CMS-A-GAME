@@ -26,14 +26,14 @@
         </template>
 
         <template #servers-data="{ row }">
-          <UiText weight="semibold" v-if="row.servers.length == 0">Tất cả</UiText>
+          <UiText weight="semibold" v-if="!row.servers || row.servers.length == 0">Tất cả</UiText>
           <UiFlex v-else wrap class="gap-0.5">
             <UBadge color="gray" v-for="i in row.servers" :key="i">{{ i }}</UBadge>
           </UiFlex>
         </template>
 
         <template #users-data="{ row }">
-          <UiText weight="semibold" v-if="row.users.length == 0">Tất cả</UiText>
+          <UiText weight="semibold" v-if="!row.users || row.users.length == 0">Tất cả</UiText>
           <UiFlex v-else wrap class="gap-0.5">
             <UBadge color="gray" v-for="i in row.users" :key="i">{{ i.username }}</UBadge>
           </UiFlex>
