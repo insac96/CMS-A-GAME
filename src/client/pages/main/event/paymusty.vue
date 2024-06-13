@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Pay Musty Event" sub="Sự kiện nạp đơn ngày">
+  <UiContent title="Pay Musty Event" sub="Nạp đúng số tiền chỉ định để nhận thưởng">
     <MainEventPaymusty />
   </UiContent>
 </template>

@@ -10,7 +10,7 @@
     <LoadingTable v-if="!list" />
     
     <div v-else>
-      <DataEmpty text="Chưa có người may mắn" icon="i-bxs-color" v-if="list.length == 0" />
+      <DataEmpty text="Chưa có người may mắn" icon="i-bxs-color" class="border-none" v-if="list.length == 0" />
 
       <UiFlex type="col" class="gap-y-2" v-else>
         <UAlert

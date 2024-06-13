@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
 
     const users = await DB.User.find({
       username : { $regex : key.toLowerCase(), $options : 'i' }
-    }).select('username').limit(5)
+    }).select('username').limit(10)
 
     return resp(event, { result: users })
   } 

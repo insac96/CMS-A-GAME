@@ -1,42 +1,41 @@
 <template>
-  <UCard>
-    <UForm
-      :validate="validate"
-      :state="state"
-      @submit="submit"
-    >
-      <UFormGroup label="Tài khoản" :hint="`${state.username ? state.username.length : 0}/15`" name="username">
-        <UInput icon="i-bxs-user" v-model="state.username" />
-      </UFormGroup>
+  <UForm
+    :validate="validate"
+    :state="state"
+    @submit="submit"
+  >
+    <UFormGroup label="Tài khoản" :hint="`${state.username ? state.username.length : 0}/15`" name="username">
+      <UInput icon="i-bxs-user" v-model="state.username" />
+    </UFormGroup>
 
-      <UFormGroup label="Email" name="email">
-        <UInput icon="i-bxs-envelope" v-model="state.email" />
-      </UFormGroup>
+    <UFormGroup label="Email" name="email">
+      <UInput icon="i-bxs-envelope" v-model="state.email" />
+    </UFormGroup>
 
-      <UFormGroup label="Điện thoại" name="phone">
-        <UInput icon="i-bxs-phone" v-model="state.phone" />
-      </UFormGroup>
+    <UFormGroup label="Điện thoại" name="phone">
+      <UInput icon="i-bxs-phone" v-model="state.phone" />
+    </UFormGroup>
 
-      <UFormGroup label="Mật khẩu" :hint="`${state.password ? state.password.length : 0}/15`" name="password">
-        <UInput icon="i-bxs-lock" v-model="state.password" type="password" />
-      </UFormGroup>
+    <UFormGroup label="Mật khẩu" :hint="`${state.password ? state.password.length : 0}/15`" name="password">
+      <UInput icon="i-bxs-lock" v-model="state.password" type="password" />
+    </UFormGroup>
 
-      <UFormGroup label="Mã mời" name="referral_code" v-if="!!configStore.config.enable.referral">
-        <UInput icon="i-bx-barcode" v-model="state.referral_code" placeholder="Nhập mã mời nếu có" />
-      </UFormGroup>
+    <UFormGroup label="Mã mời" name="referral_code" v-if="!!configStore.config.enable.referral">
+      <UInput icon="i-bx-barcode" v-model="state.referral_code" placeholder="Nhập mã mời nếu có" />
+    </UFormGroup>
 
-      <UiFlex justify="end" class="mt-6">
-        <UButton type="submit" :loading="loading.signup">Xác Nhận</UButton>
-      </UiFlex>
-    </UForm>
-  </UCard>
+    <UiFlex justify="between" class="mt-6">
+      <UiText pointer size="sm" color="gray" @click="emit('in')">Đăng nhập ngay ?</UiText>
+      <UButton type="submit" :loading="loading.signup">Xác Nhận</UButton>
+    </UiFlex>
+  </UForm>
 </template>
 
 <script setup>
 const { $socket } = useNuxtApp()
 const configStore = useConfigStore()
 const authStore = useAuthStore()
-const emit = defineEmits(['done'])
+const emit = defineEmits(['done', 'in'])
 
 const loading = ref({
   signup: false,

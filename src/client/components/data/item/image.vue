@@ -7,7 +7,7 @@
     w="1" h="1" 
     class="
       transition-all 
-      rounded-xl 
+      rounded-3xl 
     "
     :style="{
       minWidth: size ? `${size}px` : null,

@@ -3,7 +3,7 @@
     relative inline-block
     hover:ring-primary-500 dark:hover:ring-primary-400
     cursor-pointer
-    rounded-xl 
+    rounded-3xl 
   ">
     <DataItemImage 
       class="p-1"

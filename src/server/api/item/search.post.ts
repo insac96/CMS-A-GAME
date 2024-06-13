@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     const items = await DB.Item
     .find(match)
     .select('item_id item_name item_image type')
-    .limit(10)
+    .limit(20)
 
     return resp(event, { result: items })
   } 

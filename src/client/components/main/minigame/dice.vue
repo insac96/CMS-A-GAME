@@ -27,8 +27,8 @@
       <div class="grid grid-cols-12 gap-4 mt-4" v-if="!!authStore.isLogin">
         <UiFlex class="col-span-6" justify="center" v-for="i in 6" :key="i" >
           <UButtonGroup>
-            <UButton class="p-0 text-4xl">
-              <UiIcon :name="`i-bxs-dice-${i}`"/>
+            <UButton class="p-0 pl-1 text-4xl">
+              <UiIcon :name="`i-bxs-dice-${i}`" class="rounded-full"/>
             </UButton>
             <UButton color="gray" icon="i-bx-minus" @click="minusFast(i)"></UButton>
             <UInput size="md" :model-value="miniMoney(state[`dice${i}`])" readonly disabled></UInput>

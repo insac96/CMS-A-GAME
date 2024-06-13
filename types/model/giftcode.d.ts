@@ -7,7 +7,8 @@ export interface IDBGiftcode {
   updatedAt: Date
   code: string
   limit: number
-  server: Array<Types.ObjectId>
+  servers: Array<Types.ObjectId>
+  users: Array<Types.ObjectId>
   public: boolean
   gift: Array<{
     item: Types.ObjectId | IDBItem,

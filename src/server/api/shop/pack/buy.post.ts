@@ -86,7 +86,7 @@ export default defineEventHandler(async (event) => {
         {
           $group: {
             _id: '$timeformat',
-            time: { $min: '$createdAt' },
+            time: { $max: '$createdAt' },
             count: { $count: {} },
           }
         },

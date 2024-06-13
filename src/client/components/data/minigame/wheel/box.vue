@@ -11,7 +11,7 @@
           WheelItem 
           shadow-md
           bg-gray-100 dark:bg-gray-800
-          rounded-xl
+          rounded-3xl
         "
         :class="{
           'ring-2 ring-primary': !anim && index == i

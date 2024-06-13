@@ -4,7 +4,7 @@
       :ui="{ 
         base: 'relative transition-all overflow-hidden',
         background: 'hover:bg-gray-100 dark:hover:bg-gray-800',
-        rounded: 'rounded-xl',
+        rounded: 'rounded-3xl',
         shadow: 'shadow-md hover:shadow-lg',
         header: { padding: 'p-0 sm:p-0' },
         footer: { padding: 'pt-0 sm:pt-0' },

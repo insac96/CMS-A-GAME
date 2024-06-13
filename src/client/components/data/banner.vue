@@ -13,7 +13,7 @@
       w="16" h="9"
       img-size="xs:300px sm:600 md:800px 1000px"
       alt="Banner"
-      class="transition-all rounded-xl shadow-md hover:shadow-lg"
+      class="transition-all rounded-3xl shadow-md hover:shadow-lg"
       preload
     ></UiImg>
   </UiContent>

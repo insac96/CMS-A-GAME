@@ -5,7 +5,8 @@ export const DBGiftcode = (mongoose : Mongoose) => {
   const schema = new mongoose.Schema<IDBGiftcode>({ 
     code: { type: String },
     limit: { type: Number, default: 0, index: true },
-    server: [{ type: String }],
+    servers: [{ type: String }],
+    users:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }],
     public: { type: Boolean, default: false },
     gift: [{
       item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },

@@ -17,12 +17,14 @@ export default defineEventHandler(async (event) => {
     const giftcode = await DB.Giftcode.findOne({ _id: _id }).select('code')
     if(!giftcode) throw 'Mã không tồn tại'
 
-    if(giftcode.code != code){
-      const getByCode = await DB.Giftcode.findOne({ code: code }).select('_id')
+    const upCode = code.toUpperCase()
+    if(giftcode.code != upCode){
+      const getByCode = await DB.Giftcode.findOne({ code: upCode }).select('_id')
       if(!!getByCode) throw 'Tên mã đã tồn tại'
     }
 
     delete body['_id']
+    body.code = upCode
     await DB.Giftcode.updateOne({ _id: _id }, body)
 
     logAdmin(event, `Sửa thông tin Giftcode <b>${giftcode.code}</b>`)

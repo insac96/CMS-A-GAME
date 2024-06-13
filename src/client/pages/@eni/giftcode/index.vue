@@ -25,8 +25,22 @@
           <UiText weight="semibold">{{ row.limit == 0  ? 'Không giới hạn' : `${row.limit} lần` }}</UiText>
         </template>
 
+        <template #servers-data="{ row }">
+          <UiText weight="semibold" v-if="row.servers.length == 0">Tất cả</UiText>
+          <UiFlex v-else wrap class="gap-0.5">
+            <UBadge color="gray" v-for="i in row.servers" :key="i">{{ i }}</UBadge>
+          </UiFlex>
+        </template>
+
+        <template #users-data="{ row }">
+          <UiText weight="semibold" v-if="row.users.length == 0">Tất cả</UiText>
+          <UiFlex v-else wrap class="gap-0.5">
+            <UBadge color="gray" v-for="i in row.users" :key="i">{{ i.username }}</UBadge>
+          </UiFlex>
+        </template>
+
         <template #gift-data="{ row }">
-          <DataItemList :items="row.gift" class="min-w-[400px] max-w-[400px]" />
+          <DataItemList :items="row.gift" class="max-w-[400px]" />
         </template>
 
         <template #expired-data="{ row }">
@@ -70,12 +84,16 @@
           <UInput v-model="stateAdd.limit" type="number" />
         </UFormGroup>
 
-        <UFormGroup label="Hết hạn">
-          <SelectDate v-model="stateAdd.expired" time placeholder="..." />
+        <UFormGroup label="Máy chủ">
+          <SelectGameServers v-model="stateAdd.servers" />
         </UFormGroup>
 
-        <UFormGroup label="Công khai">
-          <SelectDisplay v-model="stateAdd.public" />
+        <UFormGroup label="Tài khoản">
+          <SelectUsers v-model="stateAdd.users" />
+        </UFormGroup>
+
+        <UFormGroup label="Hết hạn">
+          <SelectDate v-model="stateAdd.expired" time placeholder="..." />
         </UFormGroup>
 
         <UFormGroup label="Hiển thị">
@@ -103,6 +121,14 @@
 
         <UFormGroup label="Giới hạn">
           <UInput v-model="stateEdit.limit" type="number" />
+        </UFormGroup>
+
+        <UFormGroup label="Máy chủ">
+          <SelectGameServers v-model="stateEdit.servers" />
+        </UFormGroup>
+
+        <UFormGroup label="Tài khoản">
+          <SelectUsers multiple v-model="stateEdit.users" />
         </UFormGroup>
 
         <UFormGroup label="Hết hạn">
@@ -157,6 +183,12 @@ const columns = [
     label: 'Giới hạn',
     sortable: true
   },{
+    key: 'servers',
+    label: 'Máy chủ'
+  },{
+    key: 'users',
+    label: 'Tài khoản'
+  },{
     key: 'expired',
     label: 'Hết hạn',
     sortable: true
@@ -200,6 +232,8 @@ watch(() => page.value.search, (val) => !val && getList())
 const stateAdd = ref({
   code: null,
   limit: 0,
+  servers: [],
+  users: [],
   expired: null,
   public: false,
   display: 1
@@ -208,6 +242,8 @@ const stateEdit = ref({
   _id: null,
   code: null,
   limit: null,
+  servers: null,
+  users: null,
   expired: null,
   public: false,
   display: null
@@ -227,7 +263,10 @@ const modal = ref({
 watch(() => modal.value.add, (val) => !val && (stateAdd.value = {
   code: null,
   limit: 0,
+  servers: [],
+  users: [],
   expired: null,
+  public: false,
   display: 1
 }))
 
@@ -282,7 +321,11 @@ const getList = async () => {
 const addAction = async () => {
   try {
     loading.value.add = true
-    await useAPI('giftcode/admin/add', JSON.parse(JSON.stringify(stateAdd.value)))
+
+    const clone = JSON.parse(JSON.stringify(stateAdd.value))
+    clone.users = clone.users.map(i => i._id)
+    
+    await useAPI('giftcode/admin/add', clone)
 
     loading.value.add = false
     modal.value.add = false
@@ -296,7 +339,11 @@ const addAction = async () => {
 const editAction = async () => {
   try {
     loading.value.edit = true
-    await useAPI('giftcode/admin/edit', JSON.parse(JSON.stringify(stateEdit.value)))
+
+    const clone = JSON.parse(JSON.stringify(stateEdit.value))
+    clone.users = clone.users.map(i => i._id)
+
+    await useAPI('giftcode/admin/edit', clone)
 
     loading.value.edit = false
     modal.value.edit = false

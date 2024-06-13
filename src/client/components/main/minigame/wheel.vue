@@ -22,7 +22,7 @@
         
         <UiFlex>
           <UButton color="gray" class="mr-auto" @click="modal.limit = true">Giới hạn</UButton>
-          <USelectMenu  v-model="state.times" :options="[1, 5, 10]" class="mx-1">
+          <USelectMenu size="sm" v-model="state.times" :options="[1, 5, 10]" class="mx-1">
             <template #label>x {{ state.times }}</template>
             <template #option="{ option }">x {{ option }}</template>
           </USelectMenu>

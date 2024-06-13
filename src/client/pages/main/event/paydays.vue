@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Pay Days Event" sub="Sự kiện liên nạp">
+  <UiContent title="Pay Days Event" sub="Sự kiện nạp liên tiếp mỗi ngày">
     <MainEventPaydays />
   </UiContent>
 </template>

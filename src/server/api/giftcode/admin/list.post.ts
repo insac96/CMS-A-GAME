@@ -22,6 +22,17 @@ export default defineEventHandler(async (event) => {
       { $match: match },
       {
         $lookup: {
+          from: "users",
+          localField: "users",
+          foreignField: "_id",
+          pipeline: [{
+            $project: { _id: 1, username: 1 },
+          }],
+          as: "users"
+        }
+      },
+      {
+        $lookup: {
           from: "items",
           localField: "gift.item",
           foreignField: "_id",

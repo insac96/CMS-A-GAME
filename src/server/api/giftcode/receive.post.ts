@@ -26,6 +26,20 @@ export default defineEventHandler(async (event) => {
     if(!giftcodeData) throw 'Mã không tồn tại'
     if(giftcodeData.gift.length == 0) throw 'Mã chưa có phần thưởng để nhận'
 
+    // Check Servers
+    const servers = giftcodeData.servers
+    if(servers.length > 0){
+      const hasServer = servers.findLastIndex(i => i == server)
+      if(hasServer == -1) throw 'Mã không áp dụng cho máy chủ này'
+    }
+
+    // Check Users
+    const users = giftcodeData.users
+    if(users.length > 0){
+      const hasUser = users.findLastIndex(i => i.toString() == auth._id.toString())
+      if(hasUser == -1) throw 'Mã không áp dụng cho tài khoản của bạn'
+    }
+
     // Check Time
     if(giftcodeData.expired){
       const now = DayJS().unix()

@@ -3,8 +3,8 @@
     v-if="item" 
     :ui="{ 
       base: 'relative transition-all cursor-pointer',
-      background: 'hover:bg-gray-100 dark:hover:bg-gray-800',
-      rounded: 'rounded-xl',
+      background: 'hover:bg-gray-100',
+      rounded: 'rounded-3xl',
       shadow: 'shadow-md hover:shadow-lg',
       body: { padding: 'px-2 sm:px-2 py-6 sm:py-6' },
       divide: '',

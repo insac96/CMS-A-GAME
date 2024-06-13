@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Payment" sub="Tạo giao dịch mua xu" class="max-w-[700px] mx-auto">
+  <UiContent title="Nạp Xu" sub="Tạo giao dịch mua xu" class="max-w-[700px] mx-auto">
     <MainActionPayment />
   </UiContent>
 </template>

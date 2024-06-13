@@ -1,27 +1,26 @@
 <template>
-  <UCard>
-    <UForm :validate="validate" :state="state" @submit="submit">
-      <UFormGroup label="Tài khoản" name="username">
-        <UInput icon="i-bxs-user" v-model="state.username" />
-      </UFormGroup>
+  <UForm :validate="validate" :state="state" @submit="submit">
+    <UFormGroup label="Tài khoản" name="username">
+      <UInput icon="i-bxs-user" v-model="state.username" />
+    </UFormGroup>
 
-      <UFormGroup label="Mật khẩu" name="password">
-        <UInput icon="i-bxs-lock" v-model="state.password" type="password" />
-      </UFormGroup>
+    <UFormGroup label="Mật khẩu" name="password">
+      <UInput icon="i-bxs-lock" v-model="state.password" type="password" />
+    </UFormGroup>
 
-      <UiFlex justify="end" class="mt-6">
-        <UButton type="submit" :loading="loading">Xác Nhận</UButton>
-      </UiFlex>
-    </UForm>
+    <UiFlex justify="between" class="mt-6">
+      <UiText pointer size="sm" color="gray" @click="emit('up')">Đăng ký tài khoản ?</UiText>
+      <UButton type="submit" :loading="loading">Xác Nhận</UButton>
+    </UiFlex>
 
-    <AuthSignSocial />
-  </UCard>
+    <AuthSignSocial class="mt-4" />
+  </UForm>
 </template>
 
 <script setup>
 const { $socket } = useNuxtApp()
 const authStore = useAuthStore()
-const emit = defineEmits(['done'])
+const emit = defineEmits(['done', 'up'])
 
 const loading = ref(false)
 

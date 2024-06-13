@@ -14,12 +14,15 @@ export default defineEventHandler(async (event) => {
       || parseInt(limit) < 0
     ) throw 'Dữ liệu giới hạn không hợp lệ'
 
-    const getByCode = await DB.Giftcode.findOne({ code: code }).select('_id')
+
+    const upCode = code.toUpperCase()
+    const getByCode = await DB.Giftcode.findOne({ code: upCode }).select('_id')
     if(!!getByCode) throw 'Tên mã đã tồn tại'
 
+    body.code = upCode
     await DB.Giftcode.create(body)
 
-    logAdmin(event, `Thêm Giftcode <b>${code}</b>`)
+    logAdmin(event, `Thêm mã Giftcode <b>${upCode}</b>`)
     return resp(event, { message: 'Thêm mã thành công' })
   } 
   catch (e:any) {
