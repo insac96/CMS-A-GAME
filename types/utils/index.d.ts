@@ -4,6 +4,10 @@ export interface IAuth {
   _id: Types.ObjectId
   username: string
   type: number
+  action: {
+    giftcode: boolean
+    event: boolean
+  }
 }
 
 export interface IResp {

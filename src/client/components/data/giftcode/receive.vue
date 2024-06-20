@@ -52,8 +52,10 @@ const submit = async () => {
     loading.value = true
     await useAPI('giftcode/receive', JSON.parse(JSON.stringify(state.value)))
 
-    loading.value = false
-    emit('done')
+    setTimeout(() => {
+      loading.value = false
+      emit('done')
+    }, 1000);
   }
   catch (e) {
     loading.value = false

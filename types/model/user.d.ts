@@ -91,6 +91,10 @@ export interface IDBUser {
     update: Date
     last_ip: string
   }
+  action: {
+    giftcode: boolean
+    event: boolean
+  }
   type: number
   block: number
   token: string

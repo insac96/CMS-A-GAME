@@ -5,8 +5,11 @@ const currencyTypeList = [
 ]
 
 export default defineEventHandler(async (event) => {
+  const auth = await getAuth(event) as IAuth
+
   try {
-    const auth = await getAuth(event) as IAuth
+    if(!!auth.action.giftcode) return resp(event, { code: 400, message: 'Vui lòng đợi tiến trình cũ kết thúc' })
+    await DB.User.updateOne({ _id: auth._id }, { 'action.giftcode': true })
 
     const { server, role, giftcode } = await readBody(event)
     if(!giftcode) throw 'Không tìm thấy ID sụ kiện'
@@ -95,6 +98,7 @@ export default defineEventHandler(async (event) => {
       server: server,
       role: role
     })
+    await DB.User.updateOne({ _id: auth._id }, { 'action.giftcode': false })
 
     // Log User
     const change : any = []
@@ -108,6 +112,7 @@ export default defineEventHandler(async (event) => {
     return resp(event, { message: 'Nhận thưởng thành công' })
   } 
   catch (e:any) {
+    await DB.User.updateOne({ _id: auth._id }, { 'action.giftcode': false })
     return resp(event, { code: 400, message: e.toString() })
   }
 })

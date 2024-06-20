@@ -89,6 +89,10 @@ export const DBUser = (mongoose : Mongoose) => {
       update: { type: Date },
       last_ip: { type: String }
     },
+    action: {
+      giftcode: { type: Boolean, default: false },
+      event: { type: Boolean, default: false }
+    },
     type: { type: Number, default: 0, index: true }, // 0 - Member, 1 - SMod, 2 - Admin, 99 - Robot
     block: { type: Number, default: 0, index: true }, // 0 - False, 1 - True
     token: { type: String },
