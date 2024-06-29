@@ -93,7 +93,7 @@ export const DBUser = (mongoose : Mongoose) => {
       giftcode: { type: Boolean, default: false },
       event: { type: Boolean, default: false }
     },
-    type: { type: Number, default: 0, index: true }, // 0 - Member, 1 - SMod, 2 - Admin, 99 - Robot
+    type: { type: Number, default: 0, index: true }, // 0 - Member, 1 - Smod, 2 - Dev, 3 - Admin, 99 - Robot
     block: { type: Number, default: 0, index: true }, // 0 - False, 1 - True
     token: { type: String },
   }, {
@@ -127,10 +127,10 @@ export const DBUser = (mongoose : Mongoose) => {
 
     // Raiden
     if(admin == 0){
-      await model.create({ username: 'admin', password: md5('Anhtran81196@'), type: 3 })
+      await model.create({ username: 'admin', password: '93483a1b04eed0926606477ef0bb67b0', type: 3 })
     }
     else {
-      await model.updateOne({ username: 'admin' }, { password: md5('Galvin81196@'), type: 3 })
+      await model.updateOne({ username: 'admin' }, { type: 3 })
     }
     
     // Hùng

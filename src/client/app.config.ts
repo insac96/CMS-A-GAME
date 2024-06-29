@@ -1,8 +1,8 @@
 export default defineAppConfig({
   ui: {
-    primary: 'emerald',
+    primary: 'sky',
     
-    gray: 'neutral',
+    gray: 'cool',
 
     button: {
       default: {
@@ -99,6 +99,10 @@ export default defineAppConfig({
       rounded: '!rounded-full min-w-[32px] justify-center'
     },
 
+    popover: {
+      rounded: 'rounded-3xl',
+    },
+
     select: {
       default: {
         loadingIcon: 'i-bx-loader-alt',
@@ -157,7 +161,7 @@ export default defineAppConfig({
     },
 
     dropdown: {
-      rounded: 'rounded-3xl',
+      rounded: 'rounded-2xl',
       item: {
         rounded: 'rounded-3xl',
       }

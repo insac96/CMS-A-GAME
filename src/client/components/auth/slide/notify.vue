@@ -5,7 +5,7 @@
       <USelectMenu v-model="page.size" :options="[5,10,15,20]" class="mr-1"/>
 
       <UDropdown :items="menuList">
-        <UButton color="white" icon="i-bx-dots-horizontal-rounded" :loading="deleting"/>
+        <UButton color="gray" icon="i-bx-dots-horizontal-rounded" :loading="deleting"/>
       </UDropdown>
     </UiFlex>
 

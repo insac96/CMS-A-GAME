@@ -23,7 +23,7 @@
       </USelectMenu>
       
       <UDropdown :items="menuList">
-        <UButton icon="i-bx-dots-vertical-rounded" color="white" size="sm"></UButton>
+        <UButton icon="i-bx-dots-vertical-rounded" color="gray" size="sm"></UButton>
       </UDropdown>
     </UiFlex>
 

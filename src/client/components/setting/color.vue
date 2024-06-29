@@ -1,29 +1,31 @@
 <template>
-  <UiFlex justify="center" wrap="wrap">
-    <UButton
-      v-for="color in primaryColors" :key="color.value"
-      color="white"
-      square
-      :variant="color.value === primary.value ? 'solid' : 'ghost'"
-      @click="primary = color"
-    >
-      <UiDot size="5" :style="`color: ${color.hex}`" />
-    </UButton>
-  </UiFlex>
+  <div>
+    <UiFlex justify="center" wrap="wrap">
+      <UButton
+        v-for="color in primaryColors" :key="color.value"
+        color="white"
+        square
+        :variant="color.value === primary.value ? 'solid' : 'ghost'"
+        @click="primary = color"
+      >
+        <UiDot size="5" :style="`color: ${color.hex}`" />
+      </UButton>
+    </UiFlex>
 
-  <hr class="border-gray-200 dark:border-gray-800 my-2">
+    <hr class="border-gray-200 dark:border-gray-800 my-2">
 
-  <UiFlex justify="center" wrap="wrap">
-    <UButton
-      v-for="color in grayColors" :key="color.value"
-      color="white"
-      square
-      :variant="color.value === gray.value ? 'solid' : 'ghost'"
-      @click="gray = color"
-    >
-      <UiDot size="5" :style="`color: ${color.hex}`" />
-    </UButton>
-  </UiFlex>
+    <UiFlex justify="center" wrap="wrap">
+      <UButton
+        v-for="color in grayColors" :key="color.value"
+        color="white"
+        square
+        :variant="color.value === gray.value ? 'solid' : 'ghost'"
+        @click="gray = color"
+      >
+        <UiDot size="5" :style="`color: ${color.hex}`" />
+      </UButton>
+    </UiFlex>
+  </div>
 </template>
 
 <script setup>

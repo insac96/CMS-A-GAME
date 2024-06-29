@@ -7,7 +7,7 @@
         <UButton color="gray" class="rounded-l-full px-2">
           <UAvatar :src="user.avatar" alt="Avatar" size="2xs"/>
         </UButton>
-        <UButton color="white">Cấp {{ user.level?.number || 0 }}</UButton>
+        <UButton color="gray" class="pl-1">Cấp {{ user.level?.number || 0 }}</UButton>
       </UButtonGroup>
 
       <div class="ml-auto">
