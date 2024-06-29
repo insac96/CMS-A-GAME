@@ -3,13 +3,11 @@
     v-if="item" 
     :ui="{ 
       base: 'relative transition-all cursor-pointer',
-      background: 'hover:bg-gray-100',
-      rounded: 'rounded-3xl',
+      body: { padding: 'px-2 sm:px-2 py-4 sm:py-4' },
       shadow: 'shadow-md hover:shadow-lg',
-      body: { padding: 'px-2 sm:px-2 py-6 sm:py-6' },
-      divide: '',
-      ring: 'dark:ring-1 ring-0 hover:ring-2 dark:hover:ring-2 hover:ring-primary-500 dark:hover:ring-primary-400'
+      ring: 'dark:ring-1 ring-0 hover:ring-2 dark:hover:ring-2 hover:ring-primary-500 dark:hover:ring-primary-400',
     }"
+    class="BoxShopItem"
   > 
     <DataItemImage 
       :src="item.image || null"
@@ -84,3 +82,11 @@ const totalPrice = computed(() => {
   return total
 })
 </script>
+
+<style lang="sass">
+.BoxShopItem
+  transition: all 0.25s ease
+  overflow: hidden
+  &:hover
+    transform: translateY(-5px)
+</style>

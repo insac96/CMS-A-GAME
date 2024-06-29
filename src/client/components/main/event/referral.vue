@@ -1,56 +1,46 @@
 <template>
-  <div>
-    <!-- <UiFlex justify="end" class="mb-2" >
-      <UButton size="sm" color="gray" @click="modal.statistical = true" v-if="!!authStore.isLogin">Thống kê</UButton>
-    </UiFlex> -->
+  <div class="relative min-h-[200px]">
+    <LoadingTable v-if="loading" />
 
-    <div class="relative min-h-[200px]">
-      <LoadingTable v-if="loading" />
+    <div v-else>
+      <DataEmpty v-if="!activeConfig.active" :text="activeConfig.title"></DataEmpty>
+      
+      <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }" v-else>
+        <UTable :rows="list" :columns="columns">
+          <template #need-data="{ row }">
+            <UiText weight="semibold">{{ toMoney(row.need) }} người</UiText>
+          </template>
 
-      <div v-else>
-        <DataEmpty v-if="!activeConfig.active" :text="activeConfig.title"></DataEmpty>
-        
-        <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }" v-else>
-          <UTable :rows="list" :columns="columns">
-            <template #need-data="{ row }">
-              <UiText weight="semibold">{{ useMoney().toMoney(row.need) }} Bạn</UiText>
-            </template>
+          <template #gift-data="{ row }">
+            <DataItemList :items="row.gift" :currency="row.currency" class="sm:min-w-[auto] min-w-[250px]" />
+          </template>
 
-            <template #gift-data="{ row }">
-              <DataItemList :items="row.gift" :currency="row.currency" class="sm:min-w-[auto] min-w-[250px]" />
-            </template>
-
-            <template #actions-data="{ row }">
-              <UButton 
-                size="xs"
-                :color="statusFormat[row.status].color"
-                :disabled="row.status != 0"
-                @click="openReceive(row)"
-              >{{ statusFormat[row.status].label }}</UButton>
-            </template>
-          </UTable>
-        </UCard>
-      </div>
-
-      <UModal v-model="modal.receive" prevent-close>
-        <DataEventReceive :event="stateReceive" @done="doneReceive" @close="modal.receive = false" class="p-4" />
-      </UModal>
-
-      <UModal v-model="modal.statistical" :ui="{ width: 'md:max-w-2xl sm:max-w-xl' }" v-if="!!authStore.isLogin">
-        <DataUserStatistical type-default="count" />
-      </UModal>
+          <template #actions-data="{ row }">
+            <UButton 
+              size="xs"
+              :color="statusFormat[row.status].color"
+              :disabled="row.status != 0"
+              @click="openReceive(row)"
+            >{{ statusShow(row.status, row.need) }}</UButton>
+          </template>
+        </UTable>
+      </UCard>
     </div>
+
+    <UModal v-model="modal.receive" prevent-close>
+      <DataEventReceive :event="stateReceive" @done="doneReceive" @close="modal.receive = false" class="p-4" />
+    </UModal>
   </div>
 </template>
 
 <script setup>
 const authStore = useAuthStore()
+const { toMoney } = useMoney()
 watch(() => authStore.isLogin, () => getList())
 
 const loading = ref(true)
 
 const modal = ref({
-  statistical: false,
   receive: false
 })
 watch(() => modal.value.receive, (val) => !val && (stateReceive.value = null))
@@ -60,7 +50,9 @@ const config = ref({
   end: null,
   display: 0
 })
+
 const list = ref([])
+const statistical = ref()
 const type = ref('referral.count')
 watch(() => type.value, () => getList())
 
@@ -83,6 +75,25 @@ const statusFormat = {
   '1': { color: 'gray', label: 'Đã nhận' },
 }
 
+const statusShow = (number, need) => {
+  if(number != -1 || !authStore.isLogin) return statusFormat[number].label
+  const arrType = type.value.split('.')
+
+  if(arrType.length > 1){
+    let info = JSON.parse(JSON.stringify(statistical.value)) 
+    arrType.forEach(i => {
+      
+      info =  info[i]
+    })
+
+    
+    return `${toMoney(info)} / ${toMoney(need)}`
+  }
+  else {
+    return `${toMoney(statistical.value[type.value])} / ${toMoney(need)}`
+  }
+}
+
 // Active
 const activeConfig = computed(() => {
   if(!!loading.value) return { active: false, title: 'Đang tải...' }
@@ -102,9 +113,25 @@ const doneReceive = () => {
   getList()
 }
 
+const getStatistical = async () => {
+  try {
+    if(!authStore.isLogin) throw true
+
+    const data = await useAPI('user/getStatistical', {
+      user: authStore.profile._id
+    })
+    
+    statistical.value = data
+  }
+  catch(e){
+    statistical.value = null
+  }
+}
+
 const getList = async () => {
   try {
     loading.value = true
+    getStatistical()
     const get = await useAPI('event/list', {
       type: type.value
     })

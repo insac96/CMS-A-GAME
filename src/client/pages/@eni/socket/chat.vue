@@ -3,7 +3,7 @@
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1"/>
 
-      <UForm :state="page" @submit="getList" class="mr-auto">
+      <UForm :state="page" @submit="page.current = 1, getList()" class="mr-auto">
         <UiFlex>
           <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" class="mr-1" />
           <USelectMenu v-model="page.search.by" :options="['USER', 'TEXT']" />

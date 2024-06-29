@@ -1,15 +1,15 @@
 <template>
   <header class="sticky top-0 z-50 bg-white/75 dark:bg-transparent backdrop-blur-xl">
-    <UContainer class="flex items-center h-[var(--header-size)] max-h-[var(--header-size)]">
-      <LayoutDefaultNavSlide class="mr-2"/>
+    <UContainer class="flex justify-between items-center h-[var(--header-size)] max-h-[var(--header-size)]">
+      <LayoutDefaultNavSlide class="w-1/3"/>
       
-      <UiFlex class="mr-auto">
+      <UiFlex class="w-1/3 justify-center">
         <NuxtLink to="/">
           <UiLogo />
         </NuxtLink>
       </UiFlex>
       
-      <UiFlex justify="end" items="center">
+      <UiFlex justify="end" items="center" class="w-1/3">
         <Setting />
         <SocketChat class="ml-1" />
         <AuthSign v-if="!authStore.isLogin" class="ml-1" />

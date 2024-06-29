@@ -63,7 +63,7 @@ watch(() => type.value, () => getList())
 
 const columns = [{
   key: 'need',
-  label: 'Nạp đơn ngày',
+  label: 'Nạp đơn',
 },{
   key: 'gift',
   label: 'Phần thưởng',

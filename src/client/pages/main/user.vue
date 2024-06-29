@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[700px] mx-auto">
+  <div>
     <UiContent title="Profile" sub="Thông tin tài khoản" class="mb-6">
       <UCard :ui="{ body: { padding: 'p-0 sm:p-0' }}">
         <DataUserBox :fetch-id="authStore.profile._id" :reload="reload">

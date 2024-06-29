@@ -22,7 +22,8 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
-  disabled: Boolean
+  disabled: Boolean,
+  auto: Boolean
 })
 const emit = defineEmits(['update:modelValue', 'update:serverData'])
 
@@ -51,6 +52,9 @@ const fetch = async () => {
 
     loading.value = false
     options.value = options.value.concat(list.map(i => ({ value: i.server_id, label: i.server_name })))
+    if(options.value.length > 0 && !!props.auto){
+      server.value = options.value[0]['value']
+    }
   }
   catch (e){
     loading.value = false

@@ -1,55 +1,53 @@
 <template>
-  <NuxtLink v-if="news" :to="`/main/news/${news._id}`">
-    <UCard
-      :ui="{ 
-        base: 'relative transition-all overflow-hidden',
-        background: 'hover:bg-gray-100 dark:hover:bg-gray-800',
-        rounded: 'rounded-3xl',
-        shadow: 'shadow-md hover:shadow-lg',
-        header: { padding: 'p-0 sm:p-0' },
-        footer: { padding: 'pt-0 sm:pt-0' },
-        divide: '',
-        ring: 'dark:ring-1 ring-0 hover:ring-2 dark:hover:ring-2 hover:ring-primary-500 dark:hover:ring-primary-400'
-      }"
-    > 
-      <template #header>
-        <UiImg :src="news.og_image" w="4" h="2" />
-      </template>
-      
-      <UiText 
-        color="primary" 
-        weight="bold"
-        class="truncate lg:text-xl md:text-lg mb-2"
-      >
+  <UCard v-if="news" class="BoxNews" :ui="{
+    body: { padding: 'p-0 sm:p-0' },
+    footer: { padding: 'pb-2 sm:pb-2 pt-0 sm:pt-0 sm:px-4 px-4', base: 'border-none' },
+    shadow: 'shadow-md hover:shadow-lg',
+    ring: 'dark:ring-1 ring-0 hover:ring-2 dark:hover:ring-2 hover:ring-primary-500 dark:hover:ring-primary-400',
+  }">
+    <div @click="open(news._id)" class="cursor-pointer w-full">
+      <UiImg 
+        :src="news.og_image" 
+        ratio="16 / 9"
+        w="100%"
+      />
+    </div>
+
+    <div class="pt-2.5 pb-3 px-4">
+      <NuxtLink :to="`/main/news/${news._id}`" class="md:text-md text-sm line-clamp-1 text-gray hover:text-primary font-semibold">
         {{ news.title }}
-      </UiText>
+      </NuxtLink>
+      <UiText class="line-clamp-2 md:text-sm text-xs md:mt-0 mt-0.5" color="gray">{{ news.description }}</UiText>
+    </div>
 
-      <UiText 
-        color="gray" 
-        class="lg:text-lg line-clamp-2"
-      >
-      {{ news.description }}
-      </UiText>
+    <template #footer>
+      <UiFlex justify="between">
+        <UiText color="gray" weight="semibold" class="text-xs mr-auto">
+          {{ displayTime(news.updatedAt) }}
+        </UiText>
 
-      <template #footer>
-        <UiFlex>
-          <UiIcon v-if="news.pin == 1" color="primary" name="i-bxs-pin" size="4" class="mr-2" />
-
-          <UiText color="gray" weight="semibold" class="md:text-sm text-xs mr-auto">
-            {{ displayTime(news.updatedAt) }}
-          </UiText>
-
-          <UBadge :color="news.category?.color || 'primary'">
-            {{ news.category?.name || 'News' }}
-          </UBadge>
-        </UiFlex>
-      </template>
-    </UCard>
-  </NuxtLink>
+        <UBadge :color="news.category?.color || 'primary'">
+          {{ news.category?.name || 'News' }}
+        </UBadge>
+      </UiFlex>
+    </template>
+  </UCard>
 </template>
 
 <script setup>
 defineProps(['news'])
 
 const { displayTime } = useDayJs()
+
+const open = async (_id) => {
+  await navigateTo(`/main/news/${_id}`)
+}
 </script>
+
+<style lang="sass">
+.BoxNews
+  transition: all 0.25s ease
+  overflow: hidden
+  &:hover
+    transform: translateY(-5px)
+</style>

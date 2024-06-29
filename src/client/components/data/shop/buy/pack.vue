@@ -29,6 +29,10 @@
         <SelectMoney v-model="state.money" />
       </UFormGroup>
 
+      <UFormGroup label="Nhập số lượng" name="amount" v-if="!!pack && !!pack.gift">
+        <UInput v-model="state.amount" type="number" />
+      </UFormGroup>
+
       <UFormGroup label="Giảm giá hệ thống" v-if="systemDiscount && systemDiscount.number > 0">
         <UInput :model-value="`${systemDiscount.number}% ${systemDiscount.time}`" readonly />
       </UFormGroup>
@@ -49,6 +53,11 @@
           <UiFlex justify="between" class="text-sm font-semibold p-2">
             <UiText color="gray" class="mr-6">Đơn giá</UiText>
             <UiText align="right">{{ toMoney(pack.price) }}</UiText>
+          </UiFlex>
+
+          <UiFlex justify="between" class="text-sm font-semibold p-2">
+            <UiText color="gray" class="mr-6">Số lượng</UiText>
+            <UiText align="right">x{{ state.amount }}</UiText>
           </UiFlex>
 
           <UiFlex justify="between" class="text-sm font-semibold p-2">
@@ -84,7 +93,7 @@
 
 <script setup>
 const { dayjs, displayFull } = useDayJs()
-const { toMoney } = useMoney()
+const { toMoney, miniMoney } = useMoney()
 
 const props = defineProps(['pack', 'server'])
 const emit = defineEmits(['close', 'done'])
@@ -108,6 +117,7 @@ const state = ref({
   server: props.server ? props.server : null,
   role: null,
   pack: props.pack ? props.pack._id : null,
+  amount: 1,
   money: 'coin'
 })
 
@@ -129,17 +139,19 @@ const systemDiscount = computed(() => {
 })
 
 const totalPrice = computed(() => {
+  const amount = state.value.amount
   const price = props.pack ? props.pack?.price : 0
   const discount_level = level.value ? level.value.discount : 0
   const discount_system = systemDiscount.value.number
 
+  if(!amount || amount < 1) return null
   if(!price || price < 1) return null
   if(discount_level === undefined || discount_level < 0) return null
 
   let discount = discount_level + discount_system
   discount = discount > 100 ? 100 : discount
 
-  let total = Math.floor(price)
+  let total = Math.floor(amount * price)
   total = total - Math.floor(total * discount / 100)
   return total
 })
@@ -156,6 +168,8 @@ const validate = (state) => {
   else if (totalPrice.value != null && currency.value.coin < totalPrice.value) errors.push({ path: 'info', message: 'Số dư xu không đủ' })
   if (!state.server) errors.push({ path: 'server', message: 'Vui lòng chọn máy chủ' })
   if (!state.role) errors.push({ path: 'role', message: 'Vui lòng chọn nhân vật' })
+  if (!state.amount) errors.push({ path: 'amount', message: 'Vui lòng nhập số lượng' })
+  else if (state.amount < 1) errors.push({ path: 'amount', message: 'Số lượng không hợp lệ' })
   return errors
 }
 

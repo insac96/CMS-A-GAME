@@ -25,20 +25,31 @@
         <SelectItemList v-model="state.items" :types="['game_item']" />
       </UFormGroup>
 
-      <UiFlex justify="end" class="mt-6">
-        <UButton type="submit" :loading="loading" class="mr-1">Gửi Thư</UButton>
+      <UiFlex justify="end" class="mt-4">
+        <UButton type="submit" :loading="!!loading">Xác Nhận</UButton>
       </UiFlex>
     </UForm>
+
+    <UModal v-model="modal" preventClose :ui="{width: 'sm:max-w-[320px]'}">
+      <UiFlex type="col" justify="center" class="p-4">
+        <UiIcon :name="!!loading ? 'i-bx-mail-send' : 'i-bx-check'" size="24" color="primary" />
+        <UiText align="center" class="mb-2" color="gray">{{ !!loading ? 'Vui lòng đợi tiến trình kết thúc' : 'Đã hoàn tất' }}</UiText>
+        <UButton :loading="loading" @click="modal = false" :color="!!loading ? 'gray' : 'primary'">{{ !!loading ? 'Đang gửi' : 'Đóng' }}</UButton>
+      </UiFlex>
+    </UModal>
   </UiContent>
 </template>
 
 <script setup>
+const authStore = useAuthStore()
 const loading = ref(false)
+const modal = ref(false)
+const process = ref(undefined)
 
 const state = ref({
   title: 'Quà từ GM',
   content: 'Chúc bạn chơi game vui vẻ',
-  reason: null,
+  reason: authStore.profile.type > 1 ? 'Dev Test' : null,
   roles: [],
   items: []
 })
@@ -52,15 +63,34 @@ const validate = (state) => {
 }
 
 const submit = async () => {
-  try {
-    loading.value = true
-    await useAPI('game/admin/sendMulti', JSON.parse(JSON.stringify(state.value)))
+  modal.value = true
+  loading.value = true
+  start()
+}
 
-    state.value.reason = null
+const start = () => {
+  if(state.value.roles.length == 0) {
+    !!process.value && clearTimeout(process.value)
+    process.value = null
     loading.value = false
+    return
   }
-  catch(e) {
-    loading.value = false
-  }
+  
+  process.value = setTimeout(async () => {
+    const userSend = state.value.roles[0]
+    const sendInfo = {
+      title: state.value.title,
+      content : state.value.content,
+      reason: state.value.reason,
+      server: userSend.server.server_id,
+      role: userSend.role.role_id,
+      user: userSend.user._id,
+      items: state.value.items
+    }
+
+    await useAPI('game/admin/send', JSON.parse(JSON.stringify(sendInfo)))
+    state.value.roles.splice(0, 1)
+    start()
+  }, 2000)
 }
 </script>

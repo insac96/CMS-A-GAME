@@ -1,6 +1,6 @@
 <template>
   <div class="HomePage">
-    <DataBanner class="mb-7" />
+    <DataBanner />
     <DataNewsLatest />
   </div>
 </template>

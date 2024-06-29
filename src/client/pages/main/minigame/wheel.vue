@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Wheel Lucky" sub="Trò chơi vòng quay may mắn" class="max-w-[700px] mx-auto">
+  <UiContent title="Wheel Lucky" sub="Trò chơi vòng quay may mắn">
     <MainMinigameWheel />
   </UiContent>
 </template>

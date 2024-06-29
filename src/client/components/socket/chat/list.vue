@@ -81,7 +81,8 @@ const loading = ref(true)
 const typeFormat = {
   0: { label: 'MEMBER', color: 'gray' },
   1: { label: 'SMOD', color: 'green' },
-  2: { label: 'ADMIN', color: 'red' },
+  2: { label: 'DEV', color: 'cyan' },
+  3: { label: 'ADMIN', color: 'red' },
   99: { label: 'ROBOT', color: 'orange' }
 }
 

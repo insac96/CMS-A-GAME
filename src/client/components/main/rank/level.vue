@@ -3,7 +3,7 @@
     <UForm :state="state" :validate="validate" @submit="submit">
       <UFormGroup name="server">
         <UiFlex>
-          <SelectGameServer v-model="state.server" size="md" class="grow mr-1" />
+          <SelectGameServer auto v-model="state.server" size="md" class="grow mr-1" />
           <UButton type="submit" size="md" :loading="loading.load">Xem</UButton>
         </UiFlex>
       </UFormGroup>
@@ -66,6 +66,8 @@ const stateView = ref({
   type: null,
   server: null
 })
+
+watch(() => state.value.server, (val) => !!val && submit())
 
 const validate = (state) => {
   const errors = []

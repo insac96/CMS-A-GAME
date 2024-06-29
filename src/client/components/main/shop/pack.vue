@@ -13,10 +13,9 @@
 
     <!-- Loading -->
     <div class="grid grid-cols-12 gap-2" v-if="!!loading">
-      <LoadingShopBox class="xl:col-span-3 sm:col-span-4 col-span-6"/>
-      <LoadingShopBox class="xl:col-span-3 sm:col-span-4 col-span-6"/>
-      <LoadingShopBox class="xl:col-span-3 sm:col-span-4 col-span-6"/>
-      <LoadingShopBox class="xl:col-span-3 sm:col-span-4 col-span-6 sm:hidden xl:block"/>
+      <LoadingShopBox class="sm:col-span-4 col-span-6"/>
+      <LoadingShopBox class="sm:col-span-4 col-span-6"/>
+      <LoadingShopBox class="sm:col-span-4 col-span-6 hidden sm:block"/>
     </div>
 
     <!-- Main -->
@@ -25,7 +24,7 @@
 
       <div class="grid grid-cols-12 gap-2" v-if="list.length > 0">
         <DataShopPack
-          class="xl:col-span-3 sm:col-span-4 col-span-6" 
+          class="sm:col-span-4 col-span-6" 
           v-for="pack in list" :key="pack._id"
           :pack="pack"
           :config="config"

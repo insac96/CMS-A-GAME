@@ -1,16 +1,8 @@
 <template>
-  <div class="UiContent relative">
-    <UiFlex justify="between" class="capitalize mb-4">
-      <div>
-        <UiFlex>
-          <UiDot size="4" class="md:mr-4 mr-2" v-if="!!dot"></UiDot>
-          <p class="md:text-3xl text-xl font-bold text-gray-700 dark:text-gray-300">{{ title || '...' }}</p>
-        </UiFlex>
-
-        <UiText color="gray" class="md:text-xl text-sm md:mt-1">{{ sub || '...' }}</UiText>
-      </div>
-
-      <slot name="right-head"></slot>
+  <div>
+    <UiFlex type="col" justify="center" :items="!!start ? 'start' : 'center'" class="mb-6">
+      <UiText align="center" class="font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl text-xl">{{ title }}</UiText>
+      <UiText align="center" color="gray" class="tracking-tight sm:text-xl text-lg">{{ sub }}</UiText>
     </UiFlex>
 
     <slot></slot>
@@ -21,7 +13,7 @@
 defineProps({
   title: String,
   sub: String,
-  dot: { type: Boolean, default: true },
+  start: { type: Boolean, default: true },
 })
 
 const slots = defineSlots()

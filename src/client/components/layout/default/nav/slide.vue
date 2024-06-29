@@ -1,5 +1,5 @@
 <template>
-  <UiFlex class="md:hidden">
+  <UiFlex>
     <UiIcon 
       name="i-bx-menu-alt-left"
       size="7"

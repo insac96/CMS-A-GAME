@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Giftcode" sub="Nhập mã nhận thưởng" class="max-w-[600px] mx-auto" >
+  <UiContent title="Giftcode" sub="Nhập mã nhận thưởng">
     <MainActionGiftcode />
   </UiContent>
 </template>

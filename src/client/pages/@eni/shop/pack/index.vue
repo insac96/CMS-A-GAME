@@ -2,7 +2,7 @@
   <UiContent title="Pack Shop" sub="Quản lý cửa hàng gói">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
-      <UForm :state="page" @submit="getList" class="mr-auto">
+      <UForm :state="page" @submit="page.current = 1, getList()" class="mr-auto">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
       <UButton color="gray" @click="modal.add = true" class="ml-2">Thêm mới</UButton>

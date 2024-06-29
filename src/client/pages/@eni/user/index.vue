@@ -2,7 +2,7 @@
   <UiContent title="User" sub="Quản lý tài khoản người dùng">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-1"/>
-      <UForm :state="page" @submit="getList" class="mr-1">
+      <UForm :state="page" @submit="page.current = 1, getList()" class="mr-1">
         <UiFlex>
           <UInput v-model="page.search.key" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" class="mr-1" />
           <USelectMenu v-model="page.search.by" :options="['USER', 'PHONE', 'MAIL', 'IP']" />
@@ -397,7 +397,8 @@ const loading = ref({
 const typeFormat = {
   0: { label: 'MEMBER', color: 'gray' },
   1: { label: 'SMOD', color: 'green' },
-  2: { label: 'ADMIN', color: 'red' },
+  2: { label: 'DEV', color: 'cyan' },
+  3: { label: 'ADMIN', color: 'red' },
   99: { label: 'ROBOT', color: 'orange' }
 }
 
@@ -602,7 +603,6 @@ const exportExcel = async () => {
     window.open(url, '_blank')
 
     loading.value.exportExcel = false
-    modal.value.exportExcel = false
   }
   catch (e) {
     loading.value.exportExcel = false

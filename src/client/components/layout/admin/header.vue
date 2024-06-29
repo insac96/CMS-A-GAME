@@ -9,7 +9,7 @@
       <LayoutAdminNavSlide class="w-1/3"/>
       
       <UiFlex class="w-1/3 xl:justify-start justify-center">
-        <NuxtLink to="/admin">
+        <NuxtLink to="/@eni">
           <UiLogo />
         </NuxtLink>
       </UiFlex>

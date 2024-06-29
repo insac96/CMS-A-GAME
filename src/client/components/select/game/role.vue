@@ -53,6 +53,9 @@ const fetch = async () => {
     if(options.value.length == 1){
       role.value = options.value[0].value
     }
+    else {
+      role.value = null
+    }
   }
   catch (e) {
     loading.value = false

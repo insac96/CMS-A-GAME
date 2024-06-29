@@ -1,6 +1,8 @@
 <template>
   <div>
-    <UButton :block="block" :icon="config.game.mobile ? 'i-bx-download' : 'i-bx-play'" :size="size || 'md'" :loading="loading" @click="start">{{ text || (config.game.mobile ? 'Tải Trò Chơi' : 'Chơi Ngay') }}</UButton>
+    <UButton :block="block" :icon="config.game.mobile ? 'i-bx-download' : 'i-bx-play'" :size="size || 'md'" :loading="loading" @click="start">
+      {{ text || (config.game.mobile ? 'Tải Trò Chơi' : 'Chơi Ngay') }}
+    </UButton>
 
     <UModal v-model="modal" :ui="{ width: 'max-w-[220px] sm:max-w-[220px]' }">
       <UiFlex justify="center" class="gap-6 py-8" wrap>
@@ -54,15 +56,3 @@ const start = async () => {
   }
 }
 </script>
-
-<style lang="sass">
-.Android
-  background:#a4c639 !important
-  span
-    color: #fff !important
-
-.Iphone
-  background:#000 !important
-  span
-    color: #fff !important
-</style>

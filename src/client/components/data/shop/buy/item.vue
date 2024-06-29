@@ -41,7 +41,7 @@
         <UCard :ui="{ body: { padding: 'p-2 sm:p-2' } }">
           <UiFlex justify="between" class="text-sm font-semibold p-2">
             <UiText color="gray" class="mr-6"> Mặt hàng</UiText>
-            <UiText align="right">{{ item.type == 'game_item' ? `x${miniMoney((item.item_amount || 1) * state.amount)}` : '' }} {{ item.name }}</UiText>
+            <UiText align="right">{{ item.name }}</UiText>
           </UiFlex>
 
           <UiFlex justify="between" class="text-sm font-semibold p-2">

@@ -3,11 +3,11 @@
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-auto"/>
 
-      <UForm :state="page" @submit="getList" class="mx-1">
+      <UForm :state="page" @submit="page.current = 1, getList()" class="mx-1">
         <UInput size="sm" v-model="page.to" placeholder="Tìm kiếm người nhận" />
       </UForm>
 
-      <UForm :state="page" @submit="getList">
+      <UForm :state="page" @submit="page.current = 1, getList()">
         <UInput size="sm" v-model="page.from" placeholder="Tìm kiếm người gửi" />
       </UForm>
     </UiFlex>

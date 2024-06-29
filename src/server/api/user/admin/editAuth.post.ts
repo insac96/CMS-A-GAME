@@ -8,29 +8,27 @@ export default defineEventHandler(async (event) => {
 
     const { _id, email, phone, password, type, block } = await readBody(event)
     if(!_id) throw 'Dữ liệu đầu vào không hợp lệ'
-    if(type < 0 || type > 2) throw 'Dữ liệu quyền hạn không hợp lệ'
+    if(type < 0 || type > 3) throw 'Dữ liệu quyền hạn không hợp lệ'
     if(block < 0 || block > 1) throw 'Dữ liệu khóa không hợp lệ'
 
     const user = await DB.User.findOne({_id: _id})
     .select('username email phone type block') as IDBUser
 
     if(!user) throw 'Người dùng không tồn tại'
-    if(user.type == 2 && auth.type < 2) throw 'Smod không thể sửa thông tin của Admin'
+    if(user.type == 3 && auth.type < 3) throw 'Không thể sửa thông tin tài khoản'
+    if(user.type == 2 && auth.type < 3) throw 'Không thể sửa thông tin tài khoản'
+    if(user.type == 1 && auth.type == 2) throw 'Không thể sửa thông tin tài khoản'
 
     const update : any = { type: type, block: block }
     const change = []
 
     if(!!email && user.email != email){
-      if(auth.type < 2) throw 'Smod không thể sửa Email thành viên'
-
       const check = await DB.User.findOne({ email: email }).select('_id')
       if(!!check) throw 'Email đã tồn tại'
       update['email'] = email
       change.push('Email')
     }
     if(!!phone && user.phone != phone){
-      if(auth.type < 2) throw 'Smod không thể sửa SĐT thành viên'
-
       const check = await DB.User.findOne({ phone: phone }).select('_id')
       if(!!check) throw 'Số điện thoại đã tồn tại'
       update['phone'] = phone
@@ -41,7 +39,9 @@ export default defineEventHandler(async (event) => {
       change.push('Mật khẩu')
     }
     if(user.type != type){
-      if(type == 2 && auth.type < 2) throw 'Smod không thể nâng quyền tài khoản'
+      if(type == 3 && auth.type < 3) throw 'Không thể nâng quyền tài khoản'
+      if(type == 2 && auth.type < 3) throw 'Không thể nâng quyền tài khoản'
+      if(type == 1 && auth.type == 2) throw 'Không thể nâng quyền tài khoản'
 
       update['type'] = type
       change.push('Quyền tài khoản')

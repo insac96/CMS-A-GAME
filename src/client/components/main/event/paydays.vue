@@ -9,7 +9,7 @@
         <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }" v-else>
           <UTable :rows="list" :columns="columns">
             <template #need-data="{ row }">
-              <UiText weight="semibold">{{ useMoney().toMoney(row.need) }} Ngày</UiText>
+              <UiText weight="semibold">{{ useMoney().toMoney(row.need) }} ngày</UiText>
             </template>
 
             <template #gift-data="{ row }">
@@ -22,7 +22,7 @@
                 :color="statusFormat[row.status].color"
                 :disabled="row.status != 0"
                 @click="openReceive(row)"
-              >{{ statusFormat[row.status].label }}</UButton>
+              >{{ statusShow(row.status, row.need) }}</UButton>
             </template>
           </UTable>
         </UCard>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-const { dayjs, displayFull } = useDayJs()
+const { toMoney } = useMoney()
 const authStore = useAuthStore()
 watch(() => authStore.isLogin, () => getList())
 
@@ -58,6 +58,7 @@ const config = ref({
   display: 0
 })
 const list = ref([])
+const statistical = ref()
 const type = ref('paydays')
 watch(() => type.value, () => getList())
 
@@ -80,6 +81,11 @@ const statusFormat = {
   '1': { color: 'gray', label: 'Đã nhận' },
 }
 
+const statusShow = (number, need) => {
+  if(number != -1 || !authStore.isLogin) return statusFormat[number].label
+  return `${toMoney(statistical.value[type.value].day)} / ${toMoney(need)}`
+}
+
 // Active
 const activeConfig = computed(() => {
   if(!!loading.value) return { active: false, title: 'Đang tải...' }
@@ -99,9 +105,25 @@ const doneReceive = () => {
   getList()
 }
 
+const getStatistical = async () => {
+  try {
+    if(!authStore.isLogin) throw true
+
+    const data = await useAPI('user/getStatistical', {
+      user: authStore.profile._id
+    })
+    
+    statistical.value = data
+  }
+  catch(e){
+    statistical.value = null
+  }
+}
+
 const getList = async () => {
   try {
     loading.value = true
+    getStatistical()
     const get = await useAPI('event/list', {
       type: type.value
     })

@@ -6,8 +6,7 @@
       v-if="!loading && !!news" 
       :title="news.title" 
       :sub="news.description" 
-      :dot="false" 
-      class="max-w-[800px] mx-auto"
+      :start="false"
     >
       <UiImg 
         w="4" h="2" 

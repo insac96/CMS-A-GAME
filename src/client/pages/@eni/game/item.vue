@@ -2,10 +2,12 @@
   <UiContent title="Item" sub="Quản lý vật phẩm">
     <UiFlex class="mb-4">
       <USelectMenu v-model="page.size" :options="[5,10,20,50,100]" class="mr-2"/>
-      <UForm :state="page" @submit="getList" class="mr-auto">
+      <UForm :state="page" @submit="page.current = 1, getList()" class="mr-auto">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
-      <UButton color="gray" @click="modal.add = true" class="ml-2">Thêm mới</UButton>
+
+      <UButton :loading="loading.exportExcel" @click="exportExcel" class="ml-1">Xuất Excel</UButton>
+      <UButton color="gray" @click="modal.add = true" class="ml-1">Thêm mới</UButton>
     </UiFlex>
     
     <!-- Table -->
@@ -189,7 +191,8 @@ const loading = ref({
   load: true,
   add: false,
   edit: false,
-  del: false
+  del: false,
+  exportExcel: false
 })
 
 // Type
@@ -267,6 +270,20 @@ const delAction = async (_id) => {
   }
   catch (e) {
     loading.value.del = false
+  }
+}
+
+const exportExcel = async () => {
+  try {
+    loading.value.exportExcel = true
+    const url = await useAPI('item/admin/exportExcel')
+
+    window.open(url, '_blank')
+
+    loading.value.exportExcel = false
+  }
+  catch (e) {
+    loading.value.exportExcel = false
   }
 }
 

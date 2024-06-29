@@ -32,6 +32,7 @@
 </template>
 
 <script setup>
+const authStore = useAuthStore()
 const props = defineProps(['user', 'server'])
 const emits = defineEmits(['close'])
 const loading = ref(false)
@@ -42,7 +43,7 @@ const state = ref({
   role: null,
   title: 'Quà từ GM',
   content: 'Chúc bạn chơi game vui vẻ',
-  reason: null,
+  reason: authStore.profile.type > 1 ? 'Dev Test' : null,
   items: []
 })
 

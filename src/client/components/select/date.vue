@@ -48,7 +48,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
-const isDark = computed(() => colorMode.value === 'dark')
+const isDark = computed(() => colorMode.value == 'dark')
 
 const mode = computed(() => !!props.time ? 'dateTime' : 'date')
 
@@ -63,3 +63,14 @@ const show = computed(() => {
   else return displayTime(date.value)
 })
 </script>
+
+<style lang="sass">
+.vc-date-picker-content
+  background: #fff
+  border-radius: 12px
+  border-color: rgb(var(--color-gray-300))
+.dark
+  .vc-date-picker-content
+    background: rgb(var(--color-gray-900))
+    border-color: rgb(var(--color-gray-700))
+</style>

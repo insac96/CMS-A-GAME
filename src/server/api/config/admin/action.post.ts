@@ -3,7 +3,7 @@ import type { IAuth } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    if(auth.type < 2) throw 'Chỉ Admin mới có thể thao tác'
+    if(auth.type < 3) throw 'Chỉ Admin mới có thể thao tác'
 
     const data = await readBody(event)
     const { type } = data
@@ -43,6 +43,8 @@ export default defineEventHandler(async (event) => {
         'currency.wheel': 0,
         'currency.diamond': 0,
         'paymusty': [],
+        'paydays.day': 0,
+        'paydays.receive': 0,
         'pay.total.money': 0,
         'pay.day.money': 0,
         'pay.month.money': 0,

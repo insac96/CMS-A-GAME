@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
     const body = await readBody(event)
     if(!!body.redo){
-      if(auth.type < 2) throw 'Smod không thể hoàn tác trạng thái giao dịch'
+      if(auth.type < 3) throw 'Chỉ Admin mới có thể hoàn tác trạng thái giao dịch'
       const payment = await DB.Payment.findOne({ _id: body._id }).select('status code')
       if(!payment) throw 'Giao dịch không tồn tại'
       if(payment.status == 0) throw 'Giao dịch chưa được duyệt'

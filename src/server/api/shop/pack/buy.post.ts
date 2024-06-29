@@ -10,10 +10,11 @@ export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
 
-    const { pack, server, role, money : buyBy } = await readBody(event)
+    const { pack, server, role, money : buyBy, amount } = await readBody(event)
     if(!pack) throw 'Không tìm thấy ID vật phẩm'
     if(!server) throw 'Không tìm thấy ID máy chủ'
     if(!role) throw 'Không tìm thấy ID nhân vật'
+    if(!!isNaN(parseInt(amount)) || parseInt(amount) < 1) throw 'Số lượng không hợp lệ'
     if(!moneyType.includes(buyBy)) throw 'Tiền tệ không hỗ trợ'
 
     // Shop Config
@@ -38,7 +39,7 @@ export default defineEventHandler(async (event) => {
     if(!shopPack) throw 'Gói không tồn tại'
 
     // Total Price
-    const price = shopPack.price
+    const price = shopPack.price * parseInt(amount)
     const discountLevel = level.discount
     const discountSystem = getShopDiscount(event, shopConfig)
     const discount = discountLevel + discountSystem > 100 ? 100 : discountLevel + discountSystem
@@ -106,10 +107,10 @@ export default defineEventHandler(async (event) => {
       const item = gift.item as IDBItem
 
       if(item.type == 'game_item'){
-        giftItem.push({ id: item.item_id, amount: gift.amount })
+        giftItem.push({ id: item.item_id, amount: gift.amount * parseInt(amount) })
       }
       if(!!currencyTypeList.includes(item.type)){
-        giftCurrency[`currency.${item.type}`] = gift.amount
+        giftCurrency[`currency.${item.type}`] = gift.amount * parseInt(amount)
       }
     })
 

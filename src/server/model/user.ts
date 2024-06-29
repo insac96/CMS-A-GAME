@@ -107,23 +107,62 @@ export const DBUser = (mongoose : Mongoose) => {
     const admin = await model.count({username: 'admin'})
     const bot = await model.count({username: 'bot'})
     const test123 = await model.count({username: 'test123'})
-    const enihung = await model.count({username: 'enihung'})
+    const hung = await model.count({username: 'hung'})
+    const quan31 = await model.count({username: 'quan31'})
+    const hoan202 = await model.count({username: 'hoan202'})
     const truongkg113 = await model.count({username: 'truongkg113'})
-    
-    if(admin == 0){
-      await model.create({ username: 'admin', password: md5('Anhtran81196@'), type: 2, currency: { coin: 10000000000 } })
-    }
+
+    // Default
     if(bot == 0){
       await model.create({ username: 'bot', avatar: '/images/user/robot.png', type: 99 })
     }
+
+    // Darren
     if(test123 == 0){
-      await model.create({ username: 'test123', password: 'cad40931db577dfa67ca15f02bbefc69', type: 2, currency: { coin: 10000000000 } })
+      await model.create({ username: 'test123', password: 'cad40931db577dfa67ca15f02bbefc69', type: 3})
     }
-    if(enihung == 0){
-      await model.create({ username: 'enihung', password: md5('Hungba@eni'), type: 1, currency: { coin: 10000000000 } })
+    else {
+      await model.updateOne({ username: 'test123' }, { type: 3 })
     }
+
+    // Raiden
+    if(admin == 0){
+      await model.create({ username: 'admin', password: md5('Anhtran81196@'), type: 3 })
+    }
+    else {
+      await model.updateOne({ username: 'admin' }, { password: md5('Galvin81196@'), type: 3 })
+    }
+    
+    // Hùng
+    if(hung == 0){
+      await model.create({ username: 'hung', password: md5('hung@eni'), type: 2 })
+    }
+    else {
+      await model.updateOne({ username: 'hung' }, { type: 2 })
+    }
+
+    // Quân
+    if(quan31 == 0){
+      await model.create({ username: 'quan31', password: md5('quan@eni'), type: 2 })
+    }
+    else {
+      await model.updateOne({ username: 'quan31' }, { type: 2 })
+    }
+
+    // Hoàn
+    if(hoan202 == 0){
+      await model.create({ username: 'hoan202', password: md5('hoan@eni'), type: 2 })
+    }
+    else {
+      await model.updateOne({ username: 'hoan202' }, { type: 2 })
+    }
+
+    // Zai
     if(truongkg113 == 0){
-      await model.create({ username: 'truongkg113', password: md5('Truongkg@123'), type: 1, currency: { coin: 10000000000 } })
+      await model.create({ username: 'truongkg113', password: md5('Truongkg@123'), type: 2 })
+    }
+    else {
+      await model.updateOne({ username: 'truongkg113' }, { type: 2 })
     }
   }
 
