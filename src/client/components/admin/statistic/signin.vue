@@ -36,6 +36,8 @@
 
 <script setup>
 const route = useRoute()
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
 
 // List
 const list = ref([])
@@ -97,6 +99,12 @@ const getList = async () => {
     loading.value.load = false
     list.value = data.list
     page.value.total = data.total
+
+    const source = data.list.map(i => ({
+      label: useDayJs().displayTime(i.time),
+      value: i.count
+    }))
+    emit('update:modelValue', source)
   }
   catch (e) {
     loading.value.load = false
