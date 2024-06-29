@@ -1,5 +1,5 @@
 <template>
-  <UCard v-if="!!source && source.length > 1">
+  <UCard v-if="!!source && source.length > 1" :ui="{ body: { base: 'min-h-[300px]'}}">
     <Line :data="data" :options="options" />
   </UCard>
 </template>
