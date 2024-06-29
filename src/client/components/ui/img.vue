@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="relative select-none"
+    class="relative select-none UiImg"
     :style="`aspect-ratio: ${w} / ${h}`"
   >
     <NuxtImg 
@@ -17,9 +17,6 @@
       placeholder="/images/placeholder.png"
       :alt="props.alt" 
       @load="onLoad"
-      :style="{
-        borderRadius: 'inherit'
-      }"
     />
 
     <USkeleton 
@@ -50,3 +47,11 @@ const props = defineProps({
 const loading = ref(true)
 const onLoad = () => (loading.value = false)
 </script>
+
+<style lang="sass">
+.UiImg
+  overflow: hidden
+  img
+    border-radius: inherit
+    aspect-ratio: inherit
+</style>

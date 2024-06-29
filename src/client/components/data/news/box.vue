@@ -17,7 +17,7 @@
       <NuxtLink :to="`/main/news/${news._id}`" class="md:text-md text-sm line-clamp-1 text-gray hover:text-primary font-semibold">
         {{ news.title }}
       </NuxtLink>
-      <UiText class="line-clamp-2 md:text-sm text-xs md:mt-0 mt-0.5" color="gray">{{ news.description }}</UiText>
+      <UiText class="line-clamp-2 md:text-sm text-xs md:mt-0 mt-0.5 md:min-h-[40px] min-h-[32px]" color="gray">{{ news.description }}</UiText>
     </div>
 
     <template #footer>
