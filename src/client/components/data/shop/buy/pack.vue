@@ -51,6 +51,11 @@
           </UiFlex>
 
           <UiFlex justify="between" class="text-sm font-semibold p-2">
+            <UiText color="gray" class="mr-6"> Giới hạn</UiText>
+            <UiText align="right">{{ pack.limit }} gói / ngày</UiText>
+          </UiFlex>
+
+          <UiFlex justify="between" class="text-sm font-semibold p-2">
             <UiText color="gray" class="mr-6">Đơn giá</UiText>
             <UiText align="right">{{ toMoney(pack.price) }}</UiText>
           </UiFlex>

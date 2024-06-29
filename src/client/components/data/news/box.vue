@@ -6,18 +6,17 @@
     ring: 'dark:ring-1 ring-0 hover:ring-2 dark:hover:ring-2 hover:ring-primary-500 dark:hover:ring-primary-400',
   }">
     <div @click="open(news._id)" class="cursor-pointer w-full">
-      <UiImg 
-        :src="news.og_image" 
-        ratio="16 / 9"
-        w="100%"
-      />
+      <UiImg :src="news.og_image" w="16" h="9" class="w-full" />
     </div>
 
     <div class="pt-2.5 pb-3 px-4">
       <NuxtLink :to="`/main/news/${news._id}`" class="md:text-md text-sm line-clamp-1 text-gray hover:text-primary font-semibold">
         {{ news.title }}
       </NuxtLink>
-      <UiText class="line-clamp-2 md:text-sm text-xs md:mt-0 mt-0.5 md:min-h-[40px] min-h-[32px]" color="gray">{{ news.description }}</UiText>
+      
+      <UiText class="line-clamp-2 md:text-sm text-xs md:mt-0 mt-0.5 md:min-h-[40px] min-h-[32px]" color="gray">
+        {{ news.description }}
+      </UiText>
     </div>
 
     <template #footer>
@@ -50,4 +49,6 @@ const open = async (_id) => {
   overflow: hidden
   &:hover
     transform: translateY(-5px)
+  img
+    aspect-ratio: 16 / 9
 </style>

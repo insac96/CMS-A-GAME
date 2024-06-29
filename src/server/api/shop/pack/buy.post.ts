@@ -65,6 +65,8 @@ export default defineEventHandler(async (event) => {
 
     // Check Limit Buy
     if(shopPack.limit > 0){
+      if(amount > shopPack.limit) throw `Không thể nhập quá ${shopPack.limit} gói`
+
       const now = DayJS(Date.now())
       const start = now.startOf('date')
       const end = now.endOf('date')
@@ -79,6 +81,7 @@ export default defineEventHandler(async (event) => {
         {
           $project: {
             createdAt: 1,
+            amount: 1,
             timeformat: {
               $dateToString: { format: '%Y-%m-%d', date: '$createdAt', timezone: 'Asia/Ho_Chi_Minh' }
             }
@@ -88,7 +91,7 @@ export default defineEventHandler(async (event) => {
           $group: {
             _id: '$timeformat',
             time: { $max: '$createdAt' },
-            count: { $count: {} },
+            count: { $sum: '$amount' }
           }
         },
         { $match: { 
@@ -152,9 +155,10 @@ export default defineEventHandler(async (event) => {
       server: server,
       role: role,
       price: totalPrice,
+      amount: parseInt(amount)
     })
 
-    logUser(event, auth._id, `Dùng <b>${totalPrice.toLocaleString("vi-VN")} ${buyBy == 'coin' ? 'Xu' : 'Cống Hiến'}</b> để mua gói <b>${shopPack.name}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
+    logUser(event, auth._id, `Dùng <b>${totalPrice.toLocaleString("vi-VN")} ${buyBy == 'coin' ? 'Xu' : 'Cống Hiến'}</b> để mua gói <b>x${amount} ${shopPack.name}</b> tại máy chủ <b>${server}</b> nhân vật <b>${role}</b>`)
 
     return resp(event, { message: 'Mua gói thành công' })
   } 

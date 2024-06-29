@@ -40,6 +40,7 @@ export default defineEventHandler(async (event) => {
           name: 1, 
           price: 1,
           pin: 1,
+          limit: 1,
           gift: {
             $map: {
               input: '$giftdata',
