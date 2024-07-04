@@ -1,20 +1,11 @@
 <template>
-  <UCard v-if="!!source && source.length > 1" :ui="{ body: { base: 'min-h-[300px]'}}">
+  <UCard v-if="!!source && source.length > 1" :ui="{ body: { base: 'min-h-[300px] max-h-[300px]'}}">
     <Line :data="data" :options="options" />
   </UCard>
 </template>
 
 <script setup>
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
 import { Line } from 'vue-chartjs'
 import colors from '#tailwind-config/theme/colors'
 
@@ -22,15 +13,7 @@ const props = defineProps(['source'])
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const options = {
   responsive: true,
@@ -42,7 +25,8 @@ const data = computed(() => {
   let labels = []
   let values = []
 
-  props.source.forEach(i => {
+  const reverse = JSON.parse(JSON.stringify(props.source)).reverse()
+  reverse.forEach(i => {
     labels.push(i.label)
     values.push(i.value)
   })
