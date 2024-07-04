@@ -41,9 +41,7 @@ export default defineEventHandler(async (event) => {
     const discountSystem = getShopDiscount(event, shopConfig)
     const discount = discountLevel + discountSystem > 100 ? 100 : discountLevel + discountSystem
     const totalPrice = Math.floor(priceBuy - Math.floor(priceBuy * discount / 100))
-
-    // @ts-expect-error
-    if(totalPrice > user.currency[buyBy]) throw 'Số dư không đủ'
+    if(totalPrice > user.currency.coin) throw 'Số dư không đủ'
 
     // Check Limit Spend
     const spend = user.spend
