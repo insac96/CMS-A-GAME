@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
     // Send Item
     const itemData = shopData.item as IDBItem
     await gameSendRecharge(event, {
-      account: user.username,
+      account: account,
       server_id: server.toString(),
       role_id: role.toString(),
       recharge_id: itemData.item_id,
