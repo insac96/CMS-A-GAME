@@ -10,24 +10,11 @@ export default defineEventHandler(async (event) => {
 
     // Check Item And Create
     let item = await DB.Item.findOne({ item_id: item_id, type: 'game_recharge' }).select('item_name item_image type') as IDBItem
-    let shop = null
     if(!item){
       if(!item_name || !price) throw 'Vật phẩm không hỗ trợ'
 
-      item = await DB.Item.create({
-        item_id: item_id,
-        item_name: item_name,
-        type: 'game_recharge'
-      })
-
-      shop = await DB.Shop.create({
-        item: item._id,
-        price: price
-      }) as IDBShop
-    }
-    else {
-      shop = await DB.Shop.findOne({ item: item._id }).select('price') as IDBShop
-      if(!shop) throw 'Vật phẩm không tồn tại'
+      item = await DB.Item.create({ item_id: item_id, item_name: item_name, type: 'game_recharge' })
+      await DB.Shop.create({ item: item._id, price: price }) as IDBShop
     }
 
     // Shop Config
@@ -43,7 +30,7 @@ export default defineEventHandler(async (event) => {
 
     // Shop Item Data
     const shopData = await DB.Shop
-    .findOne({ _id: item }) 
+    .findOne({ item: item._id }) 
     .select('item item_amount price limit')
     .populate({ path: 'item', select: 'item_id item_name type' }) as IDBShop
     if(!shopData) throw 'Vật phẩm không tồn tại'
