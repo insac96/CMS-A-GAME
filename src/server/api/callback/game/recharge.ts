@@ -2,7 +2,7 @@ import type { IDBShop, IDBItem, IDBShopConfig, IDBLevel, IDBUser } from "~~/type
 
 export default defineEventHandler(async (event) => {
   try {
-    const { account, role, item_id, item_name, price, server } = getQuery(event)
+    const { account, role, item_id, item_name, price, server } = await readBody(event)
     if(!account) throw 'Không tìm thấy tên tài khoản'
     if(!item_id) throw 'Không tìm thấy ID vật phẩm'
     if(!server) throw 'Không tìm thấy thông tin máy chủ'
