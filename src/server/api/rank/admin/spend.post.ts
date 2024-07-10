@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     if(!size || !current) throw 'Dữ liệu phân trang sai'
     if(!range) throw 'Dữ liệu thời gian sai'
 
-    const match : any = { price: { $gt: 0 } }
+    const match : any = { }
     if(!!range && !!range['start'] && !!range['end']){
       const start : any = DayJS(range['start']).startOf('date')
       const end : any = DayJS(range['end']).endOf('date')
@@ -32,22 +32,53 @@ export default defineEventHandler(async (event) => {
         }
       },
       {
+        $lookup: {
+          from: "shop_box_histories",
+          localField: "user",
+          foreignField: "user",
+          pipeline: [{
+            $project: { price: 1 }
+          }],
+          as: "packHistory"
+        }
+      },
+      {
+        $project: {
+          createdAt: 1,
+          timeformat: 1,
+          user: 1,
+          priceItem: '$price',
+          pricePack: { $sum : '$packHistory.price' }
+        }
+      },
+      {
         $group: {
           _id: {
             timeformat: '$timeformat',
-            user: '$user'
+            user: '$user',
+            pricePack: '$pricePack'
           },
           time: { $min: '$createdAt' },
-          price: { $sum: '$price' },
+          price: { $sum: '$priceItem' },
         }
       },
       { $match: match },
       {
         $group: {
-          _id: '$_id.user',
+          _id: {
+            user: '$_id.user',
+            pricePack: '$_id.pricePack'
+          },
           value: { $sum: '$price' },
         }
       },
+      {
+        $project: {
+          _id: '$_id.user',
+          value: { $add : [ "$value", "$_id.pricePack" ] }
+        }
+      },
+      { $match: { value: { $gt: 0 } } },
       {
         $lookup: {
           from: "users",
