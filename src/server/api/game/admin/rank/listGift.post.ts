@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     const sorting : any = { }
     sorting[sort.column] = sort.direction == 'desc' ? -1 : 1
 
-    const match : any = { type: type, server: server }
+    const match : any = { type: type, server: server.toString() }
 
     const list = await DB.GameRankGift
     .aggregate([
@@ -65,6 +65,6 @@ export default defineEventHandler(async (event) => {
     return resp(event, { result: { list, total } })
   } 
   catch (e:any) {
-    return resp(event, { code: 400, message: e.toString() })
+    return resp(event, { code: 500, message: e.toString() })
   }
 })
