@@ -8,6 +8,7 @@ export const DBGiftcode = (mongoose : Mongoose) => {
     servers: [{ type: String }],
     users:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }],
     public: { type: Boolean, default: false },
+    justone: { type: Boolean, default: false },
     gift: [{
       item: { type: mongoose.Schema.Types.ObjectId, ref: 'items' },
       amount: { type: Number, index: true },

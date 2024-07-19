@@ -51,6 +51,10 @@
           <UBadge :color="!!row.public ? 'green' : 'gray'" variant="soft">{{ !!row.public ? 'Có' : 'Không' }}</UBadge>
         </template>
 
+        <template #justone-data="{ row }">
+          <UBadge :color="!!row.justone ? 'green' : 'gray'" variant="soft">{{ !!row.justone ? 'Có' : 'Không' }}</UBadge>
+        </template>
+
         <template #display-data="{ row }">
           <UBadge :color="row.display == 1 ? 'green' : 'gray'" variant="soft">{{ row.display == 1 ? 'Hiện' : 'Ẩn' }}</UBadge>
         </template>
@@ -101,9 +105,16 @@
         </UFormGroup>
 
         <UiFlex class="mt-4">
-          <UiFlex class="mr-auto">
-            <UToggle v-model="stateAdd.public" />
-            <UiText size="xs" weight="bold" class="ml-2">Công Khai</UiText>
+          <UiFlex class="mr-auto gap-1" type="col" items="start">
+            <UiFlex>
+              <UToggle v-model="stateAdd.public" />
+              <UiText size="xs" weight="bold" class="ml-2">Công Khai</UiText>
+            </UiFlex>
+
+            <UiFlex>
+              <UToggle v-model="stateAdd.justone" />
+              <UiText size="xs" weight="bold" class="ml-2">Dùng Một Lần</UiText>
+            </UiFlex>
           </UiFlex>
 
           <UButton type="submit" :loading="loading.add">Thêm</UButton>
@@ -140,9 +151,16 @@
         </UFormGroup>
 
         <UiFlex class="mt-4">
-          <UiFlex class="mr-auto">
-            <UToggle v-model="stateEdit.public" />
-            <UiText size="xs" weight="bold" class="ml-2">Công Khai</UiText>
+          <UiFlex class="mr-auto gap-1" type="col" items="start">
+            <UiFlex>
+              <UToggle v-model="stateEdit.public" />
+              <UiText size="xs" weight="bold" class="ml-2">Công Khai</UiText>
+            </UiFlex>
+
+            <UiFlex>
+              <UToggle v-model="stateEdit.justone" />
+              <UiText size="xs" weight="bold" class="ml-2">Dùng Một Lần</UiText>
+            </UiFlex>
           </UiFlex>
 
           <UButton type="submit" :loading="loading.edit">Sửa</UButton>
@@ -197,6 +215,10 @@ const columns = [
     label: 'Công khai',
     sortable: true
   },{
+    key: 'justone',
+    label: 'Dùng 1 lần',
+    sortable: true
+  },{
     key: 'display',
     label: 'Hiển thị',
     sortable: true
@@ -236,6 +258,7 @@ const stateAdd = ref({
   users: [],
   expired: null,
   public: false,
+  justone: false,
   display: 1
 })
 const stateEdit = ref({
@@ -246,6 +269,7 @@ const stateEdit = ref({
   users: null,
   expired: null,
   public: false,
+  justone: false,
   display: null
 })
 const stateGift = ref({

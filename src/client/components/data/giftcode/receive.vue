@@ -16,6 +16,10 @@
       <UInput :model-value="giftcode.limit == 0 ? 'Không giới hạn' : `${giftcode.limit} người`" readonly />
     </UFormGroup>
 
+    <UFormGroup label="Sử dụng">
+      <UInput :model-value="!!giftcode.justone ? 'Một lần duy nhất' : 'Một lần cho mỗi máy chủ'" readonly />
+    </UFormGroup>
+
     <UFormGroup label="Phần thưởng">
       <UCard :ui="{ body: { padding: 'p-2 sm:p-2' } }">
         <DataItemList :items="giftcode.gift" class="justify-center"/>

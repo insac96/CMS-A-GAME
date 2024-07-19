@@ -10,6 +10,7 @@ export interface IDBGiftcode {
   servers: Array<Types.ObjectId>
   users: Array<Types.ObjectId>
   public: boolean
+  justone: boolean
   gift: Array<{
     item: Types.ObjectId | IDBItem,
     amount: number

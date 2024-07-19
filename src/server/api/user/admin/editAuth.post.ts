@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
     if(!user) throw 'Người dùng không tồn tại'
     if(user.type == 3 && auth.type < 3) throw 'Không thể sửa thông tin tài khoản'
     if(user.type == 2 && auth.type < 3) throw 'Không thể sửa thông tin tài khoản'
-    if(user.type == 1 && auth.type == 2) throw 'Không thể sửa thông tin tài khoản'
 
     const update : any = { type: type, block: block }
     const change = []
@@ -41,7 +40,6 @@ export default defineEventHandler(async (event) => {
     if(user.type != type){
       if(type == 3 && auth.type < 3) throw 'Không thể nâng quyền tài khoản'
       if(type == 2 && auth.type < 3) throw 'Không thể nâng quyền tài khoản'
-      if(type == 1 && auth.type == 2) throw 'Không thể nâng quyền tài khoản'
 
       update['type'] = type
       change.push('Quyền tài khoản')
