@@ -6,22 +6,6 @@
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
       </UForm>
 
-      <USelectMenu 
-        v-if="!!configStore.config.game.mobile"
-        v-model="page.types" 
-        value-attribute="value"
-        option-attribute="label"
-        :options="[
-          { label: 'Gói nạp', value: ['game_recharge'] },
-          { label: 'Vật phẩm', value: ['game_item'] },
-        ]"
-        class="mr-auto"
-      >
-        <template #label>
-          <span>{{ page.types[0] == 'game_item' ? 'Vật phẩm' : 'Gói nạp' }}</span>
-        </template>
-      </USelectMenu>
-      
       <UDropdown :items="menuList">
         <UButton icon="i-bx-dots-vertical-rounded" color="gray" size="sm"></UButton>
       </UDropdown>
@@ -103,9 +87,6 @@ watch(() => page.value.search, (val) => (!val && getList()))
 
 const itemSelect = ref(undefined)
 watch(() => modal.value.buy, (val) => (!val && (itemSelect.value = undefined)))
-
-const typeSelect = ref('game_item')
-watch(() => typeSelect.value, (val) => page.value.types = [val])
 
 const menuList = computed(() => [
   [{

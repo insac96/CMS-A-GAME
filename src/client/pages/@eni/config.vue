@@ -166,6 +166,11 @@
           </UiFlex>
 
           <UiFlex justify="between" class="mb-4">
+            <UiText weight="semibold">Nạp trong game</UiText>
+            <UToggle v-model="state.menu.shop.recharge" />
+          </UiFlex>
+
+          <UiFlex justify="between" class="mb-4">
             <UiText weight="semibold">Vật phẩm</UiText>
             <UToggle v-model="state.menu.shop.item" />
           </UiFlex>
@@ -448,7 +453,7 @@ const state = ref({
     shop: {
       pack: false,
       item: false,
-      currency: false
+      recharge: false
     },
     event: {
       referral: false,

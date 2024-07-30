@@ -18,7 +18,7 @@ export const useConfigStore = defineStore('config', () => {
       shop: {
         pack: false,
         item: false,
-        currency: false
+        recharge: false
       },
       event: {
         referral: false,

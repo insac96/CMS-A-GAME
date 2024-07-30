@@ -23,7 +23,7 @@ export const DBConfig = (mongoose : Mongoose) => {
       shop: {
         pack: { type: Boolean, default: true },
         item: { type: Boolean, default: true },
-        currency: { type: Boolean, default: true },
+        recharge: { type: Boolean, default: false },
       },
       event: {
         referral: { type: Boolean, default: true },

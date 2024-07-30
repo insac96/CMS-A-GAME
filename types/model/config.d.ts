@@ -25,7 +25,7 @@ export interface IDBConfig {
     shop: {
       pack: boolean
       item: boolean
-      currency: boolean
+      recharge: boolean
     }
     event: {
       referral: boolean
@@ -136,7 +136,7 @@ export interface IDBConfigStore {
     shop: {
       pack: boolean
       item: boolean
-      currency: boolean
+      recharge: boolean
     }
     event: {
       referral: boolean

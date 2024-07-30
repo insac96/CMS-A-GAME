@@ -43,6 +43,12 @@
       </PlayModal>
     </UModal>
 
+    <UModal v-model="modal.shop.recharge" preventClose :ui="{ width: 'lg:max-w-3xl md:max-w-2xl sm:max-w-xl' }">
+      <PlayModal title="Cửa hàng nạp trong game" @close="modal.shop.item = false">
+        <MainShopRecharge />
+      </PlayModal>
+    </UModal>
+
     <UModal v-model="modal.shop.item" preventClose :ui="{ width: 'lg:max-w-3xl md:max-w-2xl sm:max-w-xl' }">
       <PlayModal title="Cửa hàng vật phẩm" @close="modal.shop.item = false">
         <MainShopItem />
@@ -125,7 +131,7 @@ const modal = ref({
   shop: {
     pack: false,
     item: false,
-    currency: false
+    recharge: false
   },
   event: {
     referral: false,
@@ -206,7 +212,7 @@ const menu = computed(() => {
   if(!!show.value.shop.item || !!show.value.shop.pack){
     const shop = []
     if(!!show.value.shop.pack) shop.push({
-      label: 'CH Gói',
+      label: 'CH Gói đồ',
       icon: 'i-bx-package',
       click: () => modal.value.shop.pack = true
     })
@@ -214,6 +220,11 @@ const menu = computed(() => {
       label: 'CH Vật phẩm',
       icon: 'i-bx-shopping-bag',
       click: () => modal.value.shop.item = true
+    })
+    if(!!show.value.shop.recharge) shop.push({
+      label: 'CH Nạp game',
+      icon: 'i-bx-package',
+      click: () => modal.value.shop.recharge = true
     })
     list.push(shop)
   }

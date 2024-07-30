@@ -31,8 +31,9 @@ const navItems = computed(() => {
   // Shop
   if(!!show.value.shop.pack || !!show.value.shop.item){
     const action = { label: 'Cửa Hàng', children: [] }
-    if(!!show.value.shop.pack) action.children.push([{ label: 'Gói', to: '/main/shop/pack' }])
+    if(!!show.value.shop.pack) action.children.push([{ label: 'Gói đồ', to: '/main/shop/pack' }])
     if(!!show.value.shop.item) action.children.push([{ label: 'Vật phẩm', to: '/main/shop/item' }])
+    if(!!show.value.shop.recharge) action.children.push([{ label: 'Nạp trong game', to: '/main/shop/recharge' }])
     list.push(action)
   }
 
