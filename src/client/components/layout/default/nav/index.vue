@@ -74,6 +74,7 @@ const navItems = computed(() => {
     }
 
     if(!!show.value.shop.pack) action.children.push({ label: 'Gói', to: '/main/shop/pack' })
+    if(!!show.value.shop.recharge) action.children.push({ label: 'Nạp game', to: '/main/shop/recharge' })
     if(!!show.value.shop.item) action.children.push({ label: 'Vật phẩm', to: '/main/shop/item' })
 
     list.push(action)
