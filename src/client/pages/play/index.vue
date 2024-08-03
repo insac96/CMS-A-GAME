@@ -19,6 +19,8 @@
 </template>
 
 <script setup>
+const { $socket } = useNuxtApp()
+
 definePageMeta({
   layout: 'play',
   middleware: 'play-guest'
@@ -92,5 +94,10 @@ onMounted(() => {
 
 onBeforeRouteLeave(() => {
   window.removeEventListener('message', onFast, false)
+})
+
+// Init Socket
+onMounted(() => {
+  $socket.on('disconnect', () => useTo().navigateToSSL('/'))
 })
 </script>
