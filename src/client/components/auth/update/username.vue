@@ -35,7 +35,7 @@ const state = ref({
 const validate = (state) => {
   const errors = []
   if (!state.username) errors.push({ path: 'username', message: 'Vui lòng nhập đầy đủ' })
-  else if (state.username.length < 6 || state.username.length > 15) errors.push({ path: 'username', message: 'Độ dài 6-15 ký tự' })
+  else if (state.username.length < 6 || state.username.length > 12) errors.push({ path: 'username', message: 'Độ dài 6-12 ký tự' })
   else if (!!state.username.match(/\s/g)) errors.push({ path: 'username', message: 'Phát hiện khoảng cách' })
   else if (!(/^[a-z0-9]*$/g).test(state.username)) errors.push({ path: 'username', message: 'Phát hiện ký tự đặc biệt và viết hoa' })
   else if (!!state.username.includes('admin')

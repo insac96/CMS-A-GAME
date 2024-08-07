@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     const { username, password, confirm_password, landing } = await readBody(event)
 
     if (!username) throw 'Vui lòng nhập tài khoản'
-    if (username.length < 6 || username.length > 15) throw 'Tài khoản trong khoảng 6-15 ký tự'
+    if (username.length < 6 || username.length > 12) throw 'Tài khoản trong khoảng 6-12 ký tự'
     if (!!username.match(/\s/g)) throw 'Tài khoản không có khoảng cách'
     if (!(/^[a-z0-9]*$/g).test(username)) throw 'Tài khoản không có ký tự đặc biệt và viết hoa'
     if (!!username.includes('admin')

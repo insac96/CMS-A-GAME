@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
     const { username } = await readBody(event)
     if (!username) throw 'Vui lòng nhập tên định danh'
-    if (username.length < 6 || username.length > 15) throw 'Tên định danh trong khoảng 6-15 ký tự'
+    if (username.length < 6 || username.length > 12) throw 'Tên định danh trong khoảng 6-12 ký tự'
     if (!!username.match(/\s/g)) throw 'Tên định danh không có khoảng cách'
     if (!(/^[a-z0-9]*$/g).test(username)) throw 'Tên định danh không có ký tự đặc biệt và viết hoa'
     if (!!username.includes('admin')
