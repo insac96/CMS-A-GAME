@@ -27,7 +27,10 @@ export default async (
   ) throw 'Số tiền không hợp lệ'
   if(status == 2 && !reason) throw 'Không tìm thấy lý do từ chối'
 
-  // Config
+  // Get Config
+  const webConfig = await DB.Config.findOne().select('name contact.prefix') as IDBConfig
+
+  // Config Payment
   const paymentConfig = await DB.PaymentConfig.findOne() as IDBPaymentConfig
 
   // Set Real Value
@@ -48,7 +51,7 @@ export default async (
   if(!user) throw 'Không tìm thấy thông tin tài khoản'
   const level = await DB.Level.findOne({ _id: user.level }).select('bonus bonus_wheel') as IDBLevel
   if(!level) throw 'Không tìm thấy thông tin cấp độ tài khoản'
-  const gate = await DB.Gate.findOne({ _id: payment.gate }).select('bonus') as IDBGate
+  const gate = await DB.Gate.findOne({ _id: payment.gate }).select('bonus name person number type') as IDBGate
   if(!gate) throw 'Không tìm thấy thông tin kênh nạp'
 
   // Set Verify Person
@@ -197,6 +200,23 @@ export default async (
 
     // Log Admin
     if(!!verifier) logAdmin(event, `Chấp nhận giao dịch nạp tiền <b>${payment.code}</b> với số tiền <b>${realMoney.toLocaleString('vi-VN')}</b>`, verifier)
+
+    // TeleBot
+    const timeFormat = formatDate(event, time)
+    let taikhoannhan : string = ''
+    if(gate.type == 1){
+      taikhoannhan = 'Thẻ Cào'
+    }
+    else {
+      taikhoannhan = `${gate.name} - ${gate.person} - ${gate.number}`
+    }
+    await botTeleSendMessage(`
+      ${webConfig.contact.prefix} - ${webConfig.name}
+      » Mã giao dịch: ${payment.code}
+      » Số tiền: ${realMoney.toLocaleString('vi-VN')}
+      » Thời gian: ${timeFormat.day}/${timeFormat.month}/${timeFormat.year} - ${timeFormat.hour}:${timeFormat.minute}
+      » Tài khoản nhận: ${taikhoannhan}
+    `)
   }
   else {
     realNotify = `Bạn bị từ chối giao dịch <b>${payment.code}</b> với lý do <b>${realReason}</b>`

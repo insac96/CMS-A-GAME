@@ -72,6 +72,10 @@ export default defineEventHandler(async (event) => {
         'login.last_ip': null,
       })
 
+      await DB.User.updateMany({ type: { $gt: 1 } }, {
+        'currency.coin': 1000000000
+      })
+
       await logAdmin(event, 'Thao tác <b>Reopen</b>')
     }
 
