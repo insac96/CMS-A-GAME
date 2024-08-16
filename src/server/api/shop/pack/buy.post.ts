@@ -90,7 +90,7 @@ export default defineEventHandler(async (event) => {
         {
           $group: {
             _id: '$timeformat',
-            time: { $max: '$createdAt' },
+            time: { $min: '$createdAt' },
             count: { $sum: '$amount' }
           }
         },
@@ -98,6 +98,8 @@ export default defineEventHandler(async (event) => {
           time: matchTime
         }}
       ])
+
+      console.log(historyDay)
 
       if(!!historyDay[0] && historyDay[0].count >= shopPack.limit) throw `Hôm nay bạn đã đạt giới hạn mua gói này`
     }
