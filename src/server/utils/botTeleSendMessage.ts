@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3'
+import axios from 'axios'
 
 export default async (message : string) : Promise<boolean> => {
   try {
@@ -6,18 +7,14 @@ export default async (message : string) : Promise<boolean> => {
     const CHAT_ID = "-4202180921"
     const url = 'https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage'
 
-    const send = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        chat_id: CHAT_ID,
-        text: message
-      }),
-      headers: {'Content-Type': 'application/json'}
+    await axios.post(url, {
+      chat_id: CHAT_ID,
+      text: message
     })
+
     return true
   }
   catch (e:any) {
-    console.log(e)
     return false
   }
 }

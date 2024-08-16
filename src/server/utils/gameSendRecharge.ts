@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { IDBConfig } from '~~/types'
+import axios from 'axios'
 
 interface ISendData {
   account: string
@@ -15,16 +16,11 @@ export default async (event: H3Event, data : ISendData) : Promise<void> => {
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
     if(!config.game.api.recharge) throw 'Tính năng gửi gói nạp vào trò chơi đang bảo trì'
 
-    const send = await fetch(config.game.api.recharge, {
-      method: 'post',
-      body: JSON.stringify({
-        secret: config.game.secret,
-        ...data
-      }),
-      headers: {'Content-Type': 'application/json'}
+    const send = await axios.post(config.game.api.recharge, {
+      secret: config.game.secret,
+      ...data
     })
-    
-    const res = await send.json()
+    const res = send.data
     if(res.error) throw res.error
 
     IO.emit('recharge-done', data)

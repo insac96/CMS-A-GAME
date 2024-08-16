@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { IDBConfig } from '~~/types'
+import axios from 'axios'
 
 interface ISendData {
   server_id: string
@@ -22,16 +23,11 @@ export default async (event: H3Event, data : ISendData) : Promise<any> => {
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
     if(!config.game.api.roles) throw 'Tính năng xem các nhân vật trong trò chơi đang bảo trì'
 
-    const send = await fetch(config.game.api.roles, {
-      method: 'post',
-      body: JSON.stringify({
-        secret: config.game.secret,
+    const send = await axios.post(config.game.api.roles, {
+      secret: config.game.secret,
         ...data
-      }),
-      headers: {'Content-Type': 'application/json'}
     })
-
-    const res = await send.json()
+    const res = send.data
     if(res.error) throw res.error
     
     return Promise.resolve(res.data || {

@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { IDBConfig } from '~~/types'
+import axios from 'axios'
 
 interface ISendData {
   account: string
@@ -8,22 +9,16 @@ interface ISendData {
 
 export default async (event: H3Event, data : ISendData, showBoolean : boolean = false) : Promise<any> => {
   try {
-    //return Promise.resolve([{ role_id: 1, role_name: 'Test' }])
-
     const config = await DB.Config.findOne().select('game') as IDBConfig
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
     if(!config.game.api.role) throw 'Tính năng tìm nhân vật trong trò chơi đang bảo trì'
 
-    const send = await fetch(config.game.api.role, {
-      method: 'post',
-      body: JSON.stringify({
-        secret: config.game.secret,
+    const send = await axios.post(config.game.api.role, {
+      secret: config.game.secret,
         ...data
-      }),
-      headers: {'Content-Type': 'application/json'}
     })
+    const res = send.data
 
-    const res = await send.json()
     if(!!showBoolean){
       if(res.error) return Promise.resolve(false)
       return Promise.resolve(res.data || [])

@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { IDBConfig } from '~~/types'
+import axios from 'axios'
 
 export default async (event: H3Event) : Promise<any> => {
   try {
@@ -7,15 +8,10 @@ export default async (event: H3Event) : Promise<any> => {
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
     if(!config.game.api.os) throw 'Tính năng lấy thông tin VPS đang bảo trì'
 
-    const send = await fetch(config.game.api.os, {
-      method: 'post',
-      body: JSON.stringify({
-        secret: config.game.secret
-      }),
-      headers: {'Content-Type': 'application/json'}
+    const send = await axios.post(config.game.api.os, {
+      secret: config.game.secret
     })
-
-    const res = await send.json()
+    const res = send.data
     if(res.error) throw res.error
     
     return Promise.resolve(res.data || {

@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { IDBConfig } from '~~/types'
+import axios from 'axios'
 
 interface ISendData {
   server_id: string
@@ -11,16 +12,12 @@ export default async (event: H3Event, data : ISendData, showBoolean : boolean = 
     if(!config) throw 'Không tìm thấy cấu hình trò chơi'
     if(!config.game.api.rank_power) throw 'Tính năng xem bảng xếp hạng lực chiến đang bảo trì'
 
-    const send = await fetch(config.game.api.rank_power, {
-      method: 'post',
-      body: JSON.stringify({
-        secret: config.game.secret,
+    const send = await axios.post(config.game.api.rank_power, {
+      secret: config.game.secret,
         ...data
-      }),
-      headers: {'Content-Type': 'application/json'}
     })
+    const res = send.data
 
-    const res = await send.json()
     if(!!showBoolean){
       if(res.error) return Promise.resolve(false)
       return Promise.resolve(res.data || [])
