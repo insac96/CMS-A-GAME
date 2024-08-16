@@ -20,8 +20,6 @@ export default defineEventHandler(async (event) => {
       match['time'] = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
     }
 
-    console.log(match)
-
     const shop = await DB.ShopHistory.aggregate([
       { $match: { server: server_id }},
       {
