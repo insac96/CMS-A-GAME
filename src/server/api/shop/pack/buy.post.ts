@@ -70,13 +70,13 @@ export default defineEventHandler(async (event) => {
       const now = DayJS(Date.now())
       const start = now.startOf('date')
       const end = now.endOf('date')
-      const matchTime = { $gte: new Date(start['$d']), $lte: new Date(end['$d']) }
+      const matchTime = { $gte: start['$d'], $lte: end['$d'] }
 
       const historyDay = await DB.ShopPackHistory.aggregate([
         { $match: {
           user: user._id,
           pack: shopPack._id,
-          server: server
+          createdAt: matchTime
         }},
         {
           $project: {
@@ -90,16 +90,10 @@ export default defineEventHandler(async (event) => {
         {
           $group: {
             _id: '$timeformat',
-            time: { $min: '$createdAt' },
             count: { $sum: '$amount' }
           }
         },
-        { $match: { 
-          time: matchTime
-        }}
       ])
-
-      console.log(historyDay)
 
       if(!!historyDay[0] && historyDay[0].count >= shopPack.limit) throw `Hôm nay bạn đã đạt giới hạn mua gói này`
     }
