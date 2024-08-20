@@ -3,7 +3,7 @@ import type { IAuth, IDBItem } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+    await checkPermission(event, 'shop.add')
 
     const body = await readBody(event)
     const { item, item_amount, price, limit } = body

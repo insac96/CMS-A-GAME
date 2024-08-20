@@ -3,7 +3,7 @@ import type { IAuth, IDBDice } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+    await checkPermission(event, 'dice.update')
 
     const { jar, percent } = await readBody(event)
     if(!jar || !percent) throw 'Dữ liệu đầu vào không hợp lệ'

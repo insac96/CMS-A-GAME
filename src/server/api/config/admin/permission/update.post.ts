@@ -3,14 +3,12 @@ import type { IAuth } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    await checkPermission(event, 'payment.configUpdate')
+    if(auth.type < 3) throw 'Chỉ Admin mới có quyền chình sửa'
 
     const data = await readBody(event)
-    const { maintenance, pay } = data
-    if(!!isNaN(parseInt(pay.number)) || parseInt(pay.number) < 0) throw 'Dữ liệu đầu vào không hợp lệ'
+    await DB.Config.updateMany({}, { permission: data })
 
-    await DB.PaymentConfig.updateMany({}, data)
-    logAdmin(event, 'Cập nhật <b>cấu hình</b> nạp tiền')
+    await logAdmin(event, 'Cập nhật <b>Quyền hạn</b>')
     return resp(event, { message: 'Cập nhật thành công' })
   } 
   catch (e:any) {

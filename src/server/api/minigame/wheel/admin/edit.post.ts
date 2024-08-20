@@ -3,7 +3,7 @@ import type { IAuth, IDBItem, IDBWheel } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+    await checkPermission(event, 'wheel.edit')
 
     const body = await readBody(event)
     const { _id, amount, percent, display } = body

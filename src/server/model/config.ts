@@ -93,6 +93,66 @@ export const DBConfig = (mongoose : Mongoose) => {
         os: { type: String, default: '' },
       }
     },
+    permission: {
+      config: {
+        update: { type: Array, default: [ 2, 3 ] },
+        action: { type: Array, default: [ 3 ] },
+      },
+      user: {
+        editAuth: { type: Array, default: [ 3 ] },
+        editCurrency: { type: Array, default: [ 3 ] },
+        editPay: { type: Array, default: [ 3 ] },
+        editSpend: { type: Array, default: [ 3 ] },
+        editLogin: { type: Array, default: [ 3 ] },
+      },
+      gate: {
+        add: { type: Array, default: [ 3 ] },
+        edit: { type: Array, default: [ 3 ] },
+        del: { type: Array, default: [ 3 ] },
+      },
+      payment: {
+        configUpdate: { type: Array, default: [ 3 ] },
+        verify: { type: Array, default: [ 3 ] },
+        undo: { type: Array, default: [ 3 ] },
+      },
+      spend: {
+        add: { type: Array, default: [ 3 ] },
+        edit: { type: Array, default: [ 3 ] },
+        del: { type: Array, default: [ 3 ] },
+      },
+      shop: {
+        configUpdate: { type: Array, default: [ 3 ] },
+        add: { type: Array, default: [ 3 ] },
+        edit: { type: Array, default: [ 3 ] },
+        del: { type: Array, default: [ 3 ] },
+        editGift: { type: Array, default: [ 3 ] },
+      },
+      event: {
+        add: { type: Array, default: [ 3 ] },
+        edit: { type: Array, default: [ 3 ] },
+        del: { type: Array, default: [ 3 ] },
+        editGift: { type: Array, default: [ 3 ] },
+        delHistory: { type: Array, default: [ 3 ] },
+      },
+      giftcode: {
+        add: { type: Array, default: [ 3 ] },
+        edit: { type: Array, default: [ 3 ] },
+        del: { type: Array, default: [ 3 ] },
+        editGift: { type: Array, default: [ 3 ] },
+        delHistory: { type: Array, default: [ 3 ] },
+      },
+      wheel: {
+        add: { type: Array, default: [ 3 ] },
+        edit: { type: Array, default: [ 3 ] },
+        del: { type: Array, default: [ 3 ] },
+      },
+      dice: {
+        update: { type: Array, default: [ 3 ] }
+      },
+      game: {
+        sendItem: { type: Array, default: [ 2, 3 ] },
+      }
+    },
     facebook: {
       client_id: { type: String, default: '' },
       client_secret: { type: String, default: '' },

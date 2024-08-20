@@ -58,6 +58,7 @@ const navItems = [
     children: [
       { label: 'Thống kê', to: '/@eni/statistic' },
       { label: 'Chi tiêu', to: '/@eni/spend' },
+      { label: 'Quyền hạn', to: '/@eni/permission' },
       { label: 'Cài đặt', to: '/@eni/config' },
     ]
   },

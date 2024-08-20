@@ -3,7 +3,7 @@ import type { IAuth } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    if(auth.type < 3) throw 'Chỉ Admin mới có thể thao tác'
+    await checkPermission(event, 'config.action')
 
     const data = await readBody(event)
     const { type } = data

@@ -95,6 +95,66 @@ export interface IDBConfig {
       os: string
     }
   }
+  permission: {
+    config: {
+      update: Array<number>
+      action: Array<number>
+    }
+    user: {
+      editAuth: Array<number>
+      editCurrency: Array<number>
+      editPay: Array<number>
+      editSpend: Array<number>
+      editLogin: Array<number>
+    }
+    gate: {
+      add: Array<number>
+      edit: Array<number>
+      del: Array<number>
+    }
+    payment: {
+      configUpdate: Array<number>
+      verify: Array<number>
+      undo: Array<number>
+    }
+    spend: {
+      add: Array<number>
+      edit: Array<number>
+      del: Array<number>
+    }
+    shop: {
+      configUpdate: Array<number>
+      add: Array<number>
+      edit: Array<number>
+      del: Array<number>
+      editGift: Array<number>
+    }
+    event: {
+      add: Array<number>
+      edit: Array<number>
+      del: Array<number>
+      editGift: Array<number>
+      delHistory: Array<number>
+    }
+    giftcode: {
+      add: Array<number>
+      edit: Array<number>
+      del: Array<number>
+      editGift: Array<number>
+      delHistory: Array<number>
+    }
+    wheel: {
+      add: Array<number>
+      edit: Array<number>
+      del: Array<number>
+    }
+    dice: {
+      update: Array<number>
+    }
+    game: {
+      sendItem: Array<number>
+    }
+  }
   facebook: {
     client_id: string
     client_secret: string

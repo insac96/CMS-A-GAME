@@ -3,7 +3,7 @@ import type { IAuth, IDBEventConfig, IDBEvent } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+    await checkPermission(event, 'event.editGift')
 
     const body = await readBody(event)
     const { _id, gift } = body

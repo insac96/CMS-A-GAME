@@ -3,11 +3,12 @@ import type { IAuth, IDBPayment } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+    await checkPermission(event, 'payment.verify')
 
     const body = await readBody(event)
     if(!!body.redo){
-      if(auth.type < 3) throw 'Chỉ Admin mới có thể hoàn tác trạng thái giao dịch'
+      await checkPermission(event, 'payment.undo')
+      
       const payment = await DB.Payment.findOne({ _id: body._id }).select('status code')
       if(!payment) throw 'Giao dịch không tồn tại'
       if(payment.status == 0) throw 'Giao dịch chưa được duyệt'

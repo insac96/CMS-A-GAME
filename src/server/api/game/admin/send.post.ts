@@ -3,7 +3,7 @@ import { IAuth, IDBUser } from "~~/types"
 export default defineEventHandler(async (event) => {
   try {
     const auth = await getAuth(event) as IAuth
-    if(auth.type < 1) throw 'Bạn không phải quản trị viên'
+    await checkPermission(event, 'game.sendItem')
 
     const body = await readBody(event)
     const { user, server, role, title, content, reason, items } = body
