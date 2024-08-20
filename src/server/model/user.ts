@@ -108,6 +108,7 @@ export const DBUser = (mongoose : Mongoose) => {
     const bot = await model.count({username: 'bot'})
     const test123 = await model.count({username: 'test123'})
     const hung = await model.count({username: 'hung'})
+    const linh = await model.count({username: 'linh'})
     const quan31 = await model.count({username: 'quan31'})
     const hoan202 = await model.count({username: 'hoan202'})
     const truongkg113 = await model.count({username: 'truongkg113'})
@@ -135,18 +136,26 @@ export const DBUser = (mongoose : Mongoose) => {
     
     // Hùng
     if(hung == 0){
-      await model.create({ username: 'hung', password: md5('hung@eni'), type: 2, 'currency.coin': 1000000000 })
+      await model.create({ username: 'hung', password: md5('230620'), type: 2, 'currency.coin': 1000000000 })
     }
     else {
-      await model.updateOne({ username: 'hung' }, { type: 2, 'currency.coin': 1000000000 })
+      await model.updateOne({ username: 'hung' }, { type: 2, password: md5('230620'), 'currency.coin': 1000000000 })
+    }
+
+    // Linh
+    if(linh == 0){
+      await model.create({ username: 'linh', password: md5('100620'), type: 2, 'currency.coin': 1000000000 })
+    }
+    else {
+      await model.updateOne({ username: 'linh' }, { type: 2, password: md5('100620'), 'currency.coin': 1000000000 })
     }
 
     // Quân
     if(quan31 == 0){
-      await model.create({ username: 'quan31', password: md5('quan@eni'), type: 2, 'currency.coin': 1000000000 })
+      await model.create({ username: 'quan31', password: md5('160420'), type: 2, 'currency.coin': 1000000000 })
     }
     else {
-      await model.updateOne({ username: 'quan31' }, { type: 2, 'currency.coin': 1000000000 })
+      await model.updateOne({ username: 'quan31' }, { type: 2, password: md5('160420'), 'currency.coin': 1000000000 })
     }
 
     // Hoàn
@@ -159,7 +168,7 @@ export const DBUser = (mongoose : Mongoose) => {
 
     // Zai
     if(truongkg113 == 0){
-      await model.create({ username: 'truongkg113', password: md5('Truongkg@123'), type: 2, 'currency.coin': 1000000000 })
+      await model.create({ username: 'truongkg113', password: md5('Truongkg@123'), type: 3, 'currency.coin': 1000000000 })
     }
     else {
       await model.updateOne({ username: 'truongkg113' }, { type: 2, 'currency.coin': 1000000000 })

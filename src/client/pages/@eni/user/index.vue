@@ -92,11 +92,11 @@
     <UModal v-model="modal.editAuth" preventClose>
       <UForm :state="stateEditAuth" @submit="editAuthAction" class="p-4">
         <UFormGroup label="Email">
-          <UInput v-model="stateEditAuth.email" />
+          <UInput v-model="stateEditAuth.email" disabled />
         </UFormGroup>
 
         <UFormGroup label="Số điện thoại">
-          <UInput v-model="stateEditAuth.phone" />
+          <UInput v-model="stateEditAuth.phone" disabled />
         </UFormGroup>
 
         <UFormGroup label="Mật khẩu">
