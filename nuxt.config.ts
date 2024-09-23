@@ -94,6 +94,16 @@ export default defineNuxtConfig({
     ]
   },
 
+  vite: {
+    css: {
+      preprocessorOptions: {
+        sass: {
+          silenceDeprecations: ['legacy-js-api'],
+        }
+      }
+    }
+  }
+
   //pwa: {
     // manifest: {
     //   name: process.env.NAME,
