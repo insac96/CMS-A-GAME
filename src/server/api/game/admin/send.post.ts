@@ -1,4 +1,8 @@
-import { IAuth, IDBUser } from "~~/types"
+import { IAuth, IDBUser, IDBItem } from "~~/types"
+
+const currencyTypeList = [
+  'coin', 'wheel'
+]
 
 export default defineEventHandler(async (event) => {
   try {
@@ -18,19 +22,38 @@ export default defineEventHandler(async (event) => {
       amount: i.amount
     }))
 
-    const itemSend = items.map(i => ({
-      id: i.item_id,
-      amount: i.amount
-    }))
-    
-    await gameSendMail(event, {
-      account: userData.username,
-      server_id: server,
-      role_id: role,
-      title: title || 'GM Send',
-      content: content || 'Vật phẩm gửi từ GM',
-      items: itemSend
+    // Format Gift
+    const giftItem : Array<any> = []
+    const giftCurrency : any = {}
+
+    items.forEach(gift => {
+      const item = gift
+
+      if(item.type == 'game_item'){
+        giftItem.push({ id: item.item_id, amount: item.amount })
+      }
+      if(!!currencyTypeList.includes(item.type)){
+        giftCurrency[`currency.${item.type}`] = item.amount
+      }
     })
+
+     // Send Gift
+     if(giftItem.length > 0){
+      await gameSendMail(event, {
+        account: userData.username,
+        server_id: server,
+        role_id: role,
+        title: title || 'GM Send',
+        content: content || 'Vật phẩm gửi từ GM',
+        items: giftItem
+      })
+    }
+      
+    if(Object.keys(giftCurrency).length){
+      await DB.User.updateOne({ _id: auth._id },{
+        $inc: giftCurrency
+      })
+    }
 
     await DB.LogAdminSendItem.create({
       from: auth._id,
