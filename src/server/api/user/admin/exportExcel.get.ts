@@ -24,26 +24,12 @@ export default defineEventHandler(async (event) => {
           localField: "_id",
           foreignField: "user",
           pipeline: [
-            {
-              $match: {
-                status: 1
-              }
-            },
-            {
-              $project: {
-                money: 1
-              },
-            }
+            { $match: { status: 1 } },
+            { $project: { money: 1 } }
           ],
           as: "payments"
         }
       },
-      // { $match : {
-      //   $and: [
-      //     { phone: { $exists: true }},
-      //     { email: { $exists: true }},
-      //   ]
-      // }},
       { $project: {
         username: 1, phone: 1, email: 1,
         payment: { $sum: '$payments.money' }
@@ -51,11 +37,10 @@ export default defineEventHandler(async (event) => {
       { $sort: { payment: -1 }}
     ])
 
-    console.log(users)
-    throw 1
-
-    users.forEach(user => { worksheet.addRow(user) })
-
+    users.forEach(user => { 
+      user.payment = user.payment.toLocaleString('vi-VN')
+      worksheet.addRow(user) 
+    })
     const createdAt = formatDate(event, new Date())
     const filename = `excel-users-${createdAt.day}${createdAt.month}${createdAt.year}-${createdAt.hour}-${createdAt.minute}-${createdAt.timestamp}.xlsx`
     const filePath = join('dist/excel', filename)
