@@ -18,6 +18,26 @@ export default defineEventHandler(async (event) => {
     ]
 
     const users = await DB.User.aggregate([
+      {
+        $lookup: {
+          from: "payments",
+          localField: "_id",
+          foreignField: "user",
+          pipeline: [
+            {
+              $match: {
+                status: 1
+              }
+            },
+            {
+              $project: {
+                money: 1
+              },
+            }
+          ],
+          as: "payments"
+        }
+      },
       // { $match : {
       //   $and: [
       //     { phone: { $exists: true }},
@@ -26,10 +46,13 @@ export default defineEventHandler(async (event) => {
       // }},
       { $project: {
         username: 1, phone: 1, email: 1,
-        payment: '$pay.total.money'
+        payment: { $sum: '$payments.money' }
       }},
       { $sort: { payment: -1 }}
     ])
+
+    console.log(users)
+    throw 1
 
     users.forEach(user => { worksheet.addRow(user) })
 
