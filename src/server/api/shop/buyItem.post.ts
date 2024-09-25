@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
     if(!server) throw 'Không tìm thấy ID máy chủ'
     if(!role) throw 'Không tìm thấy ID nhân vật'
     if(!!isNaN(parseInt(amount)) || parseInt(amount) < 1) throw 'Số lượng không hợp lệ'
+    if(amount > 1000) throw 'Số lượng không vượt quá 1000'
     if(!moneyType.includes(buyBy)) throw 'Tiền tệ không hỗ trợ'
 
     // Shop Config
