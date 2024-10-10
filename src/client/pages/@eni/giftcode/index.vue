@@ -139,7 +139,7 @@
         </UFormGroup>
 
         <UFormGroup label="Tài khoản">
-          <SelectUsers multiple v-model="stateEdit.users" />
+          <SelectUsers v-model="stateEdit.users" />
         </UFormGroup>
 
         <UFormGroup label="Hết hạn">

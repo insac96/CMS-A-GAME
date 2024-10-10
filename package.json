@@ -10,12 +10,13 @@
     "upgrade": "nuxi upgrade --force"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.258",
     "@nuxt/devtools": "latest",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/md5": "^2.3.3",
     "@types/multer": "^1.4.9",
     "@vite-pwa/nuxt": "^0.4.0",
-    "nuxt": "^3.11.1",
+    "nuxt": "^3.13.2",
     "nuxt-rate-limit": "^1.2.0",
     "nuxt-simple-sitemap": "^3.4.1",
     "sass": "^1.69.4",
@@ -23,7 +24,6 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@iconify/json": "^2.2.130",
     "@nuxt/image": "^1.2.0",
     "@nuxt/kit": "^3.9.3",
     "@nuxt/ui": "^2.12.0",
