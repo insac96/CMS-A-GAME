@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
     if(!fullID || !partnerID || !partnerNum || !time || !sign || !amount) throw 'Không có quyền quy cập'
 
     // Get Gate
-    const gate = await DB.Gate.findOne({ number: partnerNum }).select('key') as IDBGate
+    const gate = await DB.Gate.findOne({ number: partnerNum, type: 2 }).select('key') as IDBGate
     if(!gate) throw 'Kênh nạp không tồn tại'
     if(!gate.key) throw 'Kênh chưa hỗ trợ tự động duyệt'
     
