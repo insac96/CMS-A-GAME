@@ -87,6 +87,10 @@ export default defineNuxtConfig({
     }
   },
 
+  ui: {
+    icons: ['bxs', 'bx', 'bxl'],
+  },
+
   image: {
     domains: [
       process.env.DOMAIN as string
