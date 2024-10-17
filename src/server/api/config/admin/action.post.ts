@@ -20,8 +20,7 @@ export default defineEventHandler(async (event) => {
       await DB.ShopPackHistory.deleteMany({})
 
       await DB.GameServerLogin.deleteMany({})
-      await DB.GameRankGiftHistory.deleteMany({})
-
+      
       await DB.LogUser.deleteMany({})
       // await DB.LogAdmin.deleteMany({})
       await DB.LogAdminSendItem.deleteMany({})

@@ -2,7 +2,7 @@
   <UCard
     :ui="{ 
       base: 'relative transition-all ',
-      rounded: 'rounded-3xl',
+      rounded: 'rounded-lg',
       shadow: 'shadow-md hover:shadow-lg',
       body: { padding: 'px-2 sm:px-2 py-6 sm:py-6' },
       divide: '',

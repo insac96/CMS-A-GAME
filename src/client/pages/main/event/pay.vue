@@ -9,4 +9,7 @@ const configStore = useConfigStore()
 useSeoMeta({
   title: () => `Sự kiện tích nạp - ${configStore.config.name}`,
 })
+
+const check = () => !configStore.config.menu.event.pay && useTo().navigateToSSL('/')
+check()
 </script>

@@ -9,4 +9,7 @@ const configStore = useConfigStore()
 useSeoMeta({
   title: () => `Cửa hàng vật phẩm - ${configStore.config.name}`,
 })
+
+const check = () => !configStore.config.menu.shop.item && useTo().navigateToSSL('/')
+check()
 </script>

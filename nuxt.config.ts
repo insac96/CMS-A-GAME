@@ -51,7 +51,8 @@ export default defineNuxtConfig({
         { BlankLine: true },
         { Sitemap: `${process.env.CLIENT_URL}/sitemap.xml` }
       ]
-    }], //'@vite-pwa/nuxt'
+    }], 
+    //'@vite-pwa/nuxt'
     'nuxt-rate-limit'
   ],
 
@@ -88,6 +89,7 @@ export default defineNuxtConfig({
   },
 
   ui: {
+    // @ts-expect-error
     icons: ['bxs', 'bx', 'bxl'],
   },
 
@@ -116,6 +118,7 @@ export default defineNuxtConfig({
   // },
   // registerType: 'autoUpdate'
   //}
+
   vite: {
     css: {
       preprocessorOptions: {

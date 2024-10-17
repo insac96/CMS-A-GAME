@@ -9,4 +9,7 @@ const configStore = useConfigStore()
 useSeoMeta({
   title: () => `Sự kiện đăng nhập - ${configStore.config.name}`,
 })
+
+const check = () => !configStore.config.menu.event.login && useTo().navigateToSSL('/')
+check()
 </script>

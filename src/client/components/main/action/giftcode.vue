@@ -4,18 +4,20 @@
 
     <div v-else>
       <UForm :validate="validate" :state="state" @submit="submit">
-        <UFormGroup name="public" label="Mã công khai" v-show="!!giftcodes">
-          <DataGiftcodePublic v-model:giftcodes="giftcodes" />
-        </UFormGroup>
-
         <UFormGroup name="code" label="Nhập mã">
           <UInput v-model="state.code" />
         </UFormGroup>
 
-        <UiFlex justify="between">
-          <UButton color="gray" @click="modal.history = true">Lịch sử</UButton>
-          <UButton type="submit" :loading="loading">Kiểm tra</UButton>
-        </UiFlex>
+        <UFormGroup>
+          <UiFlex justify="between">
+            <UButton color="gray" @click="modal.history = true">Lịch sử</UButton>
+            <UButton type="submit" :loading="loading">Kiểm tra</UButton>
+          </UiFlex>
+        </UFormGroup>
+
+        <UFormGroup name="public" label="Mã công khai" v-show="!!giftcodes">
+          <DataGiftcodePublic v-model:giftcodes="giftcodes" />
+        </UFormGroup>
       </UForm>
 
       <UModal v-model="modal.receive" prevent-close>

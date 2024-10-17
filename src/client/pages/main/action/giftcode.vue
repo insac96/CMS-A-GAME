@@ -9,4 +9,7 @@ const configStore = useConfigStore()
 useSeoMeta({
   title: () => `Giftcode - ${configStore.config.name}`,
 })
+
+const check = () => !configStore.config.menu.action.giftcode && useTo().navigateToSSL('/')
+check()
 </script>

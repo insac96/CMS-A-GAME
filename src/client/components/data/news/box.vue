@@ -10,7 +10,7 @@
     </div>
 
     <div class="pt-2.5 pb-3 px-4">
-      <NuxtLink :to="`/main/news/${news._id}`" class="md:text-md text-sm line-clamp-1 text-gray hover:text-primary font-semibold">
+      <NuxtLink :to="`/main/news/${news._id}`" class="md:text-base text-sm line-clamp-2 text-gray hover:text-primary font-semibold min-h-[40px]">
         {{ news.title }}
       </NuxtLink>
       
@@ -20,12 +20,12 @@
     </div>
 
     <template #footer>
-      <UiFlex justify="between">
+      <UiFlex>
         <UiText color="gray" weight="semibold" class="text-xs mr-auto">
           {{ displayTime(news.updatedAt) }}
         </UiText>
 
-        <UBadge :color="news.category?.color || 'primary'">
+        <UBadge :color="news.category?.color || 'primary'" class="hidden md:block">
           {{ news.category?.name || 'News' }}
         </UBadge>
       </UiFlex>

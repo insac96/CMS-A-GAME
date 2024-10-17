@@ -1,7 +1,7 @@
 <template>
   <UiContent title="News" sub="Cập nhật các tin tức mới nhất" :start="false" class="w-[800px] max-w-full mx-auto" >
     <div class="grid grid-cols-12 gap-4" v-if="!!loading">
-      <LoadingNewsBox v-for="i in [1,2]" :key="i" class="md:col-span-6 col-span-12" />
+      <LoadingNewsBox v-for="i in [1,2]" :key="i" class="col-span-6" />
     </div>
     
     <div v-else>
@@ -11,7 +11,7 @@
         <DataNewsBox 
           v-for="(item, index) in list" 
           :key="index" 
-          class="md:col-span-4 sm:col-span-6 col-span-12"
+          class="md:col-span-4 col-span-6"
           :news="item"
         ></DataNewsBox>
       </div>

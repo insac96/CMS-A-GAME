@@ -4,7 +4,6 @@
       class="relative p-1.5"
       icon="i-bxs-user"
       color="gray" 
-      variant="ghost" 
       aria-label="User"
       @click="open = true"
     >

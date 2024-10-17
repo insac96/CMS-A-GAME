@@ -16,23 +16,14 @@
         <template #power-data="{ row }">
           {{ useMoney().toMoney(row.power) }}
         </template>
-
-        <template #gift-data="{ row }">
-          <UButton size="xs" color="gray" @click="viewRankGift(row.rank, 'power')">Xem</UButton>
-        </template>
       </UTable>
     </UCard>
-
-    <UModal v-model="modal.view" prevent-close>
-      <DataRankGiftView :state="stateView" @close="modal.view = false" />
-    </UModal>
   </div>
 </template>
 
 <script setup>
 const loading = ref({
-  load: false,
-  view: false
+  load: false
 })
 
 const list = ref([])
@@ -40,30 +31,17 @@ const list = ref([])
 const columns = [
   {
     key: 'rank',
-    label: 'Xếp hạng',
+    label: 'Hạng',
   },{
     key: 'role_name',
     label: 'Nhân vật',
   },{
     key: 'power',
     label: 'Lực chiến'
-  },{
-    key: 'gift',
-    label: 'Phần thưởng'
   }
 ]
 
-const modal = ref({
-  view: false
-})
-
 const state = ref({
-  server: null
-})
-
-const stateView = ref({
-  rank: null,
-  type: null,
   server: null
 })
 
@@ -73,13 +51,6 @@ const validate = (state) => {
   const errors = []
   if (!state.server) errors.push({ path: 'server', message: 'Vui lòng chọn máy chủ' })
   return errors
-}
-
-const viewRankGift = async (rank, type) => {
-  stateView.value.rank = rank
-  stateView.value.type = type
-  stateView.value.server = state.value.server
-  modal.value.view = true
 }
 
 const submit = async () => {

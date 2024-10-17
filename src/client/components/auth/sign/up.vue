@@ -109,7 +109,7 @@ const start = async () => {
     $socket.emit('login', authStore.profile._id)
 
     loading.value.start = false
-    useTo().navigateToSSL('/thankyou')
+    if(!configStore.config.game.mobile) return useTo().navigateToSSL('/thankyou')
   }
   catch(e){
     loading.value.start = false

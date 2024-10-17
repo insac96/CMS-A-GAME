@@ -9,4 +9,7 @@ const configStore = useConfigStore()
 useSeoMeta({
   title: () => `Vòng quay may mắn - ${configStore.config.name}`,
 })
+
+const check = () => !configStore.config.menu.minigame.wheel && useTo().navigateToSSL('/')
+check()
 </script>

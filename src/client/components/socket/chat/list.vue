@@ -1,8 +1,8 @@
 <template>
-  <div class="relative w-full h-full max-h-full p-2">
+  <div class="relative w-full h-full max-h-full py-2">
     <LoadingTable class="rounded-none" v-if="!!loading" />
 
-    <UiFlex type="col" id="BoxChat" class="w-full h-full overflow-x-hidden overflow-y-auto gap-y-4" v-else>
+    <UiFlex type="col" id="BoxChat" class="w-full h-full overflow-x-hidden overflow-y-auto gap-y-4 p-2" v-else>
       <UiFlex v-for="chat in chats" :key="chat._id" class="w-full">
         <!-- Right -->
         <UiFlex 
@@ -28,7 +28,7 @@
           </div>
 
           <!-- Avatar -->
-          <UiImg :src="chat.user.avatar" w="1" h="1" img-w="100" img-h="100" class="w-8 h-8 rounded-full" />
+          <UiImg :src="chat.user.avatar" w="1" h="1" img-w="100" img-h="100" class="min-w-8 w-8 h-8 rounded-full" />
         </UiFlex>
 
         <!-- Left -->
@@ -38,7 +38,7 @@
           items="start" 
         >
           <!-- Avatar -->
-          <UiImg :src="chat.user.avatar" w="1" h="1" img-w="100" img-h="100" class="w-8 h-8 rounded-full" />
+          <UiImg :src="chat.user.avatar" w="1" h="1" img-w="100" img-h="100" class="min-w-8 w-8 h-8 rounded-full" />
           
           <!-- Info -->
           <div class="text-left">

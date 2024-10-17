@@ -1,6 +1,6 @@
 <template>
   <UForm :state="state" @submit="send">
-    <UButtonGroup class="p-3 w-full">
+    <UiFlex class="p-2 gap-1">
       <UInput 
         v-model="state.text" 
         :disabled="loading" 
@@ -15,9 +15,11 @@
         variant="outline"
         placeholder="Nhập nội dung..." 
         class="w-full" 
+        size="sm"
       />
-      <UButton type="submit" icon="i-bxs-send" :disabled="loading" size="md" />
-    </UButtonGroup>
+
+      <UButton type="submit" icon="i-bxs-send" :disabled="loading" size="sm" />
+    </UiFlex>
   </UForm>
 </template>
 

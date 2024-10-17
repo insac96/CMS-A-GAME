@@ -1,5 +1,7 @@
 <template>
-  <UiFlex class="p-3" justify="between">
+  <UiFlex class="p-3" justify="end">
+    <UiIcon name="i-bx-x" size="5" pointer @click="emit('close')" class="mr-auto" v-if="!hiddenX"/>
+
     <UDropdown :items="items" :popper="{ placement: 'bottom-start' }" :ui="{ item: { shortcuts: 'inline-flex' }}">
       <UButtonGroup>
         <UButton icon="i-bx-group" />
@@ -8,8 +10,6 @@
       </UButtonGroup>
     </UDropdown>
     
-    <UiIcon name="i-bx-x" size="5" pointer @click="emit('close')" />
-
     <UModal v-model="modal.view">
       <SocketOnlineView :type="stateView.type" @close="modal.view = false" />
     </UModal>
@@ -18,6 +18,7 @@
 
 <script setup>
 const socketStore = useSocketStore()
+const props = defineProps(['hiddenX'])
 const emit = defineEmits(['close'])
 
 const modal = ref({

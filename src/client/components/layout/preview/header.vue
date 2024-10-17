@@ -16,7 +16,7 @@
       
       <UiFlex justify="end" items="center" class="w-1/3">
         <Setting />
-        <SocketChat class="ml-1" />
+        <SocketChatSlide class="ml-1" />
       </UiFlex>
     </UiFlex>
   </header>

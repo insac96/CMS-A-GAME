@@ -1,10 +1,9 @@
 <template>
   <UiFlex>
-    <UiIcon 
-      name="i-bx-menu-alt-left"
-      size="7"
-      aria="Menu"
-      pointer
+    <UButton 
+      icon="i-bx-menu-alt-left"
+      color="gray"
+      aria-label="Menu"
       @click="open = true"
     />
 

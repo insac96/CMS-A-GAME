@@ -1,19 +1,21 @@
 <template>
-  <UPopover>
-    <template #default>
-      <UButton 
-        icon="i-bxs-brush"
-        color="gray" 
-        variant="ghost" 
-        aria-label="Theme"
-      />
-    </template>
+  <UiFlex>
+    <UButton 
+      icon="i-bxs-brush"
+      color="gray"
+      aria-label="Theme"
+      @click="open = true"
+    />
 
-    <template #panel>
-      <div class="p-2 w-56">
+    <UModal v-model="open" :ui="{width: 'sm:max-w-[250px]'}">
+      <UiFlex type="col" class="p-4">
         <SettingMode class="mb-2"/>
         <SettingColor />
-      </div>
-    </template>
-  </UPopover>
+      </UiFlex>
+    </UModal>
+  </UiFlex>
 </template>
+
+<script setup>
+const open = ref(false)
+</script>

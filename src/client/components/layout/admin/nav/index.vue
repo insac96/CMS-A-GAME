@@ -133,8 +133,7 @@ const navItems = [
       { label: 'Vật phẩm', to: '/@eni/game/item' },
       { label: 'Bộ vật phẩm', to: '/@eni/game/itembox' }, 
       { label: 'Máy chủ', to: '/@eni/game/server' },
-      { label: 'Nhân vật', to: '/@eni/game/roles' },
-      { label: 'Quà xếp hạng', to: '/@eni/game/rankgift' },
+      { label: 'Nhân vật', to: '/@eni/game/roles' }
     ]
   },
   {
