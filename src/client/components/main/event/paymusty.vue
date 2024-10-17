@@ -5,27 +5,31 @@
 
       <div v-else>
         <DataEmpty v-if="!activeConfig.active" :text="activeConfig.title"></DataEmpty>
-        
-        <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }" v-else>
-          <UTable :rows="list" :columns="columns">
-            <template #need-data="{ row }">
-              <UiText weight="semibold">{{ useMoney().toMoney(row.need) }} VNĐ</UiText>
+
+        <UiFlex v-else type="col" class="gap-4">
+          <UCard v-for="(row, index) in list" :key="index" :ui="{ 
+            base: 'w-full',
+            body: { padding: 'py-2 sm:py-2 px-4 sm:px-4' },
+            header: { padding: 'py-2 sm:py-2 px-4 sm:px-4', background: 'bg-white dark:bg-gray-800' },
+          }">
+            <template #header>
+              <UiFlex justify="between" class="gap-1">
+                <UiText weight="semibold" size="sm">{{ toMoney(row.need) }} VNĐ</UiText>
+
+                <UButton 
+                  size="2xs"
+                  :color="statusFormat[row.status].color"
+                  :disabled="row.status != 0"
+                  @click="openReceive(row)"
+                >{{ statusFormat[row.status].label }}</UButton>
+              </UiFlex>
             </template>
 
-            <template #gift-data="{ row }">
-              <DataItemList :items="row.gift" :currency="row.currency" class="sm:min-w-[auto] min-w-[250px]" />
+            <template #default>
+              <DataItemList :items="row.gift" :currency="row.currency" justify="center" />
             </template>
-
-            <template #actions-data="{ row }">
-              <UButton 
-                size="xs"
-                :color="statusFormat[row.status].color"
-                :disabled="row.status != 0"
-                @click="openReceive(row)"
-              >{{ statusFormat[row.status].label }}</UButton>
-            </template>
-          </UTable>
-        </UCard>
+          </UCard>
+        </UiFlex>
       </div>
 
       <UModal v-model="modal.receive" prevent-close>
@@ -40,8 +44,8 @@
 </template>
 
 <script setup>
-const { dayjs, displayFull } = useDayJs()
 const authStore = useAuthStore()
+const { toMoney } = useMoney()
 watch(() => authStore.isLogin, () => getList())
 
 const loading = ref(true)
