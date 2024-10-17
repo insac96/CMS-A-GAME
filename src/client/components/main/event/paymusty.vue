@@ -7,14 +7,16 @@
         <DataEmpty v-if="!activeConfig.active" :text="activeConfig.title"></DataEmpty>
 
         <UiFlex v-else type="col" class="gap-4">
+          <DataEmpty text="Chưa có mốc thưởng ở sự kiện này" class="w-full" v-if="!list || (!!list && list.length == 0)"/>
+
           <UCard v-for="(row, index) in list" :key="index" :ui="{ 
-            base: 'w-full',
+            base: 'w-full overflow-hidden',
             body: { padding: 'py-2 sm:py-2 px-4 sm:px-4' },
             header: { padding: 'py-2 sm:py-2 px-4 sm:px-4', background: 'bg-gray-100 dark:bg-gray-800' },
           }">
             <template #header>
               <UiFlex justify="between" class="gap-1">
-                <UiText weight="semibold" size="sm">{{ toMoney(row.need) }} VNĐ</UiText>
+                <UiText weight="semibold" size="xs">{{ toMoney(row.need) }} VNĐ</UiText>
 
                 <UButton 
                   size="2xs"
