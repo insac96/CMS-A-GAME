@@ -10,7 +10,7 @@
           <UCard v-for="(row, index) in list" :key="index" :ui="{ 
             base: 'w-full',
             body: { padding: 'py-2 sm:py-2 px-4 sm:px-4' },
-            header: { padding: 'py-2 sm:py-2 px-4 sm:px-4', background: 'bg-white dark:bg-gray-800' },
+            header: { padding: 'py-2 sm:py-2 px-4 sm:px-4', background: 'bg-gray-100 dark:bg-gray-800' },
           }">
             <template #header>
               <UiFlex justify="between" class="gap-1">
