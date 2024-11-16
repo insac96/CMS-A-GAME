@@ -195,9 +195,9 @@ const totalCoin = computed(() => {
 // Card
 const card = {
   net:  [
-    { label: 'Viettel', value: 'VTT' },
-    { label: 'Mobifone', value: 'VMS' },
-    { label: 'Vinaphone', value: 'VNP' },
+    { label: 'Viettel', value: 'VIETTEL' },
+    { label: 'Mobifone', value: 'MOBIFONE' },
+    { label: 'Vinaphone', value: 'VINAPHONE' },
   ],
   money: [
     // { label: '10.000', value: 10000 },
