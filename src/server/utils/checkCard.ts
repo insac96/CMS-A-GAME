@@ -14,7 +14,7 @@ interface ICardData {
 
 export default async (event: H3Event, card : ICardData) : Promise<void> => {
   const { net, seri, pin, money, key, token, code } = card
-  const url = 'https://rinshop247.com/chargingws/v2'
+  const url = 'https://thesieure.com/chargingws/v2'
 
   const partner = key.split('-')
   const partner_id = partner[0]
@@ -34,6 +34,7 @@ export default async (event: H3Event, card : ICardData) : Promise<void> => {
 
   const send = await axios({ url: url, data: params })
   const res = send.data
+  console.log(res)
 
   const status = res['status']
   if(!status) throw 'Lỗi hệ thống API'
