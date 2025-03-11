@@ -5,7 +5,7 @@
   >
     <img
       v-if="!loading"
-      :src="img(imgSrc)"
+      :src="imgLink(imgSrc)"
       class="object-cover w-full h-full select-none"
       placeholder="/images/placeholder.png"
       :alt="props.alt" 
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-const { img } = useMakeLink()
+const { imgLink } = useMakeLink()
 const props = defineProps({
   src: String,
   imgSize: [ String, Number ],
