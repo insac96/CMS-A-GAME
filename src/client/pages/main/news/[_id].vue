@@ -5,8 +5,7 @@
     <UiContent 
       v-if="!loading && !!news" 
       :title="news.title" 
-      :sub="news.description" 
-      :start="false"
+      :sub="news.description"
     >
       <UiImg 
         w="4" h="2" 
@@ -25,7 +24,7 @@
           <UiText color="gray" weight="semibold" size="xs">{{ displayTime(news.updatedAt) }}</UiText>
         </UiFlex>
 
-        <UBadge :color="news.category?.color || 'primary'" class="ml-auto">
+        <UBadge color="gray" class="ml-auto" variant="soft">
           {{ news.category?.name || 'News' }}
         </UBadge>
       </UiFlex>

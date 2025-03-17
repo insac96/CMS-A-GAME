@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="News" sub="Tổng hợp tất cả tin tức">
+  <UiContent title="News" sub="Tổng hợp tất cả tin tức" icon="bx-news">
     <UiFlex justify="between" class="mb-4">
       <UForm @submit="getList" class="mr-2 max-w-[150px] sm:max-w-[220px]">
         <UInput v-model="page.search" placeholder="Tìm kiếm..." icon="i-bx-search" size="sm" />
