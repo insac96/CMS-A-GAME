@@ -7,10 +7,15 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if(from.query.f) adsFromCookie.value = from.query.f as string
 
   // Theme Cookie
-  const primaryCookie = useCookie('theme-primary', runtimeConfig.public.cookieConfig)
-  const grayCookie = useCookie('theme-gray', runtimeConfig.public.cookieConfig)
-  if(primaryCookie.value) appConfig.ui.primary = primaryCookie.value
-  if(grayCookie.value) appConfig.ui.gray = grayCookie.value
+  const mode = useColorMode()
+  // const primaryCookie = useCookie('theme-primary', runtimeConfig.public.cookieConfig)
+  // const grayCookie = useCookie('theme-gray', runtimeConfig.public.cookieConfig)
+  // if(primaryCookie.value) appConfig.ui.primary = primaryCookie.value
+  // if(grayCookie.value) appConfig.ui.gray = grayCookie.value
+  appConfig.ui.primary = 'sky'
+  appConfig.ui.gray = 'neutral'
+  mode.preference = 'dark'
+
 
   // Check SSL
   const sslCookie = useCookie('ssl-enabled', runtimeConfig.public.cookieConfig)

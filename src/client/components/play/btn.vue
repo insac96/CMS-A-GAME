@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UButton :block="block" :icon="config.game.mobile ? 'i-bx-download' : 'i-bx-play'" :size="size || 'md'" :loading="loading" @click="start">
+    <UButton :block="block" :size="size || 'md'" :loading="loading" @click="start">
       {{ text || (config.game.mobile ? 'Tải Trò Chơi' : 'Chơi Ngay') }}
     </UButton>
 

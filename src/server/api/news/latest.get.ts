@@ -2,9 +2,9 @@ export default defineEventHandler(async (event) => {
   try {
     const news = await DB.News
     .find({ display: 1 })
-    .select('category title description og_image pin updatedAt')
+    .select('category title description og_image pin createdAt')
     .populate({ path: 'category', select: 'name color' })
-    .sort({ pin: -1, updatedAt: -1 })
+    .sort({ pin: -1, createdAt: -1 })
     .limit(6)
 
     return resp(event, { result: news })

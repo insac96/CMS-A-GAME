@@ -1,6 +1,14 @@
 <template>
   <div>
-    <UButton color="gray" size="md" :loading="loading" block @click="get">Liên Hệ Hỗ Trợ</UButton>
+    <UButton
+      class="relative p-1.5"
+      icon="i-bx-support"
+      color="gray"
+      aria-label="Support"
+      :loading="loading"
+      @click="get"
+    >
+    </UButton>
 
     <UModal v-model="modal">
       <UCard>

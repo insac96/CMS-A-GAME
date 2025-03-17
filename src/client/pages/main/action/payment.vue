@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Nạp Xu" sub="Tạo giao dịch mua xu">
+  <UiContent title="Nạp Xu" sub="Tạo giao dịch mua xu" icon="bxs-credit-card">
     <MainActionPayment />
   </UiContent>
 </template>

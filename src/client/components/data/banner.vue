@@ -1,14 +1,5 @@
 <template>
-  <UiFlex type="col" justify="center" class="sm:py-18 py-6 w-full max-w-[800px] mx-auto">
-    <UiText align="center" class="font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl text-4xl">{{ config.name }}</UiText>
-    <UiText align="center" size="lg" color="gray" class="sm:mt-4 mt-1 tracking-tight">{{ config.description }}</UiText>
-
-    <UiFlex justify="center" class="mt-4 mb-8 gap-1" wrap>
-      <PlayBtn v-if="!config.game.mobile" text="Chơi Ngay" size="sm"></PlayBtn>
-      <UButton icon="i-bxl-android" color="green" class="Android" v-if="!!config.download.apk" @click="download(config.download.apk)">Android</UButton>
-      <UButton icon="i-bxl-apple" color="black" class="Iphone" v-if="!!config.download.ios" @click="download(config.download.ios)">IOS</UButton>
-    </UiFlex>
-
+  <UiContent :title="config.name" :sub="config.description" icon="bxs-party" class="w-[800px] max-w-full mx-auto">
     <UiImg 
       :src="config.og_image"
       w="16" h="9"
@@ -17,14 +8,10 @@
       class="transition-all rounded-lg shadow-md hover:shadow-lg max-w-full"
       preload
     ></UiImg>
-  </UiFlex>
+  </UiContent>
 </template>
 
 <script setup>
 const configStore = useConfigStore()
 const config = computed(() => configStore.config)
-
-const download = (link) => {
-  window.open(link, '_blank'); 
-}
 </script>

@@ -10,7 +10,7 @@
     }"
   >
     <template #header>
-      <SocketOnline @close="open = false" :hidden-x="hiddenX" />
+      <SocketOnline @close="emits('close')" :hidden-x="hiddenX" />
     </template>
 
     <SocketChatList />
@@ -23,5 +23,5 @@
 
 <script setup>
 const props = defineProps(['hiddenX'])
-const open = ref(false)
+const emits = defineEmits(['close'])
 </script>

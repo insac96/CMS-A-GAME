@@ -10,7 +10,7 @@
     </UButton>
 
     <USlideover v-model="open" :ui="{ width: 'w-screen md:max-w-sm max-w-xs'}">
-      <SocketChat />
+      <SocketChat @close="open = false" />
     </USlideover>
   </UiFlex>
 </template>

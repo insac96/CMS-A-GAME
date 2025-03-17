@@ -1,5 +1,11 @@
 <template>
-  <UiContent title="News" sub="Cập nhật các tin tức mới nhất" :start="false" class="w-[800px] max-w-full mx-auto" >
+  <UiContent title="News" sub="Các tin tức mới nhất" icon="bx-news" class="w-[800px] max-w-full mx-auto">
+    <template #more>
+      <NuxtLink to="/main/news" class="ml-auto">
+        <UButton color="gray">Xem thêm</UButton>
+      </NuxtLink>
+    </template>
+
     <div class="grid grid-cols-12 gap-4" v-if="!!loading">
       <LoadingNewsBox v-for="i in [1,2]" :key="i" class="col-span-6" />
     </div>
@@ -15,12 +21,6 @@
           :news="item"
         ></DataNewsBox>
       </div>
-
-      <UiFlex justify="center" class="mt-6" v-if="list.length > 0">
-        <NuxtLink to="/main/news">
-          <UButton icon="i-bx-news" variant="soft">Xem thêm</UButton>
-        </NuxtLink>
-      </UiFlex>
     </div>
   </UiContent>
 </template>

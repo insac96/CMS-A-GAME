@@ -1,5 +1,5 @@
 <template>
-  <UiContent title="Giftcode" sub="Nhập mã nhận thưởng">
+  <UiContent title="Giftcode" sub="Nhập mã nhận thưởng" icon="bxs-gift">
     <MainActionGiftcode />
   </UiContent>
 </template>

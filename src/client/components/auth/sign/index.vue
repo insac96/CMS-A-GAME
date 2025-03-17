@@ -1,6 +1,6 @@
 <template>
   <UiFlex>
-    <UButton aria-label="Sign" @click="modal = true">
+    <UButton aria-label="Sign" color="rose" @click="modal = true">
       Tài Khoản
     </UButton>
 
